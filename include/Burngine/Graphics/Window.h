@@ -10,17 +10,22 @@
 
 #include "../Export.h"
 #include "WindowSettings.h"
+#include "OpenGL.h"
 
 namespace burn {
 
-class Window {
+class BURNGINE_API Window {
 public:
-	Window(const WindowSettings& = WindowSettings());
+	Window();
 
 	~Window();
 
-private:
+	bool create(const WindowSettings& = WindowSettings());
+	bool close();
 
+private:
+	GLFWwindow* _window;
+	WindowSettings _settings;
 };
 
 } /* namespace burn */

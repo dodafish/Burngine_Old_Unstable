@@ -9,13 +9,11 @@
 
 namespace burn {
 
-Window::Window() {
-	// TODO Auto-generated constructor stub
-
+Window::Window() :
+				_window(nullptr) {
 }
 
 Window::~Window() {
-	// TODO Auto-generated destructor stub
 }
 
 } /* namespace burn */
