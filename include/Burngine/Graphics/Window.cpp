@@ -32,6 +32,7 @@ bool Window::create(const WindowSettings& settings) {
 			_settings.getTitle().c_str(), 0, 0);
 
 	if(_window == nullptr){
+		glfwTerminate();
 		std::cout << "Failed to create window!\n";
 		return false;
 	}
@@ -48,6 +49,18 @@ bool Window::create(const WindowSettings& settings) {
 
 bool Window::close() {
 	return true;
+}
+
+bool Window::keepOpened() const {
+	return !glfwWindowShouldClose(_window);
+}
+
+void Window::update(){
+	glfwPollEvents();
+}
+
+void Window::display() const {
+	glfwSwapBuffers(_window);
 }
 
 } /* namespace burn */

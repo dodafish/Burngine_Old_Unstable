@@ -23,6 +23,11 @@ public:
 	bool create(const WindowSettings& = WindowSettings());
 	bool close();
 
+	bool keepOpened() const;
+
+	void update();
+	void display() const;
+
 private:
 	GLFWwindow* _window;
 	WindowSettings _settings;

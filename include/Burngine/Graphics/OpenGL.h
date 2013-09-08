@@ -8,8 +8,8 @@
 #ifndef OPENGL_H_
 #define OPENGL_H_
 
-#include "../GL/glew.h"
-#include <glfw3.h>
+#include "../extern/GL/glew.h"
+#include "../extern/glfw3.h"
 
 
 #endif /* OPENGL_H_ */

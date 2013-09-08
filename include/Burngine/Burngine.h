@@ -9,6 +9,7 @@
 #define BURNGINE_H_
 
 #include "Graphics/WindowSettings.h"
+#include "Graphics/Window.h"
 
 
 #endif /* BURNGINE_H_ */
