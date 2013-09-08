@@ -8,10 +8,14 @@
 #include "Window.h"
 #include <iostream>
 
+#include <time.h>
+
 namespace burn {
 
 Window::Window() :
-				_window(nullptr) {
+				_window(nullptr),
+				_framerateLimit(0),
+				_lastTime(0){
 }
 
 Window::~Window() {
@@ -55,12 +59,27 @@ bool Window::keepOpened() const {
 	return !glfwWindowShouldClose(_window);
 }
 
-void Window::update(){
+void Window::update() {
 	glfwPollEvents();
 }
 
 void Window::display() const {
+	if(_framerateLimit != 0){
+		double now = glfwGetTime();
+		double delta = now - _lastTime;
+		if(delta > 0){
+			//TODO wait ms until bufferswap, or better: start a thread waiting for bufferswap and start calculating next scene
+		}
+	}
 	glfwSwapBuffers(_window);
+}
+
+void Window::setFramerateLimit(const unsigned int& fps) {
+	_framerateLimit = fps;
+}
+
+const unsigned int& Window::getFramerateLimit() const {
+	return _framerateLimit;
 }
 
 } /* namespace burn */

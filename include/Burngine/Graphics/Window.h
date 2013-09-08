@@ -28,9 +28,15 @@ public:
 	void update();
 	void display() const;
 
+	void setFramerateLimit(const unsigned int& fps);
+	const unsigned int& getFramerateLimit() const;
+
 private:
 	GLFWwindow* _window;
 	WindowSettings _settings;
+
+	unsigned int _framerateLimit;
+	double _lastTime;
 };
 
 } /* namespace burn */
