@@ -31,6 +31,10 @@ bool Window::create(const WindowSettings& settings) {
 		return false;
 	}
 
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
 	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()),
 			static_cast<int>(_settings.getHeight()),
 			_settings.getTitle().c_str(), 0, 0);

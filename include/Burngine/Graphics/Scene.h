@@ -13,9 +13,9 @@
 
 #include <vector>
 
-namespace burn {
+template class BURNGINE_API std::vector<burn::StaticMeshNode*>;
 
-template class BURNGINE_API std::vector<StaticMeshNode*>;
+namespace burn {
 
 class BURNGINE_API Scene {
 public:
