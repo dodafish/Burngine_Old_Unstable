@@ -13,7 +13,7 @@
 
 namespace burn {
 
-class Vertex {
+class BURNGINE_API Vertex {
 public:
 	Vertex();
 	~Vertex();
