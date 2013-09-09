@@ -9,6 +9,7 @@
 #define SCENENODE_H_
 
 #include "../Export.h"
+#include "../System/Math.h"
 
 namespace burn {
 
@@ -17,8 +18,17 @@ public:
 	SceneNode();
 	virtual ~SceneNode();
 
+	void setPosition(const Vector3f& position);
+	const Vector3f& getPosition() const;
 
+	void setRotation(const Vector3f& rotation);
+	const Vector3f& getRotation() const;
 
+	void setScale(const Vector3f& scale);
+	const Vector3f& getScale() const;
+
+private:
+	Vector3f _position, _scale, _rotation;
 };
 
 } /* namespace burn */
