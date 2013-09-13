@@ -54,8 +54,9 @@ struct BURNGINE_API BurngineShaders {
 	};
 
 	static bool loadShader(const Type& type);
-
 	static bool loadAllShaders();
+
+	static void useShader(const Type& type);
 
 private:
 	static Shader _solidColorShader;

@@ -37,6 +37,17 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 	return false;
 }
 
+void BurngineShaders::useShader(const BurngineShaders::Type& type) {
+	switch (type) {
+		case SOLID_COLOR:
+			_solidColorShader.activate();
+			break;
+		default:
+			return;
+			break;
+	}
+}
+
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
