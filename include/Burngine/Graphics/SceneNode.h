@@ -12,6 +12,7 @@
 #include "../System/Math.h"
 #include "Material.h"
 #include "Transformable.h"
+#include "Camera.h"
 
 namespace burn {
 
@@ -20,7 +21,7 @@ public:
 	SceneNode();
 	virtual ~SceneNode();
 
-	virtual void draw() = 0;
+	virtual void draw(Camera* camera = nullptr) = 0;
 
 	const Material& getMaterial() const;
 	void setMaterial(const Material& material);

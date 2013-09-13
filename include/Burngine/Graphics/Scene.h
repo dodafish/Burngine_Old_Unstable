@@ -11,10 +11,12 @@
 #include "../Export.h"
 #include "SceneNode.h"
 #include "StaticMeshNode.h"
+#include "Camera.h"
 
 #include <vector>
 
 template class BURNGINE_API std::vector<burn::SceneNode*>;
+template class BURNGINE_API std::vector<burn::Camera*>;
 
 namespace burn {
 
@@ -26,12 +28,17 @@ public:
 	void drawAll();
 
 	StaticMeshNode* createStaticMeshNode();
+	Camera* createCamera(bool active = true);
 
 	void removeNode(SceneNode* node);
 	void removeAllNodes();
+	void removeCamera(Camera* camera);
+	void removeAllCameras();
 
 private:
 	std::vector<SceneNode*> _nodes;
+	std::vector<Camera*> _cameras;
+	Camera* _activeCamera;
 };
 
 } /* namespace burn */

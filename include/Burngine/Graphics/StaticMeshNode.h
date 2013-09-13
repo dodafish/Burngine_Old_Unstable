@@ -22,7 +22,7 @@ public:
 	void setMesh(const Mesh& mesh);
 	const Mesh& getMesh() const;
 
-	virtual void draw();
+	virtual void draw(Camera* cam = nullptr);
 
 private:
 	Mesh _mesh;

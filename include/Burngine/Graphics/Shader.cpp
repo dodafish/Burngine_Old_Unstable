@@ -39,6 +39,7 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 
 void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 	switch (type) {
+
 		case SOLID_COLOR:
 			_solidColorShader.activate();
 			break;
@@ -46,6 +47,23 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 			return;
 			break;
 	}
+
+}
+
+GLuint BurngineShaders::getShaderUniformLocation(const Type& type,
+		const std::string& uniformName) {
+
+	switch (type) {
+		case SOLID_COLOR:
+			return _solidColorShader.getUniformLocation(uniformName);
+			break;
+		default:
+			return 0;
+			break;
+	}
+
+	return 0;
+
 }
 
 //--------------------------------------------------------------------------------------
@@ -69,7 +87,7 @@ void Shader::activate() const {
 	}
 }
 
-GLuint Shader::getUniformLocation(const std::string& uniformName) const{
+GLuint Shader::getUniformLocation(const std::string& uniformName) const {
 	if(Window::isContextCreated() && _id != 0){
 		return glGetUniformLocation(_id, uniformName.c_str());
 	}

@@ -18,13 +18,15 @@ const std::string MVP_UNIFORM = "MVP";
 
 //----------------------------------------------------------------
 const std::string solidColorV = "#version 330\n"
-		"layout(location = 0) in vec3 vertexPosition;"
-		"layout(location = 1) in vec3 vertexColor;"
-		"uniform mat4 " + MVP_UNIFORM + ";"
-		"out vec3 color;"
-		"void main(){"
-		"color = vertexColor;"
-		"gl_Position = mvp * vec4(vertexPosition, 1.0);"
+		"layout(location = 0) in vec3 vertexPosition;\n"
+		"layout(location = 1) in vec3 vertexColor;\n"
+		"out vec3 color;\n"
+		"uniform mat4 " + MVP_UNIFORM + ";\n"
+
+		"void main(){\n"
+		"color = vertexColor;\n"
+		"vec4 v = vec4(vertexPosition, 1.0);\n"
+		"gl_Position = " + MVP_UNIFORM + " * v;\n"
 		"}";
 const std::string solidColorF = "#version 330\n"
 		"in vec3 color;"
@@ -62,6 +64,9 @@ struct BURNGINE_API BurngineShaders {
 	static bool loadAllShaders();
 
 	static void useShader(const Type& type);
+
+	static GLuint getShaderUniformLocation(const Type& type,
+			const std::string& uniformName);
 
 private:
 	static Shader _solidColorShader;
