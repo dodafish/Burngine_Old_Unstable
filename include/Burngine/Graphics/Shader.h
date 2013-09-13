@@ -36,13 +36,7 @@ public:
 	Shader();
 	~Shader();
 
-	enum Type {
-		SOLID_COLOR
-	};
-
-	bool loadShader(const Type& type);
-
-	bool loadShaderFromString(const std::string& vertexShader,
+	bool loadFromString(const std::string& vertexShader,
 			const std::string& fragmentShader);
 
 	void activate() const;
@@ -50,6 +44,21 @@ public:
 private:
 	GLuint _id;
 
+};
+
+struct BURNGINE_API BurngineShaders {
+	BurngineShaders() = delete;
+
+	enum Type {
+		SOLID_COLOR
+	};
+
+	static bool loadShader(const Type& type);
+
+	static bool loadAllShaders();
+
+private:
+	static Shader _solidColorShader;
 };
 
 } /* namespace burn */

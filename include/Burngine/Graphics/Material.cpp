@@ -27,4 +27,15 @@ void Material::setType(Material::Type type) {
 	_type = type;
 }
 
+const Material::Type& Material::getType() const {
+	return _type;
+}
+
+bool Material::isFlagSet(Material::Flag flag) const {
+	if(flag != COUNT){
+		return _flags[flag];
+	}
+	return false;
+}
+
 } /* namespace burn */

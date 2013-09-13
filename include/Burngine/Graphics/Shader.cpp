@@ -13,6 +13,34 @@
 
 namespace burn {
 
+Shader BurngineShaders::_solidColorShader;
+
+bool BurngineShaders::loadAllShaders() {
+
+	if(!_solidColorShader.loadFromString(solidColorV, solidColorF)){
+		return false;
+	}
+
+	return true;
+}
+
+bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
+	switch (type) {
+		case SOLID_COLOR:
+			return _solidColorShader.loadFromString(solidColorV, solidColorF);
+			break;
+		default:
+			return false;
+			break;
+	}
+
+	return false;
+}
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
 Shader::Shader() :
 				_id(0) {
 
@@ -30,11 +58,7 @@ void Shader::activate() const {
 	}
 }
 
-bool Shader::loadShader(const Shader::Type& type) {
-	return loadShaderFromString(solidColorV, solidColorF);
-}
-
-bool Shader::loadShaderFromString(const std::string& vertexShader,
+bool Shader::loadFromString(const std::string& vertexShader,
 		const std::string& fragmentShader) {
 
 	if(Window::isContextCreated()){

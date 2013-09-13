@@ -31,9 +31,12 @@ public:
 	void setFlag(Flag flag, bool enabled = true);
 	void setType(Type type);
 
+	const Type& getType() const;
+	bool isFlagSet(Flag flag) const;
+
 private:
 	Type _type;
-	Flag _flags[COUNT];
+	bool _flags[COUNT];
 };
 
 } /* namespace burn */
