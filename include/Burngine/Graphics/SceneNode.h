@@ -23,19 +23,19 @@ public:
 
 	void setPosition(const Vector3f& position);
 	const Vector3f& getPosition() const;
-
 	void setRotation(const Vector3f& rotation);
 	const Vector3f& getRotation() const;
-
 	void setScale(const Vector3f& scale);
 	const Vector3f& getScale() const;
 
 	const Material& getMaterial() const;
 	void setMaterial(const Material& material);
 
+protected:
+	Material _material;
+
 private:
 	Vector3f _position, _scale, _rotation;
-	Material _material;
 };
 
 } /* namespace burn */

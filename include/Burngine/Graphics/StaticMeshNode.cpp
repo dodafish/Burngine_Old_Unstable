@@ -7,6 +7,7 @@
 
 #include "StaticMeshNode.h"
 #include "Window.h"
+#include "Shader.h"
 
 namespace burn {
 

@@ -6,3 +6,4 @@
 #include "Graphics/StaticMeshNode.h"
 #include "Graphics/Vertex.h"
 #include "Graphics/Shader.h"
+#include "Graphics/Material.h"
