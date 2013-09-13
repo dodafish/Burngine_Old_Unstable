@@ -10,6 +10,7 @@
 
 #include "../Export.h"
 #include "../System/Math.h"
+#include "Material.h"
 
 namespace burn {
 
@@ -29,8 +30,12 @@ public:
 	void setScale(const Vector3f& scale);
 	const Vector3f& getScale() const;
 
+	const Material& getMaterial() const;
+	void setMaterial(const Material& material);
+
 private:
 	Vector3f _position, _scale, _rotation;
+	Material _material;
 };
 
 } /* namespace burn */

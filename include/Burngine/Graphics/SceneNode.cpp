@@ -10,12 +10,9 @@
 namespace burn {
 
 SceneNode::SceneNode() {
-	// TODO Auto-generated constructor stub
-
 }
 
 SceneNode::~SceneNode() {
-	// TODO Auto-generated destructor stub
 }
 
 void SceneNode::setPosition(const Vector3f& position) {
@@ -40,6 +37,14 @@ void SceneNode::setScale(const Vector3f& scale) {
 
 const Vector3f& SceneNode::getScale() const {
 	return _scale;
+}
+
+const Material& SceneNode::getMaterial() const {
+	return _material;
+}
+
+void SceneNode::setMaterial(const Material& material) {
+	_material = material;
 }
 
 } /* namespace burn */
