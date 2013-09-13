@@ -15,7 +15,7 @@ namespace burn {
 
 class BURNGINE_API Vertex {
 public:
-	Vertex();
+	Vertex(const Vector3f& position = Vector3f(), const Vector3f& color = Vector3f(), const Vector2f& uv = Vector2f());
 	~Vertex();
 
 	void setPosition(const Vector3f& position);

@@ -18,6 +18,8 @@ public:
 	SceneNode();
 	virtual ~SceneNode();
 
+	virtual void draw() = 0;
+
 	void setPosition(const Vector3f& position);
 	const Vector3f& getPosition() const;
 

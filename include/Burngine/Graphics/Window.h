@@ -31,7 +31,10 @@ public:
 	void setFramerateLimit(const unsigned int& fps);
 	const unsigned int& getFramerateLimit() const;
 
+	static bool isContextCreated();
+
 private:
+	static bool _isContextCreated;
 	GLFWwindow* _window;
 	WindowSettings _settings;
 

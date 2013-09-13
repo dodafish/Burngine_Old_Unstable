@@ -9,8 +9,13 @@
 
 namespace burn {
 
-Vertex::Vertex() {
-	// TODO Auto-generated constructor stub
+Vertex::Vertex(const Vector3f& position, const Vector3f& color,
+		const Vector2f& uv) :
+				_position(position),
+				_color(color),
+				_uv(uv)
+
+{
 
 }
 

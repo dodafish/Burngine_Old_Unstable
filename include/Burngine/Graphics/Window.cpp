@@ -8,17 +8,21 @@
 #include "Window.h"
 #include <iostream>
 
-#include <time.h>
-
 namespace burn {
+
+bool Window::_isContextCreated = false;
 
 Window::Window() :
 				_window(nullptr),
 				_framerateLimit(0),
-				_lastTime(0){
+				_lastTime(0) {
 }
 
 Window::~Window() {
+}
+
+bool Window::isContextCreated() {
+	return (_isContextCreated);
 }
 
 bool Window::create(const WindowSettings& settings) {
@@ -46,6 +50,7 @@ bool Window::create(const WindowSettings& settings) {
 	}
 
 	glfwMakeContextCurrent(_window);
+	_isContextCreated = true;
 
 	if(glewInit() != GLEW_OK){
 		std::cout << "Failed to init GLEW!\n";
@@ -56,7 +61,13 @@ bool Window::create(const WindowSettings& settings) {
 }
 
 bool Window::close() {
-	return true;
+	if(_window != nullptr){
+		_isContextCreated = false;
+		glfwDestroyWindow(_window);
+		_window = nullptr;
+		return true;
+	}
+	return false;
 }
 
 bool Window::keepOpened() const {

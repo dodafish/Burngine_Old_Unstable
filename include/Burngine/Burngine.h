@@ -1,3 +1,7 @@
 #include "Graphics/WindowSettings.h"
 #include "Graphics/Window.h"
 #include "Graphics/Scene.h"
+#include "Graphics/Mesh.h"
+#include "Graphics/SceneNode.h"
+#include "Graphics/StaticMeshNode.h"
+#include "Graphics/Vertex.h"

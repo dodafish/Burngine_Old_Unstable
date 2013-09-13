@@ -9,11 +9,12 @@
 #define SCENE_H_
 
 #include "../Export.h"
+#include "SceneNode.h"
 #include "StaticMeshNode.h"
 
 #include <vector>
 
-template class BURNGINE_API std::vector<burn::StaticMeshNode*>;
+template class BURNGINE_API std::vector<burn::SceneNode*>;
 
 namespace burn {
 
@@ -22,13 +23,15 @@ public:
 	Scene();
 	~Scene();
 
-	void removeAllNodes();
+	void drawAll();
 
 	StaticMeshNode* createStaticMeshNode();
-	void removeStaticMeshNode(StaticMeshNode* node);
+
+	void removeNode(SceneNode* node);
+	void removeAllNodes();
 
 private:
-	std::vector<StaticMeshNode*> _staticMeshes;
+	std::vector<SceneNode*> _nodes;
 };
 
 } /* namespace burn */

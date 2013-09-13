@@ -10,6 +10,7 @@
 
 #include "../Export.h"
 #include "Vertex.h"
+#include "OpenGL.h"
 
 #include <vector>
 
@@ -24,8 +25,17 @@ public:
 
 	void setVertices(const std::vector<Vertex>& _vertices);
 
+	size_t getVertexCount() const;
+
+	const GLuint& getPositionBuffer();
+
 private:
 	std::vector<Vertex> _vertices;
+
+	void data();
+
+	bool _needUpdate;
+	GLuint _vertexPositionBuffer;
 };
 
 } /* namespace burn */
