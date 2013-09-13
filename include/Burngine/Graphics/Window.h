@@ -27,10 +27,11 @@ public:
 
 	void update();
 	void clear() const;
-	void display() const;
+	void display();
 
 	void setFramerateLimit(const unsigned int& fps);
 	const unsigned int& getFramerateLimit() const;
+	const double& getElapsedTime() const;
 
 	static bool isContextCreated();
 
@@ -40,7 +41,7 @@ private:
 	WindowSettings _settings;
 
 	unsigned int _framerateLimit;
-	double _lastTime;
+	double _elapsedTime;
 };
 
 } /* namespace burn */

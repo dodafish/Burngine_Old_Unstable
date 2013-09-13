@@ -7,6 +7,7 @@
 
 #include "Window.h"
 #include <iostream>
+#include <unistd.h>
 
 namespace burn {
 
@@ -15,7 +16,7 @@ bool Window::_isContextCreated = false;
 Window::Window() :
 				_window(nullptr),
 				_framerateLimit(0),
-				_lastTime(0) {
+				_elapsedTime(0) {
 }
 
 Window::~Window() {
@@ -39,8 +40,7 @@ bool Window::create(const WindowSettings& settings) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()),
-			static_cast<int>(_settings.getHeight()),
+	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
 			_settings.getTitle().c_str(), 0, 0);
 
 	if(_window == nullptr){
@@ -82,14 +82,18 @@ void Window::clear() const {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Window::display() const {
+void Window::display() {
+	_elapsedTime = glfwGetTime();
+
 	if(_framerateLimit != 0){
-		double now = glfwGetTime();
-		double delta = now - _lastTime;
-		if(delta > 0){
-			//TODO wait ms until bufferswap, or better: start a thread waiting for bufferswap and start calculating next scene
+		double _elapsedMicro = _elapsedTime * 1000000;
+		double frameTime = 1000000.0 / _framerateLimit;
+		if(_elapsedMicro < frameTime){
+			usleep(frameTime - _elapsedMicro);
 		}
 	}
+
+	glfwSetTime(0);
 	glfwSwapBuffers(_window);
 }
 
@@ -99,6 +103,10 @@ void Window::setFramerateLimit(const unsigned int& fps) {
 
 const unsigned int& Window::getFramerateLimit() const {
 	return _framerateLimit;
+}
+
+const double& Window::getElapsedTime() const {
+	return _elapsedTime;
 }
 
 } /* namespace burn */

@@ -7,3 +7,6 @@
 #include "Graphics/Vertex.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Material.h"
+#include "Graphics/Transformable.h"
+#include "System/Math.h"
+#include "Graphics/Camera.h"
