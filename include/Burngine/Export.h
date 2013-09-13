@@ -8,10 +8,12 @@
 #ifndef EXPORT_H_
 #define EXPORT_H_
 
+#include <string>
+
 #ifndef BURNGINE_STATIC
-	#define BURNGINE_API __declspec(dllexport)
+#define BURNGINE_API __declspec(dllexport)
 #else
-	#define BURNGINE_API
+#define BURNGINE_API
 #endif
 
 #endif /* EXPORT_H_ */

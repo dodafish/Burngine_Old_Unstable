@@ -1,0 +1,109 @@
+/*
+ * Shader.cpp
+ *
+ *  Created on: 13.09.2013
+ *      Author: Dominik
+ */
+
+#include "Shader.h"
+#include "Window.h"
+
+#include <iostream>
+#include <vector>
+
+namespace burn {
+
+Shader::Shader() :
+				_id(0) {
+
+}
+
+Shader::~Shader() {
+	if(_id != 0 && Window::isContextCreated()){
+		glDeleteProgram(_id);
+	}
+}
+
+void Shader::activate() const {
+	if(Window::isContextCreated()){
+		glUseProgram(_id);
+	}
+}
+
+bool Shader::loadShader(const Shader::Type& type) {
+	return loadShaderFromString(solidColorV, solidColorF);
+}
+
+bool Shader::loadShaderFromString(const std::string& vertexShader,
+		const std::string& fragmentShader) {
+
+	if(Window::isContextCreated()){
+
+		// Create the shaders
+		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+		GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+		// Read the Vertex Shader code from the file
+		std::string VertexShaderCode = vertexShader;
+
+		// Read the Fragment Shader code from the file
+		std::string FragmentShaderCode = fragmentShader;
+
+		GLint Result = GL_FALSE;
+		int InfoLogLength;
+
+		// Compile Vertex Shader
+		std::cout << "Compiling vertexshader...\n";
+		char const * VertexSourcePointer = VertexShaderCode.c_str();
+		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+		glCompileShader(VertexShaderID);
+
+		// Check Vertex Shader
+		glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL,
+				&VertexShaderErrorMessage[0]);
+		std::cout << &VertexShaderErrorMessage[0] << "\n";
+
+		// Compile Fragment Shader
+		std::cout << "Compiling fragmentshader...\n";
+		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
+		glCompileShader(FragmentShaderID);
+
+		// Check Fragment Shader
+		glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL,
+				&FragmentShaderErrorMessage[0]);
+		std::cout << &FragmentShaderErrorMessage[0] << "\n";
+
+		// Link the program
+		std::cout << "Linking program...\n";
+		GLuint ProgramID = glCreateProgram();
+		glAttachShader(ProgramID, VertexShaderID);
+		glAttachShader(ProgramID, FragmentShaderID);
+		glLinkProgram(ProgramID);
+
+		// Check the program
+		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
+		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL,
+				&ProgramErrorMessage[0]);
+		std::cout << &ProgramErrorMessage[0] << "\n";
+
+		glDeleteShader(VertexShaderID);
+		glDeleteShader(FragmentShaderID);
+
+		_id = ProgramID;
+
+		return true;
+	}
+
+	return false;
+}
+
+} /* namespace burn */

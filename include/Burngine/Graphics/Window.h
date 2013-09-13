@@ -26,6 +26,7 @@ public:
 	bool keepOpened() const;
 
 	void update();
+	void clear() const;
 	void display() const;
 
 	void setFramerateLimit(const unsigned int& fps);

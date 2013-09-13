@@ -28,6 +28,7 @@ public:
 	size_t getVertexCount() const;
 
 	const GLuint& getPositionBuffer();
+	const GLuint& getColorBuffer();
 
 private:
 	std::vector<Vertex> _vertices;
@@ -35,7 +36,7 @@ private:
 	void data();
 
 	bool _needUpdate;
-	GLuint _vertexPositionBuffer;
+	GLuint _vertexPositionBuffer, _vertexColorBuffer;
 };
 
 } /* namespace burn */

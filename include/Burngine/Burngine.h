@@ -5,3 +5,4 @@
 #include "Graphics/SceneNode.h"
 #include "Graphics/StaticMeshNode.h"
 #include "Graphics/Vertex.h"
+#include "Graphics/Shader.h"
