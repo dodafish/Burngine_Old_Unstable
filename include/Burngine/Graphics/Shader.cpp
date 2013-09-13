@@ -69,6 +69,13 @@ void Shader::activate() const {
 	}
 }
 
+GLuint Shader::getUniformLocation(const std::string& uniformName) const{
+	if(Window::isContextCreated() && _id != 0){
+		return glGetUniformLocation(_id, uniformName.c_str());
+	}
+	return 0;
+}
+
 bool Shader::loadFromString(const std::string& vertexShader,
 		const std::string& fragmentShader) {
 

@@ -14,14 +14,17 @@
 
 namespace burn {
 
+const std::string MVP_UNIFORM = "MVP";
+
 //----------------------------------------------------------------
 const std::string solidColorV = "#version 330\n"
 		"layout(location = 0) in vec3 vertexPosition;"
 		"layout(location = 1) in vec3 vertexColor;"
+		"uniform mat4 " + MVP_UNIFORM + ";"
 		"out vec3 color;"
 		"void main(){"
 		"color = vertexColor;"
-		"gl_Position = vec4(vertexPosition, 1.0);"
+		"gl_Position = mvp * vec4(vertexPosition, 1.0);"
 		"}";
 const std::string solidColorF = "#version 330\n"
 		"in vec3 color;"
@@ -40,6 +43,8 @@ public:
 			const std::string& fragmentShader);
 
 	void activate() const;
+
+	GLuint getUniformLocation(const std::string& uniformName) const;
 
 private:
 	GLuint _id;

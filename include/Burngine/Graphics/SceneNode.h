@@ -11,31 +11,24 @@
 #include "../Export.h"
 #include "../System/Math.h"
 #include "Material.h"
+#include "Transformable.h"
 
 namespace burn {
 
-class BURNGINE_API SceneNode {
+class BURNGINE_API SceneNode : public Transformable {
 public:
 	SceneNode();
 	virtual ~SceneNode();
 
 	virtual void draw() = 0;
 
-	void setPosition(const Vector3f& position);
-	const Vector3f& getPosition() const;
-	void setRotation(const Vector3f& rotation);
-	const Vector3f& getRotation() const;
-	void setScale(const Vector3f& scale);
-	const Vector3f& getScale() const;
-
 	const Material& getMaterial() const;
 	void setMaterial(const Material& material);
 
+
+
 protected:
 	Material _material;
-
-private:
-	Vector3f _position, _scale, _rotation;
 };
 
 } /* namespace burn */
