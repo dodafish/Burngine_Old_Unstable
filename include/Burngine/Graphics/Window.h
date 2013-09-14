@@ -132,6 +132,7 @@ public:
 
 private:
 	static bool _isContextCreated;
+	bool _isGlfwInit;
 	GLFWwindow* _window;
 	WindowSettings _settings;
 

@@ -14,10 +14,14 @@
 namespace burn {
 
 Shader BurngineShaders::_solidColorShader;
+Shader BurngineShaders::_texturedShader;
 
 bool BurngineShaders::loadAllShaders() {
 
 	if(!_solidColorShader.loadFromString(solidColorV, solidColorF)){
+		return false;
+	}
+	if(!_texturedShader.loadFromString(texturedV, texturedF)){
 		return false;
 	}
 
@@ -28,6 +32,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 	switch (type) {
 		case SOLID_COLOR:
 			return _solidColorShader.loadFromString(solidColorV, solidColorF);
+			break;
+		case TEXTURED:
+			return _texturedShader.loadFromString(texturedV, texturedF);
 			break;
 		default:
 			return false;
@@ -43,6 +50,9 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 		case SOLID_COLOR:
 			_solidColorShader.activate();
 			break;
+		case TEXTURED:
+			_texturedShader.activate();
+			break;
 		default:
 			return;
 			break;
@@ -50,12 +60,14 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 
 }
 
-GLuint BurngineShaders::getShaderUniformLocation(const Type& type,
-		const std::string& uniformName) {
+GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::string& uniformName) {
 
 	switch (type) {
 		case SOLID_COLOR:
 			return _solidColorShader.getUniformLocation(uniformName);
+			break;
+		case TEXTURED:
+			return _texturedShader.getUniformLocation(uniformName);
 			break;
 		default:
 			return 0;
@@ -94,8 +106,7 @@ GLuint Shader::getUniformLocation(const std::string& uniformName) const {
 	return 0;
 }
 
-bool Shader::loadFromString(const std::string& vertexShader,
-		const std::string& fragmentShader) {
+bool Shader::loadFromString(const std::string& vertexShader, const std::string& fragmentShader) {
 
 	if(Window::isContextCreated()){
 
@@ -122,8 +133,7 @@ bool Shader::loadFromString(const std::string& vertexShader,
 		glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL,
-				&VertexShaderErrorMessage[0]);
+		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 		std::cout << &VertexShaderErrorMessage[0] << "\n";
 
 		// Compile Fragment Shader
@@ -136,8 +146,7 @@ bool Shader::loadFromString(const std::string& vertexShader,
 		glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL,
-				&FragmentShaderErrorMessage[0]);
+		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 		std::cout << &FragmentShaderErrorMessage[0] << "\n";
 
 		// Link the program
@@ -151,8 +160,7 @@ bool Shader::loadFromString(const std::string& vertexShader,
 		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
-		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL,
-				&ProgramErrorMessage[0]);
+		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << "\n";
 
 		glDeleteShader(VertexShaderID);

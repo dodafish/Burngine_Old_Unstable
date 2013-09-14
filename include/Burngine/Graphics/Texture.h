@@ -38,6 +38,15 @@ public:
 	 */
 	bool loadFromFile(const std::string& file);
 
+	/**
+	 * @brief Returns the ID of the texturebuffer
+	 *
+	 * @return The ID of the texturebuffer or 0 if no buffer exists
+	 *
+	 * @see loadFromFile()
+	 */
+	const GLuint& getTextureBuffer() const;
+
 private:
 	GLuint _texture; ///< OpenGL ID for the texture
 };

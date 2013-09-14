@@ -14,6 +14,7 @@ namespace burn {
 bool Window::_isContextCreated = false;
 
 Window::Window() :
+				_isGlfwInit(false),
 				_window(nullptr),
 				_framerateLimit(0),
 				_elapsedTime(0),
@@ -21,6 +22,8 @@ Window::Window() :
 }
 
 Window::~Window() {
+	close();
+	glfwTerminate();
 }
 
 bool Window::create(const WindowSettings& settings) {
@@ -28,9 +31,11 @@ bool Window::create(const WindowSettings& settings) {
 	close();
 	_settings = settings;
 
-	if(!glfwInit()){
+	if(!_isGlfwInit && !glfwInit()){
 		std::cout << "Failed to init GLFW!\n";
 		return false;
+	}else{
+		_isGlfwInit = true;
 	}
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window

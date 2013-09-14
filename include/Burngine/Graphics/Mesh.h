@@ -11,6 +11,7 @@
 #include "../Export.h"
 #include "Vertex.h"
 #include "OpenGL.h"
+#include "Texture.h"
 
 #include <vector>
 
@@ -70,6 +71,34 @@ public:
 	 */
 	const GLuint& getColorBuffer();
 
+	/**
+	 * @brief Returns the id of the UV-buffer.
+	 * This is used mostly internally. But you can check the
+	 * buffer by comparing the returned value with 0.
+	 *
+	 * @return Returns the id of the UV-buffer or 0 if no
+	 * UV-buffer exists
+	 */
+	const GLuint& getUvBuffer();
+
+	/**
+	 * @brief Sets the Texture of the mesh
+	 *
+	 * @param texture The Texture to set
+	 *
+	 * @see getTexture()
+	 */
+	void setTexture(const Texture& texture);
+
+	/**
+	 * @brief Returns the current Texture of the mesh
+	 *
+	 * @return The current Texture
+	 *
+	 * @see setTexture()
+	 */
+	const Texture& getTexture() const;
+
 private:
 	std::vector<Vertex> _vertices;
 
@@ -82,7 +111,9 @@ private:
 	void data();
 
 	bool _needUpdate;
-	GLuint _vertexPositionBuffer, _vertexColorBuffer;
+	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer;
+
+	Texture _texture;
 };
 
 } /* namespace burn */

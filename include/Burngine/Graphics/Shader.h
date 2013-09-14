@@ -25,8 +25,7 @@ const std::string solidColorV = "#version 330\n"
 
 		"void main(){\n"
 		"color = vertexColor;\n"
-		"vec4 v = vec4(vertexPosition, 1.0);\n"
-		"gl_Position = " + MVP_UNIFORM + " * v;\n"
+		"gl_Position = " + MVP_UNIFORM + " * vec4(vertexPosition, 1.0);\n"
 		"}";
 const std::string solidColorF = "#version 330\n"
 		"in vec3 color;"
@@ -34,6 +33,24 @@ const std::string solidColorF = "#version 330\n"
 		"void main(){"
 		"fragmentColor = color;"
 		"}";
+
+const std::string texturedV = "#version 330\n"
+		"layout(location = 0) in vec3 vertexPosition;"
+		"layout(location = 1) in vec2 vertexUv;"
+		"out vec2 UV;"
+		"uniform mat4 " + MVP_UNIFORM + ";"
+		"void main(){"
+		"UV = vertexUv;"
+		"gl_Position = MVP * vec4(vertexPosition, 1);"
+		"}";
+const std::string texturedF = "#version 330\n"
+		"in vec2 UV;"
+		"out vec3 color;"
+		"uniform sampler2D myTextureSampler;"
+		"void main(){"
+		"color = texture(myTextureSampler, UV).rgb;"
+		"}"
+		;
 //----------------------------------------------------------------
 
 class BURNGINE_API Shader {
@@ -62,8 +79,7 @@ public:
 	 *
 	 * @see activate()
 	 */
-	bool loadFromString(const std::string& vertexShader,
-			const std::string& fragmentShader);
+	bool loadFromString(const std::string& vertexShader, const std::string& fragmentShader);
 
 	/**
 	 * @brief Activates the shader. It will be used for rendering until
@@ -106,7 +122,8 @@ struct BURNGINE_API BurngineShaders {
 	 * @see useShader()
 	 */
 	enum Type {
-		SOLID_COLOR ///< Solid Color Shader
+		SOLID_COLOR, ///< Solid Color Shader
+		TEXTURED ///< Simple 1-Texture Shader
 	};
 
 	/**
@@ -152,11 +169,11 @@ struct BURNGINE_API BurngineShaders {
 	 *
 	 * @see Shader::getUniformLocation()
 	 */
-	static GLuint getShaderUniformLocation(const Type& type,
-			const std::string& uniformName);
+	static GLuint getShaderUniformLocation(const Type& type, const std::string& uniformName);
 
 private:
 	static Shader _solidColorShader;
+	static Shader _texturedShader;
 };
 
 } /* namespace burn */

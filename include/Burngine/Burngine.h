@@ -10,3 +10,4 @@
 #include "Graphics/Transformable.h"
 #include "System/Math.h"
 #include "Graphics/Camera.h"
+#include "Graphics/Texture.h"

@@ -30,4 +30,8 @@ bool Texture::loadFromFile(const std::string& file) {
 	return (_texture != 0);
 }
 
+const GLuint& Texture::getTextureBuffer() const {
+	return _texture;
+}
+
 } /* namespace burn */
