@@ -8,6 +8,7 @@
 #ifndef OPENGL_H_
 #define OPENGL_H_
 
+#include "../extern/SOIL.h"
 #include "../extern/GL/glew.h"
 #include "../extern/glfw3.h"
 
