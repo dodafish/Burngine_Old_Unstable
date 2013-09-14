@@ -33,7 +33,7 @@ public:
 	const unsigned int& getFramerateLimit() const;
 	const double& getElapsedTime() const;
 
-	static bool isContextCreated();
+	static inline bool isContextCreated();
 
 private:
 	static bool _isContextCreated;
@@ -43,6 +43,10 @@ private:
 	unsigned int _framerateLimit;
 	double _elapsedTime, _lastTime;
 };
+
+bool Window::isContextCreated() {
+	return (_isContextCreated);
+}
 
 } /* namespace burn */
 #endif /* WINDOW_H_ */

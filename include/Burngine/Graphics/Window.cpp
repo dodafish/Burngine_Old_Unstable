@@ -23,10 +23,6 @@ Window::Window() :
 Window::~Window() {
 }
 
-bool Window::isContextCreated() {
-	return (_isContextCreated);
-}
-
 bool Window::create(const WindowSettings& settings) {
 
 	close();
