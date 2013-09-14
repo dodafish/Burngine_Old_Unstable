@@ -13,18 +13,82 @@
 
 namespace burn {
 
+/**
+ * @brief Contains position, color and uv.
+ * Everything what a vertex can describe.
+ */
 class BURNGINE_API Vertex {
 public:
+	/**
+	 * @The default constructor.
+	 * You can set values or let them getting
+	 * default. (All to 0)
+	 *
+	 * @param position The vertex Position
+	 * @param color The vertex Color
+	 * @param uv The vertex UV
+	 */
 	Vertex(const Vector3f& position = Vector3f(), const Vector3f& color = Vector3f(), const Vector2f& uv = Vector2f());
+
+	/**
+	 * @brief The default destructor
+	 */
 	~Vertex();
 
+	/**
+	 * @brief Sets the position of the vertex
+	 *
+	 * @param position The new position
+	 *
+	 * @see getPosition()
+	 */
 	void setPosition(const Vector3f& position);
+
+	/**
+	 * @brief Returns the current position of the vertex
+	 *
+	 * @return The current position
+	 *
+	 * @see setPosition()
+	 */
 	const Vector3f& getPosition() const;
 
+	/**
+	 * @brief Sets the color of the vertex
+	 *
+	 * @param color The new color
+	 *
+	 * @see getColor()
+	 */
 	void setColor(const Vector3f& color);
+
+	/**
+	 * @brief Return the current color of the vertex
+	 *
+	 * @return The current color
+	 *
+	 * @see setColor()
+	 */
 	const Vector3f& getColor() const;
 
+	/**
+	 * @brief Sets the current UV-coordinates of the vertex
+	 *
+	 * @param uv The new UV-coordinates
+	 *
+	 * @see getUv()
+	 *
+	 * @note UV-coordinates' range is from 0 to 1
+	 */
 	void setUv(const Vector2f& uv);
+
+	/**
+	 * @brief Return the current UV-coordinates of the vertex
+	 *
+	 * @return The current UV-coordinates
+	 *
+	 * @see setUv()
+	 */
 	const Vector2f& getUv() const;
 
 private:
