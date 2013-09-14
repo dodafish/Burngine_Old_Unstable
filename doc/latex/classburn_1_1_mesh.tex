@@ -1,0 +1,120 @@
+\hypertarget{classburn_1_1_mesh}{\section{burn\-:\-:Mesh Class Reference}
+\label{classburn_1_1_mesh}\index{burn\-::\-Mesh@{burn\-::\-Mesh}}
+}
+
+
+{\ttfamily \#include $<$Mesh.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_mesh_a35d4706a490d0f2bb190b6b785621e07}{Mesh} ()
+\begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}{$\sim$\-Mesh} ()
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{set\-Vertices} (const std\-::vector$<$ \hyperlink{classburn_1_1_vertex}{Vertex} $>$ \&vertices)
+\begin{DoxyCompactList}\small\item\em Sets the vertices of the mesh, so that they can be used for rendering later on. \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classburn_1_1_mesh_a076016c8452ff794880480626394e44c}{get\-Vertex\-Count} () const 
+\begin{DoxyCompactList}\small\item\em Returns the count of the vertices which the mesh is holding. \end{DoxyCompactList}\item 
+const G\-Luint \& \hyperlink{classburn_1_1_mesh_ac1f545b97bac2463ac0c833e23cd4779}{get\-Position\-Buffer} ()
+\begin{DoxyCompactList}\small\item\em Returns the id of the position-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\item 
+const G\-Luint \& \hyperlink{classburn_1_1_mesh_aaf8e759004d7c8203c79b52418d5b426}{get\-Color\-Buffer} ()
+\begin{DoxyCompactList}\small\item\em Returns the id of the color-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_mesh_a35d4706a490d0f2bb190b6b785621e07}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!Mesh@{Mesh}}
+\index{Mesh@{Mesh}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{Mesh}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Mesh\-::\-Mesh (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_mesh_a35d4706a490d0f2bb190b6b785621e07}
+
+
+The default constructor. 
+
+\hypertarget{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!$\sim$\-Mesh@{$\sim$\-Mesh}}
+\index{$\sim$\-Mesh@{$\sim$\-Mesh}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{$\sim$\-Mesh}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Mesh\-::$\sim$\-Mesh (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}
+
+
+The default destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_mesh_aaf8e759004d7c8203c79b52418d5b426}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Color\-Buffer@{get\-Color\-Buffer}}
+\index{get\-Color\-Buffer@{get\-Color\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Color\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Color\-Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_mesh_aaf8e759004d7c8203c79b52418d5b426}
+
+
+Returns the id of the color-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
+
+\begin{DoxyReturn}{Returns}
+Returns the id of the color-\/buffer or 0 if no color-\/buffer exists 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_mesh_ac1f545b97bac2463ac0c833e23cd4779}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Position\-Buffer@{get\-Position\-Buffer}}
+\index{get\-Position\-Buffer@{get\-Position\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Position\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Position\-Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_mesh_ac1f545b97bac2463ac0c833e23cd4779}
+
+
+Returns the id of the position-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
+
+\begin{DoxyReturn}{Returns}
+Returns the id of the position-\/buffer or 0 if no position-\/buffer exists 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_mesh_a076016c8452ff794880480626394e44c}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Vertex\-Count@{get\-Vertex\-Count}}
+\index{get\-Vertex\-Count@{get\-Vertex\-Count}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Vertex\-Count}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t burn\-::\-Mesh\-::get\-Vertex\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_mesh_a076016c8452ff794880480626394e44c}
+
+
+Returns the count of the vertices which the mesh is holding. 
+
+\begin{DoxyReturn}{Returns}
+The count of vertices
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{set\-Vertices()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!set\-Vertices@{set\-Vertices}}
+\index{set\-Vertices@{set\-Vertices}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{set\-Vertices}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Mesh\-::set\-Vertices (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ {\bf Vertex} $>$ \&}]{vertices}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}
+
+
+Sets the vertices of the mesh, so that they can be used for rendering later on. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertices} & A vector with vertices\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex}{Vertex} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\hyperlink{_mesh_8h}{Mesh.\-h}\item 
+include/\-Burngine/\-Graphics/\hyperlink{_mesh_8cpp}{Mesh.\-cpp}\end{DoxyCompactItemize}

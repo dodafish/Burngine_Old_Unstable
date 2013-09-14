@@ -64,9 +64,13 @@ void Scene::removeCamera(Camera* cam) {
 	if(cam != nullptr){
 		for(size_t i = 0; i < _cameras.size(); ++i){
 			if(_cameras[i] == cam){
+
+				if(cam == _activeCamera){
+					_activeCamera = nullptr;
+				}
+
 				delete _cameras[i];
 				_cameras.erase(_cameras.begin() + i);
-				_activeCamera = nullptr;
 				return;
 			}
 		}
@@ -79,6 +83,12 @@ void Scene::removeAllCameras() {
 	}
 	_cameras.clear();
 	_activeCamera = nullptr;
+}
+
+void Scene::setActiveCamera(Camera* cam) {
+	if(cam != nullptr){
+		_activeCamera = cam;
+	}
 }
 
 } /* namespace burn */

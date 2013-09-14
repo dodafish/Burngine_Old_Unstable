@@ -1,0 +1,181 @@
+\hypertarget{classburn_1_1_material}{\section{burn\-:\-:Material Class Reference}
+\label{classburn_1_1_material}\index{burn\-::\-Material@{burn\-::\-Material}}
+}
+
+
+{\ttfamily \#include $<$Material.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{Flag} \{ \hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823}{L\-I\-G\-H\-T\-I\-N\-G} = 0, 
+\hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a76028dd1ab583178b4e69a0894260c78}{C\-O\-U\-N\-T}
+ \}
+\item 
+enum \hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}{Type} \{ \hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43ae346efa71a38eb8fcbcba453a89c6aa4}{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R} = 0, 
+\hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43a56549fc4dfe95a8e1fbb6bb48560f084}{T\-E\-X\-T\-U\-R\-E\-D}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_material_a790cff05e96bd7956582777754a56a34}{Material} ()
+\begin{DoxyCompactList}\small\item\em The default constructor Default values\-: \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_material_a449723d0d12182275e5d0d8a6a01f41d}{$\sim$\-Material} ()
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{set\-Flag} (\hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{Flag} flag, bool enabled=true)
+\begin{DoxyCompactList}\small\item\em Sets the specified flag on true or false. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}{set\-Type} (\hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}{Type} type)
+\begin{DoxyCompactList}\small\item\em Sets the type of the material. The \hyperlink{classburn_1_1_scene_node}{Scene\-Node} will choose the right \hyperlink{classburn_1_1_shader}{Shader}. \end{DoxyCompactList}\item 
+const \hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}{Type} \& \hyperlink{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}{get\-Type} () const 
+\begin{DoxyCompactList}\small\item\em Returns the current type. \end{DoxyCompactList}\item 
+bool \hyperlink{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}{is\-Flag\-Set} (\hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{Flag} flag) const 
+\begin{DoxyCompactList}\small\item\em Returns the current status of a flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{\index{burn\-::\-Material@{burn\-::\-Material}!Flag@{Flag}}
+\index{Flag@{Flag}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{Flag}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Material\-::\-Flag}}}\label{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}!burn\-::\-Material@{burn\-::\-Material}}\index{burn\-::\-Material@{burn\-::\-Material}!L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}}\item[{\em 
+\hypertarget{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823}{L\-I\-G\-H\-T\-I\-N\-G}\label{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823}
+}]\index{C\-O\-U\-N\-T@{C\-O\-U\-N\-T}!burn\-::\-Material@{burn\-::\-Material}}\index{burn\-::\-Material@{burn\-::\-Material}!C\-O\-U\-N\-T@{C\-O\-U\-N\-T}}\item[{\em 
+\hypertarget{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a76028dd1ab583178b4e69a0894260c78}{C\-O\-U\-N\-T}\label{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8a76028dd1ab583178b4e69a0894260c78}
+}]\end{description}
+\end{Desc}
+\hypertarget{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}{\index{burn\-::\-Material@{burn\-::\-Material}!Type@{Type}}
+\index{Type@{Type}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Material\-::\-Type}}}\label{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R@{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}!burn\-::\-Material@{burn\-::\-Material}}\index{burn\-::\-Material@{burn\-::\-Material}!S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R@{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}}\item[{\em 
+\hypertarget{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43ae346efa71a38eb8fcbcba453a89c6aa4}{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}\label{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43ae346efa71a38eb8fcbcba453a89c6aa4}
+}]\index{T\-E\-X\-T\-U\-R\-E\-D@{T\-E\-X\-T\-U\-R\-E\-D}!burn\-::\-Material@{burn\-::\-Material}}\index{burn\-::\-Material@{burn\-::\-Material}!T\-E\-X\-T\-U\-R\-E\-D@{T\-E\-X\-T\-U\-R\-E\-D}}\item[{\em 
+\hypertarget{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43a56549fc4dfe95a8e1fbb6bb48560f084}{T\-E\-X\-T\-U\-R\-E\-D}\label{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43a56549fc4dfe95a8e1fbb6bb48560f084}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_material_a790cff05e96bd7956582777754a56a34}{\index{burn\-::\-Material@{burn\-::\-Material}!Material@{Material}}
+\index{Material@{Material}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{Material}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Material\-::\-Material (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a790cff05e96bd7956582777754a56a34}
+
+
+The default constructor Default values\-: 
+
+
+\begin{DoxyItemize}
+\item Type\-: S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R
+\item Flag\mbox{[}L\-I\-G\-H\-T\-I\-N\-G\mbox{]}\-: false 
+\end{DoxyItemize}\hypertarget{classburn_1_1_material_a449723d0d12182275e5d0d8a6a01f41d}{\index{burn\-::\-Material@{burn\-::\-Material}!$\sim$\-Material@{$\sim$\-Material}}
+\index{$\sim$\-Material@{$\sim$\-Material}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{$\sim$\-Material}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Material\-::$\sim$\-Material (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a449723d0d12182275e5d0d8a6a01f41d}
+
+
+The default destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}{\index{burn\-::\-Material@{burn\-::\-Material}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Material\-::\-Type} \& burn\-::\-Material\-::get\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}
+
+
+Returns the current type. 
+
+\begin{DoxyReturn}{Returns}
+The current materialtype
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}{set\-Type()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}{\index{burn\-::\-Material@{burn\-::\-Material}!is\-Flag\-Set@{is\-Flag\-Set}}
+\index{is\-Flag\-Set@{is\-Flag\-Set}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{is\-Flag\-Set}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Material\-::is\-Flag\-Set (
+\begin{DoxyParamCaption}
+\item[{{\bf Material\-::\-Flag}}]{flag}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}
+
+
+Returns the current status of a flag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flag} & The flag to check\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of a flag.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{set\-Flag()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Flag@{set\-Flag}}
+\index{set\-Flag@{set\-Flag}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{set\-Flag}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Flag (
+\begin{DoxyParamCaption}
+\item[{{\bf Material\-::\-Flag}}]{flag, }
+\item[{bool}]{enabled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}
+
+
+Sets the specified flag on true or false. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flag} & The flag to set \\
+\hline
+{\em enabled} & Sets the specified flag on true or false\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}{is\-Flag\-Set()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Type@{set\-Type}}
+\index{set\-Type@{set\-Type}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{set\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Type (
+\begin{DoxyParamCaption}
+\item[{{\bf Material\-::\-Type}}]{type}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}
+
+
+Sets the type of the material. The \hyperlink{classburn_1_1_scene_node}{Scene\-Node} will choose the right \hyperlink{classburn_1_1_shader}{Shader}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The materialtype.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}{get\-Type()}
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+Ensure that you have loaded the \hyperlink{structburn_1_1_burngine_shaders}{Burngine\-Shaders} before renering. E.\-g. by calling \hyperlink{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{Burngine\-Shaders\-::load\-All\-Shaders()} 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\hyperlink{_material_8h}{Material.\-h}\item 
+include/\-Burngine/\-Graphics/\hyperlink{_material_8cpp}{Material.\-cpp}\end{DoxyCompactItemize}
