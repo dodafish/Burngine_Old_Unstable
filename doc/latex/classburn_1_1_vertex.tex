@@ -3,6 +3,11 @@
 }
 
 
+Contains position, color and uv. Everything what a vertex can describe.  
+
+
+
+
 {\ttfamily \#include $<$Vertex.\-h$>$}
 
 \subsection*{Public Member Functions}
@@ -11,20 +16,23 @@
 \hyperlink{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}{Vertex} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&position=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(), const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(), const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&uv=\hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f}())
 \item 
 \hyperlink{classburn_1_1_vertex_ad950d9459711c1ba4223de35623f75b6}{$\sim$\-Vertex} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_vertex_aa38bae183bbe857f9fabeb8e5510e9a0}{set\-Position} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&position)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the position of the vertex. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_vertex_afdc13277da83f244302ddfc1b6863444}{get\-Position} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the current position of the vertex. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_vertex_a57e2bf8a6e58c7d02c8431f03239cc6b}{set\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the color of the vertex. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_vertex_a1dcb11a63a04b0e279e8a69df85dd8d6}{get\-Color} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Return the current color of the vertex. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_vertex_afc4eff1b4065852cb856b690006e0bd8}{set\-Uv} (const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&uv)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the current U\-V-\/coordinates of the vertex. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \hyperlink{classburn_1_1_vertex_a277e9b082825c211acf730b46580301a}{get\-Uv} () const 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return the current U\-V-\/coordinates of the vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Contains position, color and uv. Everything what a vertex can describe. 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!Vertex@{Vertex}}
@@ -36,6 +44,17 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 \item[{const {\bf Vector2f} \&}]{uv = {\ttfamily {\bf Vector2f}()}}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}
+default constructor. You can set values or let them getting default. (All to 0)
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The vertex Position \\
+\hline
+{\em color} & The vertex Color \\
+\hline
+{\em uv} & The vertex U\-V \\
+\hline
+\end{DoxyParams}
 \hypertarget{classburn_1_1_vertex_ad950d9459711c1ba4223de35623f75b6}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!$\sim$\-Vertex@{$\sim$\-Vertex}}
 \index{$\sim$\-Vertex@{$\sim$\-Vertex}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{$\sim$\-Vertex}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Vertex\-::$\sim$\-Vertex (
@@ -43,6 +62,10 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_vertex_ad950d9459711c1ba4223de35623f75b6}
+
+
+The default destructor. 
+
 
 
 \subsection{Member Function Documentation}
@@ -53,6 +76,16 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_vertex_a1dcb11a63a04b0e279e8a69df85dd8d6}
+
+
+Return the current color of the vertex. 
+
+\begin{DoxyReturn}{Returns}
+The current color
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_a57e2bf8a6e58c7d02c8431f03239cc6b}{set\-Color()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_afdc13277da83f244302ddfc1b6863444}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!get\-Position@{get\-Position}}
 \index{get\-Position@{get\-Position}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Vertex\-::get\-Position (
@@ -60,6 +93,16 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_vertex_afdc13277da83f244302ddfc1b6863444}
+
+
+Returns the current position of the vertex. 
+
+\begin{DoxyReturn}{Returns}
+The current position
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_aa38bae183bbe857f9fabeb8e5510e9a0}{set\-Position()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_a277e9b082825c211acf730b46580301a}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!get\-Uv@{get\-Uv}}
 \index{get\-Uv@{get\-Uv}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{get\-Uv}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector2f} \& burn\-::\-Vertex\-::get\-Uv (
@@ -67,6 +110,16 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_vertex_a277e9b082825c211acf730b46580301a}
+
+
+Return the current U\-V-\/coordinates of the vertex. 
+
+\begin{DoxyReturn}{Returns}
+The current U\-V-\/coordinates
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_afc4eff1b4065852cb856b690006e0bd8}{set\-Uv()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_a57e2bf8a6e58c7d02c8431f03239cc6b}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!set\-Color@{set\-Color}}
 \index{set\-Color@{set\-Color}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{set\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-::set\-Color (
@@ -74,6 +127,18 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 \item[{const {\bf Vector3f} \&}]{color}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_vertex_a57e2bf8a6e58c7d02c8431f03239cc6b}
+
+
+Sets the color of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The new color\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_a1dcb11a63a04b0e279e8a69df85dd8d6}{get\-Color()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_aa38bae183bbe857f9fabeb8e5510e9a0}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!set\-Position@{set\-Position}}
 \index{set\-Position@{set\-Position}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-::set\-Position (
@@ -81,6 +146,18 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 \item[{const {\bf Vector3f} \&}]{position}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_vertex_aa38bae183bbe857f9fabeb8e5510e9a0}
+
+
+Sets the position of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The new position\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_afdc13277da83f244302ddfc1b6863444}{get\-Position()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_afc4eff1b4065852cb856b690006e0bd8}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!set\-Uv@{set\-Uv}}
 \index{set\-Uv@{set\-Uv}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{set\-Uv}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-::set\-Uv (
@@ -88,6 +165,21 @@ const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \
 \item[{const {\bf Vector2f} \&}]{uv}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_vertex_afc4eff1b4065852cb856b690006e0bd8}
+
+
+Sets the current U\-V-\/coordinates of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em uv} & The new U\-V-\/coordinates\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_a277e9b082825c211acf730b46580301a}{get\-Uv()}
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+U\-V-\/coordinates' range is from 0 to 1 
+\end{DoxyNote}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

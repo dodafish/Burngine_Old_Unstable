@@ -3,6 +3,11 @@
 }
 
 
+A static mesh. No animations are possible.  
+
+
+
+
 {\ttfamily \#include $<$Static\-Mesh\-Node.\-h$>$}
 
 Inheritance diagram for burn\-:\-:Static\-Mesh\-Node\-:\begin{figure}[H]
@@ -15,16 +20,27 @@ Inheritance diagram for burn\-:\-:Static\-Mesh\-Node\-:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classburn_1_1_static_mesh_node_a051ef5fe091cf8e93cc4dd1bae753cbd}{Static\-Mesh\-Node} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
 \hyperlink{classburn_1_1_static_mesh_node_a68e00b329768da175ee153c46069364e}{$\sim$\-Static\-Mesh\-Node} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_static_mesh_node_af78ecebdfd7c25997caf35ef4ebecdfb}{set\-Mesh} (const \hyperlink{classburn_1_1_mesh}{Mesh} \&mesh)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classburn_1_1_mesh}{Mesh} that the node should use. \end{DoxyCompactList}\item 
 const \hyperlink{classburn_1_1_mesh}{Mesh} \& \hyperlink{classburn_1_1_static_mesh_node_ad269a91df547f3a3092d193e4210e081}{get\-Mesh} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the current \hyperlink{classburn_1_1_mesh}{Mesh} the node is using. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae5324e7989b}{draw} (\hyperlink{classburn_1_1_camera}{Camera} $\ast$cam=nullptr)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Renders the node to the scene. Call this indirect by calling the drawfunction of the \hyperlink{classburn_1_1_scene}{Scene} which the node belongs to. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A static mesh. No animations are possible. 
+
+\begin{DoxyNote}{Note}
+Create a \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node} only by calling the according function of a Scene! Otherwise you will get undefined results.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_scene_a2e3b91590d6dee8c927c90f4f4d52e37}{Scene\-::create\-Static\-Mesh\-Node()} 
+\end{DoxySeeAlso}
 
 
 \subsection{Constructor \& Destructor Documentation}
@@ -35,6 +51,10 @@ virtual void \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae53
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_static_mesh_node_a051ef5fe091cf8e93cc4dd1bae753cbd}
+
+
+The default constructor. 
+
 \hypertarget{classburn_1_1_static_mesh_node_a68e00b329768da175ee153c46069364e}{\index{burn\-::\-Static\-Mesh\-Node@{burn\-::\-Static\-Mesh\-Node}!$\sim$\-Static\-Mesh\-Node@{$\sim$\-Static\-Mesh\-Node}}
 \index{$\sim$\-Static\-Mesh\-Node@{$\sim$\-Static\-Mesh\-Node}!burn::StaticMeshNode@{burn\-::\-Static\-Mesh\-Node}}
 \subsubsection[{$\sim$\-Static\-Mesh\-Node}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Static\-Mesh\-Node\-::$\sim$\-Static\-Mesh\-Node (
@@ -42,6 +62,10 @@ virtual void \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae53
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_static_mesh_node_a68e00b329768da175ee153c46069364e}
+
+
+The default destructor. 
+
 
 
 \subsection{Member Function Documentation}
@@ -54,6 +78,18 @@ virtual void \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae53
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae5324e7989b}
 
 
+Renders the node to the scene. Call this indirect by calling the drawfunction of the \hyperlink{classburn_1_1_scene}{Scene} which the node belongs to. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cam} & The \hyperlink{classburn_1_1_camera}{Camera} that the node is rendered to accordingly or nullptr to draw defaultposition\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_scene_a5ec4aad558ab7f3299fef632d86da8d3}{Scene\-::draw\-All()} 
+\end{DoxySeeAlso}
+
+
 Implements \hyperlink{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}{burn\-::\-Scene\-Node}.
 
 \hypertarget{classburn_1_1_static_mesh_node_ad269a91df547f3a3092d193e4210e081}{\index{burn\-::\-Static\-Mesh\-Node@{burn\-::\-Static\-Mesh\-Node}!get\-Mesh@{get\-Mesh}}
@@ -63,6 +99,16 @@ Implements \hyperlink{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_static_mesh_node_ad269a91df547f3a3092d193e4210e081}
+
+
+Returns the current \hyperlink{classburn_1_1_mesh}{Mesh} the node is using. 
+
+\begin{DoxyReturn}{Returns}
+The current \hyperlink{classburn_1_1_mesh}{Mesh}
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_static_mesh_node_af78ecebdfd7c25997caf35ef4ebecdfb}{set\-Mesh()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_static_mesh_node_af78ecebdfd7c25997caf35ef4ebecdfb}{\index{burn\-::\-Static\-Mesh\-Node@{burn\-::\-Static\-Mesh\-Node}!set\-Mesh@{set\-Mesh}}
 \index{set\-Mesh@{set\-Mesh}!burn::StaticMeshNode@{burn\-::\-Static\-Mesh\-Node}}
 \subsubsection[{set\-Mesh}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Static\-Mesh\-Node\-::set\-Mesh (
@@ -70,6 +116,18 @@ Implements \hyperlink{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3
 \item[{const {\bf Mesh} \&}]{mesh}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_static_mesh_node_af78ecebdfd7c25997caf35ef4ebecdfb}
+
+
+Sets the \hyperlink{classburn_1_1_mesh}{Mesh} that the node should use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mesh} & The \hyperlink{classburn_1_1_mesh}{Mesh} to use\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_static_mesh_node_ad269a91df547f3a3092d193e4210e081}{get\-Mesh()} 
+\end{DoxySeeAlso}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

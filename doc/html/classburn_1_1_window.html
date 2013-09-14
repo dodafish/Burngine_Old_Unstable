@@ -98,39 +98,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical commands.  
+ <a href="classburn_1_1_window.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_window_8h_source.html">Window.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acc7f6464e1ed22854f41342becb51e62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#acc7f6464e1ed22854f41342becb51e62">Window</a> ()</td></tr>
+<tr class="memdesc:acc7f6464e1ed22854f41342becb51e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#acc7f6464e1ed22854f41342becb51e62">More...</a><br/></td></tr>
 <tr class="separator:acc7f6464e1ed22854f41342becb51e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47bd487f48808cab78faa5713e15f0c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a47bd487f48808cab78faa5713e15f0c3">~Window</a> ()</td></tr>
+<tr class="memdesc:a47bd487f48808cab78faa5713e15f0c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default destructor.  <a href="#a47bd487f48808cab78faa5713e15f0c3">More...</a><br/></td></tr>
 <tr class="separator:a47bd487f48808cab78faa5713e15f0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80b727274500cf2f093c2bd2fffa4b75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a80b727274500cf2f093c2bd2fffa4b75">create</a> (const <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a> &amp;=<a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>())</td></tr>
-<tr class="separator:a80b727274500cf2f093c2bd2fffa4b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d37ad863a1c1dd888fa131adcf6c7ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a0d37ad863a1c1dd888fa131adcf6c7ec">create</a> (const <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a> &amp;ws=<a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>())</td></tr>
+<tr class="memdesc:a0d37ad863a1c1dd888fa131adcf6c7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a window defined by <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>.  <a href="#a0d37ad863a1c1dd888fa131adcf6c7ec">More...</a><br/></td></tr>
+<tr class="separator:a0d37ad863a1c1dd888fa131adcf6c7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bed3eba8c1da3f0a58a3ed5de2c1071"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a1bed3eba8c1da3f0a58a3ed5de2c1071">close</a> ()</td></tr>
+<tr class="memdesc:a1bed3eba8c1da3f0a58a3ed5de2c1071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the current window.  <a href="#a1bed3eba8c1da3f0a58a3ed5de2c1071">More...</a><br/></td></tr>
 <tr class="separator:a1bed3eba8c1da3f0a58a3ed5de2c1071"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefd7af7009fee4982b04ac946540f7ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#aefd7af7009fee4982b04ac946540f7ee">keepOpened</a> () const </td></tr>
+<tr class="memdesc:aefd7af7009fee4982b04ac946540f7ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call will check events which want to close the window.  <a href="#aefd7af7009fee4982b04ac946540f7ee">More...</a><br/></td></tr>
 <tr class="separator:aefd7af7009fee4982b04ac946540f7ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e1da9f111938b38bc4c2c06dac9cfd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a81e1da9f111938b38bc4c2c06dac9cfd">update</a> ()</td></tr>
+<tr class="memdesc:a81e1da9f111938b38bc4c2c06dac9cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates and handles all events. This must be called again and again in order to tell the OS that the program is not stuck and running fine.  <a href="#a81e1da9f111938b38bc4c2c06dac9cfd">More...</a><br/></td></tr>
 <tr class="separator:a81e1da9f111938b38bc4c2c06dac9cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e6c75cedaeb5571aaac2921bf8bcb6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a2e6c75cedaeb5571aaac2921bf8bcb6e">clear</a> () const </td></tr>
+<tr class="memdesc:a2e6c75cedaeb5571aaac2921bf8bcb6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleares the back buffer. (The buffer on which Burngine is rendering)  <a href="#a2e6c75cedaeb5571aaac2921bf8bcb6e">More...</a><br/></td></tr>
 <tr class="separator:a2e6c75cedaeb5571aaac2921bf8bcb6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a017ddbce346ebe3e11e2abc6ce0948e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a017ddbce346ebe3e11e2abc6ce0948e0">display</a> ()</td></tr>
+<tr class="memdesc:a017ddbce346ebe3e11e2abc6ce0948e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the back buffer with the front buffer. Due to the call the buffer on which had been drawn will be displayed.  <a href="#a017ddbce346ebe3e11e2abc6ce0948e0">More...</a><br/></td></tr>
 <tr class="separator:a017ddbce346ebe3e11e2abc6ce0948e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840d45e13910496fe9edd45d844e46a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#a840d45e13910496fe9edd45d844e46a1">setFramerateLimit</a> (const unsigned int &amp;fps)</td></tr>
+<tr class="memdesc:a840d45e13910496fe9edd45d844e46a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caps the framerate of the window. Set 0 (default) to disable the framerate limit.  <a href="#a840d45e13910496fe9edd45d844e46a1">More...</a><br/></td></tr>
 <tr class="separator:a840d45e13910496fe9edd45d844e46a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa694b6ed57c02e625fff074f31a107c9"><td class="memItemLeft" align="right" valign="top">const unsigned int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#aa694b6ed57c02e625fff074f31a107c9">getFramerateLimit</a> () const </td></tr>
+<tr class="memdesc:aa694b6ed57c02e625fff074f31a107c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current framerate limit of the window.  <a href="#aa694b6ed57c02e625fff074f31a107c9">More...</a><br/></td></tr>
 <tr class="separator:aa694b6ed57c02e625fff074f31a107c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5af78665f468bd19ebb38a8ac13b701"><td class="memItemLeft" align="right" valign="top">const double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#ae5af78665f468bd19ebb38a8ac13b701">getElapsedTime</a> () const </td></tr>
+<tr class="memdesc:ae5af78665f468bd19ebb38a8ac13b701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time in seconds which was needed to draw the last frame. This is useful to make calculations framerate-independing but depending on time.  <a href="#ae5af78665f468bd19ebb38a8ac13b701">More...</a><br/></td></tr>
 <tr class="separator:ae5af78665f468bd19ebb38a8ac13b701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab5f58992b7d89ca04c57516bd128780c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_window.html#ab5f58992b7d89ca04c57516bd128780c">isContextCreated</a> ()</td></tr>
+<tr class="memdesc:ab5f58992b7d89ca04c57516bd128780c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to ensure, that an OpenGL-Context exists. Calling OpenGL-Methods will result in crashes when no context is created. This is internally used by all classes that call OpenGL-Methods.  <a href="#ab5f58992b7d89ca04c57516bd128780c">More...</a><br/></td></tr>
 <tr class="separator:ab5f58992b7d89ca04c57516bd128780c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical commands. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="acc7f6464e1ed22854f41342becb51e62"></a>
 <div class="memitem">
 <div class="memproto">
@@ -143,6 +160,8 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The default constructor. </p>
 
 </div>
 </div>
@@ -158,6 +177,8 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The default destructor. </p>
 
 </div>
 </div>
@@ -175,6 +196,8 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Cleares the back buffer. (The buffer on which Burngine is rendering) </p>
+
 </div>
 </div>
 <a class="anchor" id="a1bed3eba8c1da3f0a58a3ed5de2c1071"></a>
@@ -190,9 +213,13 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Destroys the current window. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns true on success</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#a0d37ad863a1c1dd888fa131adcf6c7ec" title="Creates a window defined by WindowSettings. ">create()</a> </dd></dl>
+
 </div>
 </div>
-<a class="anchor" id="a80b727274500cf2f093c2bd2fffa4b75"></a>
+<a class="anchor" id="a0d37ad863a1c1dd888fa131adcf6c7ec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -200,11 +227,22 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">bool burn::Window::create </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a> &amp;&#160;</td>
-          <td class="paramname"><em>settings</em> = <code><a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>()</code>)</td><td></td>
+          <td class="paramname"><em>ws</em> = <code><a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>()</code>)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Creates a window defined by <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ws</td><td>The <a class="el" href="classburn_1_1_window_settings.html">WindowSettings</a> which the window should be created to accordingly.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true on success</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will destroy the window created by this class if needed. If you like to have multiple windows, create multiple classes of type <a class="el" href="classburn_1_1_window.html" title="The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical...">Window</a> and call <a class="el" href="classburn_1_1_window.html#a0d37ad863a1c1dd888fa131adcf6c7ec" title="Creates a window defined by WindowSettings. ">create()</a> on each.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#a1bed3eba8c1da3f0a58a3ed5de2c1071" title="Destroys the current window. ">close()</a> </dd></dl>
 
 </div>
 </div>
@@ -221,6 +259,9 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Swaps the back buffer with the front buffer. Due to the call the buffer on which had been drawn will be displayed. </p>
+<dl class="section note"><dt>Note</dt><dd>This method takes the framerate limit in account. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ae5af78665f468bd19ebb38a8ac13b701"></a>
@@ -236,6 +277,9 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the time in seconds which was needed to draw the last frame. This is useful to make calculations framerate-independing but depending on time. </p>
+<dl class="section return"><dt>Returns</dt><dd>The elapsed time of the last frame in seconds </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="aa694b6ed57c02e625fff074f31a107c9"></a>
@@ -250,6 +294,10 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current framerate limit of the window. </p>
+<dl class="section return"><dt>Returns</dt><dd>The framerate limit or 0 when no limit is set</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#a840d45e13910496fe9edd45d844e46a1" title="Caps the framerate of the window. Set 0 (default) to disable the framerate limit. ...">setFramerateLimit()</a> </dd></dl>
 
 </div>
 </div>
@@ -274,6 +322,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>This function is used to ensure, that an OpenGL-Context exists. Calling OpenGL-Methods will result in crashes when no context is created. This is internally used by all classes that call OpenGL-Methods. </p>
+<p>A Context is created as soon as a window was created. </p>
+
 </div>
 </div>
 <a class="anchor" id="aefd7af7009fee4982b04ac946540f7ee"></a>
@@ -288,6 +339,11 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>This call will check events which want to close the window. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns false if the window should be closed.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#a81e1da9f111938b38bc4c2c06dac9cfd" title="Updates and handles all events. This must be called again and again in order to tell the OS that the ...">update()</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Events will be updated by calling <a class="el" href="classburn_1_1_window.html#a81e1da9f111938b38bc4c2c06dac9cfd" title="Updates and handles all events. This must be called again and again in order to tell the OS that the ...">update()</a> </dd></dl>
 
 </div>
 </div>
@@ -305,6 +361,17 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Caps the framerate of the window. Set 0 (default) to disable the framerate limit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fps</td><td>Frames per second</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#a017ddbce346ebe3e11e2abc6ce0948e0" title="Swaps the back buffer with the front buffer. Due to the call the buffer on which had been drawn will ...">display()</a> </dd>
+<dd>
+<a class="el" href="classburn_1_1_window.html#aa694b6ed57c02e625fff074f31a107c9" title="Returns the current framerate limit of the window. ">getFramerateLimit()</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a81e1da9f111938b38bc4c2c06dac9cfd"></a>
@@ -320,6 +387,9 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Updates and handles all events. This must be called again and again in order to tell the OS that the program is not stuck and running fine. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_window.html#aefd7af7009fee4982b04ac946540f7ee" title="This call will check events which want to close the window. ">keepOpened()</a> </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -329,7 +399,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 11:49:21 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

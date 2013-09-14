@@ -98,6 +98,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Provides methods to move an object in 3D-space.  
+ <a href="classburn_1_1_transformable.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_transformable_8h_source.html">Transformable.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for burn::Transformable:</div>
@@ -107,29 +110,38 @@ Inheritance diagram for burn::Transformable:</div>
   <map id="burn::Transformable_map" name="burn::Transformable_map">
 <area href="classburn_1_1_camera.html" alt="burn::Camera" shape="rect" coords="0,56,136,80"/>
 <area href="classburn_1_1_scene_node.html" alt="burn::SceneNode" shape="rect" coords="146,56,282,80"/>
-<area href="classburn_1_1_static_mesh_node.html" alt="burn::StaticMeshNode" shape="rect" coords="146,112,282,136"/>
+<area href="classburn_1_1_static_mesh_node.html" title="A static mesh. No animations are possible. " alt="burn::StaticMeshNode" shape="rect" coords="146,112,282,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab5df8f6f319ebc8888465632a1567981"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981">Transformable</a> ()</td></tr>
+<tr class="memdesc:ab5df8f6f319ebc8888465632a1567981"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#ab5df8f6f319ebc8888465632a1567981">More...</a><br/></td></tr>
 <tr class="separator:ab5df8f6f319ebc8888465632a1567981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a421e6dc05fe22e624f25c346380624b7"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a421e6dc05fe22e624f25c346380624b7">~Transformable</a> ()</td></tr>
+<tr class="memdesc:a421e6dc05fe22e624f25c346380624b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor, because this class should be derived only.  <a href="#a421e6dc05fe22e624f25c346380624b7">More...</a><br/></td></tr>
 <tr class="separator:a421e6dc05fe22e624f25c346380624b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a408d484d0ed48c1d7499391b3f2d4a66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a408d484d0ed48c1d7499391b3f2d4a66">setPosition</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;position)</td></tr>
+<tr class="memdesc:a408d484d0ed48c1d7499391b3f2d4a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the position of the object.  <a href="#a408d484d0ed48c1d7499391b3f2d4a66">More...</a><br/></td></tr>
 <tr class="separator:a408d484d0ed48c1d7499391b3f2d4a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2946b97405311e3aff7f86fc6b0cd59"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ac2946b97405311e3aff7f86fc6b0cd59">getPosition</a> () const </td></tr>
+<tr class="memdesc:ac2946b97405311e3aff7f86fc6b0cd59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current position of the object.  <a href="#ac2946b97405311e3aff7f86fc6b0cd59">More...</a><br/></td></tr>
 <tr class="separator:ac2946b97405311e3aff7f86fc6b0cd59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adad877d654e3ac20ed0ff6edf002e040"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#adad877d654e3ac20ed0ff6edf002e040">setRotation</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;rotation)</td></tr>
+<tr class="memdesc:adad877d654e3ac20ed0ff6edf002e040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rotation of the object.  <a href="#adad877d654e3ac20ed0ff6edf002e040">More...</a><br/></td></tr>
 <tr class="separator:adad877d654e3ac20ed0ff6edf002e040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14977c0459a9bec1fd935a5967111311"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a14977c0459a9bec1fd935a5967111311">getRotation</a> () const </td></tr>
+<tr class="memdesc:a14977c0459a9bec1fd935a5967111311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current rotation of the object.  <a href="#a14977c0459a9bec1fd935a5967111311">More...</a><br/></td></tr>
 <tr class="separator:a14977c0459a9bec1fd935a5967111311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e73a5706524923d4fc6c13990b7f575"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a7e73a5706524923d4fc6c13990b7f575">setScale</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;scale)</td></tr>
+<tr class="memdesc:a7e73a5706524923d4fc6c13990b7f575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scale of the object.  <a href="#a7e73a5706524923d4fc6c13990b7f575">More...</a><br/></td></tr>
 <tr class="separator:a7e73a5706524923d4fc6c13990b7f575"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e6d9642bcb49deb83b38a3831824b52"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a7e6d9642bcb49deb83b38a3831824b52">getScale</a> () const </td></tr>
+<tr class="memdesc:a7e6d9642bcb49deb83b38a3831824b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current scale of the object.  <a href="#a7e6d9642bcb49deb83b38a3831824b52">More...</a><br/></td></tr>
 <tr class="separator:a7e6d9642bcb49deb83b38a3831824b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8743b842184630917ee67e8e8039fc6f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a8743b842184630917ee67e8e8039fc6f">getModelMatrix</a> ()</td></tr>
+<tr class="memdesc:a8743b842184630917ee67e8e8039fc6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current modelmatrix of the object.  <a href="#a8743b842184630917ee67e8e8039fc6f">More...</a><br/></td></tr>
 <tr class="separator:a8743b842184630917ee67e8e8039fc6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -143,7 +155,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a6a06bcec86a7f2e70eba6fe7e8bbe61c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a></td></tr>
 <tr class="separator:a6a06bcec86a7f2e70eba6fe7e8bbe61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provides methods to move an object in 3D-space. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab5df8f6f319ebc8888465632a1567981"></a>
 <div class="memitem">
 <div class="memproto">
@@ -156,6 +170,8 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The default constructor. </p>
 
 </div>
 </div>
@@ -180,6 +196,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Virtual destructor, because this class should be derived only. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -196,6 +214,9 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the current modelmatrix of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current modelmatrix </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ac2946b97405311e3aff7f86fc6b0cd59"></a>
@@ -210,6 +231,10 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current position of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current position</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#a408d484d0ed48c1d7499391b3f2d4a66" title="Sets the position of the object. ">setPosition()</a> </dd></dl>
 
 </div>
 </div>
@@ -226,6 +251,10 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the current rotation of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current rotation</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#adad877d654e3ac20ed0ff6edf002e040" title="Sets the rotation of the object. ">setRotation()</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a7e6d9642bcb49deb83b38a3831824b52"></a>
@@ -240,6 +269,10 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Return the current scale of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current scale</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#a7e73a5706524923d4fc6c13990b7f575" title="Sets the scale of the object. ">setScale()</a> </dd></dl>
 
 </div>
 </div>
@@ -257,6 +290,15 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the position of the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The new position</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#ac2946b97405311e3aff7f86fc6b0cd59" title="Returns the current position of the object. ">getPosition()</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="adad877d654e3ac20ed0ff6edf002e040"></a>
@@ -273,6 +315,15 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the rotation of the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rotation</td><td>The new rotation</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#a14977c0459a9bec1fd935a5967111311" title="Returns the current rotation of the object. ">getRotation()</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a7e73a5706524923d4fc6c13990b7f575"></a>
@@ -288,6 +339,15 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the scale of the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>The new scale</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_transformable.html#a7e6d9642bcb49deb83b38a3831824b52" title="Return the current scale of the object. ">getScale()</a> </dd></dl>
 
 </div>
 </div>
@@ -379,7 +439,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 11:49:21 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

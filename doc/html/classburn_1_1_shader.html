@@ -102,14 +102,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9795869452f44ff05a2a4b1f278bc990"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a9795869452f44ff05a2a4b1f278bc990">Shader</a> ()</td></tr>
+<tr class="memdesc:a9795869452f44ff05a2a4b1f278bc990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Default values:  <a href="#a9795869452f44ff05a2a4b1f278bc990">More...</a><br/></td></tr>
 <tr class="separator:a9795869452f44ff05a2a4b1f278bc990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f67c0a15b6cf9146869cfbcdbdfb541"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a4f67c0a15b6cf9146869cfbcdbdfb541">~Shader</a> ()</td></tr>
+<tr class="memdesc:a4f67c0a15b6cf9146869cfbcdbdfb541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. Deletes shaderprogram from OpenGL if needed.  <a href="#a4f67c0a15b6cf9146869cfbcdbdfb541">More...</a><br/></td></tr>
 <tr class="separator:a4f67c0a15b6cf9146869cfbcdbdfb541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ae2975b4b68d38d8aa3d045df082e7c2a">loadFromString</a> (const std::string &amp;vertexShader, const std::string &amp;fragmentShader)</td></tr>
+<tr class="memdesc:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and creates shaderprograms by passing in a vertex- and fragmentshader.  <a href="#ae2975b4b68d38d8aa3d045df082e7c2a">More...</a><br/></td></tr>
 <tr class="separator:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f476e17b38b96d84ea57c31d7aab78d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a8f476e17b38b96d84ea57c31d7aab78d">activate</a> () const </td></tr>
+<tr class="memdesc:a8f476e17b38b96d84ea57c31d7aab78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the shader. It will be used for rendering until no other <a class="el" href="classburn_1_1_shader.html">Shader</a> had been called or this one had been destroyed.  <a href="#a8f476e17b38b96d84ea57c31d7aab78d">More...</a><br/></td></tr>
 <tr class="separator:a8f476e17b38b96d84ea57c31d7aab78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae96b86c6da489d759bec9be7664040dc"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ae96b86c6da489d759bec9be7664040dc">getUniformLocation</a> (const std::string &amp;uniformName) const </td></tr>
+<tr class="memdesc:ae96b86c6da489d759bec9be7664040dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for example. Internal usage mostly.  <a href="#ae96b86c6da489d759bec9be7664040dc">More...</a><br/></td></tr>
 <tr class="separator:ae96b86c6da489d759bec9be7664040dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -126,6 +131,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Default constructor. Default values: </p>
+<ul>
+<li>ID: 0 (invalid ID) </li>
+</ul>
+
 </div>
 </div>
 <a class="anchor" id="a4f67c0a15b6cf9146869cfbcdbdfb541"></a>
@@ -140,6 +150,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Default destructor. Deletes shaderprogram from OpenGL if needed. </p>
 
 </div>
 </div>
@@ -157,6 +169,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Activates the shader. It will be used for rendering until no other <a class="el" href="classburn_1_1_shader.html">Shader</a> had been called or this one had been destroyed. </p>
+<dl class="section note"><dt>Note</dt><dd>If no <a class="el" href="classburn_1_1_shader.html">Shader</a> was created by e.g. calling <a class="el" href="classburn_1_1_shader.html#ae2975b4b68d38d8aa3d045df082e7c2a" title="Loads and creates shaderprograms by passing in a vertex- and fragmentshader. ">loadFromString()</a>, this call will disable shaders at all.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_shader.html#ae2975b4b68d38d8aa3d045df082e7c2a" title="Loads and creates shaderprograms by passing in a vertex- and fragmentshader. ">loadFromString()</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ae96b86c6da489d759bec9be7664040dc"></a>
@@ -172,6 +188,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for example. Internal usage mostly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uniformName</td><td>The name of the uniform.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns a value &gt;= 0 on success or -1 when the uniform could not be found. </dd></dl>
 
 </div>
 </div>
@@ -199,6 +224,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Loads and creates shaderprograms by passing in a vertex- and fragmentshader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexShader</td><td>The vertexshader. </td></tr>
+    <tr><td class="paramname">fragmentShader</td><td>The fragmentshader.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true when shader was created successfully.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_shader.html#a8f476e17b38b96d84ea57c31d7aab78d" title="Activates the shader. It will be used for rendering until no other Shader had been called or this one...">activate()</a> </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -208,7 +244,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 11:49:21 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

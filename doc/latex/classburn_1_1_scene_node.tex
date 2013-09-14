@@ -15,15 +15,15 @@ Inheritance diagram for burn\-:\-:Scene\-Node\-:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classburn_1_1_scene_node_a107d42062677132d1104391fd2bf2530}{Scene\-Node} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Default Constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}{$\sim$\-Scene\-Node} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Default Destructor. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}{draw} (\hyperlink{classburn_1_1_camera}{Camera} $\ast$camera=nullptr)=0
-\item 
+\begin{DoxyCompactList}\small\item\em Virtual method for rendering. \end{DoxyCompactList}\item 
 const \hyperlink{classburn_1_1_material}{Material} \& \hyperlink{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{get\-Material} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the material that the node is using. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\-Material} (const \hyperlink{classburn_1_1_material}{Material} \&material)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Sets the material of the node. Influences the rendering behaviour. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -39,6 +39,10 @@ void \hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_scene_node_a107d42062677132d1104391fd2bf2530}
+
+
+Default Constructor. 
+
 \hypertarget{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!$\sim$\-Scene\-Node@{$\sim$\-Scene\-Node}}
 \index{$\sim$\-Scene\-Node@{$\sim$\-Scene\-Node}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{$\sim$\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Scene\-Node\-::$\sim$\-Scene\-Node (
@@ -46,6 +50,10 @@ void \hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}
+
+
+Default Destructor. 
+
 
 
 \subsection{Member Function Documentation}
@@ -58,6 +66,15 @@ void \hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\
 )\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}
 
 
+Virtual method for rendering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em camera} & Pointer to \hyperlink{classburn_1_1_camera}{Camera} to draw node correctly or nullptr for default rendermode. \\
+\hline
+\end{DoxyParams}
+
+
 Implemented in \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae5324e7989b}{burn\-::\-Static\-Mesh\-Node}.
 
 \hypertarget{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!get\-Material@{get\-Material}}
@@ -67,6 +84,16 @@ Implemented in \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}
+
+
+Returns the material that the node is using. 
+
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classburn_1_1_material}{Material} of the node.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\-Material()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-Material@{set\-Material}}
 \index{set\-Material@{set\-Material}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{set\-Material}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::set\-Material (
@@ -74,6 +101,18 @@ Implemented in \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae
 \item[{const {\bf Material} \&}]{material}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}
+
+
+Sets the material of the node. Influences the rendering behaviour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em material} & The \hyperlink{classburn_1_1_material}{Material} to use.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{get\-Material()} 
+\end{DoxySeeAlso}
 
 
 \subsection{Member Data Documentation}

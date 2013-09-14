@@ -3,39 +3,47 @@
 }
 
 
+The most important class of Burngine. It defines the Open\-G\-L-\/\-Context which is needed for all graphical commands.  
+
+
+
+
 {\ttfamily \#include $<$Window.\-h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classburn_1_1_window_acc7f6464e1ed22854f41342becb51e62}{Window} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
 \hyperlink{classburn_1_1_window_a47bd487f48808cab78faa5713e15f0c3}{$\sim$\-Window} ()
-\item 
-bool \hyperlink{classburn_1_1_window_a80b727274500cf2f093c2bd2fffa4b75}{create} (const \hyperlink{classburn_1_1_window_settings}{Window\-Settings} \&=\hyperlink{classburn_1_1_window_settings}{Window\-Settings}())
-\item 
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classburn_1_1_window_a0d37ad863a1c1dd888fa131adcf6c7ec}{create} (const \hyperlink{classburn_1_1_window_settings}{Window\-Settings} \&ws=\hyperlink{classburn_1_1_window_settings}{Window\-Settings}())
+\begin{DoxyCompactList}\small\item\em Creates a window defined by \hyperlink{classburn_1_1_window_settings}{Window\-Settings}. \end{DoxyCompactList}\item 
 bool \hyperlink{classburn_1_1_window_a1bed3eba8c1da3f0a58a3ed5de2c1071}{close} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Destroys the current window. \end{DoxyCompactList}\item 
 bool \hyperlink{classburn_1_1_window_aefd7af7009fee4982b04ac946540f7ee}{keep\-Opened} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em This call will check events which want to close the window. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_window_a81e1da9f111938b38bc4c2c06dac9cfd}{update} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Updates and handles all events. This must be called again and again in order to tell the O\-S that the program is not stuck and running fine. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_window_a2e6c75cedaeb5571aaac2921bf8bcb6e}{clear} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Cleares the back buffer. (The buffer on which Burngine is rendering) \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_window_a017ddbce346ebe3e11e2abc6ce0948e0}{display} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Swaps the back buffer with the front buffer. Due to the call the buffer on which had been drawn will be displayed. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_window_a840d45e13910496fe9edd45d844e46a1}{set\-Framerate\-Limit} (const unsigned int \&fps)
-\item 
+\begin{DoxyCompactList}\small\item\em Caps the framerate of the window. Set 0 (default) to disable the framerate limit. \end{DoxyCompactList}\item 
 const unsigned int \& \hyperlink{classburn_1_1_window_aa694b6ed57c02e625fff074f31a107c9}{get\-Framerate\-Limit} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the current framerate limit of the window. \end{DoxyCompactList}\item 
 const double \& \hyperlink{classburn_1_1_window_ae5af78665f468bd19ebb38a8ac13b701}{get\-Elapsed\-Time} () const 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the time in seconds which was needed to draw the last frame. This is useful to make calculations framerate-\/independing but depending on time. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{is\-Context\-Created} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This function is used to ensure, that an Open\-G\-L-\/\-Context exists. Calling Open\-G\-L-\/\-Methods will result in crashes when no context is created. This is internally used by all classes that call Open\-G\-L-\/\-Methods. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+The most important class of Burngine. It defines the Open\-G\-L-\/\-Context which is needed for all graphical commands. 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classburn_1_1_window_acc7f6464e1ed22854f41342becb51e62}{\index{burn\-::\-Window@{burn\-::\-Window}!Window@{Window}}
@@ -45,6 +53,10 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_acc7f6464e1ed22854f41342becb51e62}
+
+
+The default constructor. 
+
 \hypertarget{classburn_1_1_window_a47bd487f48808cab78faa5713e15f0c3}{\index{burn\-::\-Window@{burn\-::\-Window}!$\sim$\-Window@{$\sim$\-Window}}
 \index{$\sim$\-Window@{$\sim$\-Window}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{$\sim$\-Window}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Window\-::$\sim$\-Window (
@@ -52,6 +64,10 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_a47bd487f48808cab78faa5713e15f0c3}
+
+
+The default destructor. 
+
 
 
 \subsection{Member Function Documentation}
@@ -62,6 +78,10 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_window_a2e6c75cedaeb5571aaac2921bf8bcb6e}
+
+
+Cleares the back buffer. (The buffer on which Burngine is rendering) 
+
 \hypertarget{classburn_1_1_window_a1bed3eba8c1da3f0a58a3ed5de2c1071}{\index{burn\-::\-Window@{burn\-::\-Window}!close@{close}}
 \index{close@{close}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Window\-::close (
@@ -69,13 +89,41 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_a1bed3eba8c1da3f0a58a3ed5de2c1071}
-\hypertarget{classburn_1_1_window_a80b727274500cf2f093c2bd2fffa4b75}{\index{burn\-::\-Window@{burn\-::\-Window}!create@{create}}
+
+
+Destroys the current window. 
+
+\begin{DoxyReturn}{Returns}
+Returns true on success
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_a0d37ad863a1c1dd888fa131adcf6c7ec}{create()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_window_a0d37ad863a1c1dd888fa131adcf6c7ec}{\index{burn\-::\-Window@{burn\-::\-Window}!create@{create}}
 \index{create@{create}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{create}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Window\-::create (
 \begin{DoxyParamCaption}
-\item[{const {\bf Window\-Settings} \&}]{settings = {\ttfamily {\bf Window\-Settings}()}}
+\item[{const {\bf Window\-Settings} \&}]{ws = {\ttfamily {\bf Window\-Settings}()}}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_window_a80b727274500cf2f093c2bd2fffa4b75}
+)}}\label{classburn_1_1_window_a0d37ad863a1c1dd888fa131adcf6c7ec}
+
+
+Creates a window defined by \hyperlink{classburn_1_1_window_settings}{Window\-Settings}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ws} & The \hyperlink{classburn_1_1_window_settings}{Window\-Settings} which the window should be created to accordingly.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function will destroy the window created by this class if needed. If you like to have multiple windows, create multiple classes of type \hyperlink{classburn_1_1_window}{Window} and call \hyperlink{classburn_1_1_window_a0d37ad863a1c1dd888fa131adcf6c7ec}{create()} on each.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_a1bed3eba8c1da3f0a58a3ed5de2c1071}{close()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_window_a017ddbce346ebe3e11e2abc6ce0948e0}{\index{burn\-::\-Window@{burn\-::\-Window}!display@{display}}
 \index{display@{display}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Window\-::display (
@@ -83,6 +131,13 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_a017ddbce346ebe3e11e2abc6ce0948e0}
+
+
+Swaps the back buffer with the front buffer. Due to the call the buffer on which had been drawn will be displayed. 
+
+\begin{DoxyNote}{Note}
+This method takes the framerate limit in account. 
+\end{DoxyNote}
 \hypertarget{classburn_1_1_window_ae5af78665f468bd19ebb38a8ac13b701}{\index{burn\-::\-Window@{burn\-::\-Window}!get\-Elapsed\-Time@{get\-Elapsed\-Time}}
 \index{get\-Elapsed\-Time@{get\-Elapsed\-Time}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{get\-Elapsed\-Time}]{\setlength{\rightskip}{0pt plus 5cm}const double \& burn\-::\-Window\-::get\-Elapsed\-Time (
@@ -90,6 +145,13 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_window_ae5af78665f468bd19ebb38a8ac13b701}
+
+
+Returns the time in seconds which was needed to draw the last frame. This is useful to make calculations framerate-\/independing but depending on time. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time of the last frame in seconds 
+\end{DoxyReturn}
 \hypertarget{classburn_1_1_window_aa694b6ed57c02e625fff074f31a107c9}{\index{burn\-::\-Window@{burn\-::\-Window}!get\-Framerate\-Limit@{get\-Framerate\-Limit}}
 \index{get\-Framerate\-Limit@{get\-Framerate\-Limit}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{get\-Framerate\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned int \& burn\-::\-Window\-::get\-Framerate\-Limit (
@@ -97,6 +159,16 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_window_aa694b6ed57c02e625fff074f31a107c9}
+
+
+Returns the current framerate limit of the window. 
+
+\begin{DoxyReturn}{Returns}
+The framerate limit or 0 when no limit is set
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_a840d45e13910496fe9edd45d844e46a1}{set\-Framerate\-Limit()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{\index{burn\-::\-Window@{burn\-::\-Window}!is\-Context\-Created@{is\-Context\-Created}}
 \index{is\-Context\-Created@{is\-Context\-Created}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{is\-Context\-Created}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Window\-::is\-Context\-Created (
@@ -104,13 +176,30 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}
-\hypertarget{classburn_1_1_window_aefd7af7009fee4982b04ac946540f7ee}{\index{burn\-::\-Window@{burn\-::\-Window}!keep\-Opened@{keep\-Opened}}
+
+
+This function is used to ensure, that an Open\-G\-L-\/\-Context exists. Calling Open\-G\-L-\/\-Methods will result in crashes when no context is created. This is internally used by all classes that call Open\-G\-L-\/\-Methods. 
+
+A Context is created as soon as a window was created. \hypertarget{classburn_1_1_window_aefd7af7009fee4982b04ac946540f7ee}{\index{burn\-::\-Window@{burn\-::\-Window}!keep\-Opened@{keep\-Opened}}
 \index{keep\-Opened@{keep\-Opened}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{keep\-Opened}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Window\-::keep\-Opened (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_window_aefd7af7009fee4982b04ac946540f7ee}
+
+
+This call will check events which want to close the window. 
+
+\begin{DoxyReturn}{Returns}
+Returns false if the window should be closed.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_a81e1da9f111938b38bc4c2c06dac9cfd}{update()}
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+Events will be updated by calling \hyperlink{classburn_1_1_window_a81e1da9f111938b38bc4c2c06dac9cfd}{update()} 
+\end{DoxyNote}
 \hypertarget{classburn_1_1_window_a840d45e13910496fe9edd45d844e46a1}{\index{burn\-::\-Window@{burn\-::\-Window}!set\-Framerate\-Limit@{set\-Framerate\-Limit}}
 \index{set\-Framerate\-Limit@{set\-Framerate\-Limit}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{set\-Framerate\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Window\-::set\-Framerate\-Limit (
@@ -118,6 +207,20 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 \item[{const unsigned int \&}]{fps}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_a840d45e13910496fe9edd45d844e46a1}
+
+
+Caps the framerate of the window. Set 0 (default) to disable the framerate limit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fps} & Frames per second\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_a017ddbce346ebe3e11e2abc6ce0948e0}{display()} 
+
+\hyperlink{classburn_1_1_window_aa694b6ed57c02e625fff074f31a107c9}{get\-Framerate\-Limit()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_window_a81e1da9f111938b38bc4c2c06dac9cfd}{\index{burn\-::\-Window@{burn\-::\-Window}!update@{update}}
 \index{update@{update}!burn::Window@{burn\-::\-Window}}
 \subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Window\-::update (
@@ -125,6 +228,13 @@ static bool \hyperlink{classburn_1_1_window_ab5f58992b7d89ca04c57516bd128780c}{i
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_window_a81e1da9f111938b38bc4c2c06dac9cfd}
+
+
+Updates and handles all events. This must be called again and again in order to tell the O\-S that the program is not stuck and running fine. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_window_aefd7af7009fee4982b04ac946540f7ee}{keep\-Opened()} 
+\end{DoxySeeAlso}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

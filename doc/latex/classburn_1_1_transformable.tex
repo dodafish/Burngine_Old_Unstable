@@ -3,6 +3,11 @@
 }
 
 
+Provides methods to move an object in 3\-D-\/space.  
+
+
+
+
 {\ttfamily \#include $<$Transformable.\-h$>$}
 
 Inheritance diagram for burn\-:\-:Transformable\-:\begin{figure}[H]
@@ -15,23 +20,23 @@ Inheritance diagram for burn\-:\-:Transformable\-:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classburn_1_1_transformable_ab5df8f6f319ebc8888465632a1567981}{Transformable} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classburn_1_1_transformable_a421e6dc05fe22e624f25c346380624b7}{$\sim$\-Transformable} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Virtual destructor, because this class should be derived only. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_transformable_a408d484d0ed48c1d7499391b3f2d4a66}{set\-Position} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&position)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the position of the object. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_transformable_ac2946b97405311e3aff7f86fc6b0cd59}{get\-Position} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the current position of the object. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_transformable_adad877d654e3ac20ed0ff6edf002e040}{set\-Rotation} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&rotation)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the rotation of the object. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_transformable_a14977c0459a9bec1fd935a5967111311}{get\-Rotation} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Returns the current rotation of the object. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_transformable_a7e73a5706524923d4fc6c13990b7f575}{set\-Scale} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&scale)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets the scale of the object. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_transformable_a7e6d9642bcb49deb83b38a3831824b52}{get\-Scale} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Return the current scale of the object. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \hyperlink{classburn_1_1_transformable_a8743b842184630917ee67e8e8039fc6f}{get\-Model\-Matrix} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the current modelmatrix of the object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -45,6 +50,9 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Provides methods to move an object in 3\-D-\/space. 
+
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classburn_1_1_transformable_ab5df8f6f319ebc8888465632a1567981}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!Transformable@{Transformable}}
 \index{Transformable@{Transformable}!burn::Transformable@{burn\-::\-Transformable}}
@@ -53,6 +61,10 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_transformable_ab5df8f6f319ebc8888465632a1567981}
+
+
+The default constructor. 
+
 \hypertarget{classburn_1_1_transformable_a421e6dc05fe22e624f25c346380624b7}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!$\sim$\-Transformable@{$\sim$\-Transformable}}
 \index{$\sim$\-Transformable@{$\sim$\-Transformable}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{$\sim$\-Transformable}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Transformable\-::$\sim$\-Transformable (
@@ -60,6 +72,10 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_transformable_a421e6dc05fe22e624f25c346380624b7}
+
+
+Virtual destructor, because this class should be derived only. 
+
 
 
 \subsection{Member Function Documentation}
@@ -70,6 +86,13 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_transformable_a8743b842184630917ee67e8e8039fc6f}
+
+
+Returns the current modelmatrix of the object. 
+
+\begin{DoxyReturn}{Returns}
+The current modelmatrix 
+\end{DoxyReturn}
 \hypertarget{classburn_1_1_transformable_ac2946b97405311e3aff7f86fc6b0cd59}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!get\-Position@{get\-Position}}
 \index{get\-Position@{get\-Position}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Transformable\-::get\-Position (
@@ -77,6 +100,16 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_transformable_ac2946b97405311e3aff7f86fc6b0cd59}
+
+
+Returns the current position of the object. 
+
+\begin{DoxyReturn}{Returns}
+The current position
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_a408d484d0ed48c1d7499391b3f2d4a66}{set\-Position()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_transformable_a14977c0459a9bec1fd935a5967111311}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!get\-Rotation@{get\-Rotation}}
 \index{get\-Rotation@{get\-Rotation}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{get\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Transformable\-::get\-Rotation (
@@ -84,6 +117,16 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_transformable_a14977c0459a9bec1fd935a5967111311}
+
+
+Returns the current rotation of the object. 
+
+\begin{DoxyReturn}{Returns}
+The current rotation
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_adad877d654e3ac20ed0ff6edf002e040}{set\-Rotation()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_transformable_a7e6d9642bcb49deb83b38a3831824b52}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!get\-Scale@{get\-Scale}}
 \index{get\-Scale@{get\-Scale}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{get\-Scale}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Transformable\-::get\-Scale (
@@ -91,6 +134,16 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_transformable_a7e6d9642bcb49deb83b38a3831824b52}
+
+
+Return the current scale of the object. 
+
+\begin{DoxyReturn}{Returns}
+The current scale
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_a7e73a5706524923d4fc6c13990b7f575}{set\-Scale()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_transformable_a408d484d0ed48c1d7499391b3f2d4a66}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!set\-Position@{set\-Position}}
 \index{set\-Position@{set\-Position}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Transformable\-::set\-Position (
@@ -98,6 +151,18 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 \item[{const {\bf Vector3f} \&}]{position}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_transformable_a408d484d0ed48c1d7499391b3f2d4a66}
+
+
+Sets the position of the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The new position\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_ac2946b97405311e3aff7f86fc6b0cd59}{get\-Position()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_transformable_adad877d654e3ac20ed0ff6edf002e040}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!set\-Rotation@{set\-Rotation}}
 \index{set\-Rotation@{set\-Rotation}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{set\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Transformable\-::set\-Rotation (
@@ -105,6 +170,18 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 \item[{const {\bf Vector3f} \&}]{rotation}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_transformable_adad877d654e3ac20ed0ff6edf002e040}
+
+
+Sets the rotation of the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & The new rotation\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_a14977c0459a9bec1fd935a5967111311}{get\-Rotation()} 
+\end{DoxySeeAlso}
 \hypertarget{classburn_1_1_transformable_a7e73a5706524923d4fc6c13990b7f575}{\index{burn\-::\-Transformable@{burn\-::\-Transformable}!set\-Scale@{set\-Scale}}
 \index{set\-Scale@{set\-Scale}!burn::Transformable@{burn\-::\-Transformable}}
 \subsubsection[{set\-Scale}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Transformable\-::set\-Scale (
@@ -112,6 +189,18 @@ const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \
 \item[{const {\bf Vector3f} \&}]{scale}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_transformable_a7e73a5706524923d4fc6c13990b7f575}
+
+
+Sets the scale of the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scale} & The new scale\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_transformable_a7e6d9642bcb49deb83b38a3831824b52}{get\-Scale()} 
+\end{DoxySeeAlso}
 
 
 \subsection{Member Data Documentation}

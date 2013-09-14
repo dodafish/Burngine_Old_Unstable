@@ -106,33 +106,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>burn {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_transformable.html">Transformable</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classburn_1_1_transformable.html">Transformable</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classburn_1_1_transformable.html">Transformable</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> setPosition(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; position);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getPosition() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">void</span> setRotation(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; rotation);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getRotation() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span> setScale(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; scale);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getScale() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; getModelMatrix();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">   32</a></span>&#160;    <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> _position, <a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a>, _rotation;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">   33</a></span>&#160;    <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> <a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} <span class="comment">/* namespace burn */</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TRANSFORMABLE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> setPosition(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; position);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getPosition() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> setRotation(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; rotation);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getRotation() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> setScale(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; scale);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getScale() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; getModelMatrix();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">   95</a></span>&#160;    <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> _position, <a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a>, _rotation;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">   96</a></span>&#160;    <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> <a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;} <span class="comment">/* namespace burn */</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TRANSFORMABLE_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 11:49:21 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 14 2013 15:16:05 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
