@@ -16,7 +16,8 @@ bool Window::_isContextCreated = false;
 Window::Window() :
 				_window(nullptr),
 				_framerateLimit(0),
-				_elapsedTime(0) {
+				_elapsedTime(0),
+				_lastTime(0) {
 }
 
 Window::~Window() {
@@ -83,17 +84,16 @@ void Window::clear() const {
 }
 
 void Window::display() {
-	_elapsedTime = glfwGetTime();
+	double now = glfwGetTime();
+	_elapsedTime = now - _lastTime;
+	_lastTime = now;
 
 	if(_framerateLimit != 0){
-		double _elapsedMicro = _elapsedTime * 1000000;
-		double frameTime = 1000000.0 / _framerateLimit;
-		if(_elapsedMicro < frameTime){
-			usleep(frameTime - _elapsedMicro);
+		if(_elapsedTime < (1.0 / _framerateLimit)){
+			usleep(((1.0 / _framerateLimit) - _elapsedTime) * 1000000);
 		}
 	}
 
-	glfwSetTime(0);
 	glfwSwapBuffers(_window);
 }
 

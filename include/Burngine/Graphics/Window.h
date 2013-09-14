@@ -41,7 +41,7 @@ private:
 	WindowSettings _settings;
 
 	unsigned int _framerateLimit;
-	double _elapsedTime;
+	double _elapsedTime, _lastTime;
 };
 
 } /* namespace burn */
