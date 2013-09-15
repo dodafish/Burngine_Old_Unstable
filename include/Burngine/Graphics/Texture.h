@@ -48,6 +48,11 @@ public:
 	const GLuint& getTextureBuffer() const;
 
 private:
+
+	void generate();
+	void erase();
+
+	bool _isTextureGenerated;
 	GLuint _texture; ///< OpenGL ID for the texture
 };
 

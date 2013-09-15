@@ -11,7 +11,13 @@
 #include <string>
 
 #ifndef BURNGINE_STATIC
+
+#ifndef BURNGINE_IMPORT
 #define BURNGINE_API __declspec(dllexport)
+#else
+#define BURNGINE_API __declspec(dllimport)
+#endif
+
 #else
 #define BURNGINE_API
 #endif

@@ -38,6 +38,8 @@ bool Window::create(const WindowSettings& settings) {
 		_isGlfwInit = true;
 	}
 
+	std::cout << "-------------------------\n" << glfwGetVersionString() << "\n-------------------------\n";
+
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -56,6 +58,21 @@ bool Window::create(const WindowSettings& settings) {
 
 	if(glewInit() != GLEW_OK){
 		std::cout << "Failed to init GLEW!\n";
+		return false;
+	}
+
+	if(GLEW_VERSION_4_3){
+		std::cout << "OpenGL 4.3 supported\n";
+	}else if(GLEW_VERSION_4_2){
+		std::cout << "OpenGL 4.2 supported\n";
+	}else if(GLEW_VERSION_4_1){
+		std::cout << "OpenGL 4.1 supported\n";
+	}else if(GLEW_VERSION_4_0){
+		std::cout << "OpenGL 4.0 supported\n";
+	}else if(GLEW_VERSION_3_3){
+		std::cout << "OpenGL 3.3 supported\n";
+	}else{
+		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
 		return false;
 	}
 
