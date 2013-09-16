@@ -36,14 +36,19 @@ bool Window::create(const WindowSettings& settings) {
 		std::cout << "Failed to init GLFW!\n";
 		return false;
 	}else{
+		std::cout << "GLFW successfully initialized.\n";
 		_isGlfwInit = true;
 	}
 
 	std::cout << "-------------------------\n" << glfwGetVersionString() << "\n-------------------------\n";
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+	//The following will get checked after creation
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+	std::cout << "All window-hints set. Attempting creation...\n";
 
 	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
 			_settings.getTitle().c_str(), 0, 0);
@@ -52,16 +57,24 @@ bool Window::create(const WindowSettings& settings) {
 		glfwTerminate();
 		std::cout << "Failed to create window!\n";
 		return false;
+	}else{
+		std::cout << "Window successfully created.\n";
 	}
 
 	glfwMakeContextCurrent(_window);
 	_isContextCreated = true;
 
+	std::cout << "Setting GLEW to experimental...\n";
+	glewExperimental = GL_TRUE;
+
 	if(glewInit() != GLEW_OK){
 		std::cout << "Failed to init GLEW!\n";
 		return false;
+	}else{
+		std::cout << "GLEW successfully initialited.\n";
 	}
 
+	//Check OpenGL version
 	if(GLEW_VERSION_4_3){
 		std::cout << "OpenGL 4.3 supported\n";
 	}else if(GLEW_VERSION_4_2){
@@ -79,6 +92,8 @@ bool Window::create(const WindowSettings& settings) {
 
 	glGenVertexArrays(1, &_vertexArrayID);
 	glBindVertexArray(_vertexArrayID);
+
+	std::cout << "Created default VAO...\nWindow creation done.\n";
 
 	return true;
 }
