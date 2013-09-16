@@ -9,18 +9,16 @@
 
 namespace burn {
 
-Vertex::Vertex(const Vector3f& position, const Vector3f& color,
-		const Vector2f& uv) :
+Vertex::Vertex(const Vector3f& position, const Vector3f& color, const Vector2f& uv, const Vector3f& normal) :
 				_position(position),
 				_color(color),
-				_uv(uv)
+				_uv(uv),
+				_normal(normal)
 
 {
-
 }
 
 Vertex::~Vertex() {
-	// TODO Auto-generated destructor stub
 }
 
 void Vertex::setPosition(const Vector3f& position) {
