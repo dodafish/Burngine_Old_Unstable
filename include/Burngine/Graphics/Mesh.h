@@ -32,6 +32,17 @@ public:
 	~Mesh();
 
 	/**
+	 * @brief Loads a 3D-model into the Mesh object.
+	 * It uses the assimp importer, so it supports the files
+	 * that assimp does.
+	 *
+	 * @param file The file to load
+	 *
+	 * @return Returns true on load-success
+	 */
+	bool loadFromFile(const std::string& file);
+
+	/**
 	 * @brief Sets the vertices of the mesh, so that they can be
 	 * used for rendering later on.
 	 *

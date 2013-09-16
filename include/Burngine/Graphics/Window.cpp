@@ -18,7 +18,8 @@ Window::Window() :
 				_window(nullptr),
 				_framerateLimit(0),
 				_elapsedTime(0),
-				_lastTime(0) {
+				_lastTime(0),
+				_vertexArrayID(0) {
 }
 
 Window::~Window() {
@@ -75,6 +76,9 @@ bool Window::create(const WindowSettings& settings) {
 		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
 		return false;
 	}
+
+	glGenVertexArrays(1, &_vertexArrayID);
+	glBindVertexArray(_vertexArrayID);
 
 	return true;
 }

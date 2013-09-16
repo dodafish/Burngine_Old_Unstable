@@ -10,6 +10,13 @@
 #include "OpenGL.h"
 #include "Window.h"
 
+#include <zlib.h>
+
+#include "../extern/assimp/Importer.hpp"      // C++ importer interface
+#include "../extern/assimp/scene.h"           // Output data structure
+#include "../extern/assimp/postprocess.h"     // Post processing flags
+#include <iostream>
+
 namespace burn {
 
 Mesh::Mesh() :
@@ -34,6 +41,56 @@ Mesh::~Mesh() {
 		glDeleteBuffers(1, &_vertexUvBuffer);
 	}
 
+}
+
+bool Mesh::loadFromFile(const std::string& file) {
+
+	Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(file.c_str(),
+			aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices
+					| aiProcess_SortByPType);
+
+	if(!scene){
+		std::cout << "Error while loading asset: " << importer.GetErrorString() << "\n";
+		return false;
+	}else{
+		std::cout << "Successfully loaded asset: " << file << "\n";
+	}
+
+	//Asset successfully loaded.
+
+	_vertices.clear();
+
+	std::cout << "----- Total count of meshes: " << scene->mNumMeshes << "\n";
+	for(unsigned int i = 0; i < scene->mNumMeshes; ++i){
+
+		aiMesh* mesh = scene->mMeshes[i];
+
+		std::cout << "----- Total count of faces for mesh #" << i << ": " << mesh->mNumFaces << "\n";
+		for(unsigned int j = 0; j < mesh->mNumFaces; ++j){
+
+			const aiFace& face = mesh->mFaces[j];
+			for(unsigned int k = 0; k != 3; ++k){
+				aiVector3D pos = mesh->mVertices[face.mIndices[k]];
+
+				aiVector3D uv =
+						mesh->HasTextureCoords(0) ?
+								mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f, 0.0f, 0.0f);
+
+				aiVector3D normal =
+						mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
+
+				_vertices.push_back(Vertex(Vector3f(pos.x, pos.y, pos.z), Vector3f(0, 1, 0), Vector2f(uv.x, uv.y)));
+			}
+
+		}
+
+	}
+
+	_needUpdate = true;
+	data();
+
+	return true;
 }
 
 size_t Mesh::getVertexCount() const {

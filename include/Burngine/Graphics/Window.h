@@ -138,6 +138,8 @@ private:
 
 	unsigned int _framerateLimit;
 	double _elapsedTime, _lastTime;
+
+	GLuint _vertexArrayID;
 };
 
 bool Window::isContextCreated() {
