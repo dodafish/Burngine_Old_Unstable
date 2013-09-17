@@ -10,7 +10,7 @@
 
 #include "../Export.h"
 #include "SceneNode.h"
-#include "Mesh.h"
+#include "Model.h"
 
 namespace burn {
 
@@ -36,22 +36,24 @@ public:
 	~StaticMeshNode();
 
 	/**
-	 * @brief Sets the Mesh that the node should use
+	 * @brief Sets the Model that the node should use
 	 *
-	 * @param mesh The Mesh to use
+	 * @param model The Model to use
 	 *
-	 * @see getMesh()
+	 * @see getModel()
 	 */
-	void setMesh(const Mesh& mesh);
+	void setModel(const Model& model);
 
 	/**
-	 * @brief Returns the current Mesh the node is using
+	 * @brief Returns the current Model the node is using
 	 *
-	 * @return The current Mesh
+	 * @return The current Model
 	 *
-	 * @see setMesh()
+	 * @see setModel()
 	 */
-	const Mesh& getMesh() const;
+	const Model& getModel() const;
+
+	bool loadFromFile(const std::string& file);
 
 	/**
 	 * @brief Renders the node to the scene. Call this
@@ -66,7 +68,7 @@ public:
 	virtual void draw(Camera* cam = nullptr);
 
 private:
-	Mesh _mesh;
+	Model _model;
 };
 
 } /* namespace burn */

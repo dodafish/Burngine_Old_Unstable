@@ -9,6 +9,8 @@
 
 #include "Window.h"
 
+#include <iostream>
+
 namespace burn {
 
 Texture::Texture() :
@@ -30,7 +32,12 @@ bool Texture::loadFromFile(const std::string& file) {
 	_texture = SOIL_load_OGL_texture(file.c_str(), SOIL_LOAD_AUTO, _texture,
 			SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
-	return (_texture != 0);
+	if(_texture != 0){
+		std::cout << "Created texturebuffer. ID: " << _texture << "\n";
+		return true;
+	}
+
+	return false;
 }
 
 const GLuint& Texture::getTextureBuffer() const {

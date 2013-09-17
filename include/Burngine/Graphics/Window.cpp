@@ -100,6 +100,8 @@ bool Window::create(const WindowSettings& settings) {
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS);
 
+	glClearColor(0.1, 0.1, 0.3, 1.0);
+
 	std::cout << "Enabled depth-test.\n";
 
 	return true;

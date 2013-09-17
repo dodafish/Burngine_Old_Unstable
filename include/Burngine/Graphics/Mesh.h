@@ -16,9 +16,10 @@
 #include <vector>
 
 template class BURNGINE_API std::vector<burn::Vertex>;
-template class BURNGINE_API std::vector<burn::Texture>;
 
 namespace burn {
+
+class Model;
 
 class BURNGINE_API Mesh {
 public:
@@ -71,7 +72,7 @@ public:
 	 * @return Returns the id of the position-buffer or 0 if no
 	 * position-buffer exists
 	 */
-	const GLuint& getPositionBuffer();
+	const GLuint& getPositionBuffer() const;
 
 	/**
 	 * @brief Returns the id of the color-buffer.
@@ -81,7 +82,7 @@ public:
 	 * @return Returns the id of the color-buffer or 0 if no
 	 * color-buffer exists
 	 */
-	const GLuint& getColorBuffer();
+	const GLuint& getColorBuffer() const;
 
 	/**
 	 * @brief Returns the id of the UV-buffer.
@@ -91,7 +92,7 @@ public:
 	 * @return Returns the id of the UV-buffer or 0 if no
 	 * UV-buffer exists
 	 */
-	const GLuint& getUvBuffer();
+	const GLuint& getUvBuffer() const;
 
 	/**
 	 * @brief Sets the Texture of the mesh
@@ -109,14 +110,11 @@ public:
 	 *
 	 * @see setTexture()
 	 */
-	const Texture& getTexture(const size_t& index) const;
+	const Texture& getTexture() const;
 
-	size_t getTextureCount() const;
+	void setMaterialIndex(const unsigned int& index);
 
-	void clearTextures();
-
-private:
-	std::vector<Vertex> _vertices;
+	const unsigned int& getMaterialIndex() const;
 
 	/**
 	 * @brief Fills the buffers with data or creates them if needed.
@@ -126,10 +124,18 @@ private:
 	 */
 	void data();
 
+private:
+
+	friend Model;
+
+	std::vector<Vertex> _vertices;
+
 	bool _needUpdate;
 	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer;
 
-	std::vector<Texture> _textures;
+	unsigned int _materialIndex;
+
+	Texture _texture;
 };
 
 } /* namespace burn */
