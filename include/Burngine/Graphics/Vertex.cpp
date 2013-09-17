@@ -12,10 +12,8 @@ namespace burn {
 Vertex::Vertex(const Vector3f& position, const Vector3f& color, const Vector2f& uv, const Vector3f& normal) :
 				_position(position),
 				_color(color),
-				_uv(uv),
-				_normal(normal)
-
-{
+				_normal(normal),
+				_uv(uv) {
 }
 
 Vertex::~Vertex() {
