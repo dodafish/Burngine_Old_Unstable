@@ -82,7 +82,8 @@ void StaticMeshNode::draw(Camera* cam) {
 			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::TEXTURED, MVP_UNIFORM), 1,
 			GL_FALSE, &MVP[0][0]);
 
-			glBindTexture(GL_TEXTURE_2D, _mesh.getTexture().getTextureBuffer());
+			if(_mesh.getTextureCount() != 0)
+				glBindTexture(GL_TEXTURE_2D, _mesh.getTexture(0).getTextureBuffer());
 
 			//0 = Positions
 			glEnableVertexAttribArray(0);
@@ -106,7 +107,7 @@ void StaticMeshNode::draw(Camera* cam) {
 					(void*)0            // array buffer offset
 					);
 
-			// Draw the triangle !
+			// Draw the triangles !
 			glDrawArrays(GL_TRIANGLES, 0, _mesh.getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
 			glDisableVertexAttribArray(0);

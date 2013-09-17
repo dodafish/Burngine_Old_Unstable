@@ -95,6 +95,13 @@ bool Window::create(const WindowSettings& settings) {
 
 	std::cout << "Created default VAO...\nWindow creation done.\n";
 
+	// Enable depth test
+	glEnable(GL_DEPTH_TEST);
+	// Accept fragment if it closer to the camera than the former one
+	glDepthFunc(GL_LESS);
+
+	std::cout << "Enabled depth-test.\n";
+
 	return true;
 }
 

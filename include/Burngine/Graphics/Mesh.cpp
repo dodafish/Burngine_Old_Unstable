@@ -60,6 +60,7 @@ bool Mesh::loadFromFile(const std::string& file) {
 	//Asset successfully loaded.
 
 	_vertices.clear();
+	clearTextures();
 
 	std::cout << "----- Total count of meshes: " << scene->mNumMeshes << "\n";
 	for(unsigned int i = 0; i < scene->mNumMeshes; ++i){
@@ -80,9 +81,37 @@ bool Mesh::loadFromFile(const std::string& file) {
 				aiVector3D normal =
 						mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
 
-				_vertices.push_back(Vertex(Vector3f(pos.x, pos.y, pos.z), Vector3f(0, 1, 0), Vector2f(uv.x, uv.y)));
+				_vertices.push_back(
+						Vertex(Vector3f(pos.x, pos.y, pos.z), Vector3f(0, 1, 0), Vector2f(uv.x, uv.y),
+								Vector3f(normal.x, normal.y, normal.z)));
 			}
 
+		}
+
+	}
+
+	std::cout << "----- Total count of materials: " << scene->mNumMaterials << "\n";
+	for(unsigned int i = 0; i < scene->mNumMaterials; ++i){
+
+		aiMaterial* material = scene->mMaterials[i];
+
+		unsigned int textureIndex = 0;
+		aiString assimpFile;
+		if(material->GetTexture(aiTextureType_DIFFUSE, textureIndex, &assimpFile) == AI_SUCCESS){
+			std::string file = assimpFile.data; //convert string-type
+			std::cout << "Attempting to load texture: " << file << "\n";
+
+			_textures.push_back(Texture());
+			if(!_textures.back().loadFromFile(file)){
+				std::cout << "Failed to load texture: " << file << "\n";
+				_textures.pop_back();
+				return false;
+			}else{
+				std::cout << "Texture '" << file << "' successfully loaded.\n";
+			}
+
+		}else{
+			std::cout << "Material texture is invalid.\n";
 		}
 
 	}
@@ -123,14 +152,19 @@ const GLuint& Mesh::getUvBuffer() {
 }
 
 void Mesh::setTexture(const Texture& tex) {
-	_texture = tex;
-	_needUpdate = true;
-
-	data();
+	_textures.push_back(tex);
 }
 
-const Texture& Mesh::getTexture() const {
-	return _texture;
+const Texture& Mesh::getTexture(const size_t& index) const {
+	return (_textures.size() > index) ? _textures[index] : _textures[0];
+}
+
+void Mesh::clearTextures() {
+	_textures.clear();
+}
+
+size_t Mesh::getTextureCount() const {
+	return _textures.size();
 }
 
 void Mesh::data() {

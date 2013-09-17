@@ -16,6 +16,7 @@
 #include <vector>
 
 template class BURNGINE_API std::vector<burn::Vertex>;
+template class BURNGINE_API std::vector<burn::Texture>;
 
 namespace burn {
 
@@ -108,7 +109,11 @@ public:
 	 *
 	 * @see setTexture()
 	 */
-	const Texture& getTexture() const;
+	const Texture& getTexture(const size_t& index) const;
+
+	size_t getTextureCount() const;
+
+	void clearTextures();
 
 private:
 	std::vector<Vertex> _vertices;
@@ -124,7 +129,7 @@ private:
 	bool _needUpdate;
 	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer;
 
-	Texture _texture;
+	std::vector<Texture> _textures;
 };
 
 } /* namespace burn */
