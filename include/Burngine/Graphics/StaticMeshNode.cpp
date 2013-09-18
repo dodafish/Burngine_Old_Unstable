@@ -25,7 +25,7 @@ const Model& StaticMeshNode::getModel() const {
 	return _model;
 }
 
-bool StaticMeshNode::loadFromFile(const std::string& file){
+bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
@@ -46,14 +46,14 @@ void StaticMeshNode::draw(Camera* cam) {
 			MVP = Projection * View * getModelMatrix();
 		}
 
-		if(_material.getType() == Material::SOLID_COLOR){
+		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
-			BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
+			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
+				BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
 
-			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, MVP_UNIFORM), 1,
-			GL_FALSE, &MVP[0][0]);
-
-			for(size_t i = 0; i < _model.getMeshCount(); ++i){
+				glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, MVP_UNIFORM),
+						1,
+						GL_FALSE, &MVP[0][0]);
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -82,17 +82,12 @@ void StaticMeshNode::draw(Camera* cam) {
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
+			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
-			}
+				BurngineShaders::useShader(BurngineShaders::TEXTURED);
 
-		}else if(_material.getType() == Material::TEXTURED){
-
-			BurngineShaders::useShader(BurngineShaders::TEXTURED);
-
-			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::TEXTURED, MVP_UNIFORM), 1,
-			GL_FALSE, &MVP[0][0]);
-
-			for(size_t i = 0; i < _model.getMeshCount(); ++i){
+				glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::TEXTURED, MVP_UNIFORM), 1,
+				GL_FALSE, &MVP[0][0]);
 
 				glBindTexture(GL_TEXTURE_2D, _model.getMesh(i).getTexture().getTextureBuffer());
 
@@ -125,7 +120,6 @@ void StaticMeshNode::draw(Camera* cam) {
 				glDisableVertexAttribArray(1);
 
 			}
-
 		}
 
 	}

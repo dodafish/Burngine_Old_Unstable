@@ -12,6 +12,7 @@
 #include "Vertex.h"
 #include "OpenGL.h"
 #include "Texture.h"
+#include "Material.h"
 
 #include <vector>
 
@@ -112,6 +113,25 @@ public:
 	 */
 	const Texture& getTexture() const;
 
+	/**
+	 * @brief Returns the material that the node is using.
+	 *
+	 * @return The Material of the node.
+	 *
+	 * @see setMaterial()
+	 */
+	const Material& getMaterial() const;
+
+	/**
+	 * @brief Sets the material of the node. Influences the rendering
+	 * behaviour.
+	 *
+	 * @param material The Material to use.
+	 *
+	 * @see getMaterial()
+	 */
+	void setMaterial(const Material& material);
+
 	void setMaterialIndex(const unsigned int& index);
 
 	const unsigned int& getMaterialIndex() const;
@@ -124,9 +144,13 @@ public:
 	 */
 	void data();
 
+	void setDiffuseColor(const Vector3f& color);
+
 private:
 
 	friend Model;
+
+	Material _material;
 
 	std::vector<Vertex> _vertices;
 

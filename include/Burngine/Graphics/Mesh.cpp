@@ -48,6 +48,14 @@ void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	data();
 }
 
+void Mesh::setDiffuseColor(const Vector3f& color) {
+	for(size_t i = 0; i < _vertices.size(); ++i){
+		_vertices[i].setColor(color);
+	}
+	_needUpdate = true;
+	data();
+}
+
 const GLuint& Mesh::getPositionBuffer() const {
 	return _vertexPositionBuffer;
 }
@@ -66,6 +74,14 @@ void Mesh::setTexture(const Texture& tex) {
 
 const Texture& Mesh::getTexture() const {
 	return _texture;
+}
+
+const Material& Mesh::getMaterial() const {
+	return _material;
+}
+
+void Mesh::setMaterial(const Material& material) {
+	_material = material;
 }
 
 void Mesh::data() {

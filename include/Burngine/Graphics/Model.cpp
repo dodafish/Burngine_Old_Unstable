@@ -75,8 +75,13 @@ bool Model::loadFromFile(const std::string& file) {
 				aiVector3D normal =
 						mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
 
+				Vector3f color = Vector3f(0, 1, 0);
+				if(mesh->mColors[0] != 0){
+					color = Vector3f(mesh->mColors[0]->r, mesh->mColors[0]->g, mesh->mColors[0]->b);
+				}
+
 				vertices.push_back(
-						Vertex(Vector3f(pos.x, pos.y, pos.z), Vector3f(0, 1, 0), Vector2f(uv.x, uv.y),
+						Vertex(Vector3f(pos.x, pos.y, pos.z), color, Vector2f(uv.x, uv.y),
 								Vector3f(normal.x, normal.y, normal.z)));
 			}
 
@@ -97,6 +102,15 @@ bool Model::loadFromFile(const std::string& file) {
 
 		aiMaterial* material = scene->mMaterials[i];
 
+		aiColor3D color(1.f, 0.7f, 0.f);
+		material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+		std::cout << "-------- Setting diffuse color...\n";
+		for(size_t j = 0; j < _meshes.size(); ++j){
+			if(_meshes[j]->getMaterialIndex() == i){
+				_meshes[j]->setDiffuseColor(Vector3f(color.r, color.g, color.b));
+			}
+		}
+
 		unsigned int textureIndex = 0;
 		aiString assimpFile;
 		if(material->GetTexture(aiTextureType_DIFFUSE, textureIndex, &assimpFile) == AI_SUCCESS){
@@ -107,6 +121,7 @@ bool Model::loadFromFile(const std::string& file) {
 				if(_meshes[j]->getMaterialIndex() == i){
 					std::cout << "Attempting to load texture: " << file << "\n";
 					if(_meshes[j]->_texture.loadFromFile(file)){
+						_meshes[j]->_material.setType(Material::Type::TEXTURED);
 						std::cout << "Texture '" << file << "' successfully loaded.\n";
 						std::cout << "Linked texture to mesh (" << &_meshes[j] << "). Material index = " << i << "\n";
 						break;
