@@ -65,7 +65,7 @@ public:
 	 *
 	 * @see Scene::drawAll()
 	 */
-	virtual void draw(Camera* cam = nullptr);
+	virtual void draw(std::shared_ptr<Camera> cam);
 
 private:
 	Model _model;

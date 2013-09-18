@@ -11,8 +11,7 @@
 
 namespace burn {
 
-Scene::Scene() :
-				_activeCamera(nullptr) {
+Scene::Scene() {
 }
 
 Scene::~Scene() {
@@ -26,33 +25,28 @@ void Scene::drawAll() {
 	}
 }
 
-StaticMeshNode* Scene::createStaticMeshNode() {
-	StaticMeshNode* n = new StaticMeshNode;
-	_nodes.push_back(n);
-	return n;
+std::shared_ptr<StaticMeshNode> Scene::createStaticMeshNode() {
+	std::shared_ptr<StaticMeshNode> mesh(new StaticMeshNode());
+	_nodes.push_back(mesh);
+	return mesh;
 }
 
 void Scene::removeAllNodes() {
-	//StaticMeshNodes:
-	for(size_t i = 0; i < _nodes.size(); ++i){
-		delete _nodes[i];
-	}
+	//All nodes deleted by garbage collector of std::unique_ptr
 	_nodes.clear();
-
 }
 
-void Scene::removeNode(SceneNode* node) {
+void Scene::removeNode(std::shared_ptr<SceneNode> node) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == node){
-			delete node;
 			_nodes.erase(_nodes.begin() + i);
 			return;
 		}
 	}
 }
 
-Camera* Scene::createCamera(bool active) {
-	Camera* cam = new Camera();
+std::shared_ptr<Camera> Scene::createCamera(bool active) {
+	std::shared_ptr<Camera> cam(new Camera());
 	_cameras.push_back(cam);
 	if(active){
 		_activeCamera = cam;
@@ -60,16 +54,13 @@ Camera* Scene::createCamera(bool active) {
 	return cam;
 }
 
-void Scene::removeCamera(Camera* cam) {
+void Scene::removeCamera(std::shared_ptr<Camera> cam) {
 	if(cam != nullptr){
 		for(size_t i = 0; i < _cameras.size(); ++i){
 			if(_cameras[i] == cam){
-
 				if(cam == _activeCamera){
 					_activeCamera = nullptr;
 				}
-
-				delete _cameras[i];
 				_cameras.erase(_cameras.begin() + i);
 				return;
 			}
@@ -78,14 +69,11 @@ void Scene::removeCamera(Camera* cam) {
 }
 
 void Scene::removeAllCameras() {
-	for(size_t i = 0; i < _cameras.size(); ++i){
-		delete _cameras[i];
-	}
 	_cameras.clear();
 	_activeCamera = nullptr;
 }
 
-void Scene::setActiveCamera(Camera* cam) {
+void Scene::setActiveCamera(std::shared_ptr<Camera> cam) {
 	if(cam != nullptr){
 		_activeCamera = cam;
 	}

@@ -17,12 +17,9 @@
 namespace burn {
 
 Model::Model() {
-	// TODO Auto-generated constructor stub
-
 }
 
 Model::~Model() {
-	// TODO Auto-generated destructor stub
 }
 
 size_t Model::getMeshCount() const {
@@ -87,7 +84,7 @@ bool Model::loadFromFile(const std::string& file) {
 
 		}
 
-		_meshes.push_back(new Mesh());
+		_meshes.push_back(std::shared_ptr<Mesh>(new Mesh()));
 		_meshes.back()->setVertices(vertices);
 		_meshes.back()->setMaterialIndex(mesh->mMaterialIndex);
 
@@ -131,24 +128,6 @@ bool Model::loadFromFile(const std::string& file) {
 					}
 				}
 			}
-
-			/*std::cout << "Attempting to load texture: " << file << "\n";
-
-			 Texture t;
-			 if(!t.loadFromFile(file)){
-			 std::cout << "Failed to load texture: " << file << "\n";
-			 return false;
-			 }else{
-			 std::cout << "Texture '" << file << "' successfully loaded.\n";
-			 std::cout << "Searching according mesh for texture...\n";
-			 for(size_t j = 0; j < _meshes.size(); ++j){
-			 if(_meshes[j].getMaterialIndex() == i){
-			 _meshes[j].setTexture(t);
-			 std::cout << "Linked texture to mesh. Material index = " << i << "\n";
-			 break;
-			 }
-			 }
-			 }*/
 
 		}else{
 			std::cout << "Material texture is invalid.\n";

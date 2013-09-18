@@ -11,8 +11,9 @@
 #include "../Export.h"
 #include "Mesh.h"
 #include <vector>
+#include <memory>
 
-template class BURNGINE_API std::vector<burn::Mesh*>;
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Mesh>>;
 
 namespace burn {
 
@@ -32,7 +33,7 @@ public:
 	void update();
 
 private:
-	std::vector<Mesh*> _meshes;
+	std::vector<std::shared_ptr<Mesh>> _meshes;
 };
 
 } /* namespace burn */

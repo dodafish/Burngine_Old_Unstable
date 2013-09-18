@@ -12,6 +12,7 @@
 #include "../System/Math.h"
 #include "Transformable.h"
 #include "Camera.h"
+#include <memory>
 
 namespace burn {
 
@@ -33,7 +34,7 @@ public:
 	 * @param camera Pointer to Camera to draw node correctly or
 	 * nullptr for default rendermode.
 	 */
-	virtual void draw(Camera* camera = nullptr) = 0;
+	virtual void draw(std::shared_ptr<Camera> camera) = 0;
 
 protected:
 

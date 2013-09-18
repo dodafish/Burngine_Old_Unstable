@@ -14,9 +14,10 @@
 #include "Camera.h"
 
 #include <vector>
+#include <memory>
 
-template class BURNGINE_API std::vector<burn::SceneNode*>;
-template class BURNGINE_API std::vector<burn::Camera*>;
+template class BURNGINE_API std::vector<std::shared_ptr<burn::SceneNode>>;
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Camera>>;
 
 namespace burn {
 
@@ -44,7 +45,7 @@ public:
 	 *
 	 * @return A pointer to the StaticMeshNode.
 	 */
-	StaticMeshNode* createStaticMeshNode();
+	std::shared_ptr<StaticMeshNode> createStaticMeshNode();
 
 	/**
 	 * @brief Adds a Camera to the scene.
@@ -56,7 +57,7 @@ public:
 	 *
 	 * @see setCameraActive()
 	 */
-	Camera* createCamera(bool active = true);
+	std::shared_ptr<Camera> createCamera(bool active = true);
 
 	/**
 	 * @brief Removes any SceneNode (except Camera) from the scene.
@@ -64,7 +65,7 @@ public:
 	 *
 	 * @param node The SceneNode to delete/remove.
 	 */
-	void removeNode(SceneNode* node);
+	void removeNode(std::shared_ptr<SceneNode> node);
 
 	/**
 	 * @brief Removes all nodes from the scene.
@@ -77,7 +78,7 @@ public:
 	 *
 	 * @param camera The Camera to delete/remove.
 	 */
-	void removeCamera(Camera* camera);
+	void removeCamera(std::shared_ptr<Camera> camera);
 
 	/**
 	 * @brief Removes all cameras from the scene.
@@ -95,12 +96,12 @@ public:
 	 * @note You can use cameras from other scenes, but it is
 	 * recommended to use cameras from the same scene only.
 	 */
-	void setActiveCamera(Camera* camera);
+	void setActiveCamera(std::shared_ptr<Camera> camera);
 
 private:
-	std::vector<SceneNode*> _nodes;
-	std::vector<Camera*> _cameras;
-	Camera* _activeCamera;
+	std::vector<std::shared_ptr<SceneNode>> _nodes;
+	std::vector<std::shared_ptr<Camera>> _cameras;
+	std::shared_ptr<Camera> _activeCamera;
 };
 
 } /* namespace burn */

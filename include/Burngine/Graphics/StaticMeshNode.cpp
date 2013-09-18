@@ -29,7 +29,7 @@ bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
-void StaticMeshNode::draw(Camera* cam) {
+void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 	if(Window::isContextCreated()){
 
