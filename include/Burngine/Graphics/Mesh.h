@@ -76,6 +76,16 @@ public:
 	const GLuint& getPositionBuffer() const;
 
 	/**
+	 * @brief Returns the id of the normal-buffer.
+	 * This is used mostly internally. But you can check the
+	 * buffer by comparing the returned value with 0.
+	 *
+	 * @return Returns the id of the normal-buffer or 0 if no
+	 * normal-buffer exists
+	 */
+	const GLuint& getNormalBuffer() const;
+
+	/**
 	 * @brief Returns the id of the color-buffer.
 	 * This is used mostly internally. But you can check the
 	 * buffer by comparing the returned value with 0.
@@ -155,7 +165,7 @@ private:
 	std::vector<Vertex> _vertices;
 
 	bool _needUpdate;
-	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer;
+	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer, _vertexNormalBuffer;
 
 	unsigned int _materialIndex;
 

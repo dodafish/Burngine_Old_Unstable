@@ -27,6 +27,14 @@ const Vector3f& Vertex::getPosition() const {
 	return _position;
 }
 
+void Vertex::setNormal(const Vector3f& normal) {
+	_normal = normal;
+}
+
+const Vector3f& Vertex::getNormal() const {
+	return _normal;
+}
+
 void Vertex::setColor(const Vector3f& color) {
 	_color = color;
 }

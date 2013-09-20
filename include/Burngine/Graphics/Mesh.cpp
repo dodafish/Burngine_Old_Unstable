@@ -17,12 +17,14 @@ Mesh::Mesh() :
 				_vertexPositionBuffer(0),
 				_vertexColorBuffer(0),
 				_vertexUvBuffer(0),
+				_vertexNormalBuffer(0),
 				_materialIndex(0) {
 
 	if(Window::isContextCreated()){
 		glGenBuffers(1, &_vertexPositionBuffer);
 		glGenBuffers(1, &_vertexColorBuffer);
 		glGenBuffers(1, &_vertexUvBuffer);
+		glGenBuffers(1, &_vertexNormalBuffer);
 	}
 
 }
@@ -33,6 +35,7 @@ Mesh::~Mesh() {
 		glDeleteBuffers(1, &_vertexPositionBuffer);
 		glDeleteBuffers(1, &_vertexColorBuffer);
 		glDeleteBuffers(1, &_vertexUvBuffer);
+		glDeleteBuffers(1, &_vertexNormalBuffer);
 	}
 
 }
@@ -58,6 +61,10 @@ void Mesh::setDiffuseColor(const Vector3f& color) {
 
 const GLuint& Mesh::getPositionBuffer() const {
 	return _vertexPositionBuffer;
+}
+
+const GLuint& Mesh::getNormalBuffer() const {
+	return _vertexNormalBuffer;
 }
 
 const GLuint& Mesh::getColorBuffer() const {
@@ -91,9 +98,10 @@ void Mesh::data() {
 			glGenBuffers(1, &_vertexPositionBuffer);
 			glGenBuffers(1, &_vertexColorBuffer);
 			glGenBuffers(1, &_vertexUvBuffer);
+			glGenBuffers(1, &_vertexNormalBuffer);
 		}
 
-		std::vector<GLfloat> pos, col, uv;
+		std::vector<GLfloat> pos, col, uv, norm;
 		for(size_t i = 0; i < _vertices.size(); ++i){
 			pos.push_back(_vertices[i].getPosition().x);
 			pos.push_back(_vertices[i].getPosition().y);
@@ -105,6 +113,10 @@ void Mesh::data() {
 
 			uv.push_back(_vertices[i].getUv().x);
 			uv.push_back(_vertices[i].getUv().y);
+
+			norm.push_back(_vertices[i].getNormal().x);
+			norm.push_back(_vertices[i].getNormal().y);
+			norm.push_back(_vertices[i].getNormal().z);
 		}
 
 		glBindBuffer(GL_ARRAY_BUFFER, _vertexPositionBuffer);
