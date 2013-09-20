@@ -17,6 +17,7 @@ Scene::Scene() {
 Scene::~Scene() {
 	removeAllNodes();
 	removeAllCameras();
+	removeAllLights();
 }
 
 void Scene::drawAll() {
