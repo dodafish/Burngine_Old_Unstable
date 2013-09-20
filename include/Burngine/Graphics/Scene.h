@@ -111,7 +111,6 @@ private:
 	std::vector<std::shared_ptr<Camera>> _cameras;
 	std::vector<std::shared_ptr<Light>> _lights;
 	std::shared_ptr<Camera> _activeCamera;
-
 };
 
 } /* namespace burn */

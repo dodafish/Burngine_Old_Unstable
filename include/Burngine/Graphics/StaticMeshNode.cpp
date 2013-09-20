@@ -29,7 +29,7 @@ bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
-void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
+void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights) {
 
 	if(Window::isContextCreated()){
 
@@ -40,7 +40,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
 
 				BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
-				setUniforms(BurngineShaders::SOLID_COLOR, cam);
+				setUniforms(BurngineShaders::SOLID_COLOR, cam, lights);
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -85,7 +85,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
 				BurngineShaders::useShader(BurngineShaders::TEXTURED);
-				setUniforms(BurngineShaders::TEXTURED, cam);
+				setUniforms(BurngineShaders::TEXTURED, cam, lights);
 
 				glBindTexture(GL_TEXTURE_2D, _model.getMesh(i).getTexture().getTextureBuffer());
 

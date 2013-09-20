@@ -18,7 +18,10 @@ const std::string MODEL_MATRIX = "M_";
 const std::string VIEW_MATRIX = "V_";
 const std::string PROJECTION_MATRIX = "P_";
 const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODEL_MATRIX + ")";
+
 const std::string CAMERA_POSITION = "CAM_";
+
+const std::string LIGHT_COUNT = "LIGHT_COUNT_";
 
 //----------------------------------------------------------------
 const std::string solidColorV = "#version 330\n"
@@ -28,22 +31,25 @@ const std::string solidColorV = "#version 330\n"
 
 		"out vec3 fragmentColor;"
 		"out vec3 normal;"
-		"out vec3 lightDir;"
+		"out vec3 eyeDir_camspace;"
+		"flat out int lightCount;"
+		"out mat4 viewMat;"
 
 		"uniform mat4 " + MODEL_MATRIX + ";"
 		"uniform mat4 " + VIEW_MATRIX + ";"
 		"uniform mat4 " + PROJECTION_MATRIX + ";"
 		"uniform vec3 " + CAMERA_POSITION + ";"
+		"uniform int " + LIGHT_COUNT + ";"
 
 		"void main(){"
+		"viewMat = " + VIEW_MATRIX + ";"
+		"lightCount = " + LIGHT_COUNT + ";"
 		"gl_Position = " + MVP + " * vec4(vertexPosition, 1.0);"
 
 		"vec3 vertexPosition_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexPosition, 1)).xyz;"
 
-		"vec3 eyeDir_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(" + CAMERA_POSITION
+		"eyeDir_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(" + CAMERA_POSITION
 		+ ",1.0)).xyz - vertexPosition_camspace;"
-
-				"lightDir = vec3(1.0, 2.0, 3.0) + eyeDir_camspace;"
 
 				"fragmentColor = vertexColor;"
 				"normal = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexNormal, 0)).xyz;"
@@ -52,16 +58,32 @@ const std::string solidColorV = "#version 330\n"
 const std::string solidColorF = "#version 330\n"
 		"in vec3 fragmentColor;"
 		"in vec3 normal;"
-		"in vec3 lightDir;"
+		"flat in int lightCount;"
+		"in vec3 eyeDir_camspace;"
+		"in mat4 viewMat;"
+
+		"uniform samplerBuffer lightPositions;"
 
 		"out vec3 color;"
 
 		"void main(){"
 		"vec3 n = normalize(normal);"
-		"vec3 l = normalize(lightDir);"
 
+		"color = vec3(0.0,0.0,0.0);"
+
+		"for(int i = 0; i < lightCount; i++){"
+
+		"vec3 lightPos;"
+		"lightPos.x = texelFetch(lightPositions, i*3).r;"
+		"lightPos.y = texelFetch(lightPositions, i*3+1).r;"
+		"lightPos.z = texelFetch(lightPositions, i*3+2).r;"
+		"lightPos = (viewMat * vec4(lightPos, 1.0)).xyz;"
+
+		"vec3 l = normalize(lightPos + eyeDir_camspace);"
 		"float cosTheta = clamp( dot( n,l ), 0,1 );"
-		"color = fragmentColor * cosTheta;"
+		"color = color + (fragmentColor * cosTheta);"
+
+		"}"
 		"}";
 
 const std::string texturedV = "#version 330\n"

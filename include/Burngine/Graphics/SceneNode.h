@@ -13,7 +13,9 @@
 #include "Transformable.h"
 #include "Camera.h"
 #include <memory>
+#include <vector>
 #include "Shader.h"
+#include "Light.h"
 
 namespace burn {
 
@@ -35,11 +37,12 @@ public:
 	 * @param camera Pointer to Camera to draw node correctly or
 	 * nullptr for default rendermode.
 	 */
-	virtual void draw(std::shared_ptr<Camera> camera) = 0;
+	virtual void draw(std::shared_ptr<Camera> camera, const std::vector<std::shared_ptr<Light>>& lights) = 0;
 
 protected:
 
-	void setUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam);
+	void setUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam,
+			const std::vector<std::shared_ptr<Light>>& lights);
 
 };
 
