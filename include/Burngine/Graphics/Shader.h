@@ -14,43 +14,79 @@
 
 namespace burn {
 
-const std::string MVP_UNIFORM = "MVP";
+const std::string MODEL_MATRIX = "M_";
+const std::string VIEW_MATRIX = "V_";
+const std::string PROJECTION_MATRIX = "P_";
+const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODEL_MATRIX + ")";
 
 //----------------------------------------------------------------
 const std::string solidColorV = "#version 330\n"
-		"layout(location = 0) in vec3 vertexPosition;\n"
-		"layout(location = 1) in vec3 vertexColor;\n"
-		"out vec3 color;\n"
-		"uniform mat4 " + MVP_UNIFORM + ";\n"
+		"layout(location = 0) in vec3 vertexPosition;"
+		"layout(location = 1) in vec3 vertexColor;"
+		"layout(location = 2) in vec3 vertexNormal;"
 
-		"void main(){\n"
-		"color = vertexColor;\n"
-		"gl_Position = " + MVP_UNIFORM + " * vec4(vertexPosition, 1.0);\n"
-		"}";
-const std::string solidColorF = "#version 330\n"
-		"in vec3 color;"
 		"out vec3 fragmentColor;"
+		"out vec3 normal;"
+		"out vec3 lightDir;"
+
+		"uniform mat4 " + MODEL_MATRIX + ";"
+		"uniform mat4 " + VIEW_MATRIX + ";"
+		"uniform mat4 " + PROJECTION_MATRIX + ";"
+
 		"void main(){"
-		"fragmentColor = color;"
+		"gl_Position = " + MVP + " * vec4(vertexPosition, 1.0);"
+
+		"vec3 vertexPosition_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexPosition, 1)).xyz;"
+
+		"vec3 eyeDir_camspace = vec3(0.0, 1.0, 2.0) - vertexPosition_camspace;"
+		"lightDir = vec3(1.0, 2.0, 3.0) + eyeDir_camspace;"
+
+		"fragmentColor = vertexColor;"
+		"normal = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexNormal, 0)).xyz;"
+		"}";
+
+const std::string solidColorF = "#version 330\n"
+		"in vec3 fragmentColor;"
+		"in vec3 normal;"
+		"in vec3 lightDir;"
+
+		"out vec3 color;"
+
+		"void main(){"
+		"vec3 n = normalize(normal);"
+		"vec3 l = normalize(lightDir);"
+
+		"float cosTheta = clamp( dot( n,l ), 0,1 );"
+		"color = fragmentColor * cosTheta;"
 		"}";
 
 const std::string texturedV = "#version 330\n"
 		"layout(location = 0) in vec3 vertexPosition;"
 		"layout(location = 1) in vec2 vertexUv;"
+		"layout(location = 2) in vec3 vertexNormal;\n"
+
 		"out vec2 UV;"
-		"uniform mat4 " + MVP_UNIFORM + ";"
+
+		"uniform mat4 " + MODEL_MATRIX + ";"
+		"uniform mat4 " + VIEW_MATRIX + ";"
+		"uniform mat4 " + PROJECTION_MATRIX + ";"
+
 		"void main(){"
 		"UV = vertexUv;"
-		"gl_Position = MVP * vec4(vertexPosition, 1);"
+		"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
 		"}";
+
 const std::string texturedF = "#version 330\n"
 		"in vec2 UV;"
+
 		"out vec3 color;"
+
 		"uniform sampler2D myTextureSampler;"
+
 		"void main(){"
 		"color = texture(myTextureSampler, UV).rgb;"
-		"}"
-		;
+		"}";
+
 //----------------------------------------------------------------
 
 class BURNGINE_API Shader {

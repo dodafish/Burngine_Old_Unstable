@@ -131,6 +131,12 @@ void Mesh::data() {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * uv.size(), &uv[0],
 		GL_STATIC_DRAW);
 
+		glBindBuffer(GL_ARRAY_BUFFER, _vertexNormalBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * norm.size(), &norm[0],
+		GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind
+
 		_needUpdate = false;
 	}
 }
