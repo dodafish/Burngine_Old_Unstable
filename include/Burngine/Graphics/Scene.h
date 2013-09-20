@@ -12,12 +12,14 @@
 #include "SceneNode.h"
 #include "StaticMeshNode.h"
 #include "Camera.h"
+#include "Light.h"
 
 #include <vector>
 #include <memory>
 
 template class BURNGINE_API std::vector<std::shared_ptr<burn::SceneNode>>;
 template class BURNGINE_API std::vector<std::shared_ptr<burn::Camera>>;
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Light>>;
 
 namespace burn {
 
@@ -58,6 +60,12 @@ public:
 	 * @see setCameraActive()
 	 */
 	std::shared_ptr<Camera> createCamera(bool active = true);
+
+	std::shared_ptr<Light> createLight();
+
+	void removeLight(std::shared_ptr<Light> light);
+
+	void removeAllLights();
 
 	/**
 	 * @brief Removes any SceneNode (except Camera) from the scene.
@@ -101,7 +109,9 @@ public:
 private:
 	std::vector<std::shared_ptr<SceneNode>> _nodes;
 	std::vector<std::shared_ptr<Camera>> _cameras;
+	std::vector<std::shared_ptr<Light>> _lights;
 	std::shared_ptr<Camera> _activeCamera;
+
 };
 
 } /* namespace burn */

@@ -79,4 +79,23 @@ void Scene::setActiveCamera(std::shared_ptr<Camera> cam) {
 	}
 }
 
+std::shared_ptr<Light> Scene::createLight() {
+	std::shared_ptr<Light> light(new Light());
+	_lights.push_back(light);
+	return light;
+}
+
+void Scene::removeLight(std::shared_ptr<Light> light) {
+	for(size_t i = 0; i < _lights.size(); ++i){
+		if(_lights[i] == light){
+			_lights.erase(_lights.begin() + i);
+			return;
+		}
+	}
+}
+
+void Scene::removeAllLights() {
+	_lights.clear(); //Smart pointers ftw!
+}
+
 } /* namespace burn */
