@@ -35,34 +35,12 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 		_model.update();
 
-		glm::mat4 viewMatrix, projectionMatrix;
-		Vector3f cameraPosition; //(0,0,0)
-		if(cam != nullptr){
-			projectionMatrix = glm::perspective(cam->getFov(), cam->getAspectRatio(), 0.1f, 100.0f);
-			viewMatrix = glm::lookAt(cam->getPosition(), cam->getLookAt(), glm::vec3(0, 1, 0));
-			cameraPosition = cam->getPosition();
-		}else{
-			projectionMatrix = Matrix4f(1.f);
-			viewMatrix = Matrix4f(1.f);
-		}
-
 		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
 			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
+
 				BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
-
-				glUniformMatrix4fv(
-						BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, MODEL_MATRIX), 1,
-						GL_FALSE, &getModelMatrix()[0][0]);
-				glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, VIEW_MATRIX),
-						1,
-						GL_FALSE, &viewMatrix[0][0]);
-				glUniformMatrix4fv(
-						BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, PROJECTION_MATRIX), 1,
-						GL_FALSE, &projectionMatrix[0][0]);
-
-				glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, CAMERA_POSITION),
-						cameraPosition.x, cameraPosition.y, cameraPosition.z);
+				setUniforms(BurngineShaders::SOLID_COLOR, cam);
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -107,19 +85,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
 				BurngineShaders::useShader(BurngineShaders::TEXTURED);
-
-				glUniformMatrix4fv(
-						BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, MODEL_MATRIX), 1,
-						GL_FALSE, &getModelMatrix()[0][0]);
-				glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, VIEW_MATRIX),
-						1,
-						GL_FALSE, &viewMatrix[0][0]);
-				glUniformMatrix4fv(
-						BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, PROJECTION_MATRIX), 1,
-						GL_FALSE, &projectionMatrix[0][0]);
-
-				glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::SOLID_COLOR, CAMERA_POSITION),
-						cameraPosition.x, cameraPosition.y, cameraPosition.z);
+				setUniforms(BurngineShaders::TEXTURED, cam);
 
 				glBindTexture(GL_TEXTURE_2D, _model.getMesh(i).getTexture().getTextureBuffer());
 

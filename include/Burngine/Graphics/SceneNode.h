@@ -13,6 +13,7 @@
 #include "Transformable.h"
 #include "Camera.h"
 #include <memory>
+#include "Shader.h"
 
 namespace burn {
 
@@ -37,6 +38,8 @@ public:
 	virtual void draw(std::shared_ptr<Camera> camera) = 0;
 
 protected:
+
+	void setUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam);
 
 };
 
