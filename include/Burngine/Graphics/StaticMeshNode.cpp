@@ -64,23 +64,11 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::sh
 						(void*)0            // array buffer offset
 						);
 
-				//2 = Normals
-				glEnableVertexAttribArray(2);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getNormalBuffer());
-				glVertexAttribPointer(2, // attribute 2
-						3,                  // size
-						GL_FLOAT,           // type
-						GL_FALSE,           // normalized?
-						0,                  // stride
-						(void*)0            // array buffer offset
-						);
-
 				// Draw the triangle !
 				glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(2);
 
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
@@ -111,23 +99,11 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::sh
 						(void*)0            // array buffer offset
 						);
 
-				//2 = Normals
-				glEnableVertexAttribArray(2);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getNormalBuffer());
-				glVertexAttribPointer(2, // attribute 2
-						3,                  // size
-						GL_FLOAT,           // type
-						GL_FALSE,           // normalized?
-						0,                  // stride
-						(void*)0            // array buffer offset
-						);
-
 				// Draw the triangles !
 				glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(2);
 
 			}
 		}

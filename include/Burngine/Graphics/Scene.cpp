@@ -24,29 +24,9 @@ Scene::~Scene() {
 void Scene::drawAll() {
 	if(Window::isContextCreated()){
 
-		GLuint lightBuffer, dataBuffer;
-
-		std::vector<float> lightData;
-		for(size_t i = 0; i < _lights.size(); ++i){
-			lightData.push_back(_lights[i]->getPosition().x);
-			lightData.push_back(_lights[i]->getPosition().y);
-			lightData.push_back(_lights[i]->getPosition().z);
-		}
-
-		glGenBuffers(1, &dataBuffer);
-		glBindBuffer(GL_TEXTURE_BUFFER, dataBuffer);
-		glBufferData(GL_TEXTURE_BUFFER, sizeof(float) * lightData.size(), &lightData[0], GL_STATIC_DRAW);
-
-		glGenTextures(1, &lightBuffer);
-		glBindTexture(GL_TEXTURE_BUFFER, lightBuffer);
-		glTexBuffer(GL_TEXTURE_BUFFER, GL_R32F, dataBuffer);
-
 		for(size_t i = 0; i < _nodes.size(); ++i){
 			_nodes[i]->draw(_activeCamera, _lights);
 		}
-
-		glDeleteBuffers(1, &dataBuffer);
-		glDeleteTextures(1, &lightBuffer);
 
 	}
 }

@@ -36,11 +36,6 @@ void SceneNode::setUniforms(const BurngineShaders::Type& type, std::shared_ptr<C
 	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(type, PROJECTION_MATRIX), 1,
 	GL_FALSE, &projectionMatrix[0][0]);
 
-	glUniform3f(BurngineShaders::getShaderUniformLocation(type, CAMERA_POSITION), cameraPosition.x, cameraPosition.y,
-			cameraPosition.z);
-
-	glUniform1i(BurngineShaders::getShaderUniformLocation(type, LIGHT_COUNT), lights.size());
-
 }
 
 } /* namespace burn */
