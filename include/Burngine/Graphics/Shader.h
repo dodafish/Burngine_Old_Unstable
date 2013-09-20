@@ -18,6 +18,7 @@ const std::string MODEL_MATRIX = "M_";
 const std::string VIEW_MATRIX = "V_";
 const std::string PROJECTION_MATRIX = "P_";
 const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODEL_MATRIX + ")";
+const std::string CAMERA_POSITION = "CAM_";
 
 //----------------------------------------------------------------
 const std::string solidColorV = "#version 330\n"
@@ -32,18 +33,21 @@ const std::string solidColorV = "#version 330\n"
 		"uniform mat4 " + MODEL_MATRIX + ";"
 		"uniform mat4 " + VIEW_MATRIX + ";"
 		"uniform mat4 " + PROJECTION_MATRIX + ";"
+		"uniform vec3 " + CAMERA_POSITION + ";"
 
 		"void main(){"
 		"gl_Position = " + MVP + " * vec4(vertexPosition, 1.0);"
 
 		"vec3 vertexPosition_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexPosition, 1)).xyz;"
 
-		"vec3 eyeDir_camspace = vec3(0.0, 1.0, 2.0) - vertexPosition_camspace;"
-		"lightDir = vec3(1.0, 2.0, 3.0) + eyeDir_camspace;"
+		"vec3 eyeDir_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(" + CAMERA_POSITION
+		+ ",1.0)).xyz - vertexPosition_camspace;"
 
-		"fragmentColor = vertexColor;"
-		"normal = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexNormal, 0)).xyz;"
-		"}";
+				"lightDir = vec3(1.0, 2.0, 3.0) + eyeDir_camspace;"
+
+				"fragmentColor = vertexColor;"
+				"normal = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "*vec4(vertexNormal, 0)).xyz;"
+				"}";
 
 const std::string solidColorF = "#version 330\n"
 		"in vec3 fragmentColor;"
