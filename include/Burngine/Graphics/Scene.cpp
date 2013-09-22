@@ -9,6 +9,7 @@
 
 #include "StaticMeshNode.h"
 #include "Window.h"
+#include "RenderTexture.h"
 
 namespace burn {
 
@@ -25,10 +26,50 @@ Scene::~Scene() {
 void Scene::drawAll() {
 	if(Window::isContextCreated()){
 
+		//Render objects without lighting:
+		_window.bind();
+		Window::setBlendMode(Window::OVERWRITE);
+		glDepthFunc(GL_LESS);
 		for(size_t i = 0; i < _nodes.size(); ++i){
-			_nodes[i]->draw(_activeCamera, _lights);
+			_nodes[i]->draw(_activeCamera);
 		}
 
+		RenderTexture rt;
+		if(rt.create(_window.getSettings().getWidth(), _window.getSettings().getHeight())){
+			//Render objects' lightings:
+			rt.bind();
+			rt.clear();
+			glDepthFunc(GL_LEQUAL);
+			Window::setBlendMode(Window::OVERWRITE);
+			for(size_t i = 0; i < _nodes.size(); ++i){
+				_nodes[i]->drawLighting(_activeCamera, _lights);
+			}
+
+			//Add lighting to scene:
+			glDepthFunc(GL_LESS);
+			_window.bind();
+			Window::setBlendMode(Window::MULTIPLY);
+			rt.drawFullscreen();
+		}
+
+		/*RenderTexture rt;
+		 if(rt.create(_window.getSettings().getWidth(), _window.getSettings().getHeight())){
+		 //glDisable(GL_DEPTH_TEST);
+		 //
+		 rt.bind();
+		 rt.clear();
+		 Window::setBlendMode(Window::OVERWRITE);
+		 glDepthFunc(GL_LESS);
+		 for(size_t i = 0; i < _nodes.size(); ++i){
+		 _nodes[i]->draw(_activeCamera);
+		 }
+
+		 glEnable(GL_DEPTH_TEST);
+		 glDepthFunc(GL_LEQUAL);
+		 _window.bind();
+		 Window::setBlendMode(Window::OVERWRITE);
+		 rt.drawFullscreen();
+		 }*/
 	}
 }
 

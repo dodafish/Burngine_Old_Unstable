@@ -8,6 +8,7 @@
 #include "StaticMeshNode.h"
 #include "Window.h"
 #include "Shader.h"
+#include <iostream>
 
 namespace burn {
 
@@ -29,7 +30,7 @@ bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
-void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights) {
+void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 	if(Window::isContextCreated()){
 
@@ -40,7 +41,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::sh
 			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
 
 				BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
-				setUniforms(BurngineShaders::SOLID_COLOR, cam, lights);
+				setMVPUniforms(BurngineShaders::SOLID_COLOR, cam);
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -73,7 +74,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::sh
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
 				BurngineShaders::useShader(BurngineShaders::TEXTURED);
-				setUniforms(BurngineShaders::TEXTURED, cam, lights);
+				setMVPUniforms(BurngineShaders::TEXTURED, cam);
 
 				glBindTexture(GL_TEXTURE_2D, _model.getMesh(i).getTexture().getTextureBuffer());
 
@@ -106,6 +107,62 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam, const std::vector<std::sh
 				glDisableVertexAttribArray(1);
 
 			}
+		}
+
+	}
+
+}
+
+void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights) {
+
+	_model.update();
+
+	for(size_t i = 0; i < _model.getMeshCount(); ++i){
+
+		Vector3f camPosition; //(0,0,0)
+		if(cam != nullptr){
+			camPosition = cam->getPosition();
+		}
+
+		for(size_t j = 0; j < lights.size(); ++j){
+
+			BurngineShaders::useShader(BurngineShaders::LIGHTING);
+			setMVPUniforms(BurngineShaders::LIGHTING, cam);
+
+			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, CAMERA_POSITION),
+					camPosition.x, camPosition.y, camPosition.z);
+
+			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_POSITION),
+					lights[j]->getPosition().x, lights[j]->getPosition().y, lights[j]->getPosition().z);
+
+			//0 = Positions
+			glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+			glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+					3,                  // size
+					GL_FLOAT,           // type
+					GL_FALSE,           // normalized?
+					0,                  // stride
+					(void*)0            // array buffer offset
+					);
+
+			//1 = Normals
+			glEnableVertexAttribArray(1);
+			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getNormalBuffer());
+			glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+					3,                  // size
+					GL_FLOAT,           // type
+					GL_FALSE,           // normalized?
+					0,                  // stride
+					(void*)0            // array buffer offset
+					);
+
+			// Draw the triangles !
+			glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+
 		}
 
 	}

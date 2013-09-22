@@ -15,8 +15,7 @@ SceneNode::SceneNode() {
 SceneNode::~SceneNode() {
 }
 
-void SceneNode::setUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam,
-		const std::vector<std::shared_ptr<Light>>& lights) {
+void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam) {
 
 	glm::mat4 viewMatrix, projectionMatrix;
 	Vector3f cameraPosition; //(0,0,0)

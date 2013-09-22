@@ -120,6 +120,10 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	return true;
 }
 
+const WindowSettings& Window::getSettings() const {
+	return _settings;
+}
+
 bool Window::close() {
 	if(_window != nullptr){
 		_isContextCreated = false;

@@ -20,7 +20,10 @@ public:
 
 	bool create(const unsigned int& width = 1024, const unsigned int& height = 768);
 
-	void bind(const RenderTexture* renderTexture) const;
+	void bind() const;
+	void clear() const;
+
+	void drawFullscreen();
 
 private:
 	void destroy();

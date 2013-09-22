@@ -18,6 +18,7 @@ namespace burn {
 Shader BurngineShaders::_solidColorShader;
 Shader BurngineShaders::_texturedShader;
 Shader BurngineShaders::_rawTextureShader;
+Shader BurngineShaders::_lightingShader;
 
 bool BurngineShaders::loadAllShaders() {
 
@@ -28,6 +29,9 @@ bool BurngineShaders::loadAllShaders() {
 		return false;
 	}
 	if(!_rawTextureShader.loadFromString(rawTextureV, rawTextureF)){
+		return false;
+	}
+	if(!_lightingShader.loadFromString(lightingV, lightingF)){
 		return false;
 	}
 
@@ -44,6 +48,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 			break;
 		case RAW_TEXTURE:
 			return _rawTextureShader.loadFromString(rawTextureV, rawTextureF);
+			break;
+		case LIGHTING:
+			return _lightingShader.loadFromString(lightingV, lightingF);
 			break;
 		default:
 			return false;
@@ -62,6 +69,12 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 		case TEXTURED:
 			_texturedShader.activate();
 			break;
+		case RAW_TEXTURE:
+			_rawTextureShader.activate();
+			break;
+		case LIGHTING:
+			_lightingShader.activate();
+			break;
 		default:
 			return;
 			break;
@@ -77,6 +90,12 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 			break;
 		case TEXTURED:
 			return _texturedShader.getUniformLocation(uniformName);
+			break;
+		case RAW_TEXTURE:
+			return _rawTextureShader.getUniformLocation(uniformName);
+			break;
+		case LIGHTING:
+			return _lightingShader.getUniformLocation(uniformName);
 			break;
 		default:
 			return 0;

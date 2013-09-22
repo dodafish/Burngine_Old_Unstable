@@ -55,6 +55,8 @@ public:
 	 */
 	bool create(const WindowSettings& ws = WindowSettings(), bool loadShaders = true);
 
+	const WindowSettings& getSettings() const;
+
 	/**
 	 * @brief Destroys the current window
 	 *

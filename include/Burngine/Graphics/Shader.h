@@ -21,7 +21,7 @@ const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODE
 
 const std::string CAMERA_POSITION = "CAM_";
 
-const std::string LIGHT_COUNT = "LIGHT_COUNT_";
+const std::string LIGHT_POSITION = "LIGHT_POSITION_";
 
 //----------------------------------------------------------------
 // see BurngineShaderCode.h
@@ -97,7 +97,8 @@ struct BURNGINE_API BurngineShaders {
 	enum Type {
 		SOLID_COLOR, ///< Solid Color Shader
 		TEXTURED, ///< Simple 1-Texture Shader
-		RAW_TEXTURE ///< This renders a texture without matrices. (Internal use)
+		RAW_TEXTURE, ///< This renders a texture without matrices. (Internal use)
+		LIGHTING ///< Renders the model's lighting
 	};
 
 	/**
@@ -149,6 +150,7 @@ private:
 	static Shader _solidColorShader;
 	static Shader _texturedShader;
 	static Shader _rawTextureShader;
+	static Shader _lightingShader;
 };
 
 } /* namespace burn */
