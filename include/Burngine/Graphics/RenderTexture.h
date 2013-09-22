@@ -18,7 +18,10 @@ public:
 	RenderTexture();
 	~RenderTexture();
 
-	bool create();
+	bool create(const unsigned int& width = 1024, const unsigned int& height = 768);
+
+	void bind(const RenderTexture* renderTexture) const;
+	static void unbind();
 
 private:
 	void destroy();
