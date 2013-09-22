@@ -80,7 +80,6 @@ public:
 
 private:
 	GLuint _id;
-	bool _isLoaded;
 };
 
 struct BURNGINE_API BurngineShaders {

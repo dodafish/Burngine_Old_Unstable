@@ -92,8 +92,7 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 //--------------------------------------------------------------------------------------
 
 Shader::Shader() :
-				_id(0),
-				_isLoaded(false) {
+				_id(0) {
 
 }
 
