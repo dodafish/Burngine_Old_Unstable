@@ -96,16 +96,17 @@ const std::string lightingV = "#version 330\n"
 		"out vec3 lightDir_camspace;"
 		"out vec3 normal_camspace;"
 		"out float dist;"
+		"out vec3 eyeDir_camspace;"
 
 		"void main(){"
 			"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
 
-			"vec3 eyeDirection_camspace = " + CAMERA_POSITION +
+			"eyeDir_camspace = " + CAMERA_POSITION +
 			" - (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(vertexPosition, 1)).xyz;"
 
 			"vec3 singleLight = " + LIGHT_POSITION + ";"
 			"vec3 lPos = (" + VIEW_MATRIX + " * vec4(singleLight,1)).xyz;"
-			"lightDir_camspace = lPos + eyeDirection_camspace;"
+			"lightDir_camspace = lPos + eyeDir_camspace;"
 
 			"normal_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(vertexNormal, 0)).xyz;"
 			"dist = distance(gl_Position.xyz, lPos);"
@@ -114,6 +115,7 @@ const std::string lightingV = "#version 330\n"
 const std::string lightingF = "#version 330\n"
 		"in vec3 lightDir_camspace;"
 		"in vec3 normal_camspace;"
+		"in vec3 eyeDir_camspace;"
 
 		"out vec3 color;"
 		"in float dist;"
@@ -125,8 +127,14 @@ const std::string lightingF = "#version 330\n"
 		"void main(){"
 			"vec3 n = normalize(normal_camspace);"
 			"vec3 l = normalize(lightDir_camspace);"
+			"vec3 E = normalize(eyeDir_camspace);"
+			"vec3 R = reflect(-l, n);"
+
 			"float cosTheta = clamp( dot( n,l ), 0,1 );"
+			"float cosAlpha = clamp( dot( E,R ), 0,1 );"
+
 			"color = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
+			"color = color + vec3(1.0,1.0,1.0) * " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * pow(cosAlpha,5) / (dist*dist);"
 		"}";
 
 const std::string colorlessV = "#version 330\n"
