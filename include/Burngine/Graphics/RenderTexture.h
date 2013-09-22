@@ -21,13 +21,13 @@ public:
 	bool create(const unsigned int& width = 1024, const unsigned int& height = 768);
 
 	void bind(const RenderTexture* renderTexture) const;
-	static void unbind();
 
 private:
 	void destroy();
 
 	GLuint _framebuffer, _texture, _depthbuffer;
 	bool _isCreated;
+	unsigned int _width, _height;
 };
 
 } /* namespace burn */

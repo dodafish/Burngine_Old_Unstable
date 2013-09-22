@@ -16,7 +16,9 @@ RenderTexture::RenderTexture() :
 				_framebuffer(0),
 				_texture(0),
 				_depthbuffer(0),
-				_isCreated(false) {
+				_isCreated(false),
+				_width(0),
+				_height(0) {
 }
 
 RenderTexture::~RenderTexture() {
@@ -25,6 +27,9 @@ RenderTexture::~RenderTexture() {
 
 bool RenderTexture::create(const unsigned int& width, const unsigned int& height) {
 	destroy(); //if needed
+
+	_width = width;
+	_height = height;
 
 	if(Window::isContextCreated() && !_isCreated){
 		//Framebuffer:
@@ -79,12 +84,7 @@ void RenderTexture::destroy() {
 void RenderTexture::bind(const RenderTexture* rt) const {
 	if(_isCreated && Window::isContextCreated()){
 		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	}
-}
-
-void RenderTexture::unbind() {
-	if(Window::isContextCreated()){
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, _width, _height);
 	}
 }
 

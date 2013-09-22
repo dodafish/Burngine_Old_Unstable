@@ -120,6 +120,8 @@ public:
 	 */
 	const double& getElapsedTime() const;
 
+	void bind() const;
+
 	/**
 	 * @brief This function is used to ensure, that an
 	 * OpenGL-Context exists. Calling OpenGL-Methods will result

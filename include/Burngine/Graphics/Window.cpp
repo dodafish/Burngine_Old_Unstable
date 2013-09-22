@@ -159,4 +159,9 @@ const double& Window::getElapsedTime() const {
 	return _elapsedTime;
 }
 
+void Window::bind() const {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, _settings.getWidth(), _settings.getHeight());
+}
+
 } /* namespace burn */
