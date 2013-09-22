@@ -11,10 +11,13 @@
 #include <iostream>
 #include <vector>
 
+#include "BurngineShaderCode.h"
+
 namespace burn {
 
 Shader BurngineShaders::_solidColorShader;
 Shader BurngineShaders::_texturedShader;
+Shader BurngineShaders::_rawTextureShader;
 
 bool BurngineShaders::loadAllShaders() {
 
@@ -22,6 +25,9 @@ bool BurngineShaders::loadAllShaders() {
 		return false;
 	}
 	if(!_texturedShader.loadFromString(texturedV, texturedF)){
+		return false;
+	}
+	if(!_rawTextureShader.loadFromString(rawTextureV, rawTextureF)){
 		return false;
 	}
 
@@ -35,6 +41,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 			break;
 		case TEXTURED:
 			return _texturedShader.loadFromString(texturedV, texturedF);
+			break;
+		case RAW_TEXTURE:
+			return _rawTextureShader.loadFromString(rawTextureV, rawTextureF);
 			break;
 		default:
 			return false;

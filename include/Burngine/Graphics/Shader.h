@@ -24,59 +24,7 @@ const std::string CAMERA_POSITION = "CAM_";
 const std::string LIGHT_COUNT = "LIGHT_COUNT_";
 
 //----------------------------------------------------------------
-const std::string solidColorV = "#version 330\n"
-		"layout(location = 0) in vec3 vertexPosition;"
-		"layout(location = 1) in vec3 vertexColor;"
-
-		"out vec3 fragmentColor;"
-
-		"uniform mat4 " + MODEL_MATRIX + ";"
-		"uniform mat4 " + VIEW_MATRIX + ";"
-		"uniform mat4 " + PROJECTION_MATRIX + ";"
-
-		"void main(){"
-		"gl_Position = " + MVP + " * vec4(vertexPosition, 1.0);"
-		"fragmentColor = vertexColor;"
-		"}";
-
-const std::string solidColorF = "#version 330\n"
-		"in vec3 fragmentColor;"
-
-		"out vec3 color;"
-
-		"void main(){"
-
-		"color = fragmentColor;"
-
-		"}";
-
-const std::string texturedV = "#version 330\n"
-		"layout(location = 0) in vec3 vertexPosition;"
-		"layout(location = 1) in vec2 vertexUv;"
-		"layout(location = 2) in vec3 vertexNormal;\n"
-
-		"out vec2 UV;"
-
-		"uniform mat4 " + MODEL_MATRIX + ";"
-		"uniform mat4 " + VIEW_MATRIX + ";"
-		"uniform mat4 " + PROJECTION_MATRIX + ";"
-
-		"void main(){"
-		"UV = vertexUv;"
-		"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
-		"}";
-
-const std::string texturedF = "#version 330\n"
-		"in vec2 UV;"
-
-		"out vec3 color;"
-
-		"uniform sampler2D myTextureSampler;"
-
-		"void main(){"
-		"color = texture(myTextureSampler, UV).rgb;"
-		"}";
-
+// see BurngineShaderCode.h
 //----------------------------------------------------------------
 
 class BURNGINE_API Shader {
@@ -149,7 +97,8 @@ struct BURNGINE_API BurngineShaders {
 	 */
 	enum Type {
 		SOLID_COLOR, ///< Solid Color Shader
-		TEXTURED ///< Simple 1-Texture Shader
+		TEXTURED, ///< Simple 1-Texture Shader
+		RAW_TEXTURE ///< This renders a texture without matrices. (Internal use)
 	};
 
 	/**
@@ -200,6 +149,7 @@ struct BURNGINE_API BurngineShaders {
 private:
 	static Shader _solidColorShader;
 	static Shader _texturedShader;
+	static Shader _rawTextureShader;
 };
 
 } /* namespace burn */
