@@ -120,12 +120,13 @@ const std::string lightingF = "#version 330\n"
 
 		"uniform vec3 " + LIGHT_COLOR + ";"
 		"uniform float " + LIGHT_INTENSITY + ";"
+		"uniform vec3 " + LIGHT_AMBIENT + ";"
 
 		"void main(){"
 			"vec3 n = normalize(normal_camspace);"
 			"vec3 l = normalize(lightDir_camspace);"
 			"float cosTheta = clamp( dot( n,l ), 0,1 );"
-			"color = " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
+			"color = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
 		"}";
 
 const std::string colorlessV = "#version 330\n"

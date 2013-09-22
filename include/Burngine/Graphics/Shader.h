@@ -24,6 +24,7 @@ const std::string CAMERA_POSITION = "CAM_";
 const std::string LIGHT_POSITION = "LIGHT_POSITION_";
 const std::string LIGHT_COLOR = "LIGHT_COLOR_";
 const std::string LIGHT_INTENSITY = "LIGHT_INTENSITY_";
+const std::string LIGHT_AMBIENT = "LIGHT_AMBIENT_";
 
 //----------------------------------------------------------------
 // see BurngineShaderCode.h

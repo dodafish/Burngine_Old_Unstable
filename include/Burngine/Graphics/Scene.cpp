@@ -14,7 +14,7 @@
 namespace burn {
 
 Scene::Scene(Window& window) :
-				_window(window) {
+				_window(window){
 }
 
 Scene::~Scene() {
@@ -49,7 +49,7 @@ void Scene::drawAll() {
 			glDepthFunc(GL_EQUAL);
 			Window::setBlendMode(Window::ADD);
 			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawLighting(_activeCamera, _lights);
+				_nodes[i]->drawLighting(_activeCamera, _lights, _ambientColor);
 			}
 
 			//Add lighting to scene:
@@ -133,6 +133,14 @@ void Scene::removeLight(std::shared_ptr<Light> light) {
 
 void Scene::removeAllLights() {
 	_lights.clear(); //Smart pointers ftw!
+}
+
+void Scene::setAmbientColor(const Vector3f& color) {
+	_ambientColor = color;
+}
+
+const Vector3f& Scene::getAmbientColor() const {
+	return _ambientColor;
 }
 
 } /* namespace burn */

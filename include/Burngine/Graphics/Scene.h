@@ -108,8 +108,12 @@ public:
 	 */
 	void setActiveCamera(std::shared_ptr<Camera> camera);
 
+	void setAmbientColor(const Vector3f& color);
+	const Vector3f& getAmbientColor() const;
+
 private:
 	Window& _window;
+	Vector3f _ambientColor;
 
 	std::vector<std::shared_ptr<SceneNode>> _nodes;
 	std::vector<std::shared_ptr<Camera>> _cameras;

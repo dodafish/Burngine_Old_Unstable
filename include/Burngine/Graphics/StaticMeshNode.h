@@ -69,7 +69,8 @@ public:
 
 	virtual void drawDepthColorless(std::shared_ptr<Camera> camera);
 
-	virtual void drawLighting(std::shared_ptr<Camera> camera, const std::vector<std::shared_ptr<Light>>& lights);
+	virtual void drawLighting(std::shared_ptr<Camera> camera, const std::vector<std::shared_ptr<Light>>& lights,
+			const Vector3f& ambient);
 
 private:
 	Model _model;

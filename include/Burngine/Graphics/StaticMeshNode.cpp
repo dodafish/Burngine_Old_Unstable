@@ -142,7 +142,8 @@ void StaticMeshNode::drawDepthColorless(std::shared_ptr<Camera> cam) {
 
 }
 
-void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights) {
+void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights,
+		const Vector3f& ambient) {
 
 	_model.update();
 
@@ -166,6 +167,9 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_COLOR),
 					lights[j]->getColor().r, lights[j]->getColor().g, lights[j]->getColor().b);
+
+			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_AMBIENT), ambient.r,
+					ambient.g, ambient.b);
 
 			glUniform1f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_INTENSITY),
 					lights[j]->getIntensity());
