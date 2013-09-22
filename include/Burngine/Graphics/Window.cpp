@@ -104,6 +104,10 @@ bool Window::create(const WindowSettings& settings) {
 
 	std::cout << "Enabled depth-test.\n";
 
+	glEnable(GL_BLEND);
+
+	std::cout << "Blending enabled.\n";
+
 	return true;
 }
 
