@@ -11,6 +11,11 @@
 #include "../Export.h"
 #include "WindowSettings.h"
 #include "OpenGL.h"
+#include "Scene.h"
+
+#include <vector>
+
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Scene>>;
 
 namespace burn {
 
@@ -146,7 +151,12 @@ public:
 	 */
 	static inline void setBlendMode(const BlendMode& blendMode);
 
+	std::shared_ptr<Scene> createScene();
+	void removeScene(const std::shared_ptr<Scene>& scene);
+
 private:
+	std::vector<std::shared_ptr<Scene>> _scenes;
+
 	static bool _isContextCreated;
 	bool _isGlfwInit;
 	GLFWwindow* _window;

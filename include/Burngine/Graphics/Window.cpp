@@ -164,4 +164,19 @@ void Window::bind() const {
 	glViewport(0, 0, _settings.getWidth(), _settings.getHeight());
 }
 
+std::shared_ptr<Scene> Window::createScene() {
+	std::shared_ptr<Scene> scene(new Scene(*this));
+	_scenes.push_back(scene);
+	return scene;
+}
+
+void Window::removeScene(const std::shared_ptr<Scene>& scene) {
+	for(size_t i = 0; i < _scenes.size(); ++i){
+		if(_scenes[i] == scene){
+			_scenes.erase(_scenes.begin() + i);
+			return;
+		}
+	}
+}
+
 } /* namespace burn */

@@ -12,7 +12,8 @@
 
 namespace burn {
 
-Scene::Scene() {
+Scene::Scene(Window& window) :
+				_window(window) {
 }
 
 Scene::~Scene() {

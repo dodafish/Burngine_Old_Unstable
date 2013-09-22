@@ -23,12 +23,14 @@ template class BURNGINE_API std::vector<std::shared_ptr<burn::Light>>;
 
 namespace burn {
 
+class Window;
+
 class BURNGINE_API Scene {
 public:
 	/**
 	 * @brief The default constructor
 	 */
-	Scene();
+	Scene(Window& window);
 
 	/**
 	 * @brief The default destructor. When called by e.g. deleting
@@ -107,6 +109,8 @@ public:
 	void setActiveCamera(std::shared_ptr<Camera> camera);
 
 private:
+	Window& _window;
+
 	std::vector<std::shared_ptr<SceneNode>> _nodes;
 	std::vector<std::shared_ptr<Camera>> _cameras;
 	std::vector<std::shared_ptr<Light>> _lights;
