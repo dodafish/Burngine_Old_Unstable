@@ -18,6 +18,7 @@ const std::string MODEL_MATRIX = "M_";
 const std::string VIEW_MATRIX = "V_";
 const std::string PROJECTION_MATRIX = "P_";
 const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODEL_MATRIX + ")";
+const std::string NORMAL_MATRIX = "NORM_MAT_";
 
 const std::string CAMERA_POSITION = "CAM_";
 
@@ -25,6 +26,7 @@ const std::string LIGHT_POSITION = "LIGHT_POSITION_";
 const std::string LIGHT_COLOR = "LIGHT_COLOR_";
 const std::string LIGHT_INTENSITY = "LIGHT_INTENSITY_";
 const std::string LIGHT_AMBIENT = "LIGHT_AMBIENT_";
+const std::string LIGHT_SPECULAR = "LIGHT_SPECULAR_";
 
 //----------------------------------------------------------------
 // see BurngineShaderCode.h

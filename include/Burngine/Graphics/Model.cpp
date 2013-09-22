@@ -99,12 +99,18 @@ bool Model::loadFromFile(const std::string& file) {
 
 		aiMaterial* material = scene->mMaterials[i];
 
-		aiColor3D color(1.f, 0.7f, 0.f);
-		material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-		std::cout << "-------- Setting diffuse color...\n";
+		aiColor3D diffuseColor(1.f, 0.7f, 0.f);
+		aiColor3D specularColor(1.f, 1.f, 1.f);
+		material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
+		material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
+		std::cout << "-------- Setting diffuse/specular colors...\n";
 		for(size_t j = 0; j < _meshes.size(); ++j){
 			if(_meshes[j]->getMaterialIndex() == i){
-				_meshes[j]->setDiffuseColor(Vector3f(color.r, color.g, color.b));
+				Material mat = _meshes[j]->getMaterial();
+
+				_meshes[j]->setDiffuseColor(Vector3f(diffuseColor.r, diffuseColor.g, diffuseColor.b));
+				mat.setSpecularColor(Vector3f(specularColor.r, specularColor.g, specularColor.b));
+				_meshes[j]->setMaterial(mat);
 			}
 		}
 

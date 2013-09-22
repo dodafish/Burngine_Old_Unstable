@@ -10,7 +10,8 @@
 namespace burn {
 
 Material::Material() :
-				_type(SOLID_COLOR) {
+				_type(SOLID_COLOR),
+				_specularColor(Vector3f(1.f, 1.f, 1.f)) {
 	_flags[LIGHTING] = false;
 }
 
@@ -36,6 +37,14 @@ bool Material::isFlagSet(Material::Flag flag) const {
 		return _flags[flag];
 	}
 	return false;
+}
+
+void Material::setSpecularColor(const Vector3f& color) {
+	_specularColor = color;
+}
+
+const Vector3f& Material::getSpecularColor() const {
+	return _specularColor;
 }
 
 } /* namespace burn */

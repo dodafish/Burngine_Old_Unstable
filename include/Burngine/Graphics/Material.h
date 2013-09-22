@@ -9,6 +9,7 @@
 #define MATERIAL_H_
 
 #include "../Export.h"
+#include "../System/Math.h"
 
 namespace burn {
 
@@ -81,9 +82,14 @@ public:
 	 */
 	bool isFlagSet(Flag flag) const;
 
+	void setSpecularColor(const Vector3f& color);
+	const Vector3f& getSpecularColor() const;
+
 private:
 	Type _type;
 	bool _flags[COUNT];
+
+	Vector3f _specularColor;
 };
 
 } /* namespace burn */

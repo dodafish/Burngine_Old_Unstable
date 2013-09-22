@@ -159,6 +159,20 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 			BurngineShaders::useShader(BurngineShaders::LIGHTING);
 			setMVPUniforms(BurngineShaders::LIGHTING, cam);
 
+			Matrix4f mvp, view, projection;
+			if(cam != nullptr){
+				projection = glm::perspective(cam->getFov(), cam->getAspectRatio(), 0.1f, 100.0f);
+				view = glm::lookAt(cam->getPosition(), cam->getLookAt(), glm::vec3(0, 1, 0));
+			}else{
+				projection = Matrix4f(1.f);
+				view = Matrix4f(1.f);
+			}
+			mvp = projection * view * getModelMatrix();
+			Matrix4f normalMatrix = glm::transpose(glm::inverse(mvp));
+
+			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, NORMAL_MATRIX), 1,
+			GL_FALSE, &normalMatrix[0][0]);
+
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, CAMERA_POSITION),
 					camPosition.x, camPosition.y, camPosition.z);
 
@@ -170,6 +184,11 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_AMBIENT), ambient.r,
 					ambient.g, ambient.b);
+
+			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_SPECULAR),
+					_model.getMesh(i).getMaterial().getSpecularColor().r,
+					_model.getMesh(i).getMaterial().getSpecularColor().g,
+					_model.getMesh(i).getMaterial().getSpecularColor().b);
 
 			glUniform1f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_INTENSITY),
 					lights[j]->getIntensity());
