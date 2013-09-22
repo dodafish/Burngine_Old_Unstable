@@ -41,6 +41,9 @@ public:
 	 *
 	 * @param ws The WindowSettings which the window should be
 	 * created to accordingly.
+	 * @param loadShaders Loads the predefined BurngineShaders.
+	 * If you set this to false, pay attention loading them manually
+	 * before drawing anything, that uses no costum shaders!
 	 *
 	 * @return Returns true on success
 	 *
@@ -50,7 +53,7 @@ public:
 	 *
 	 * @see close()
 	 */
-	bool create(const WindowSettings& ws = WindowSettings());
+	bool create(const WindowSettings& ws = WindowSettings(), bool loadShaders = true);
 
 	/**
 	 * @brief Destroys the current window

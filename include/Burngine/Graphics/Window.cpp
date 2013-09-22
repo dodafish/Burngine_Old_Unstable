@@ -27,7 +27,7 @@ Window::~Window() {
 	glfwTerminate();
 }
 
-bool Window::create(const WindowSettings& settings) {
+bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	close();
 	_settings = settings;
@@ -88,6 +88,15 @@ bool Window::create(const WindowSettings& settings) {
 	}else{
 		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
 		return false;
+	}
+
+	if(loadShaders){
+		if(!BurngineShaders::loadAllShaders()){
+			return false;
+		}
+		std::cout << "Loaded BurngineShaders.\n";
+	}else{
+		std::cout << "BurngineShaders not loaded! This might cause crashes, when not loaded manually.\n";
 	}
 
 	glGenVertexArrays(1, &_vertexArrayID);
