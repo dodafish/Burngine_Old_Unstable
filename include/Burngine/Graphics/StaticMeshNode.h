@@ -67,6 +67,8 @@ public:
 	 */
 	virtual void draw(std::shared_ptr<Camera> cam);
 
+	virtual void drawDepthColorless(std::shared_ptr<Camera> camera);
+
 	virtual void drawLighting(std::shared_ptr<Camera> camera, const std::vector<std::shared_ptr<Light>>& lights);
 
 private:

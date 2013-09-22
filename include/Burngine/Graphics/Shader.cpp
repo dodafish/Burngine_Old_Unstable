@@ -19,6 +19,7 @@ Shader BurngineShaders::_solidColorShader;
 Shader BurngineShaders::_texturedShader;
 Shader BurngineShaders::_rawTextureShader;
 Shader BurngineShaders::_lightingShader;
+Shader BurngineShaders::_colorlessShader;
 
 bool BurngineShaders::loadAllShaders() {
 
@@ -32,6 +33,9 @@ bool BurngineShaders::loadAllShaders() {
 		return false;
 	}
 	if(!_lightingShader.loadFromString(lightingV, lightingF)){
+		return false;
+	}
+	if(!_colorlessShader.loadFromString(colorlessV, colorlessF)){
 		return false;
 	}
 
@@ -51,6 +55,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 			break;
 		case LIGHTING:
 			return _lightingShader.loadFromString(lightingV, lightingF);
+			break;
+		case COLORLESS:
+			return _colorlessShader.loadFromString(colorlessV, colorlessF);
 			break;
 		default:
 			return false;
@@ -75,6 +82,9 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 		case LIGHTING:
 			_lightingShader.activate();
 			break;
+		case COLORLESS:
+			_colorlessShader.activate();
+			break;
 		default:
 			return;
 			break;
@@ -96,6 +106,9 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 			break;
 		case LIGHTING:
 			return _lightingShader.getUniformLocation(uniformName);
+			break;
+		case COLORLESS:
+			return _colorlessShader.getUniformLocation(uniformName);
 			break;
 		default:
 			return 0;

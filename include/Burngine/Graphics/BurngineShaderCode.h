@@ -95,6 +95,7 @@ const std::string lightingV = "#version 330\n"
 
 		"out vec3 lightDir_camspace;"
 		"out vec3 normal_camspace;"
+		"out float dist;"
 
 		"void main(){"
 			"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
@@ -107,6 +108,7 @@ const std::string lightingV = "#version 330\n"
 			"lightDir_camspace = lPos + eyeDirection_camspace;"
 
 			"normal_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(vertexNormal, 0)).xyz;"
+			"dist = distance(gl_Position.xyz, lPos);"
 		"}";
 
 const std::string lightingF = "#version 330\n"
@@ -114,12 +116,33 @@ const std::string lightingF = "#version 330\n"
 		"in vec3 normal_camspace;"
 
 		"out vec3 color;"
+		"in float dist;"
+
+		"uniform vec3 " + LIGHT_COLOR + ";"
+		"uniform float " + LIGHT_INTENSITY + ";"
 
 		"void main(){"
 			"vec3 n = normalize(normal_camspace);"
 			"vec3 l = normalize(lightDir_camspace);"
 			"float cosTheta = clamp( dot( n,l ), 0,1 );"
-			"color = vec3(1.0, 1.0, 1.0) * cosTheta;"
+			"color = " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
+		"}";
+
+const std::string colorlessV = "#version 330\n"
+		"layout(location = 0) in vec3 vertexPosition;"
+
+		"uniform mat4 " + MODEL_MATRIX + ";"
+		"uniform mat4 " + VIEW_MATRIX + ";"
+		"uniform mat4 " + PROJECTION_MATRIX + ";"
+
+		"void main(){"
+			"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
+		"}";
+
+const std::string colorlessF = "#version 330\n"
+		"out vec3 color;"
+		"void main(){"
+		"color = vec3(0,0,0);"
 		"}";
 
 }

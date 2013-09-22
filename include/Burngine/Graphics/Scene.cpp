@@ -39,8 +39,15 @@ void Scene::drawAll() {
 			//Render objects' lightings:
 			rt.bind();
 			rt.clear();
-			glDepthFunc(GL_LEQUAL);
+
+			glDepthFunc(GL_LESS);
 			Window::setBlendMode(Window::OVERWRITE);
+			for(size_t i = 0; i < _nodes.size(); ++i){
+				_nodes[i]->drawDepthColorless(_activeCamera);
+			}
+
+			glDepthFunc(GL_EQUAL);
+			Window::setBlendMode(Window::ADD);
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawLighting(_activeCamera, _lights);
 			}
@@ -52,24 +59,6 @@ void Scene::drawAll() {
 			rt.drawFullscreen();
 		}
 
-		/*RenderTexture rt;
-		 if(rt.create(_window.getSettings().getWidth(), _window.getSettings().getHeight())){
-		 //glDisable(GL_DEPTH_TEST);
-		 //
-		 rt.bind();
-		 rt.clear();
-		 Window::setBlendMode(Window::OVERWRITE);
-		 glDepthFunc(GL_LESS);
-		 for(size_t i = 0; i < _nodes.size(); ++i){
-		 _nodes[i]->draw(_activeCamera);
-		 }
-
-		 glEnable(GL_DEPTH_TEST);
-		 glDepthFunc(GL_LEQUAL);
-		 _window.bind();
-		 Window::setBlendMode(Window::OVERWRITE);
-		 rt.drawFullscreen();
-		 }*/
 	}
 }
 

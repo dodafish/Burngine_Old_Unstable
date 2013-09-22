@@ -113,6 +113,35 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 }
 
+void StaticMeshNode::drawDepthColorless(std::shared_ptr<Camera> cam) {
+
+	_model.update();
+
+	for(size_t i = 0; i < _model.getMeshCount(); ++i){
+
+		BurngineShaders::useShader(BurngineShaders::COLORLESS);
+		setMVPUniforms(BurngineShaders::COLORLESS, cam);
+
+		//0 = Positions
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+		glVertexAttribPointer(0, // attribute 0
+				3,                  // size
+				GL_FLOAT,           // type
+				GL_FALSE,           // normalized?
+				0,                  // stride
+				(void*)0            // array buffer offset
+				);
+
+		// Draw the triangle !
+		glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+		glDisableVertexAttribArray(0);
+
+	}
+
+}
+
 void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights) {
 
 	_model.update();
@@ -135,26 +164,32 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_POSITION),
 					lights[j]->getPosition().x, lights[j]->getPosition().y, lights[j]->getPosition().z);
 
+			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_COLOR),
+					lights[j]->getColor().r, lights[j]->getColor().g, lights[j]->getColor().b);
+
+			glUniform1f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_INTENSITY),
+					lights[j]->getIntensity());
+
 			//0 = Positions
 			glEnableVertexAttribArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
 			glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-					3,                  // size
-					GL_FLOAT,           // type
-					GL_FALSE,           // normalized?
-					0,                  // stride
-					(void*)0            // array buffer offset
+					3, // size
+					GL_FLOAT, // type
+					GL_FALSE, // normalized?
+					0, // stride
+					(void*)0 // array buffer offset
 					);
 
 			//1 = Normals
 			glEnableVertexAttribArray(1);
 			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getNormalBuffer());
 			glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-					3,                  // size
-					GL_FLOAT,           // type
-					GL_FALSE,           // normalized?
-					0,                  // stride
-					(void*)0            // array buffer offset
+					3, // size
+					GL_FLOAT, // type
+					GL_FALSE, // normalized?
+					0, // stride
+					(void*)0 // array buffer offset
 					);
 
 			// Draw the triangles !
