@@ -159,7 +159,7 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 			BurngineShaders::useShader(BurngineShaders::LIGHTING);
 			setMVPUniforms(BurngineShaders::LIGHTING, cam);
 
-			Matrix4f mvp, view, projection;
+			Matrix4f normalMatrix, view, projection;
 			if(cam != nullptr){
 				projection = glm::perspective(cam->getFov(), cam->getAspectRatio(), 0.1f, 100.0f);
 				view = glm::lookAt(cam->getPosition(), cam->getLookAt(), glm::vec3(0, 1, 0));
@@ -167,8 +167,7 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 				projection = Matrix4f(1.f);
 				view = Matrix4f(1.f);
 			}
-			mvp = projection * view * getModelMatrix();
-			Matrix4f normalMatrix = glm::transpose(glm::inverse(mvp));
+			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 
 			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, NORMAL_MATRIX), 1,
 			GL_FALSE, &normalMatrix[0][0]);
