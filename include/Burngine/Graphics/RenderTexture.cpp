@@ -101,17 +101,11 @@ void RenderTexture::bind() const {
 
 void RenderTexture::clear() const {
 	if(_isCreated && Window::isContextCreated()){
-		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-		glViewport(0, 0, _width, _height);
-		glBindRenderbuffer(GL_RENDERBUFFER, _depthbuffer);
-
 		glBindTexture(GL_TEXTURE_2D, _texture0);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, _texture1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 }
 
