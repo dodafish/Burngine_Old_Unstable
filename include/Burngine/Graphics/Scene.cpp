@@ -14,7 +14,7 @@
 namespace burn {
 
 Scene::Scene(Window& window) :
-				_window(window){
+				_window(window) {
 }
 
 Scene::~Scene() {
@@ -30,9 +30,11 @@ void Scene::drawAll() {
 		_window.bind();
 		Window::setBlendMode(Window::OVERWRITE);
 		glDepthFunc(GL_LESS);
+		glDisable(GL_BLEND);
 		for(size_t i = 0; i < _nodes.size(); ++i){
 			_nodes[i]->draw(_activeCamera);
 		}
+		glEnable(GL_BLEND);
 
 		RenderTexture rt;
 		if(rt.create(_window.getSettings().getWidth(), _window.getSettings().getHeight())){
@@ -53,10 +55,23 @@ void Scene::drawAll() {
 			}
 
 			//Add lighting to scene:
-			glDepthFunc(GL_LESS);
+			glDepthMask(GL_FALSE);
+			glDisable(GL_DEPTH_TEST);
 			_window.bind();
 			Window::setBlendMode(Window::MULTIPLY);
-			rt.drawFullscreen();
+			rt.drawFullscreen(RenderTexture::TEXTURE0); //Diffuse lightings
+			_window.bind();
+			Window::setBlendMode(Window::ADD);
+			rt.drawFullscreen(RenderTexture::TEXTURE1); //Specular lightings
+
+			//Debug-view:
+			Window::setBlendMode(Window::OVERWRITE);
+			rt.draw(RenderTexture::TEXTURE0, Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
+			rt.draw(RenderTexture::TEXTURE1, Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
+
+			glDepthMask(GL_TRUE);
+			glEnable(GL_DEPTH_TEST);
+
 		}
 
 	}

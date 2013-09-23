@@ -10,6 +10,7 @@
 
 #include "../Export.h"
 #include "OpenGL.h"
+#include "../System/Math.h"
 
 namespace burn {
 
@@ -23,12 +24,18 @@ public:
 	void bind() const;
 	void clear() const;
 
-	void drawFullscreen();
+	enum TextureUnit{
+		TEXTURE0,
+		TEXTURE1
+	};
+
+	void drawFullscreen(TextureUnit tu);
+	void draw(TextureUnit tu, const Vector2f& position, const Vector2f& size);
 
 private:
 	void destroy();
 
-	GLuint _framebuffer, _texture, _depthbuffer;
+	GLuint _framebuffer, _texture0, _texture1, _depthbuffer;
 	bool _isCreated;
 	unsigned int _width, _height;
 };
