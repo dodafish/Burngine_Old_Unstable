@@ -6,6 +6,7 @@
  */
 
 #include "DepthTexture.h"
+#include "Window.h"
 
 namespace burn {
 
@@ -64,6 +65,12 @@ void DepthTexture::clear() {
 		glBindTexture(GL_TEXTURE_2D, _texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+		GLint lastFB = 0;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	}
 }
 

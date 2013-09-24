@@ -117,6 +117,12 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	std::cout << "Blending enabled.\n";
 
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
+	std::cout << "Cullface enabled.\n";
+
 	return true;
 }
 

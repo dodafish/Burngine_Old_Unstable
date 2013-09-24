@@ -106,6 +106,12 @@ void RenderTexture::clear() const {
 		glBindTexture(GL_TEXTURE_2D, _texture1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+		GLint lastFB = 0;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	}
 }
 
