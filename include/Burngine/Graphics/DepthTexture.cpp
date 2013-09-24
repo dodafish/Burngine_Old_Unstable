@@ -21,6 +21,10 @@ DepthTexture::~DepthTexture() {
 }
 
 bool DepthTexture::create() {
+
+	if(!Window::isContextCreated())
+		return false;
+
 	destroy(); //if needed
 
 	glGenFramebuffers(1, &_framebuffer);

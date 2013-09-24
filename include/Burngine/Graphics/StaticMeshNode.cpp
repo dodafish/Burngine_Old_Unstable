@@ -8,6 +8,7 @@
 #include "StaticMeshNode.h"
 #include "Window.h"
 #include "Shader.h"
+#include "DepthCubeMap.h"
 #include <iostream>
 
 namespace burn {
@@ -147,15 +148,17 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 
 	_model.update();
 
-	for(size_t i = 0; i < _model.getMeshCount(); ++i){
+	Vector3f camPosition; //(0,0,0)
+	if(cam != nullptr){
+		camPosition = cam->getPosition();
+	}
 
-		Vector3f camPosition; //(0,0,0)
-		if(cam != nullptr){
-			camPosition = cam->getPosition();
-		}
+	for(size_t j = 0; j < lights.size(); ++j){
 
-		for(size_t j = 0; j < lights.size(); ++j){
+		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
+			//---
+			//Draw the actual lighting:
 			BurngineShaders::useShader(BurngineShaders::LIGHTING);
 			setMVPUniforms(BurngineShaders::LIGHTING, cam);
 
