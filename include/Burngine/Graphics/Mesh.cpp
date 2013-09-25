@@ -17,8 +17,7 @@ Mesh::Mesh() :
 				_vertexPositionBuffer(0),
 				_vertexColorBuffer(0),
 				_vertexUvBuffer(0),
-				_vertexNormalBuffer(0),
-				_materialIndex(0) {
+				_vertexNormalBuffer(0) {
 
 	if(Window::isContextCreated()){
 		glGenBuffers(1, &_vertexPositionBuffer);
@@ -48,14 +47,6 @@ void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	_vertices = vertices;
 	_needUpdate = true;
 
-	data();
-}
-
-void Mesh::setDiffuseColor(const Vector3f& color) {
-	for(size_t i = 0; i < _vertices.size(); ++i){
-		_vertices[i].setColor(color);
-	}
-	_needUpdate = true;
 	data();
 }
 
@@ -92,7 +83,7 @@ void Mesh::setMaterial(const Material& material) {
 }
 
 void Mesh::data() {
-	if(_needUpdate && Window::isContextCreated() && _vertices.size() != 0){
+	if(Window::isContextCreated() && _vertices.size() != 0){
 
 		if(_vertexPositionBuffer == 0){
 			glGenBuffers(1, &_vertexPositionBuffer);
@@ -107,9 +98,15 @@ void Mesh::data() {
 			pos.push_back(_vertices[i].getPosition().y);
 			pos.push_back(_vertices[i].getPosition().z);
 
-			col.push_back(_vertices[i].getColor().r);
-			col.push_back(_vertices[i].getColor().g);
-			col.push_back(_vertices[i].getColor().b);
+			if(!_material.isUsingDiffuseColor()){
+				col.push_back(_vertices[i].getColor().r);
+				col.push_back(_vertices[i].getColor().g);
+				col.push_back(_vertices[i].getColor().b);
+			}else{
+				col.push_back(_material.getDiffuseColor().r);
+				col.push_back(_material.getDiffuseColor().g);
+				col.push_back(_material.getDiffuseColor().b);
+			}
 
 			uv.push_back(_vertices[i].getUv().x);
 			uv.push_back(_vertices[i].getUv().y);
@@ -139,14 +136,6 @@ void Mesh::data() {
 
 		_needUpdate = false;
 	}
-}
-
-void Mesh::setMaterialIndex(const unsigned int& index) {
-	_materialIndex = index;
-}
-
-const unsigned int& Mesh::getMaterialIndex() const {
-	return _materialIndex;
 }
 
 } /* namespace burn */

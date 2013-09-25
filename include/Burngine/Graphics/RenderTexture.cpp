@@ -35,6 +35,14 @@ bool RenderTexture::create(const unsigned int& width, const unsigned int& height
 	_height = height;
 
 	if(Window::isContextCreated() && !_isCreated){
+
+		GLint lastFB = 0;
+		GLint lastRB = 0;
+		GLint lastTex = 0;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+		glGetIntegerv(GL_RENDERBUFFER_BINDING, &lastRB);
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
+
 		//Framebuffer:
 		glGenFramebuffers(1, &_framebuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
@@ -71,9 +79,9 @@ bool RenderTexture::create(const unsigned int& width, const unsigned int& height
 		}
 
 		//Unbind all:
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+		glBindTexture(GL_TEXTURE_2D, lastTex);
+		glBindRenderbuffer(GL_RENDERBUFFER, lastRB);
 
 		_isCreated = true;
 		return true;
@@ -132,6 +140,9 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 
 		BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
 
+		GLint lastTex = 0;
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
+
 		if(tu == TEXTURE0)
 			glBindTexture(GL_TEXTURE_2D, _texture0);
 		else if(tu == TEXTURE1)
@@ -165,7 +176,7 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, lastTex);
 
 	}
 
@@ -188,6 +199,9 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 
 		BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
 
+		GLint lastTex = 0;
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
+
 		if(tu == TEXTURE0)
 			glBindTexture(GL_TEXTURE_2D, _texture0);
 		else if(tu == TEXTURE1)
@@ -221,7 +235,7 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, lastTex);
 
 	}
 

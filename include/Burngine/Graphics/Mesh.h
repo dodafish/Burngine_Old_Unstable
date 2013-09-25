@@ -142,10 +142,6 @@ public:
 	 */
 	void setMaterial(const Material& material);
 
-	void setMaterialIndex(const unsigned int& index);
-
-	const unsigned int& getMaterialIndex() const;
-
 	/**
 	 * @brief Fills the buffers with data or creates them if needed.
 	 * Uses _vertices as vertexdata. Internal use only.
@@ -153,8 +149,6 @@ public:
 	 * @see setVertices()
 	 */
 	void data();
-
-	void setDiffuseColor(const Vector3f& color);
 
 private:
 
@@ -166,8 +160,6 @@ private:
 
 	bool _needUpdate;
 	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer, _vertexNormalBuffer;
-
-	unsigned int _materialIndex;
 
 	Texture _texture;
 };

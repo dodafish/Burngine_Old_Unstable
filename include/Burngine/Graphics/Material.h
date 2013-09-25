@@ -85,11 +85,22 @@ public:
 	void setSpecularColor(const Vector3f& color);
 	const Vector3f& getSpecularColor() const;
 
+	void setDiffuseColor(const Vector3f& color);
+	const Vector3f& getDiffuseColor() const;
+
+	void setIndex(const unsigned int& index);
+	const unsigned int& getIndex() const;
+
+	void useDiffuseColor(bool shouldUseDiffuse = true);
+	bool isUsingDiffuseColor() const;
+
 private:
 	Type _type;
 	bool _flags[COUNT];
 
-	Vector3f _specularColor;
+	Vector3f _specularColor, _diffuseColor;
+	unsigned int _index;
+	bool _useDiffuseColor;
 };
 
 } /* namespace burn */

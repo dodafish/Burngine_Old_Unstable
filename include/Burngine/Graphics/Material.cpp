@@ -11,7 +11,10 @@ namespace burn {
 
 Material::Material() :
 				_type(SOLID_COLOR),
-				_specularColor(Vector3f(1.f, 1.f, 1.f)) {
+				_specularColor(Vector3f(1.f, 1.f, 1.f)),
+				_diffuseColor(Vector3f(1.f, 0.7f, 0.f)),
+				_index(0),
+				_useDiffuseColor(false) {
 	_flags[LIGHTING] = false;
 }
 
@@ -45,6 +48,31 @@ void Material::setSpecularColor(const Vector3f& color) {
 
 const Vector3f& Material::getSpecularColor() const {
 	return _specularColor;
+}
+
+void Material::setDiffuseColor(const Vector3f& color) {
+	_diffuseColor = color;
+	_useDiffuseColor = true;
+}
+
+const Vector3f& Material::getDiffuseColor() const {
+	return _diffuseColor;
+}
+
+void Material::setIndex(const unsigned int& index) {
+	_index = index;
+}
+
+const unsigned int& Material::getIndex() const {
+	return _index;
+}
+
+void Material::useDiffuseColor(bool shouldUseDiffuse) {
+	_useDiffuseColor = shouldUseDiffuse;
+}
+
+bool Material::isUsingDiffuseColor() const {
+	return _useDiffuseColor;
 }
 
 } /* namespace burn */

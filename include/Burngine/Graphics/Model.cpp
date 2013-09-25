@@ -49,13 +49,13 @@ bool Model::loadFromFile(const std::string& file) {
 	_meshes.clear();
 
 	std::cout << "--- Total count of meshes: " << scene->mNumMeshes << "\n";
+	std::vector<Vertex> vertices;
 	for(unsigned int i = 0; i < scene->mNumMeshes; ++i){
 
 		std::cout << "----- Loading mesh #" << i << "\n";
 
 		aiMesh* mesh = scene->mMeshes[i];
 
-		std::vector<Vertex> vertices;
 		vertices.clear();
 
 		std::cout << "----- Total count of faces for mesh #" << i << ": " << mesh->mNumFaces << "\n";
@@ -86,16 +86,20 @@ bool Model::loadFromFile(const std::string& file) {
 
 		_meshes.push_back(std::shared_ptr<Mesh>(new Mesh()));
 		_meshes.back()->setVertices(vertices);
-		_meshes.back()->setMaterialIndex(mesh->mMaterialIndex);
+
+		Material mat = _meshes.back()->getMaterial();
+		mat.setIndex(mesh->mMaterialIndex);
+		_meshes.back()->setMaterial(mat);
 
 		std::cout << "----- Created mesh #" << i << " - " << &_meshes.back() << "\n";
 
 	}
 
-	std::cout << "--- Total count of materials: " << scene->mNumMaterials << "\n";
+	//Material Settings:
+	std::cout << "----- Total count of materials: " << scene->mNumMaterials << "\n";
 	for(unsigned int i = 0; i < scene->mNumMaterials; ++i){
 
-		std::cout << "----- Loading material #" << i << "\n";
+		std::cout << "-------- Loading material #" << i << "\n";
 
 		aiMaterial* material = scene->mMaterials[i];
 
@@ -103,25 +107,28 @@ bool Model::loadFromFile(const std::string& file) {
 		aiColor3D specularColor(1.f, 1.f, 1.f);
 		material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
 		material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
-		std::cout << "-------- Setting diffuse/specular colors...\n";
+		std::cout << "-------- Setting diffuse/specular colors\n";
 		for(size_t j = 0; j < _meshes.size(); ++j){
-			if(_meshes[j]->getMaterialIndex() == i){
+			if(_meshes[j]->getMaterial().getIndex() == i){
 				Material mat = _meshes[j]->getMaterial();
 
-				_meshes[j]->setDiffuseColor(Vector3f(diffuseColor.r, diffuseColor.g, diffuseColor.b));
+				mat.setDiffuseColor(Vector3f(diffuseColor.r, diffuseColor.g, diffuseColor.b));
 				mat.setSpecularColor(Vector3f(specularColor.r, specularColor.g, specularColor.b));
 				_meshes[j]->setMaterial(mat);
+				_meshes[j]->data();
 			}
 		}
+
+		//Textures:
 
 		unsigned int textureIndex = 0;
 		aiString assimpFile;
 		if(material->GetTexture(aiTextureType_DIFFUSE, textureIndex, &assimpFile) == AI_SUCCESS){
 			std::string file = assimpFile.data; //convert string-type
 
-			std::cout << "Searching according mesh for texture...\n";
+			std::cout << "-------- Searching according mesh for texture...\n";
 			for(size_t j = 0; j < _meshes.size(); ++j){
-				if(_meshes[j]->getMaterialIndex() == i){
+				if(_meshes[j]->getMaterial().getIndex() == i){
 					std::cout << "Attempting to load texture: " << file << "\n";
 					if(_meshes[j]->_texture.loadFromFile(file)){
 						_meshes[j]->_material.setType(Material::Type::TEXTURED);
@@ -129,14 +136,14 @@ bool Model::loadFromFile(const std::string& file) {
 						std::cout << "Linked texture to mesh (" << &_meshes[j] << "). Material index = " << i << "\n";
 						break;
 					}else{
-						std::cout << "Failed to load texture: " << file << "\n";
+						std::cout << "!Failed to load texture: " << file << "\n";
 						return false;
 					}
 				}
 			}
 
 		}else{
-			std::cout << "Material texture is invalid.\n";
+			std::cout << "!Material texture is invalid.\n";
 		}
 
 	}

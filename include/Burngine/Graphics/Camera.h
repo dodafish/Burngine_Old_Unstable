@@ -99,7 +99,6 @@ private:
 	float _aspectRatio;
 	Vector3f _lookAt;
 	float _fov;
-
 };
 
 } /* namespace burn */
