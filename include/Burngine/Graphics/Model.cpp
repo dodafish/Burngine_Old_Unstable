@@ -26,7 +26,7 @@ size_t Model::getMeshCount() const {
 	return _meshes.size();
 }
 
-const Mesh& Model::getMesh(const size_t& index) const {
+Mesh& Model::getMesh(const size_t& index) const {
 	return *(_meshes[index]);
 }
 

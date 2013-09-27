@@ -172,6 +172,12 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 			}
 			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 
+			if(_model.getMesh(i).getMaterial().isFlagSet(Material::LIGHTING)){
+				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_ENABLED), 1);
+			}else{
+				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_ENABLED), 0);
+			}
+
 			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, NORMAL_MATRIX), 1,
 			GL_FALSE, &normalMatrix[0][0]);
 

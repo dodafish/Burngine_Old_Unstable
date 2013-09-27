@@ -125,19 +125,27 @@ const std::string lightingF = "#version 330\n"
 		"uniform vec3 " + LIGHT_AMBIENT + ";"
 		"uniform vec3 " + LIGHT_SPECULAR + ";"
 
+		"uniform int " + LIGHT_ENABLED + ";"
+
 		"void main(){"
-			"vec3 n = normalize(normal_camspace);"
-			"vec3 l = normalize(lightPosition_camspace - position_camspace);"
-			"vec3 E = normalize(cameraPosition_camspace - position_camspace);"
-			"vec3 R = reflect(-l, n);"
+			"if(" + LIGHT_ENABLED + " == 1){"
+				"vec3 n = normalize(normal_camspace);"
+				"vec3 l = normalize(lightPosition_camspace - position_camspace);"
+				"vec3 E = normalize(cameraPosition_camspace - position_camspace);"
+				"vec3 R = reflect(-l, n);"
 
-			"float cosTheta = clamp( dot( n,l ), 0,1 );"
-			"float cosAlpha = clamp( dot( E,R ), 0,1 );"
+				"float cosTheta = clamp( dot( n,l ), 0,1 );"
+				"float cosAlpha = clamp( dot( E,R ), 0,1 );"
 
-			"float dist = distance(lightPosition_camspace, position_camspace);"
+				"float dist = distance(lightPosition_camspace, position_camspace);"
 
-			"diffuseColor = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
-			"specularColor = " + LIGHT_SPECULAR + " * " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * pow(cosAlpha,5) / (dist*dist);"
+				"diffuseColor = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
+				"specularColor = " + LIGHT_SPECULAR + " * " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * pow(cosAlpha,5) / (dist*dist);"
+			"}"
+			"else{"
+				"diffuseColor = vec3(1.0);"
+				"specularColor = vec3(0.0);"
+			"}"
 		"}";
 
 const std::string colorlessV = "#version 330\n"

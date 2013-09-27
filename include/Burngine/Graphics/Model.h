@@ -28,7 +28,7 @@ public:
 	bool loadFromFile(const std::string& file);
 
 	size_t getMeshCount() const;
-	const Mesh& getMesh(const size_t& index) const;
+	Mesh& getMesh(const size_t& index) const ;
 
 	void update();
 

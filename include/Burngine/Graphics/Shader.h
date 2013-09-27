@@ -22,6 +22,7 @@ const std::string NORMAL_MATRIX = "NORM_MAT_";
 
 const std::string CAMERA_POSITION = "CAM_";
 
+const std::string LIGHT_ENABLED = "LIGHTIGHT_ENABLED_HOOOOODOOOOR_";
 const std::string LIGHT_POSITION = "LIGHT_POSITION_";
 const std::string LIGHT_COLOR = "LIGHT_COLOR_";
 const std::string LIGHT_INTENSITY = "LIGHT_INTENSITY_";
