@@ -131,7 +131,7 @@ public:
 	 *
 	 * @see setMaterial()
 	 */
-	const Material& getMaterial() const;
+	Material& getMaterial();
 
 	/**
 	 * @brief Sets the material of the node. Influences the rendering
@@ -141,7 +141,7 @@ public:
 	 *
 	 * @see getMaterial()
 	 */
-	void setMaterial(const Material& material);
+	void setMaterial(Material& material);
 
 	void update();
 	void forceUpdate();

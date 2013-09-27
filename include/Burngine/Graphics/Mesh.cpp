@@ -83,11 +83,11 @@ const Texture& Mesh::getTexture() const {
 	return _texture;
 }
 
-const Material& Mesh::getMaterial() const {
+Material& Mesh::getMaterial() {
 	return _material;
 }
 
-void Mesh::setMaterial(const Material& material) {
+void Mesh::setMaterial(Material& material) {
 	_material = material;
 }
 
