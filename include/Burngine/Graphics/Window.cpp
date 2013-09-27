@@ -9,6 +9,9 @@
 #include <iostream>
 #include <unistd.h>
 
+#include "Scene.h"
+#include "Shader.h"
+
 namespace burn {
 
 bool Window::_isContextCreated = false;

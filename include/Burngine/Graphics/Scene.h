@@ -9,13 +9,17 @@
 #define SCENE_H_
 
 #include "../Export.h"
-#include "SceneNode.h"
-#include "StaticMeshNode.h"
-#include "Camera.h"
-#include "Light.h"
+#include "../System/Math.h"
 
 #include <vector>
 #include <memory>
+
+namespace burn {
+class Camera;
+class Light;
+class StaticMeshNode;
+class SceneNode;
+}
 
 template class BURNGINE_API std::vector<std::shared_ptr<burn::SceneNode>>;
 template class BURNGINE_API std::vector<std::shared_ptr<burn::Camera>>;

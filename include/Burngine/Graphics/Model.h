@@ -9,9 +9,12 @@
 #define MODEL_H_
 
 #include "../Export.h"
-#include "Mesh.h"
 #include <vector>
 #include <memory>
+
+namespace burn{
+class Mesh;
+}
 
 template class BURNGINE_API std::vector<std::shared_ptr<burn::Mesh>>;
 

@@ -7,9 +7,13 @@
 
 #include "Scene.h"
 
-#include "StaticMeshNode.h"
 #include "Window.h"
 #include "RenderTexture.h"
+
+#include "SceneNode.h"
+#include "StaticMeshNode.h"
+#include "Camera.h"
+#include "Light.h"
 
 namespace burn {
 

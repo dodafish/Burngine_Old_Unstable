@@ -11,13 +11,15 @@
 #include "../Export.h"
 #include "../System/Math.h"
 #include "Transformable.h"
-#include "Camera.h"
+#include "Shader.h"
+
 #include <memory>
 #include <vector>
-#include "Shader.h"
-#include "Light.h"
 
 namespace burn {
+
+class Camera;
+class Light;
 
 class BURNGINE_API SceneNode : public Transformable {
 public:

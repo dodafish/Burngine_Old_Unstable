@@ -9,11 +9,15 @@
 #define WINDOW_H_
 
 #include "../Export.h"
-#include "WindowSettings.h"
 #include "OpenGL.h"
-#include "Scene.h"
+#include "WindowSettings.h"
 
 #include <vector>
+#include <memory>
+
+namespace burn {
+class Scene;
+}
 
 template class BURNGINE_API std::vector<std::shared_ptr<burn::Scene>>;
 

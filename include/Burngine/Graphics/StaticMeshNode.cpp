@@ -9,6 +9,11 @@
 #include "Window.h"
 #include "Shader.h"
 #include "DepthCubeMap.h"
+#include "Material.h"
+#include "Camera.h"
+#include "Mesh.h"
+#include "Light.h"
+
 #include <iostream>
 
 namespace burn {

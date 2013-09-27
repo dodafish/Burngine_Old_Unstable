@@ -9,10 +9,11 @@
 #define MESH_H_
 
 #include "../Export.h"
-#include "Vertex.h"
 #include "OpenGL.h"
-#include "Texture.h"
+
+#include "Vertex.h"
 #include "Material.h"
+#include "Texture.h"
 
 #include <vector>
 

@@ -7,6 +7,9 @@
 
 #include "SceneNode.h"
 
+#include "Camera.h"
+#include "Light.h"
+
 namespace burn {
 
 SceneNode::SceneNode() {
