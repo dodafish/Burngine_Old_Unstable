@@ -51,7 +51,7 @@ public:
 	 *
 	 * @see setModel()
 	 */
-	const Model& getModel() const;
+	Model& getModel();
 
 	bool loadFromFile(const std::string& file);
 

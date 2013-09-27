@@ -9,10 +9,12 @@
 #define MODEL_H_
 
 #include "../Export.h"
+#include "Material.h"
+
 #include <vector>
 #include <memory>
 
-namespace burn{
+namespace burn {
 class Mesh;
 }
 
@@ -31,7 +33,22 @@ public:
 	bool loadFromFile(const std::string& file);
 
 	size_t getMeshCount() const;
-	Mesh& getMesh(const size_t& index) const ;
+	Mesh& getMesh(const size_t& index) const;
+
+	/**
+	 * @brief Changes the flags of all meshes to the given parameter.
+	 * It replaces the Material::setFlag function, just that this one
+	 * sets the flag to every mesh.
+	 * If you want to affect only a single mesh, you have to get the
+	 * mesh via getMesh()
+	 *
+	 * @param flag The material flag to set
+	 * @param enabled Enables/Disables the flag
+	 *
+	 * @see Material
+	 * @see getMesh()
+	 */
+	void setFlag(const Material::Flag& flag, const bool& enabled = true);
 
 	void update();
 

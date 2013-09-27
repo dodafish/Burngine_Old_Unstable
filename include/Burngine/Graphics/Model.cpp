@@ -152,6 +152,12 @@ bool Model::loadFromFile(const std::string& file) {
 	return true;
 }
 
+void Model::setFlag(const Material::Flag& flag, const bool& enabled) {
+	for(size_t i = 0; i < _meshes.size(); ++i){
+		_meshes[i]->getMaterial().setFlag(flag, enabled);
+	}
+}
+
 void Model::update() {
 	for(size_t i = 0; i < _meshes.size(); ++i){
 		_meshes[i]->update();
