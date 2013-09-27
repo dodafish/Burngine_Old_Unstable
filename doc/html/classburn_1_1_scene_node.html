@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classburn_1_1_scene_node-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">burn::SceneNode Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -118,15 +118,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa651409167ec065930115c8b31057e35"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#aa651409167ec065930115c8b31057e35">~SceneNode</a> ()</td></tr>
 <tr class="memdesc:aa651409167ec065930115c8b31057e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Destructor.  <a href="#aa651409167ec065930115c8b31057e35">More...</a><br/></td></tr>
 <tr class="separator:aa651409167ec065930115c8b31057e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcea597571e59f15421c7a9ae0bfdbc3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#adcea597571e59f15421c7a9ae0bfdbc3">draw</a> (<a class="el" href="classburn_1_1_camera.html">Camera</a> *camera=nullptr)=0</td></tr>
-<tr class="memdesc:adcea597571e59f15421c7a9ae0bfdbc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual method for rendering.  <a href="#adcea597571e59f15421c7a9ae0bfdbc3">More...</a><br/></td></tr>
-<tr class="separator:adcea597571e59f15421c7a9ae0bfdbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90bbe26a50c9039986bb60b52fd82a7d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_material.html">Material</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a90bbe26a50c9039986bb60b52fd82a7d">getMaterial</a> () const </td></tr>
-<tr class="memdesc:a90bbe26a50c9039986bb60b52fd82a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the material that the node is using.  <a href="#a90bbe26a50c9039986bb60b52fd82a7d">More...</a><br/></td></tr>
-<tr class="separator:a90bbe26a50c9039986bb60b52fd82a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66ab4afa17f078a3814d4bbd88ed9ea1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a66ab4afa17f078a3814d4bbd88ed9ea1">setMaterial</a> (const <a class="el" href="classburn_1_1_material.html">Material</a> &amp;material)</td></tr>
-<tr class="memdesc:a66ab4afa17f078a3814d4bbd88ed9ea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the material of the node. Influences the rendering behaviour.  <a href="#a66ab4afa17f078a3814d4bbd88ed9ea1">More...</a><br/></td></tr>
-<tr class="separator:a66ab4afa17f078a3814d4bbd88ed9ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11a0695c2c0381824d6bf3e4518371bd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a11a0695c2c0381824d6bf3e4518371bd">draw</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera)=0</td></tr>
+<tr class="memdesc:a11a0695c2c0381824d6bf3e4518371bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual method for rendering.  <a href="#a11a0695c2c0381824d6bf3e4518371bd">More...</a><br/></td></tr>
+<tr class="separator:a11a0695c2c0381824d6bf3e4518371bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5cd67bf31709472a4a7d85804fd8bb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#aba5cd67bf31709472a4a7d85804fd8bb">drawDepthColorless</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera)=0</td></tr>
+<tr class="separator:aba5cd67bf31709472a4a7d85804fd8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39a9e949313f6e1131825e43ce1d22a5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a39a9e949313f6e1131825e43ce1d22a5">drawLighting</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&gt; &amp;lights, const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;ambient)=0</td></tr>
+<tr class="separator:a39a9e949313f6e1131825e43ce1d22a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
 <tr class="memitem:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981">Transformable</a> ()</td></tr>
 <tr class="memdesc:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#ab5df8f6f319ebc8888465632a1567981">More...</a><br/></td></tr>
@@ -156,10 +154,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8743b842184630917ee67e8e8039fc6f inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current modelmatrix of the object.  <a href="#a8743b842184630917ee67e8e8039fc6f">More...</a><br/></td></tr>
 <tr class="separator:a8743b842184630917ee67e8e8039fc6f inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a8474c310dafc48e860ebb5ed7ecc7f8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a8474c310dafc48e860ebb5ed7ecc7f8f">_material</a></td></tr>
-<tr class="separator:a8474c310dafc48e860ebb5ed7ecc7f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a3d6c0c517581a1458c4fd8c02f12cfa5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a3d6c0c517581a1458c4fd8c02f12cfa5">setMVPUniforms</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">BurngineShaders::Type</a> &amp;type, std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; cam)</td></tr>
+<tr class="separator:a3d6c0c517581a1458c4fd8c02f12cfa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
 <tr class="memitem:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a1cb1a52f8518c7c2f50e45d8cd902767">_position</a></td></tr>
 <tr class="separator:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,7 +215,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="adcea597571e59f15421c7a9ae0bfdbc3"></a>
+<a class="anchor" id="a11a0695c2c0381824d6bf3e4518371bd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -224,8 +225,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void burn::SceneNode::draw </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classburn_1_1_camera.html">Camera</a> *&#160;</td>
-          <td class="paramname"><em>camera</em> = <code>nullptr</code>)</td><td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>camera</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -244,56 +245,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classburn_1_1_static_mesh_node.html#a7ff88bee9757061b0393ae5324e7989b">burn::StaticMeshNode</a>.</p>
+<p>Implemented in <a class="el" href="classburn_1_1_static_mesh_node.html#a549592ca6fa617368511c8f68e3ca6d4">burn::StaticMeshNode</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a90bbe26a50c9039986bb60b52fd82a7d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classburn_1_1_material.html">Material</a> &amp; burn::SceneNode::getMaterial </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the material that the node is using. </p>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classburn_1_1_material.html">Material</a> of the node.</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_scene_node.html#a66ab4afa17f078a3814d4bbd88ed9ea1" title="Sets the material of the node. Influences the rendering behaviour. ">setMaterial()</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a66ab4afa17f078a3814d4bbd88ed9ea1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::SceneNode::setMaterial </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classburn_1_1_material.html">Material</a> &amp;&#160;</td>
-          <td class="paramname"><em>material</em>)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the material of the node. Influences the rendering behaviour. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">material</td><td>The <a class="el" href="classburn_1_1_material.html">Material</a> to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_scene_node.html#a90bbe26a50c9039986bb60b52fd82a7d" title="Returns the material that the node is using. ">getMaterial()</a> </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a8474c310dafc48e860ebb5ed7ecc7f8f"></a>
+<a class="anchor" id="aba5cd67bf31709472a4a7d85804fd8bb"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -301,7 +257,89 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classburn_1_1_material.html">Material</a> burn::SceneNode::_material</td>
+          <td class="memname">virtual void burn::SceneNode::drawDepthColorless </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>camera</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classburn_1_1_static_mesh_node.html#ac33ab5c73d01867df4708783e01a87af">burn::StaticMeshNode</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a39a9e949313f6e1131825e43ce1d22a5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void burn::SceneNode::drawLighting </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>camera</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>lights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td>
+          <td class="paramname"><em>ambient</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classburn_1_1_static_mesh_node.html#a3bc717d99643f34a82443f89b24eae40">burn::StaticMeshNode</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d6c0c517581a1458c4fd8c02f12cfa5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::SceneNode::setMVPUniforms </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">BurngineShaders::Type</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>cam</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -320,7 +358,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

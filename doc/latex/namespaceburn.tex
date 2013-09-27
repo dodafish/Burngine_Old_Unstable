@@ -6,9 +6,19 @@
 \item 
 class \hyperlink{classburn_1_1_camera}{Camera}
 \item 
+class \hyperlink{classburn_1_1_depth_cube_map}{Depth\-Cube\-Map}
+\item 
+class \hyperlink{classburn_1_1_depth_texture}{Depth\-Texture}
+\item 
+class \hyperlink{classburn_1_1_light}{Light}
+\begin{DoxyCompactList}\small\item\em Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously the scale will have no effect. \end{DoxyCompactList}\item 
 class \hyperlink{classburn_1_1_material}{Material}
 \item 
 class \hyperlink{classburn_1_1_mesh}{Mesh}
+\item 
+class \hyperlink{classburn_1_1_model}{Model}
+\begin{DoxyCompactList}\small\item\em A model can load 3d models from file. \end{DoxyCompactList}\item 
+class \hyperlink{classburn_1_1_render_texture}{Render\-Texture}
 \item 
 class \hyperlink{classburn_1_1_scene}{Scene}
 \item 
@@ -20,6 +30,8 @@ struct \hyperlink{structburn_1_1_burngine_shaders}{Burngine\-Shaders}
 \item 
 class \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node}
 \begin{DoxyCompactList}\small\item\em A static mesh. No animations are possible. \end{DoxyCompactList}\item 
+class \hyperlink{classburn_1_1_texture}{Texture}
+\begin{DoxyCompactList}\small\item\em Holds Open\-G\-L comfort images as textures. \end{DoxyCompactList}\item 
 class \hyperlink{classburn_1_1_transformable}{Transformable}
 \begin{DoxyCompactList}\small\item\em Provides methods to move an object in 3\-D-\/space. \end{DoxyCompactList}\item 
 class \hyperlink{classburn_1_1_vertex}{Vertex}
@@ -42,11 +54,49 @@ typedef glm\-::mat4 \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-const std\-::string \hyperlink{namespaceburn_a6e76b4eddd0b0e54b5969cde910d0bc0}{M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M} = \char`\"{}M\-V\-P\char`\"{}
-\item 
 const std\-::string \hyperlink{namespaceburn_a6eafdfe4d85acab9368409999e505dd3}{solid\-Color\-V}
 \item 
 const std\-::string \hyperlink{namespaceburn_ab930855fc914e51fe8d7f734a5534c6d}{solid\-Color\-F}
+\item 
+const std\-::string \hyperlink{namespaceburn_a3d60f931a7ad5b52bf67858342c6621a}{textured\-V}
+\item 
+const std\-::string \hyperlink{namespaceburn_aa50f80a84ae71807267b64cdb3b06b3e}{textured\-F}
+\item 
+const std\-::string \hyperlink{namespaceburn_adda519b7f874b2d7f463ee2a761b869f}{raw\-Texture\-V}
+\item 
+const std\-::string \hyperlink{namespaceburn_ad03d19988ac03d79b4e2a4714da49c18}{raw\-Texture\-F}
+\item 
+const std\-::string \hyperlink{namespaceburn_a78bde68a8e56b05d88971530a815c479}{lighting\-V}
+\item 
+const std\-::string \hyperlink{namespaceburn_a01739beb4fb70b50d2f18f0f2ca82b62}{lighting\-F}
+\item 
+const std\-::string \hyperlink{namespaceburn_ac819ca068b6bba609abb0f725fa3b778}{colorless\-V}
+\item 
+const std\-::string \hyperlink{namespaceburn_ad168558e196bd8b02d6da9e256dd01c7}{colorless\-F}
+\item 
+const std\-::string \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}M\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}V\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}P\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{M\-V\-P} = \char`\"{}(\char`\"{} + \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{}$\ast$\char`\"{} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{}$\ast$\char`\"{} + \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{})\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}{N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}N\-O\-R\-M\-\_\-\-M\-A\-T\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_aea213969ba83f20b14023eac83ce7f04}{C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N} = \char`\"{}C\-A\-M\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a2761e037b3be5b8f6f125f294a44b0bf}{L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D} = \char`\"{}L\-I\-G\-H\-T\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D\-\_\-\-H\-O\-O\-O\-O\-O\-D\-O\-O\-O\-O\-R\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a6512046548178a3d2212bfbca815c5b0}{L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_ad5901e3871a98659781464fbbcd2e37c}{L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_aca7df8a95e5540d26da673ad43c639af}{L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a1f547dd93c8820ec1276db0869c7e92c}{L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T\-\_\-\char`\"{}
+\item 
+const std\-::string \hyperlink{namespaceburn_a4a1c8f51e081e667c4a08ab9251a8b61}{L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R\-\_\-\char`\"{}
 \end{DoxyCompactItemize}
 
 
@@ -66,19 +116,149 @@ const std\-::string \hyperlink{namespaceburn_ab930855fc914e51fe8d7f734a5534c6d}{
 
 
 \subsection{Variable Documentation}
-\hypertarget{namespaceburn_a6e76b4eddd0b0e54b5969cde910d0bc0}{\index{burn@{burn}!M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M@{M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M}}
-\index{M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M@{M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M}!burn@{burn}}
-\subsubsection[{M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-M\-V\-P\-\_\-\-U\-N\-I\-F\-O\-R\-M = \char`\"{}M\-V\-P\char`\"{}}}\label{namespaceburn_a6e76b4eddd0b0e54b5969cde910d0bc0}
+\hypertarget{namespaceburn_aea213969ba83f20b14023eac83ce7f04}{\index{burn@{burn}!C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N@{C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}}
+\index{C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N@{C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}!burn@{burn}}
+\subsubsection[{C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N = \char`\"{}C\-A\-M\-\_\-\char`\"{}}}\label{namespaceburn_aea213969ba83f20b14023eac83ce7f04}
+\hypertarget{namespaceburn_ad168558e196bd8b02d6da9e256dd01c7}{\index{burn@{burn}!colorless\-F@{colorless\-F}}
+\index{colorless\-F@{colorless\-F}!burn@{burn}}
+\subsubsection[{colorless\-F}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::colorless\-F}}\label{namespaceburn_ad168558e196bd8b02d6da9e256dd01c7}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) out vec3 color0;"}
+        \textcolor{stringliteral}{"layout(location = 1) out vec3 color1;"}
+        \textcolor{stringliteral}{"void main()\{"}
+        \textcolor{stringliteral}{"color0 = vec3(0,0,0);"}
+        \textcolor{stringliteral}{"color1 = vec3(0,0,0);"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_ac819ca068b6bba609abb0f725fa3b778}{\index{burn@{burn}!colorless\-V@{colorless\-V}}
+\index{colorless\-V@{colorless\-V}!burn@{burn}}
+\subsubsection[{colorless\-V}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::colorless\-V}}\label{namespaceburn_ac819ca068b6bba609abb0f725fa3b778}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;"}
+
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{MODEL\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{PROJECTION\_MATRIX} + \textcolor{stringliteral}{";"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"gl\_Position = "} + \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{MVP} + \textcolor{stringliteral}{" * vec4(vertexPosition, 1);"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_a1f547dd93c8820ec1276db0869c7e92c}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T@{L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T}}
+\index{L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T@{L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T = \char`\"{}L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T\-\_\-\char`\"{}}}\label{namespaceburn_a1f547dd93c8820ec1276db0869c7e92c}
+\hypertarget{namespaceburn_ad5901e3871a98659781464fbbcd2e37c}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R@{L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R}}
+\index{L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R@{L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R = \char`\"{}L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R\-\_\-\char`\"{}}}\label{namespaceburn_ad5901e3871a98659781464fbbcd2e37c}
+\hypertarget{namespaceburn_a2761e037b3be5b8f6f125f294a44b0bf}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D@{L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D}}
+\index{L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D@{L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D = \char`\"{}L\-I\-G\-H\-T\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D\-\_\-\-H\-O\-O\-O\-O\-O\-D\-O\-O\-O\-O\-R\-\_\-\char`\"{}}}\label{namespaceburn_a2761e037b3be5b8f6f125f294a44b0bf}
+\hypertarget{namespaceburn_aca7df8a95e5540d26da673ad43c639af}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y@{L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y}}
+\index{L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y@{L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y = \char`\"{}L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y\-\_\-\char`\"{}}}\label{namespaceburn_aca7df8a95e5540d26da673ad43c639af}
+\hypertarget{namespaceburn_a6512046548178a3d2212bfbca815c5b0}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N@{L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}}
+\index{L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N@{L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N = \char`\"{}L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N\-\_\-\char`\"{}}}\label{namespaceburn_a6512046548178a3d2212bfbca815c5b0}
+\hypertarget{namespaceburn_a4a1c8f51e081e667c4a08ab9251a8b61}{\index{burn@{burn}!L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R@{L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R}}
+\index{L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R@{L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R}!burn@{burn}}
+\subsubsection[{L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R = \char`\"{}L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R\-\_\-\char`\"{}}}\label{namespaceburn_a4a1c8f51e081e667c4a08ab9251a8b61}
+\hypertarget{namespaceburn_a01739beb4fb70b50d2f18f0f2ca82b62}{\index{burn@{burn}!lighting\-F@{lighting\-F}}
+\index{lighting\-F@{lighting\-F}!burn@{burn}}
+\subsubsection[{lighting\-F}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::lighting\-F}}\label{namespaceburn_a01739beb4fb70b50d2f18f0f2ca82b62}
+\hypertarget{namespaceburn_a78bde68a8e56b05d88971530a815c479}{\index{burn@{burn}!lighting\-V@{lighting\-V}}
+\index{lighting\-V@{lighting\-V}!burn@{burn}}
+\subsubsection[{lighting\-V}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::lighting\-V}}\label{namespaceburn_a78bde68a8e56b05d88971530a815c479}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;"}
+        \textcolor{stringliteral}{"layout(location = 1) in vec3 vertexNormal;"}
+
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{MODEL\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{PROJECTION\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}{NORMAL\_MATRIX} + \textcolor{stringliteral}{";"}
+
+        \textcolor{stringliteral}{"uniform vec3 "} + \hyperlink{namespaceburn_aea213969ba83f20b14023eac83ce7f04}{CAMERA\_POSITION} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform vec3 "} + \hyperlink{namespaceburn_a6512046548178a3d2212bfbca815c5b0}{LIGHT\_POSITION} + \textcolor{stringliteral}{";"}
+
+        \textcolor{stringliteral}{"out vec3 lightPosition\_camspace;"}
+        \textcolor{stringliteral}{"out vec3 normal\_camspace;"}
+        \textcolor{stringliteral}{"out vec3 position\_camspace;"}
+        \textcolor{stringliteral}{"out vec3 cameraPosition\_camspace;"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"gl\_Position = "} + \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{MVP} + \textcolor{stringliteral}{" * vec4(vertexPosition, 1);"}
+
+            \textcolor{stringliteral}{"vec3 singleLight = "} + \hyperlink{namespaceburn_a6512046548178a3d2212bfbca815c5b0}{LIGHT\_POSITION} + \textcolor{stringliteral}{";"}
+            \textcolor{stringliteral}{"lightPosition\_camspace = ("} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{" * vec4(singleLight,1)).xyz;"}
+
+            \textcolor{stringliteral}{"cameraPosition\_camspace = ("} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{" * vec4("} + 
+      \hyperlink{namespaceburn_aea213969ba83f20b14023eac83ce7f04}{CAMERA\_POSITION} + \textcolor{stringliteral}{",1)).xyz;"}
+
+            \textcolor{stringliteral}{"normal\_camspace = ("} + \hyperlink{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}{NORMAL\_MATRIX} + \textcolor{stringliteral}{"* vec4(vertexNormal, 0)).xyz;"}
+            \textcolor{stringliteral}{"position\_camspace = ("} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{"*"} + 
+      \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{MODEL\_MATRIX} + \textcolor{stringliteral}{"* vec4(vertexPosition, 1)).xyz;"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{\index{burn@{burn}!M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X@{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X}}
+\index{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X@{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X}!burn@{burn}}
+\subsubsection[{M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X = \char`\"{}M\-\_\-\char`\"{}}}\label{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}
+\hypertarget{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{\index{burn@{burn}!M\-V\-P@{M\-V\-P}}
+\index{M\-V\-P@{M\-V\-P}!burn@{burn}}
+\subsubsection[{M\-V\-P}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-M\-V\-P = \char`\"{}(\char`\"{} + {\bf P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{}$\ast$\char`\"{} + {\bf V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{}$\ast$\char`\"{} + {\bf M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X} + \char`\"{})\char`\"{}}}\label{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}
+\hypertarget{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}{\index{burn@{burn}!N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X@{N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X}}
+\index{N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X@{N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X}!burn@{burn}}
+\subsubsection[{N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X = \char`\"{}N\-O\-R\-M\-\_\-\-M\-A\-T\-\_\-\char`\"{}}}\label{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}
+\hypertarget{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{\index{burn@{burn}!P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X@{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X}}
+\index{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X@{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X}!burn@{burn}}
+\subsubsection[{P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X = \char`\"{}P\-\_\-\char`\"{}}}\label{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}
+\hypertarget{namespaceburn_ad03d19988ac03d79b4e2a4714da49c18}{\index{burn@{burn}!raw\-Texture\-F@{raw\-Texture\-F}}
+\index{raw\-Texture\-F@{raw\-Texture\-F}!burn@{burn}}
+\subsubsection[{raw\-Texture\-F}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::raw\-Texture\-F}}\label{namespaceburn_ad03d19988ac03d79b4e2a4714da49c18}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"in vec2 UV;"}
+        \textcolor{stringliteral}{"uniform sampler2D renderedTexture;"}
+
+        \textcolor{stringliteral}{"out vec3 color;"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"color = texture(renderedTexture, UV).rgb;"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_adda519b7f874b2d7f463ee2a761b869f}{\index{burn@{burn}!raw\-Texture\-V@{raw\-Texture\-V}}
+\index{raw\-Texture\-V@{raw\-Texture\-V}!burn@{burn}}
+\subsubsection[{raw\-Texture\-V}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::raw\-Texture\-V}}\label{namespaceburn_adda519b7f874b2d7f463ee2a761b869f}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;"}
+        \textcolor{stringliteral}{"layout(location = 1) in vec2 vertexUV;"}
+        \textcolor{stringliteral}{"out vec2 UV;"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"gl\_Position = vec4(vertexPosition, 1);"}
+            \textcolor{stringliteral}{"UV = vertexUV;"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
 \hypertarget{namespaceburn_ab930855fc914e51fe8d7f734a5534c6d}{\index{burn@{burn}!solid\-Color\-F@{solid\-Color\-F}}
 \index{solid\-Color\-F@{solid\-Color\-F}!burn@{burn}}
 \subsubsection[{solid\-Color\-F}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::solid\-Color\-F}}\label{namespaceburn_ab930855fc914e51fe8d7f734a5534c6d}
 {\bfseries Initial value\-:}
 \begin{DoxyCode}
 = \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
-        \textcolor{stringliteral}{"in vec3 color;"}
-        \textcolor{stringliteral}{"out vec3 fragmentColor;"}
+        \textcolor{stringliteral}{"in vec3 fragmentColor;"}
+
+        \textcolor{stringliteral}{"out vec3 color;"}
+
         \textcolor{stringliteral}{"void main()\{"}
-        \textcolor{stringliteral}{"fragmentColor = color;"}
+            \textcolor{stringliteral}{"color = fragmentColor;"}
         \textcolor{stringliteral}{"\}"}
 \end{DoxyCode}
 \hypertarget{namespaceburn_a6eafdfe4d85acab9368409999e505dd3}{\index{burn@{burn}!solid\-Color\-V@{solid\-Color\-V}}
@@ -87,14 +267,56 @@ const std\-::string \hyperlink{namespaceburn_ab930855fc914e51fe8d7f734a5534c6d}{
 {\bfseries Initial value\-:}
 \begin{DoxyCode}
 = \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
-        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;\(\backslash\)n"}
-        \textcolor{stringliteral}{"layout(location = 1) in vec3 vertexColor;\(\backslash\)n"}
-        \textcolor{stringliteral}{"out vec3 color;\(\backslash\)n"}
-        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a6e76b4eddd0b0e54b5969cde910d0bc0}{MVP\_UNIFORM} + \textcolor{stringliteral}{";\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;"}
+        \textcolor{stringliteral}{"layout(location = 1) in vec3 vertexColor;"}
 
-        \textcolor{stringliteral}{"void main()\{\(\backslash\)n"}
-        \textcolor{stringliteral}{"color = vertexColor;\(\backslash\)n"}
-        \textcolor{stringliteral}{"vec4 v = vec4(vertexPosition, 1.0);\(\backslash\)n"}
-        \textcolor{stringliteral}{"gl\_Position = "} + \hyperlink{namespaceburn_a6e76b4eddd0b0e54b5969cde910d0bc0}{MVP\_UNIFORM} + \textcolor{stringliteral}{" * v;\(\backslash\)n"}
+        \textcolor{stringliteral}{"out vec3 fragmentColor;"}
+
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{MODEL\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{PROJECTION\_MATRIX} + \textcolor{stringliteral}{";"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"gl\_Position = "} + \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{MVP} + \textcolor{stringliteral}{" * vec4(vertexPosition, 1.0);"}
+            \textcolor{stringliteral}{"fragmentColor = vertexColor;"}
         \textcolor{stringliteral}{"\}"}
 \end{DoxyCode}
+\hypertarget{namespaceburn_aa50f80a84ae71807267b64cdb3b06b3e}{\index{burn@{burn}!textured\-F@{textured\-F}}
+\index{textured\-F@{textured\-F}!burn@{burn}}
+\subsubsection[{textured\-F}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::textured\-F}}\label{namespaceburn_aa50f80a84ae71807267b64cdb3b06b3e}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"in vec2 UV;"}
+
+        \textcolor{stringliteral}{"out vec3 color;"}
+
+        \textcolor{stringliteral}{"uniform sampler2D myTextureSampler;"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"color = texture(myTextureSampler, UV).rgb;"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_a3d60f931a7ad5b52bf67858342c6621a}{\index{burn@{burn}!textured\-V@{textured\-V}}
+\index{textured\-V@{textured\-V}!burn@{burn}}
+\subsubsection[{textured\-V}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::textured\-V}}\label{namespaceburn_a3d60f931a7ad5b52bf67858342c6621a}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"#version 330\(\backslash\)n"}
+        \textcolor{stringliteral}{"layout(location = 0) in vec3 vertexPosition;"}
+        \textcolor{stringliteral}{"layout(location = 1) in vec2 vertexUv;"}
+
+        \textcolor{stringliteral}{"out vec2 UV;"}
+
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{MODEL\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{VIEW\_MATRIX} + \textcolor{stringliteral}{";"}
+        \textcolor{stringliteral}{"uniform mat4 "} + \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{PROJECTION\_MATRIX} + \textcolor{stringliteral}{";"}
+
+        \textcolor{stringliteral}{"void main()\{"}
+            \textcolor{stringliteral}{"UV = vertexUv;"}
+            \textcolor{stringliteral}{"gl\_Position = "} + \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{MVP} + \textcolor{stringliteral}{" * vec4(vertexPosition, 1);"}
+        \textcolor{stringliteral}{"\}"}
+\end{DoxyCode}
+\hypertarget{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{\index{burn@{burn}!V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X@{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X}}
+\index{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X@{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X}!burn@{burn}}
+\subsubsection[{V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string burn\-::\-V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X = \char`\"{}V\-\_\-\char`\"{}}}\label{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}

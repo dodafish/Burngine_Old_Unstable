@@ -13,7 +13,7 @@ Contains position, color and uv. Everything what a vertex can describe.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}{Vertex} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&position=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(), const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(), const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&uv=\hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f}())
+\hyperlink{classburn_1_1_vertex_aa387f73cc33b830457c492cd8009bb38}{Vertex} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&position=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(), const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(1.\-0f, 1.\-0f, 1.\-0f), const Vector2f \&uv=\-Vector2f(), const Vector3f \&normal=\-Vector3f(1.\-0f, 1.\-0f, 1.\-0f))
 \item 
 \hyperlink{classburn_1_1_vertex_ad950d9459711c1ba4223de35623f75b6}{$\sim$\-Vertex} ()
 \begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
@@ -28,22 +28,27 @@ const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \
 void \hyperlink{classburn_1_1_vertex_afc4eff1b4065852cb856b690006e0bd8}{set\-Uv} (const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&uv)
 \begin{DoxyCompactList}\small\item\em Sets the current U\-V-\/coordinates of the vertex. \end{DoxyCompactList}\item 
 const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \& \hyperlink{classburn_1_1_vertex_a277e9b082825c211acf730b46580301a}{get\-Uv} () const 
-\begin{DoxyCompactList}\small\item\em Return the current U\-V-\/coordinates of the vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return the current U\-V-\/coordinates of the vertex. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_vertex_afad866f5f2e1c303fb7cf8902ee7180e}{set\-Normal} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&normal)
+\begin{DoxyCompactList}\small\item\em Sets the current normal-\/coordinates of the vertex. \end{DoxyCompactList}\item 
+const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_vertex_a5f0844ff20f84c3fedabb5f9352f97ff}{get\-Normal} () const 
+\begin{DoxyCompactList}\small\item\em Return the current normal-\/coordinates of the vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Contains position, color and uv. Everything what a vertex can describe. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!Vertex@{Vertex}}
+\hypertarget{classburn_1_1_vertex_aa387f73cc33b830457c492cd8009bb38}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!Vertex@{Vertex}}
 \index{Vertex@{Vertex}!burn::Vertex@{burn\-::\-Vertex}}
 \subsubsection[{Vertex}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Vertex\-::\-Vertex (
 \begin{DoxyParamCaption}
 \item[{const {\bf Vector3f} \&}]{position = {\ttfamily {\bf Vector3f}()}, }
-\item[{const {\bf Vector3f} \&}]{color = {\ttfamily {\bf Vector3f}()}, }
-\item[{const {\bf Vector2f} \&}]{uv = {\ttfamily {\bf Vector2f}()}}
+\item[{const {\bf Vector3f} \&}]{color = {\ttfamily {\bf Vector3f}(1.0f,~1.0f,~1.0f)}, }
+\item[{const {\bf Vector2f} \&}]{uv = {\ttfamily {\bf Vector2f}()}, }
+\item[{const {\bf Vector3f} \&}]{normal = {\ttfamily {\bf Vector3f}(1.0f,~1.0f,~1.0f)}}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_vertex_ae8eacfebc5e61f6660f875fb6eefdb03}
+)}}\label{classburn_1_1_vertex_aa387f73cc33b830457c492cd8009bb38}
 default constructor. You can set values or let them getting default. (All to 0)
 
 
@@ -53,6 +58,8 @@ default constructor. You can set values or let them getting default. (All to 0)
 {\em color} & The vertex Color \\
 \hline
 {\em uv} & The vertex U\-V \\
+\hline
+{\em normal} & The vertex Normal \\
 \hline
 \end{DoxyParams}
 \hypertarget{classburn_1_1_vertex_ad950d9459711c1ba4223de35623f75b6}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!$\sim$\-Vertex@{$\sim$\-Vertex}}
@@ -85,6 +92,23 @@ The current color
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_vertex_a57e2bf8a6e58c7d02c8431f03239cc6b}{set\-Color()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_vertex_a5f0844ff20f84c3fedabb5f9352f97ff}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!get\-Normal@{get\-Normal}}
+\index{get\-Normal@{get\-Normal}!burn::Vertex@{burn\-::\-Vertex}}
+\subsubsection[{get\-Normal}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Vertex\-::get\-Normal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_vertex_a5f0844ff20f84c3fedabb5f9352f97ff}
+
+
+Return the current normal-\/coordinates of the vertex. 
+
+\begin{DoxyReturn}{Returns}
+The current normal-\/coordinates
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_afad866f5f2e1c303fb7cf8902ee7180e}{set\-Normal()} 
 \end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_afdc13277da83f244302ddfc1b6863444}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!get\-Position@{get\-Position}}
 \index{get\-Position@{get\-Position}!burn::Vertex@{burn\-::\-Vertex}}
@@ -138,6 +162,25 @@ Sets the color of the vertex.
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_vertex_a1dcb11a63a04b0e279e8a69df85dd8d6}{get\-Color()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_vertex_afad866f5f2e1c303fb7cf8902ee7180e}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!set\-Normal@{set\-Normal}}
+\index{set\-Normal@{set\-Normal}!burn::Vertex@{burn\-::\-Vertex}}
+\subsubsection[{set\-Normal}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-::set\-Normal (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector3f} \&}]{normal}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_afad866f5f2e1c303fb7cf8902ee7180e}
+
+
+Sets the current normal-\/coordinates of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em normal} & The new normal-\/coordinates\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_vertex_a5f0844ff20f84c3fedabb5f9352f97ff}{get\-Normal()} 
 \end{DoxySeeAlso}
 \hypertarget{classburn_1_1_vertex_aa38bae183bbe857f9fabeb8e5510e9a0}{\index{burn\-::\-Vertex@{burn\-::\-Vertex}!set\-Position@{set\-Position}}
 \index{set\-Position@{set\-Position}!burn::Vertex@{burn\-::\-Vertex}}

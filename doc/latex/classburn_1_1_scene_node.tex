@@ -18,17 +18,18 @@ Inheritance diagram for burn\-:\-:Scene\-Node\-:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Default Constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}{$\sim$\-Scene\-Node} ()
 \begin{DoxyCompactList}\small\item\em Default Destructor. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}{draw} (\hyperlink{classburn_1_1_camera}{Camera} $\ast$camera=nullptr)=0
+virtual void \hyperlink{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}{draw} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)=0
 \begin{DoxyCompactList}\small\item\em Virtual method for rendering. \end{DoxyCompactList}\item 
-const \hyperlink{classburn_1_1_material}{Material} \& \hyperlink{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{get\-Material} () const 
-\begin{DoxyCompactList}\small\item\em Returns the material that the node is using. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\-Material} (const \hyperlink{classburn_1_1_material}{Material} \&material)
-\begin{DoxyCompactList}\small\item\em Sets the material of the node. Influences the rendering behaviour. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Attributes}
+virtual void \hyperlink{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}{draw\-Depth\-Colorless} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)=0
+\item 
+virtual void \hyperlink{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}{draw\-Lighting} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera, const std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_light}{Light} $>$$>$ \&lights, const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&ambient)=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classburn_1_1_material}{Material} \hyperlink{classburn_1_1_scene_node_a8474c310dafc48e860ebb5ed7ecc7f8f}{\-\_\-material}
+void \hyperlink{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}{set\-M\-V\-P\-Uniforms} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Burngine\-Shaders\-::\-Type} \&type, std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ cam)
 \end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Constructor \& Destructor Documentation}
@@ -57,13 +58,13 @@ Default Destructor.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw@{draw}}
+\hypertarget{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw@{draw}}
 \index{draw@{draw}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw (
 \begin{DoxyParamCaption}
-\item[{{\bf Camera} $\ast$}]{camera = {\ttfamily nullptr}}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_adcea597571e59f15421c7a9ae0bfdbc3}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}
 
 
 Virtual method for rendering. 
@@ -75,50 +76,40 @@ Virtual method for rendering.
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classburn_1_1_static_mesh_node_a7ff88bee9757061b0393ae5324e7989b}{burn\-::\-Static\-Mesh\-Node}.
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_a549592ca6fa617368511c8f68e3ca6d4}{burn\-::\-Static\-Mesh\-Node}.
 
-\hypertarget{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!get\-Material@{get\-Material}}
-\index{get\-Material@{get\-Material}!burn::SceneNode@{burn\-::\-Scene\-Node}}
-\subsubsection[{get\-Material}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Material} \& burn\-::\-Scene\-Node\-::get\-Material (
+\hypertarget{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Depth\-Colorless@{draw\-Depth\-Colorless}}
+\index{draw\-Depth\-Colorless@{draw\-Depth\-Colorless}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{draw\-Depth\-Colorless}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw\-Depth\-Colorless (
 \begin{DoxyParamCaption}
-{}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}
 
 
-Returns the material that the node is using. 
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_ac33ab5c73d01867df4708783e01a87af}{burn\-::\-Static\-Mesh\-Node}.
 
-\begin{DoxyReturn}{Returns}
-The \hyperlink{classburn_1_1_material}{Material} of the node.
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{set\-Material()} 
-\end{DoxySeeAlso}
-\hypertarget{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-Material@{set\-Material}}
-\index{set\-Material@{set\-Material}!burn::SceneNode@{burn\-::\-Scene\-Node}}
-\subsubsection[{set\-Material}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::set\-Material (
+\hypertarget{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Lighting@{draw\-Lighting}}
+\index{draw\-Lighting@{draw\-Lighting}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{draw\-Lighting}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw\-Lighting (
 \begin{DoxyParamCaption}
-\item[{const {\bf Material} \&}]{material}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera, }
+\item[{const std\-::vector$<$ std\-::shared\-\_\-ptr$<$ {\bf Light} $>$$>$ \&}]{lights, }
+\item[{const {\bf Vector3f} \&}]{ambient}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_node_a66ab4afa17f078a3814d4bbd88ed9ea1}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}
 
 
-Sets the material of the node. Influences the rendering behaviour. 
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_a3bc717d99643f34a82443f89b24eae40}{burn\-::\-Static\-Mesh\-Node}.
 
-
-\begin{DoxyParams}{Parameters}
-{\em material} & The \hyperlink{classburn_1_1_material}{Material} to use.\\
-\hline
-\end{DoxyParams}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_scene_node_a90bbe26a50c9039986bb60b52fd82a7d}{get\-Material()} 
-\end{DoxySeeAlso}
-
-
-\subsection{Member Data Documentation}
-\hypertarget{classburn_1_1_scene_node_a8474c310dafc48e860ebb5ed7ecc7f8f}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!\-\_\-material@{\-\_\-material}}
-\index{\-\_\-material@{\-\_\-material}!burn::SceneNode@{burn\-::\-Scene\-Node}}
-\subsubsection[{\-\_\-material}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Material} burn\-::\-Scene\-Node\-::\-\_\-material\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_scene_node_a8474c310dafc48e860ebb5ed7ecc7f8f}
+\hypertarget{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-M\-V\-P\-Uniforms@{set\-M\-V\-P\-Uniforms}}
+\index{set\-M\-V\-P\-Uniforms@{set\-M\-V\-P\-Uniforms}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{set\-M\-V\-P\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::set\-M\-V\-P\-Uniforms (
+\begin{DoxyParamCaption}
+\item[{const {\bf Burngine\-Shaders\-::\-Type} \&}]{type, }
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{cam}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

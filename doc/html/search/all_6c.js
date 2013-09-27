@@ -1,7 +1,20 @@
 var searchData=
 [
-  ['lighting',['LIGHTING',['../classburn_1_1_material.html#a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823',1,'burn::Material']]],
+  ['light',['Light',['../classburn_1_1_light.html',1,'burn']]],
+  ['light',['Light',['../classburn_1_1_light.html#a70a09e0609abe704f3e65d4790b6d6ce',1,'burn::Light']]],
+  ['light_2ecpp',['Light.cpp',['../_light_8cpp.html',1,'']]],
+  ['light_2eh',['Light.h',['../_light_8h.html',1,'']]],
+  ['light_5fambient',['LIGHT_AMBIENT',['../namespaceburn.html#a1f547dd93c8820ec1276db0869c7e92c',1,'burn']]],
+  ['light_5fcolor',['LIGHT_COLOR',['../namespaceburn.html#ad5901e3871a98659781464fbbcd2e37c',1,'burn']]],
+  ['light_5fenabled',['LIGHT_ENABLED',['../namespaceburn.html#a2761e037b3be5b8f6f125f294a44b0bf',1,'burn']]],
+  ['light_5fintensity',['LIGHT_INTENSITY',['../namespaceburn.html#aca7df8a95e5540d26da673ad43c639af',1,'burn']]],
+  ['light_5fposition',['LIGHT_POSITION',['../namespaceburn.html#a6512046548178a3d2212bfbca815c5b0',1,'burn']]],
+  ['light_5fspecular',['LIGHT_SPECULAR',['../namespaceburn.html#a4a1c8f51e081e667c4a08ab9251a8b61',1,'burn']]],
+  ['lighting',['LIGHTING',['../classburn_1_1_material.html#a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823',1,'burn::Material::LIGHTING()'],['../structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f',1,'burn::BurngineShaders::LIGHTING()']]],
+  ['lightingf',['lightingF',['../namespaceburn.html#a01739beb4fb70b50d2f18f0f2ca82b62',1,'burn']]],
+  ['lightingv',['lightingV',['../namespaceburn.html#a78bde68a8e56b05d88971530a815c479',1,'burn']]],
   ['loadallshaders',['loadAllShaders',['../structburn_1_1_burngine_shaders.html#a33e19e46e7bc1b6d18f05d2ee233dc50',1,'burn::BurngineShaders']]],
+  ['loadfromfile',['loadFromFile',['../classburn_1_1_mesh.html#a3179d5730bfcf0e781b1c0daebfc7439',1,'burn::Mesh::loadFromFile()'],['../classburn_1_1_model.html#aa9220fbb6658d0ded238efd5f5e81097',1,'burn::Model::loadFromFile()'],['../classburn_1_1_static_mesh_node.html#a6c571030b013c2b72d85bf36952de724',1,'burn::StaticMeshNode::loadFromFile()'],['../classburn_1_1_texture.html#a96d10626c422ea8dbc2cd51105061128',1,'burn::Texture::loadFromFile()']]],
   ['loadfromstring',['loadFromString',['../classburn_1_1_shader.html#ae2975b4b68d38d8aa3d045df082e7c2a',1,'burn::Shader']]],
   ['loadshader',['loadShader',['../structburn_1_1_burngine_shaders.html#ab9ebed7c4668a72e7cbbd0630226d7ab',1,'burn::BurngineShaders']]],
   ['lookat',['lookAt',['../classburn_1_1_camera.html#aacfbde225b770a51a020ec15403b1c41',1,'burn::Camera']]]

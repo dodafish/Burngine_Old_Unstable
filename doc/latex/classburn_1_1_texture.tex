@@ -1,0 +1,96 @@
+\hypertarget{classburn_1_1_texture}{\section{burn\-:\-:Texture Class Reference}
+\label{classburn_1_1_texture}\index{burn\-::\-Texture@{burn\-::\-Texture}}
+}
+
+
+Holds Open\-G\-L comfort images as textures.  
+
+
+
+
+{\ttfamily \#include $<$Texture.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_texture_ac44cabdfa800d3881a78e9bfa6a90a77}{Texture} ()
+\begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_texture_a2652ca0b245b24ef802bb20a99d8248f}{$\sim$\-Texture} ()
+\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classburn_1_1_texture_a96d10626c422ea8dbc2cd51105061128}{load\-From\-File} (const std\-::string \&file)
+\begin{DoxyCompactList}\small\item\em Loads an image from file and stores it as texture ready for use. \end{DoxyCompactList}\item 
+const G\-Luint \& \hyperlink{classburn_1_1_texture_ab72aed3fd26485a51ebe161b87c9b520}{get\-Texture\-Buffer} () const 
+\begin{DoxyCompactList}\small\item\em Returns the I\-D of the texturebuffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds Open\-G\-L comfort images as textures. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_texture_ac44cabdfa800d3881a78e9bfa6a90a77}{\index{burn\-::\-Texture@{burn\-::\-Texture}!Texture@{Texture}}
+\index{Texture@{Texture}!burn::Texture@{burn\-::\-Texture}}
+\subsubsection[{Texture}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Texture\-::\-Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_texture_ac44cabdfa800d3881a78e9bfa6a90a77}
+
+
+The default constructor. 
+
+\hypertarget{classburn_1_1_texture_a2652ca0b245b24ef802bb20a99d8248f}{\index{burn\-::\-Texture@{burn\-::\-Texture}!$\sim$\-Texture@{$\sim$\-Texture}}
+\index{$\sim$\-Texture@{$\sim$\-Texture}!burn::Texture@{burn\-::\-Texture}}
+\subsubsection[{$\sim$\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Texture\-::$\sim$\-Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_texture_a2652ca0b245b24ef802bb20a99d8248f}
+
+
+The default destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_texture_ab72aed3fd26485a51ebe161b87c9b520}{\index{burn\-::\-Texture@{burn\-::\-Texture}!get\-Texture\-Buffer@{get\-Texture\-Buffer}}
+\index{get\-Texture\-Buffer@{get\-Texture\-Buffer}!burn::Texture@{burn\-::\-Texture}}
+\subsubsection[{get\-Texture\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Texture\-::get\-Texture\-Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_texture_ab72aed3fd26485a51ebe161b87c9b520}
+
+
+Returns the I\-D of the texturebuffer. 
+
+\begin{DoxyReturn}{Returns}
+The I\-D of the texturebuffer or 0 if no buffer exists
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_texture_a96d10626c422ea8dbc2cd51105061128}{load\-From\-File()} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_texture_a96d10626c422ea8dbc2cd51105061128}{\index{burn\-::\-Texture@{burn\-::\-Texture}!load\-From\-File@{load\-From\-File}}
+\index{load\-From\-File@{load\-From\-File}!burn::Texture@{burn\-::\-Texture}}
+\subsubsection[{load\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Texture\-::load\-From\-File (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{file}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_texture_a96d10626c422ea8dbc2cd51105061128}
+
+
+Loads an image from file and stores it as texture ready for use. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The image to load\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\hyperlink{_texture_8h}{Texture.\-h}\item 
+include/\-Burngine/\-Graphics/\hyperlink{_texture_8cpp}{Texture.\-cpp}\end{DoxyCompactItemize}

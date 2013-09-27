@@ -8,36 +8,46 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classburn_1_1_scene_a09732ed3723c2e68af643fcb6b0a189f}{Scene} ()
+\hyperlink{classburn_1_1_scene_a9c6d2804f8f0ce73a3eddea66c235ff8}{Scene} (\hyperlink{classburn_1_1_window}{Window} \&window)
 \begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
 \hyperlink{classburn_1_1_scene_a7722cda0111bd22ca193174326e66924}{$\sim$\-Scene} ()
 \begin{DoxyCompactList}\small\item\em The default destructor. When called by e.\-g. deleting the scene it cleans up its data. In other words it deletes all nodes/cameras/etc. it is holding. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_scene_a5ec4aad558ab7f3299fef632d86da8d3}{draw\-All} ()
 \begin{DoxyCompactList}\small\item\em Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}. \end{DoxyCompactList}\item 
-\hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node} $\ast$ \hyperlink{classburn_1_1_scene_a2e3b91590d6dee8c927c90f4f4d52e37}{create\-Static\-Mesh\-Node} ()
+std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node} $>$ \hyperlink{classburn_1_1_scene_af8440772f49bfc6ce5e77a021446ecad}{create\-Static\-Mesh\-Node} ()
 \begin{DoxyCompactList}\small\item\em Adds a \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node} to the scene. \end{DoxyCompactList}\item 
-\hyperlink{classburn_1_1_camera}{Camera} $\ast$ \hyperlink{classburn_1_1_scene_a916aabc00fe334e676f5aface60538bd}{create\-Camera} (bool active=true)
+std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ \hyperlink{classburn_1_1_scene_a0cfa518da5d3225c899e26540d7bbba5}{create\-Camera} (bool active=true)
 \begin{DoxyCompactList}\small\item\em Adds a \hyperlink{classburn_1_1_camera}{Camera} to the scene. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_a06c17cb4d46417f2a7b3d1ae35b02627}{remove\-Node} (\hyperlink{classburn_1_1_scene_node}{Scene\-Node} $\ast$node)
+std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_light}{Light} $>$ \hyperlink{classburn_1_1_scene_a72924fb917b9f55cd7268b65ac81b59d}{create\-Light} ()
+\item 
+void \hyperlink{classburn_1_1_scene_a60272f8aad568d7475449c649587b9fa}{remove\-Light} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_light}{Light} $>$ light)
+\item 
+void \hyperlink{classburn_1_1_scene_aeb92e9aea3bbff01d8039ef3b9143f56}{remove\-All\-Lights} ()
+\item 
+void \hyperlink{classburn_1_1_scene_a3bbc514d911206f374ba54a2efd97c40}{remove\-Node} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_scene_node}{Scene\-Node} $>$ node)
 \begin{DoxyCompactList}\small\item\em Removes any \hyperlink{classburn_1_1_scene_node}{Scene\-Node} (except \hyperlink{classburn_1_1_camera}{Camera}) from the scene. The pointer will become a nullptr. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_scene_a2fed244c443937c2656cdc0f65780960}{remove\-All\-Nodes} ()
 \begin{DoxyCompactList}\small\item\em Removes all nodes from the scene. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_ac9d7dd721cfd534f098b3099421e944b}{remove\-Camera} (\hyperlink{classburn_1_1_camera}{Camera} $\ast$camera)
+void \hyperlink{classburn_1_1_scene_a2023bc9e2e228c51070d41976bc71a33}{remove\-Camera} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)
 \begin{DoxyCompactList}\small\item\em Removes a \hyperlink{classburn_1_1_camera}{Camera} from the scene. The pointer will become a nullptr. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_scene_a9d3f254361eef7ee71052ecdc1576bad}{remove\-All\-Cameras} ()
 \begin{DoxyCompactList}\small\item\em Removes all cameras from the scene. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_abcd415bc3f879e92782cfc64f7815673}{set\-Active\-Camera} (\hyperlink{classburn_1_1_camera}{Camera} $\ast$camera)
-\begin{DoxyCompactList}\small\item\em Sets a camera as active one. This camera will influence the rendering behaviour of the scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classburn_1_1_scene_a84ce9f46db92a7be5d137991c4df651c}{set\-Active\-Camera} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)
+\begin{DoxyCompactList}\small\item\em Sets a camera as active one. This camera will influence the rendering behaviour of the scene. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}{set\-Ambient\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
+\item 
+const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_scene_ab69fca29865bba8474c4b05e7af5fc21}{get\-Ambient\-Color} () const 
+\end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classburn_1_1_scene_a09732ed3723c2e68af643fcb6b0a189f}{\index{burn\-::\-Scene@{burn\-::\-Scene}!Scene@{Scene}}
+\hypertarget{classburn_1_1_scene_a9c6d2804f8f0ce73a3eddea66c235ff8}{\index{burn\-::\-Scene@{burn\-::\-Scene}!Scene@{Scene}}
 \index{Scene@{Scene}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{Scene}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Scene\-::\-Scene (
 \begin{DoxyParamCaption}
-{}
+\item[{{\bf Window} \&}]{window}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_a09732ed3723c2e68af643fcb6b0a189f}
+)}}\label{classburn_1_1_scene_a9c6d2804f8f0ce73a3eddea66c235ff8}
 
 
 The default constructor. 
@@ -56,13 +66,13 @@ The default destructor. When called by e.\-g. deleting the scene it cleans up it
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classburn_1_1_scene_a916aabc00fe334e676f5aface60538bd}{\index{burn\-::\-Scene@{burn\-::\-Scene}!create\-Camera@{create\-Camera}}
+\hypertarget{classburn_1_1_scene_a0cfa518da5d3225c899e26540d7bbba5}{\index{burn\-::\-Scene@{burn\-::\-Scene}!create\-Camera@{create\-Camera}}
 \index{create\-Camera@{create\-Camera}!burn::Scene@{burn\-::\-Scene}}
-\subsubsection[{create\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera} $\ast$ burn\-::\-Scene\-::create\-Camera (
+\subsubsection[{create\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$ burn\-::\-Scene\-::create\-Camera (
 \begin{DoxyParamCaption}
 \item[{bool}]{active = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_a916aabc00fe334e676f5aface60538bd}
+)}}\label{classburn_1_1_scene_a0cfa518da5d3225c899e26540d7bbba5}
 
 
 Adds a \hyperlink{classburn_1_1_camera}{Camera} to the scene. 
@@ -78,13 +88,20 @@ A pointer to the \hyperlink{classburn_1_1_camera}{Camera}.
 \begin{DoxySeeAlso}{See Also}
 set\-Camera\-Active() 
 \end{DoxySeeAlso}
-\hypertarget{classburn_1_1_scene_a2e3b91590d6dee8c927c90f4f4d52e37}{\index{burn\-::\-Scene@{burn\-::\-Scene}!create\-Static\-Mesh\-Node@{create\-Static\-Mesh\-Node}}
-\index{create\-Static\-Mesh\-Node@{create\-Static\-Mesh\-Node}!burn::Scene@{burn\-::\-Scene}}
-\subsubsection[{create\-Static\-Mesh\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Static\-Mesh\-Node} $\ast$ burn\-::\-Scene\-::create\-Static\-Mesh\-Node (
+\hypertarget{classburn_1_1_scene_a72924fb917b9f55cd7268b65ac81b59d}{\index{burn\-::\-Scene@{burn\-::\-Scene}!create\-Light@{create\-Light}}
+\index{create\-Light@{create\-Light}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{create\-Light}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<$ {\bf Light} $>$ burn\-::\-Scene\-::create\-Light (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_a2e3b91590d6dee8c927c90f4f4d52e37}
+)}}\label{classburn_1_1_scene_a72924fb917b9f55cd7268b65ac81b59d}
+\hypertarget{classburn_1_1_scene_af8440772f49bfc6ce5e77a021446ecad}{\index{burn\-::\-Scene@{burn\-::\-Scene}!create\-Static\-Mesh\-Node@{create\-Static\-Mesh\-Node}}
+\index{create\-Static\-Mesh\-Node@{create\-Static\-Mesh\-Node}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{create\-Static\-Mesh\-Node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<$ {\bf Static\-Mesh\-Node} $>$ burn\-::\-Scene\-::create\-Static\-Mesh\-Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_af8440772f49bfc6ce5e77a021446ecad}
 
 
 Adds a \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node} to the scene. 
@@ -103,6 +120,13 @@ A pointer to the \hyperlink{classburn_1_1_static_mesh_node}{Static\-Mesh\-Node}.
 
 Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}. 
 
+\hypertarget{classburn_1_1_scene_ab69fca29865bba8474c4b05e7af5fc21}{\index{burn\-::\-Scene@{burn\-::\-Scene}!get\-Ambient\-Color@{get\-Ambient\-Color}}
+\index{get\-Ambient\-Color@{get\-Ambient\-Color}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{get\-Ambient\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Scene\-::get\-Ambient\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_scene_ab69fca29865bba8474c4b05e7af5fc21}
 \hypertarget{classburn_1_1_scene_a9d3f254361eef7ee71052ecdc1576bad}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-All\-Cameras@{remove\-All\-Cameras}}
 \index{remove\-All\-Cameras@{remove\-All\-Cameras}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{remove\-All\-Cameras}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-All\-Cameras (
@@ -114,6 +138,13 @@ Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}.
 
 Removes all cameras from the scene. 
 
+\hypertarget{classburn_1_1_scene_aeb92e9aea3bbff01d8039ef3b9143f56}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-All\-Lights@{remove\-All\-Lights}}
+\index{remove\-All\-Lights@{remove\-All\-Lights}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{remove\-All\-Lights}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-All\-Lights (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_aeb92e9aea3bbff01d8039ef3b9143f56}
 \hypertarget{classburn_1_1_scene_a2fed244c443937c2656cdc0f65780960}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-All\-Nodes@{remove\-All\-Nodes}}
 \index{remove\-All\-Nodes@{remove\-All\-Nodes}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{remove\-All\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-All\-Nodes (
@@ -125,13 +156,13 @@ Removes all cameras from the scene.
 
 Removes all nodes from the scene. 
 
-\hypertarget{classburn_1_1_scene_ac9d7dd721cfd534f098b3099421e944b}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-Camera@{remove\-Camera}}
+\hypertarget{classburn_1_1_scene_a2023bc9e2e228c51070d41976bc71a33}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-Camera@{remove\-Camera}}
 \index{remove\-Camera@{remove\-Camera}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{remove\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-Camera (
 \begin{DoxyParamCaption}
-\item[{{\bf Camera} $\ast$}]{camera}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_ac9d7dd721cfd534f098b3099421e944b}
+)}}\label{classburn_1_1_scene_a2023bc9e2e228c51070d41976bc71a33}
 
 
 Removes a \hyperlink{classburn_1_1_camera}{Camera} from the scene. The pointer will become a nullptr. 
@@ -141,13 +172,20 @@ Removes a \hyperlink{classburn_1_1_camera}{Camera} from the scene. The pointer w
 {\em camera} & The \hyperlink{classburn_1_1_camera}{Camera} to delete/remove. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classburn_1_1_scene_a06c17cb4d46417f2a7b3d1ae35b02627}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-Node@{remove\-Node}}
+\hypertarget{classburn_1_1_scene_a60272f8aad568d7475449c649587b9fa}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-Light@{remove\-Light}}
+\index{remove\-Light@{remove\-Light}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{remove\-Light}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-Light (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Light} $>$}]{light}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_a60272f8aad568d7475449c649587b9fa}
+\hypertarget{classburn_1_1_scene_a3bbc514d911206f374ba54a2efd97c40}{\index{burn\-::\-Scene@{burn\-::\-Scene}!remove\-Node@{remove\-Node}}
 \index{remove\-Node@{remove\-Node}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{remove\-Node}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::remove\-Node (
 \begin{DoxyParamCaption}
-\item[{{\bf Scene\-Node} $\ast$}]{node}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Scene\-Node} $>$}]{node}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_a06c17cb4d46417f2a7b3d1ae35b02627}
+)}}\label{classburn_1_1_scene_a3bbc514d911206f374ba54a2efd97c40}
 
 
 Removes any \hyperlink{classburn_1_1_scene_node}{Scene\-Node} (except \hyperlink{classburn_1_1_camera}{Camera}) from the scene. The pointer will become a nullptr. 
@@ -157,13 +195,13 @@ Removes any \hyperlink{classburn_1_1_scene_node}{Scene\-Node} (except \hyperlink
 {\em node} & The \hyperlink{classburn_1_1_scene_node}{Scene\-Node} to delete/remove. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classburn_1_1_scene_abcd415bc3f879e92782cfc64f7815673}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Active\-Camera@{set\-Active\-Camera}}
+\hypertarget{classburn_1_1_scene_a84ce9f46db92a7be5d137991c4df651c}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Active\-Camera@{set\-Active\-Camera}}
 \index{set\-Active\-Camera@{set\-Active\-Camera}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{set\-Active\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Active\-Camera (
 \begin{DoxyParamCaption}
-\item[{{\bf Camera} $\ast$}]{camera}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_abcd415bc3f879e92782cfc64f7815673}
+)}}\label{classburn_1_1_scene_a84ce9f46db92a7be5d137991c4df651c}
 
 
 Sets a camera as active one. This camera will influence the rendering behaviour of the scene. 
@@ -179,6 +217,13 @@ Sets a camera as active one. This camera will influence the rendering behaviour 
 \begin{DoxyNote}{Note}
 You can use cameras from other scenes, but it is recommended to use cameras from the same scene only. 
 \end{DoxyNote}
+\hypertarget{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Ambient\-Color@{set\-Ambient\-Color}}
+\index{set\-Ambient\-Color@{set\-Ambient\-Color}!burn::Scene@{burn\-::\-Scene}}
+\subsubsection[{set\-Ambient\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Ambient\-Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector3f} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

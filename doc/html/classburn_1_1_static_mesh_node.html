@@ -120,15 +120,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a68e00b329768da175ee153c46069364e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#a68e00b329768da175ee153c46069364e">~StaticMeshNode</a> ()</td></tr>
 <tr class="memdesc:a68e00b329768da175ee153c46069364e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default destructor.  <a href="#a68e00b329768da175ee153c46069364e">More...</a><br/></td></tr>
 <tr class="separator:a68e00b329768da175ee153c46069364e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af78ecebdfd7c25997caf35ef4ebecdfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#af78ecebdfd7c25997caf35ef4ebecdfb">setMesh</a> (const <a class="el" href="classburn_1_1_mesh.html">Mesh</a> &amp;mesh)</td></tr>
-<tr class="memdesc:af78ecebdfd7c25997caf35ef4ebecdfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="classburn_1_1_mesh.html">Mesh</a> that the node should use.  <a href="#af78ecebdfd7c25997caf35ef4ebecdfb">More...</a><br/></td></tr>
-<tr class="separator:af78ecebdfd7c25997caf35ef4ebecdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad269a91df547f3a3092d193e4210e081"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_mesh.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#ad269a91df547f3a3092d193e4210e081">getMesh</a> () const </td></tr>
-<tr class="memdesc:ad269a91df547f3a3092d193e4210e081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current <a class="el" href="classburn_1_1_mesh.html">Mesh</a> the node is using.  <a href="#ad269a91df547f3a3092d193e4210e081">More...</a><br/></td></tr>
-<tr class="separator:ad269a91df547f3a3092d193e4210e081"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ff88bee9757061b0393ae5324e7989b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#a7ff88bee9757061b0393ae5324e7989b">draw</a> (<a class="el" href="classburn_1_1_camera.html">Camera</a> *cam=nullptr)</td></tr>
-<tr class="memdesc:a7ff88bee9757061b0393ae5324e7989b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the node to the scene. Call this indirect by calling the drawfunction of the <a class="el" href="classburn_1_1_scene.html">Scene</a> which the node belongs to.  <a href="#a7ff88bee9757061b0393ae5324e7989b">More...</a><br/></td></tr>
-<tr class="separator:a7ff88bee9757061b0393ae5324e7989b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa89d9de19f56975acc63da0ca1eb3acc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#aa89d9de19f56975acc63da0ca1eb3acc">setModel</a> (const <a class="el" href="classburn_1_1_model.html">Model</a> &amp;model)</td></tr>
+<tr class="memdesc:aa89d9de19f56975acc63da0ca1eb3acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> that the node should use.  <a href="#aa89d9de19f56975acc63da0ca1eb3acc">More...</a><br/></td></tr>
+<tr class="separator:aa89d9de19f56975acc63da0ca1eb3acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6caf5d20b137bb00032a81690a4ebfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_model.html">Model</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#ab6caf5d20b137bb00032a81690a4ebfc">getModel</a> ()</td></tr>
+<tr class="memdesc:ab6caf5d20b137bb00032a81690a4ebfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> the node is using.  <a href="#ab6caf5d20b137bb00032a81690a4ebfc">More...</a><br/></td></tr>
+<tr class="separator:ab6caf5d20b137bb00032a81690a4ebfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c571030b013c2b72d85bf36952de724"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#a6c571030b013c2b72d85bf36952de724">loadFromFile</a> (const std::string &amp;file)</td></tr>
+<tr class="separator:a6c571030b013c2b72d85bf36952de724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549592ca6fa617368511c8f68e3ca6d4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#a549592ca6fa617368511c8f68e3ca6d4">draw</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; cam)</td></tr>
+<tr class="memdesc:a549592ca6fa617368511c8f68e3ca6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the node to the scene. Call this indirect by calling the drawfunction of the <a class="el" href="classburn_1_1_scene.html">Scene</a> which the node belongs to.  <a href="#a549592ca6fa617368511c8f68e3ca6d4">More...</a><br/></td></tr>
+<tr class="separator:a549592ca6fa617368511c8f68e3ca6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac33ab5c73d01867df4708783e01a87af"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#ac33ab5c73d01867df4708783e01a87af">drawDepthColorless</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera)</td></tr>
+<tr class="separator:ac33ab5c73d01867df4708783e01a87af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc717d99643f34a82443f89b24eae40"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_static_mesh_node.html#a3bc717d99643f34a82443f89b24eae40">drawLighting</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&gt; &amp;lights, const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;ambient)</td></tr>
+<tr class="separator:a3bc717d99643f34a82443f89b24eae40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classburn_1_1_scene_node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classburn_1_1_scene_node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classburn_1_1_scene_node.html">burn::SceneNode</a></td></tr>
 <tr class="memitem:a107d42062677132d1104391fd2bf2530 inherit pub_methods_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a107d42062677132d1104391fd2bf2530">SceneNode</a> ()</td></tr>
 <tr class="memdesc:a107d42062677132d1104391fd2bf2530 inherit pub_methods_classburn_1_1_scene_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor.  <a href="#a107d42062677132d1104391fd2bf2530">More...</a><br/></td></tr>
@@ -136,12 +142,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa651409167ec065930115c8b31057e35 inherit pub_methods_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#aa651409167ec065930115c8b31057e35">~SceneNode</a> ()</td></tr>
 <tr class="memdesc:aa651409167ec065930115c8b31057e35 inherit pub_methods_classburn_1_1_scene_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Destructor.  <a href="#aa651409167ec065930115c8b31057e35">More...</a><br/></td></tr>
 <tr class="separator:aa651409167ec065930115c8b31057e35 inherit pub_methods_classburn_1_1_scene_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90bbe26a50c9039986bb60b52fd82a7d inherit pub_methods_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_material.html">Material</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a90bbe26a50c9039986bb60b52fd82a7d">getMaterial</a> () const </td></tr>
-<tr class="memdesc:a90bbe26a50c9039986bb60b52fd82a7d inherit pub_methods_classburn_1_1_scene_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the material that the node is using.  <a href="#a90bbe26a50c9039986bb60b52fd82a7d">More...</a><br/></td></tr>
-<tr class="separator:a90bbe26a50c9039986bb60b52fd82a7d inherit pub_methods_classburn_1_1_scene_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66ab4afa17f078a3814d4bbd88ed9ea1 inherit pub_methods_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a66ab4afa17f078a3814d4bbd88ed9ea1">setMaterial</a> (const <a class="el" href="classburn_1_1_material.html">Material</a> &amp;material)</td></tr>
-<tr class="memdesc:a66ab4afa17f078a3814d4bbd88ed9ea1 inherit pub_methods_classburn_1_1_scene_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the material of the node. Influences the rendering behaviour.  <a href="#a66ab4afa17f078a3814d4bbd88ed9ea1">More...</a><br/></td></tr>
-<tr class="separator:a66ab4afa17f078a3814d4bbd88ed9ea1 inherit pub_methods_classburn_1_1_scene_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
 <tr class="memitem:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981">Transformable</a> ()</td></tr>
 <tr class="memdesc:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#ab5df8f6f319ebc8888465632a1567981">More...</a><br/></td></tr>
@@ -173,14 +173,23 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_attribs_classburn_1_1_scene_node"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classburn_1_1_scene_node')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classburn_1_1_scene_node.html">burn::SceneNode</a></td></tr>
-<tr class="memitem:a8474c310dafc48e860ebb5ed7ecc7f8f inherit pro_attribs_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a8474c310dafc48e860ebb5ed7ecc7f8f">_material</a></td></tr>
-<tr class="separator:a8474c310dafc48e860ebb5ed7ecc7f8f inherit pro_attribs_classburn_1_1_scene_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classburn_1_1_scene_node"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classburn_1_1_scene_node')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classburn_1_1_scene_node.html">burn::SceneNode</a></td></tr>
+<tr class="memitem:a3d6c0c517581a1458c4fd8c02f12cfa5 inherit pro_methods_classburn_1_1_scene_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene_node.html#a3d6c0c517581a1458c4fd8c02f12cfa5">setMVPUniforms</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">BurngineShaders::Type</a> &amp;type, std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; cam)</td></tr>
+<tr class="separator:a3d6c0c517581a1458c4fd8c02f12cfa5 inherit pro_methods_classburn_1_1_scene_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
+<tr class="memitem:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a1cb1a52f8518c7c2f50e45d8cd902767">_position</a></td></tr>
+<tr class="separator:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80e5ca4d02b2d58593b751b040e86492 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a></td></tr>
+<tr class="separator:a80e5ca4d02b2d58593b751b040e86492 inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62e417f44d78cbeedfd30e62c1b896d inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ad62e417f44d78cbeedfd30e62c1b896d">_rotation</a></td></tr>
+<tr class="separator:ad62e417f44d78cbeedfd30e62c1b896d inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a06bcec86a7f2e70eba6fe7e8bbe61c inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a></td></tr>
+<tr class="separator:a6a06bcec86a7f2e70eba6fe7e8bbe61c inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A static mesh. No animations are possible. </p>
 <dl class="section note"><dt>Note</dt><dd>Create a <a class="el" href="classburn_1_1_static_mesh_node.html" title="A static mesh. No animations are possible. ">StaticMeshNode</a> only by calling the according function of a Scene! Otherwise you will get undefined results.</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_scene.html#a2e3b91590d6dee8c927c90f4f4d52e37" title="Adds a StaticMeshNode to the scene. ">Scene::createStaticMeshNode()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_scene.html#af8440772f49bfc6ce5e77a021446ecad" title="Adds a StaticMeshNode to the scene. ">Scene::createStaticMeshNode()</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a051ef5fe091cf8e93cc4dd1bae753cbd"></a>
 <div class="memitem">
@@ -217,7 +226,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a7ff88bee9757061b0393ae5324e7989b"></a>
+<a class="anchor" id="a549592ca6fa617368511c8f68e3ca6d4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -227,8 +236,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void burn::StaticMeshNode::draw </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classburn_1_1_camera.html">Camera</a> *&#160;</td>
-          <td class="paramname"><em>cam</em> = <code>nullptr</code>)</td><td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>cam</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -248,51 +257,135 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_scene.html#a5ec4aad558ab7f3299fef632d86da8d3" title="Draws every SceneNode. ">Scene::drawAll()</a> </dd></dl>
 
-<p>Implements <a class="el" href="classburn_1_1_scene_node.html#adcea597571e59f15421c7a9ae0bfdbc3">burn::SceneNode</a>.</p>
+<p>Implements <a class="el" href="classburn_1_1_scene_node.html#a11a0695c2c0381824d6bf3e4518371bd">burn::SceneNode</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad269a91df547f3a3092d193e4210e081"></a>
+<a class="anchor" id="ac33ab5c73d01867df4708783e01a87af"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classburn_1_1_mesh.html">Mesh</a> &amp; burn::StaticMeshNode::getMesh </td>
+          <td class="memname">void burn::StaticMeshNode::drawDepthColorless </td>
           <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td> const</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>camera</em>)</td><td></td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Returns the current <a class="el" href="classburn_1_1_mesh.html">Mesh</a> the node is using. </p>
-<dl class="section return"><dt>Returns</dt><dd>The current <a class="el" href="classburn_1_1_mesh.html">Mesh</a></dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_static_mesh_node.html#af78ecebdfd7c25997caf35ef4ebecdfb" title="Sets the Mesh that the node should use. ">setMesh()</a> </dd></dl>
+<p>Implements <a class="el" href="classburn_1_1_scene_node.html#aba5cd67bf31709472a4a7d85804fd8bb">burn::SceneNode</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af78ecebdfd7c25997caf35ef4ebecdfb"></a>
+<a class="anchor" id="a3bc717d99643f34a82443f89b24eae40"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::StaticMeshNode::drawLighting </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramname"><em>camera</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>lights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td>
+          <td class="paramname"><em>ambient</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classburn_1_1_scene_node.html#a39a9e949313f6e1131825e43ce1d22a5">burn::SceneNode</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab6caf5d20b137bb00032a81690a4ebfc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::StaticMeshNode::setMesh </td>
+          <td class="memname"><a class="el" href="classburn_1_1_model.html">Model</a> &amp; burn::StaticMeshNode::getModel </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classburn_1_1_mesh.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>mesh</em>)</td><td></td>
+          <td class="paramname">)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the <a class="el" href="classburn_1_1_mesh.html">Mesh</a> that the node should use. </p>
+<p>Returns the current <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> the node is using. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_static_mesh_node.html#aa89d9de19f56975acc63da0ca1eb3acc" title="Sets the Model that the node should use. ">setModel()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6c571030b013c2b72d85bf36952de724"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool burn::StaticMeshNode::loadFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa89d9de19f56975acc63da0ca1eb3acc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::StaticMeshNode::setModel </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> that the node should use. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mesh</td><td>The <a class="el" href="classburn_1_1_mesh.html">Mesh</a> to use</td></tr>
+    <tr><td class="paramname">model</td><td>The <a class="el" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> to use</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_static_mesh_node.html#ad269a91df547f3a3092d193e4210e081" title="Returns the current Mesh the node is using. ">getMesh()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_static_mesh_node.html#ab6caf5d20b137bb00032a81690a4ebfc" title="Returns the current Model the node is using. ">getModel()</a> </dd></dl>
 
 </div>
 </div>
@@ -303,7 +396,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -107,18 +107,43 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad8b2e6283ea14b3943a8945ab7f2d27d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ad8b2e6283ea14b3943a8945ab7f2d27d">~Mesh</a> ()</td></tr>
 <tr class="memdesc:ad8b2e6283ea14b3943a8945ab7f2d27d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default destructor.  <a href="#ad8b2e6283ea14b3943a8945ab7f2d27d">More...</a><br/></td></tr>
 <tr class="separator:ad8b2e6283ea14b3943a8945ab7f2d27d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3179d5730bfcf0e781b1c0daebfc7439"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a3179d5730bfcf0e781b1c0daebfc7439">loadFromFile</a> (const std::string &amp;file)</td></tr>
+<tr class="memdesc:a3179d5730bfcf0e781b1c0daebfc7439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a 3D-model into the <a class="el" href="classburn_1_1_mesh.html">Mesh</a> object. It uses the assimp importer, so it supports the files that assimp does.  <a href="#a3179d5730bfcf0e781b1c0daebfc7439">More...</a><br/></td></tr>
+<tr class="separator:a3179d5730bfcf0e781b1c0daebfc7439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0996bd5d561cdf7b26e27c713facea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ae0996bd5d561cdf7b26e27c713facea7">setVertices</a> (const std::vector&lt; <a class="el" href="classburn_1_1_vertex.html">Vertex</a> &gt; &amp;vertices)</td></tr>
 <tr class="memdesc:ae0996bd5d561cdf7b26e27c713facea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the vertices of the mesh, so that they can be used for rendering later on.  <a href="#ae0996bd5d561cdf7b26e27c713facea7">More...</a><br/></td></tr>
 <tr class="separator:ae0996bd5d561cdf7b26e27c713facea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a076016c8452ff794880480626394e44c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a076016c8452ff794880480626394e44c">getVertexCount</a> () const </td></tr>
 <tr class="memdesc:a076016c8452ff794880480626394e44c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the count of the vertices which the mesh is holding.  <a href="#a076016c8452ff794880480626394e44c">More...</a><br/></td></tr>
 <tr class="separator:a076016c8452ff794880480626394e44c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1f545b97bac2463ac0c833e23cd4779"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ac1f545b97bac2463ac0c833e23cd4779">getPositionBuffer</a> ()</td></tr>
-<tr class="memdesc:ac1f545b97bac2463ac0c833e23cd4779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the position-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#ac1f545b97bac2463ac0c833e23cd4779">More...</a><br/></td></tr>
-<tr class="separator:ac1f545b97bac2463ac0c833e23cd4779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8e759004d7c8203c79b52418d5b426"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#aaf8e759004d7c8203c79b52418d5b426">getColorBuffer</a> ()</td></tr>
-<tr class="memdesc:aaf8e759004d7c8203c79b52418d5b426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the color-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#aaf8e759004d7c8203c79b52418d5b426">More...</a><br/></td></tr>
-<tr class="separator:aaf8e759004d7c8203c79b52418d5b426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a617b88d25c58c342f02751d67cb5e29b"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a617b88d25c58c342f02751d67cb5e29b">getPositionBuffer</a> () const </td></tr>
+<tr class="memdesc:a617b88d25c58c342f02751d67cb5e29b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the position-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#a617b88d25c58c342f02751d67cb5e29b">More...</a><br/></td></tr>
+<tr class="separator:a617b88d25c58c342f02751d67cb5e29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad571f57e9a162b86585c0b3f288bbfc6"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ad571f57e9a162b86585c0b3f288bbfc6">getNormalBuffer</a> () const </td></tr>
+<tr class="memdesc:ad571f57e9a162b86585c0b3f288bbfc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the normal-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#ad571f57e9a162b86585c0b3f288bbfc6">More...</a><br/></td></tr>
+<tr class="separator:ad571f57e9a162b86585c0b3f288bbfc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8757bde80c135f9d8e8e0291e00ffe5"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ae8757bde80c135f9d8e8e0291e00ffe5">getColorBuffer</a> () const </td></tr>
+<tr class="memdesc:ae8757bde80c135f9d8e8e0291e00ffe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the color-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#ae8757bde80c135f9d8e8e0291e00ffe5">More...</a><br/></td></tr>
+<tr class="separator:ae8757bde80c135f9d8e8e0291e00ffe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bcc126c9f06b9f04549b02328f2fc72"><td class="memItemLeft" align="right" valign="top">const GLuint &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a5bcc126c9f06b9f04549b02328f2fc72">getUvBuffer</a> () const </td></tr>
+<tr class="memdesc:a5bcc126c9f06b9f04549b02328f2fc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the id of the UV-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0.  <a href="#a5bcc126c9f06b9f04549b02328f2fc72">More...</a><br/></td></tr>
+<tr class="separator:a5bcc126c9f06b9f04549b02328f2fc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2457c00cd236e5933e725bb1d55db0d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a2457c00cd236e5933e725bb1d55db0d9">setTexture</a> (const <a class="el" href="classburn_1_1_texture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="memdesc:a2457c00cd236e5933e725bb1d55db0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a> of the mesh.  <a href="#a2457c00cd236e5933e725bb1d55db0d9">More...</a><br/></td></tr>
+<tr class="separator:a2457c00cd236e5933e725bb1d55db0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbea44f2a2683c44728bb17e4691d406"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_texture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#acbea44f2a2683c44728bb17e4691d406">getTexture</a> () const </td></tr>
+<tr class="memdesc:acbea44f2a2683c44728bb17e4691d406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a> of the mesh.  <a href="#acbea44f2a2683c44728bb17e4691d406">More...</a><br/></td></tr>
+<tr class="separator:acbea44f2a2683c44728bb17e4691d406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e3f6168e3bb37e5c30323c5e19b85cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_material.html">Material</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a7e3f6168e3bb37e5c30323c5e19b85cc">getMaterial</a> ()</td></tr>
+<tr class="memdesc:a7e3f6168e3bb37e5c30323c5e19b85cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the material that the node is using.  <a href="#a7e3f6168e3bb37e5c30323c5e19b85cc">More...</a><br/></td></tr>
+<tr class="separator:a7e3f6168e3bb37e5c30323c5e19b85cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff24f1eb82cb417062e8d1ec179d8bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a2ff24f1eb82cb417062e8d1ec179d8bd">setMaterial</a> (<a class="el" href="classburn_1_1_material.html">Material</a> &amp;material)</td></tr>
+<tr class="memdesc:a2ff24f1eb82cb417062e8d1ec179d8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the material of the node. Influences the rendering behaviour.  <a href="#a2ff24f1eb82cb417062e8d1ec179d8bd">More...</a><br/></td></tr>
+<tr class="separator:a2ff24f1eb82cb417062e8d1ec179d8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4880e1e9d0580cd08064290fe4c3d3a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#a4880e1e9d0580cd08064290fe4c3d3a0">update</a> ()</td></tr>
+<tr class="separator:a4880e1e9d0580cd08064290fe4c3d3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9d9b1c1d6a9486e65e384f28aa009d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_mesh.html#ad9d9b1c1d6a9486e65e384f28aa009d5">forceUpdate</a> ()</td></tr>
+<tr class="separator:ad9d9b1c1d6a9486e65e384f28aa009d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a35d4706a490d0f2bb190b6b785621e07"></a>
@@ -156,7 +181,22 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aaf8e759004d7c8203c79b52418d5b426"></a>
+<a class="anchor" id="ad9d9b1c1d6a9486e65e384f28aa009d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Mesh::forceUpdate </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae8757bde80c135f9d8e8e0291e00ffe5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -164,7 +204,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">const GLuint &amp; burn::Mesh::getColorBuffer </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -174,12 +214,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac1f545b97bac2463ac0c833e23cd4779"></a>
+<a class="anchor" id="a7e3f6168e3bb37e5c30323c5e19b85cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const GLuint &amp; burn::Mesh::getPositionBuffer </td>
+          <td class="memname"><a class="el" href="classburn_1_1_material.html">Material</a> &amp; burn::Mesh::getMaterial </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
@@ -187,8 +227,82 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the material that the node is using. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classburn_1_1_material.html">Material</a> of the node.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_mesh.html#a2ff24f1eb82cb417062e8d1ec179d8bd" title="Sets the material of the node. Influences the rendering behaviour. ">setMaterial()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad571f57e9a162b86585c0b3f288bbfc6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GLuint &amp; burn::Mesh::getNormalBuffer </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the id of the normal-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns the id of the normal-buffer or 0 if no normal-buffer exists </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a617b88d25c58c342f02751d67cb5e29b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GLuint &amp; burn::Mesh::getPositionBuffer </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Returns the id of the position-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns the id of the position-buffer or 0 if no position-buffer exists </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acbea44f2a2683c44728bb17e4691d406"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classburn_1_1_texture.html">Texture</a> &amp; burn::Mesh::getTexture </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a> of the mesh. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_mesh.html#a2457c00cd236e5933e725bb1d55db0d9" title="Sets the Texture of the mesh. ">setTexture()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5bcc126c9f06b9f04549b02328f2fc72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GLuint &amp; burn::Mesh::getUvBuffer </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the id of the UV-buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns the id of the UV-buffer or 0 if no UV-buffer exists </dd></dl>
 
 </div>
 </div>
@@ -208,6 +322,81 @@ Public Member Functions</h2></td></tr>
 <p>Returns the count of the vertices which the mesh is holding. </p>
 <dl class="section return"><dt>Returns</dt><dd>The count of vertices</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_mesh.html#ae0996bd5d561cdf7b26e27c713facea7" title="Sets the vertices of the mesh, so that they can be used for rendering later on. ">setVertices()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3179d5730bfcf0e781b1c0daebfc7439"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool burn::Mesh::loadFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads a 3D-model into the <a class="el" href="classburn_1_1_mesh.html">Mesh</a> object. It uses the assimp importer, so it supports the files that assimp does. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The file to load</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true on load-success </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ff24f1eb82cb417062e8d1ec179d8bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Mesh::setMaterial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_material.html">Material</a> &amp;&#160;</td>
+          <td class="paramname"><em>material</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the material of the node. Influences the rendering behaviour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">material</td><td>The <a class="el" href="classburn_1_1_material.html">Material</a> to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_mesh.html#a7e3f6168e3bb37e5c30323c5e19b85cc" title="Returns the material that the node is using. ">getMaterial()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2457c00cd236e5933e725bb1d55db0d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Mesh::setTexture </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_texture.html">Texture</a> &amp;&#160;</td>
+          <td class="paramname"><em>texture</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a> of the mesh. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>The <a class="el" href="classburn_1_1_texture.html" title="Holds OpenGL comfort images as textures. ">Texture</a> to set</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_mesh.html#acbea44f2a2683c44728bb17e4691d406" title="Returns the current Texture of the mesh. ">getTexture()</a> </dd></dl>
 
 </div>
 </div>
@@ -236,6 +425,21 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a4880e1e9d0580cd08064290fe4c3d3a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Mesh::update </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/Burngine/Graphics/<a class="el" href="_mesh_8h_source.html">Mesh.h</a></li>
 <li>include/Burngine/Graphics/<a class="el" href="_mesh_8cpp.html">Mesh.cpp</a></li>
@@ -243,7 +447,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 14 2013 15:16:06 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

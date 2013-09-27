@@ -30,7 +30,23 @@ void \hyperlink{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}{set\-T
 const \hyperlink{classburn_1_1_material_a2d219315cf05e59bbffe8e3831cc6c43}{Type} \& \hyperlink{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}{get\-Type} () const 
 \begin{DoxyCompactList}\small\item\em Returns the current type. \end{DoxyCompactList}\item 
 bool \hyperlink{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}{is\-Flag\-Set} (\hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{Flag} flag) const 
-\begin{DoxyCompactList}\small\item\em Returns the current status of a flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the current status of a flag. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_material_ae50bc615e9bb17bc9eb232345fb1e776}{set\-Specular\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
+\item 
+const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_material_a732240fb8d7fe3f82e8ec2da93356b5e}{get\-Specular\-Color} () const 
+\item 
+void \hyperlink{classburn_1_1_material_a0b50c4daafb286d54d5159bc93fc695c}{set\-Diffuse\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
+\item 
+const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_material_a4572c25ee95804084e9dce9c1116f493}{get\-Diffuse\-Color} () const 
+\item 
+void \hyperlink{classburn_1_1_material_a730e2d8f5d444f6ce45e1f25a4f424d6}{set\-Index} (const unsigned int \&index)
+\item 
+const unsigned int \& \hyperlink{classburn_1_1_material_ab42a52377d982ebca5d17776c9b2b800}{get\-Index} () const 
+\item 
+void \hyperlink{classburn_1_1_material_a016895c77f4fd7393ab263ac7455e5a2}{use\-Diffuse\-Color} (bool should\-Use\-Diffuse=true)
+\item 
+bool \hyperlink{classburn_1_1_material_a4f2d46a41409a068985c7377eeb1f3c4}{is\-Using\-Diffuse\-Color} () const 
+\end{DoxyCompactItemize}
 
 
 \subsection{Member Enumeration Documentation}
@@ -90,6 +106,27 @@ The default destructor.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_material_a4572c25ee95804084e9dce9c1116f493}{\index{burn\-::\-Material@{burn\-::\-Material}!get\-Diffuse\-Color@{get\-Diffuse\-Color}}
+\index{get\-Diffuse\-Color@{get\-Diffuse\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{get\-Diffuse\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Material\-::get\-Diffuse\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_a4572c25ee95804084e9dce9c1116f493}
+\hypertarget{classburn_1_1_material_ab42a52377d982ebca5d17776c9b2b800}{\index{burn\-::\-Material@{burn\-::\-Material}!get\-Index@{get\-Index}}
+\index{get\-Index@{get\-Index}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{get\-Index}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned int \& burn\-::\-Material\-::get\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_ab42a52377d982ebca5d17776c9b2b800}
+\hypertarget{classburn_1_1_material_a732240fb8d7fe3f82e8ec2da93356b5e}{\index{burn\-::\-Material@{burn\-::\-Material}!get\-Specular\-Color@{get\-Specular\-Color}}
+\index{get\-Specular\-Color@{get\-Specular\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{get\-Specular\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Material\-::get\-Specular\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_a732240fb8d7fe3f82e8ec2da93356b5e}
 \hypertarget{classburn_1_1_material_a46b4ee518276ce465566b0fe8fdc169a}{\index{burn\-::\-Material@{burn\-::\-Material}!get\-Type@{get\-Type}}
 \index{get\-Type@{get\-Type}!burn::Material@{burn\-::\-Material}}
 \subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Material\-::\-Type} \& burn\-::\-Material\-::get\-Type (
@@ -129,6 +166,20 @@ Status of a flag.
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{set\-Flag()} 
 \end{DoxySeeAlso}
+\hypertarget{classburn_1_1_material_a4f2d46a41409a068985c7377eeb1f3c4}{\index{burn\-::\-Material@{burn\-::\-Material}!is\-Using\-Diffuse\-Color@{is\-Using\-Diffuse\-Color}}
+\index{is\-Using\-Diffuse\-Color@{is\-Using\-Diffuse\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{is\-Using\-Diffuse\-Color}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Material\-::is\-Using\-Diffuse\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_material_a4f2d46a41409a068985c7377eeb1f3c4}
+\hypertarget{classburn_1_1_material_a0b50c4daafb286d54d5159bc93fc695c}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Diffuse\-Color@{set\-Diffuse\-Color}}
+\index{set\-Diffuse\-Color@{set\-Diffuse\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{set\-Diffuse\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Diffuse\-Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector3f} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a0b50c4daafb286d54d5159bc93fc695c}
 \hypertarget{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Flag@{set\-Flag}}
 \index{set\-Flag@{set\-Flag}!burn::Material@{burn\-::\-Material}}
 \subsubsection[{set\-Flag}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Flag (
@@ -151,6 +202,20 @@ Sets the specified flag on true or false.
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_material_afa32027c9de752c96b74e08b3f1e42af}{is\-Flag\-Set()} 
 \end{DoxySeeAlso}
+\hypertarget{classburn_1_1_material_a730e2d8f5d444f6ce45e1f25a4f424d6}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Index@{set\-Index}}
+\index{set\-Index@{set\-Index}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{set\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Index (
+\begin{DoxyParamCaption}
+\item[{const unsigned int \&}]{index}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a730e2d8f5d444f6ce45e1f25a4f424d6}
+\hypertarget{classburn_1_1_material_ae50bc615e9bb17bc9eb232345fb1e776}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Specular\-Color@{set\-Specular\-Color}}
+\index{set\-Specular\-Color@{set\-Specular\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{set\-Specular\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Specular\-Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector3f} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_ae50bc615e9bb17bc9eb232345fb1e776}
 \hypertarget{classburn_1_1_material_a287ad604c643dc76fc07d27b45ceecd2}{\index{burn\-::\-Material@{burn\-::\-Material}!set\-Type@{set\-Type}}
 \index{set\-Type@{set\-Type}!burn::Material@{burn\-::\-Material}}
 \subsubsection[{set\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::set\-Type (
@@ -173,6 +238,13 @@ Sets the type of the material. The \hyperlink{classburn_1_1_scene_node}{Scene\-N
 \begin{DoxyNote}{Note}
 Ensure that you have loaded the \hyperlink{structburn_1_1_burngine_shaders}{Burngine\-Shaders} before renering. E.\-g. by calling \hyperlink{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{Burngine\-Shaders\-::load\-All\-Shaders()} 
 \end{DoxyNote}
+\hypertarget{classburn_1_1_material_a016895c77f4fd7393ab263ac7455e5a2}{\index{burn\-::\-Material@{burn\-::\-Material}!use\-Diffuse\-Color@{use\-Diffuse\-Color}}
+\index{use\-Diffuse\-Color@{use\-Diffuse\-Color}!burn::Material@{burn\-::\-Material}}
+\subsubsection[{use\-Diffuse\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Material\-::use\-Diffuse\-Color (
+\begin{DoxyParamCaption}
+\item[{bool}]{should\-Use\-Diffuse = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_material_a016895c77f4fd7393ab263ac7455e5a2}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

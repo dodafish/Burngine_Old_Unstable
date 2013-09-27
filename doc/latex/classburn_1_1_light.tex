@@ -1,0 +1,136 @@
+\hypertarget{classburn_1_1_light}{\section{burn\-:\-:Light Class Reference}
+\label{classburn_1_1_light}\index{burn\-::\-Light@{burn\-::\-Light}}
+}
+
+
+Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously the scale will have no effect.  
+
+
+
+
+{\ttfamily \#include $<$Light.\-h$>$}
+
+Inheritance diagram for burn\-:\-:Light\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classburn_1_1_light}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \{ \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}, 
+\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}{S\-P\-O\-T}, 
+\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}{Light} (const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \&type=\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}, const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(1.\-0f, 1.\-0f, 1.\-0f), const float \&intensity=1.\-0f)
+\item 
+\hyperlink{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}{$\sim$\-Light} ()
+\item 
+void \hyperlink{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}{set\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
+\item 
+const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}{get\-Color} () const 
+\item 
+void \hyperlink{classburn_1_1_light_a798ae7d682b85dcede11a89047f19508}{set\-Intensity} (const float \&intensity)
+\item 
+const float \& \hyperlink{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}{get\-Intensity} () const 
+\item 
+void \hyperlink{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}{set\-Type} (const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \&type)
+\item 
+const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \& \hyperlink{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}{get\-Type} () const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously the scale will have no effect. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{\index{burn\-::\-Light@{burn\-::\-Light}!Type@{Type}}
+\index{Type@{Type}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Light\-::\-Type}}}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\-O\-I\-N\-T@{P\-O\-I\-N\-T}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!P\-O\-I\-N\-T@{P\-O\-I\-N\-T}}\item[{\em 
+\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}
+}]\index{S\-P\-O\-T@{S\-P\-O\-T}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!S\-P\-O\-T@{S\-P\-O\-T}}\item[{\em 
+\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}{S\-P\-O\-T}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}
+}]\index{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}}\item[{\em 
+\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}{\index{burn\-::\-Light@{burn\-::\-Light}!Light@{Light}}
+\index{Light@{Light}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{Light}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Light\-::\-Light (
+\begin{DoxyParamCaption}
+\item[{const {\bf Type} \&}]{type = {\ttfamily {\bf P\-O\-I\-N\-T}}, }
+\item[{const {\bf Vector3f} \&}]{color = {\ttfamily {\bf Vector3f}(1.0f,~1.0f,~1.0f)}, }
+\item[{const float \&}]{intensity = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}
+\hypertarget{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}{\index{burn\-::\-Light@{burn\-::\-Light}!$\sim$\-Light@{$\sim$\-Light}}
+\index{$\sim$\-Light@{$\sim$\-Light}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{$\sim$\-Light}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Light\-::$\sim$\-Light (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Color@{get\-Color}}
+\index{get\-Color@{get\-Color}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Light\-::get\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}
+\hypertarget{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Intensity@{get\-Intensity}}
+\index{get\-Intensity@{get\-Intensity}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Intensity}]{\setlength{\rightskip}{0pt plus 5cm}const float \& burn\-::\-Light\-::get\-Intensity (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}
+\hypertarget{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Light\-::\-Type} \& burn\-::\-Light\-::get\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}
+\hypertarget{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}{\index{burn\-::\-Light@{burn\-::\-Light}!set\-Color@{set\-Color}}
+\index{set\-Color@{set\-Color}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{set\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::set\-Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector3f} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}
+\hypertarget{classburn_1_1_light_a798ae7d682b85dcede11a89047f19508}{\index{burn\-::\-Light@{burn\-::\-Light}!set\-Intensity@{set\-Intensity}}
+\index{set\-Intensity@{set\-Intensity}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{set\-Intensity}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::set\-Intensity (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{intensity}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_a798ae7d682b85dcede11a89047f19508}
+\hypertarget{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}{\index{burn\-::\-Light@{burn\-::\-Light}!set\-Type@{set\-Type}}
+\index{set\-Type@{set\-Type}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{set\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::set\-Type (
+\begin{DoxyParamCaption}
+\item[{const {\bf Type} \&}]{type}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\hyperlink{_light_8h}{Light.\-h}\item 
+include/\-Burngine/\-Graphics/\hyperlink{_light_8cpp}{Light.\-cpp}\end{DoxyCompactItemize}

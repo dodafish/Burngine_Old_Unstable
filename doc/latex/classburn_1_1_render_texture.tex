@@ -1,0 +1,110 @@
+\hypertarget{classburn_1_1_render_texture}{\section{burn\-:\-:Render\-Texture Class Reference}
+\label{classburn_1_1_render_texture}\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}}
+}
+
+
+{\ttfamily \#include $<$Render\-Texture.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5da}{Texture\-Unit} \{ \hyperlink{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa63857be6a31ec0a5bf5e31ccd90f4530}{T\-E\-X\-T\-U\-R\-E0}, 
+\hyperlink{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa7116b76de0e4f6e20d11cc3a540f93d3}{T\-E\-X\-T\-U\-R\-E1}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_render_texture_a45a90ff516418ff94aab80a662111bf2}{Render\-Texture} ()
+\item 
+\hyperlink{classburn_1_1_render_texture_aa4d4ccf9bc258394db5e3c9b17a8240a}{$\sim$\-Render\-Texture} ()
+\item 
+bool \hyperlink{classburn_1_1_render_texture_aed4d20e1aa9566409e500ab4b84401b6}{create} (const unsigned int \&width=1024, const unsigned int \&height=768)
+\item 
+void \hyperlink{classburn_1_1_render_texture_a89af1bfdbbc279d24bd734aa765096b4}{bind} () const 
+\item 
+void \hyperlink{classburn_1_1_render_texture_a3316518369cf057633d22d06a6b1b6bb}{clear} () const 
+\item 
+void \hyperlink{classburn_1_1_render_texture_aaae0e105c24a1fb2f0d13428f1d8160b}{draw\-Fullscreen} (\hyperlink{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5da}{Texture\-Unit} tu)
+\item 
+void \hyperlink{classburn_1_1_render_texture_aa9304d9bf8985071cb73c405ee72aab3}{draw} (\hyperlink{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5da}{Texture\-Unit} tu, const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&position, const \hyperlink{namespaceburn_a2af71ec5609a2f2d501827804e86a9b8}{Vector2f} \&size)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5da}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!Texture\-Unit@{Texture\-Unit}}
+\index{Texture\-Unit@{Texture\-Unit}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{Texture\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Render\-Texture\-::\-Texture\-Unit}}}\label{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5da}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{T\-E\-X\-T\-U\-R\-E0@{T\-E\-X\-T\-U\-R\-E0}!burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}}\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!T\-E\-X\-T\-U\-R\-E0@{T\-E\-X\-T\-U\-R\-E0}}\item[{\em 
+\hypertarget{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa63857be6a31ec0a5bf5e31ccd90f4530}{T\-E\-X\-T\-U\-R\-E0}\label{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa63857be6a31ec0a5bf5e31ccd90f4530}
+}]\index{T\-E\-X\-T\-U\-R\-E1@{T\-E\-X\-T\-U\-R\-E1}!burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}}\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!T\-E\-X\-T\-U\-R\-E1@{T\-E\-X\-T\-U\-R\-E1}}\item[{\em 
+\hypertarget{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa7116b76de0e4f6e20d11cc3a540f93d3}{T\-E\-X\-T\-U\-R\-E1}\label{classburn_1_1_render_texture_a6bab8f7342172061a5bc63c49528f5daa7116b76de0e4f6e20d11cc3a540f93d3}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_render_texture_a45a90ff516418ff94aab80a662111bf2}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!Render\-Texture@{Render\-Texture}}
+\index{Render\-Texture@{Render\-Texture}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{Render\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Render\-Texture\-::\-Render\-Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_render_texture_a45a90ff516418ff94aab80a662111bf2}
+\hypertarget{classburn_1_1_render_texture_aa4d4ccf9bc258394db5e3c9b17a8240a}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!$\sim$\-Render\-Texture@{$\sim$\-Render\-Texture}}
+\index{$\sim$\-Render\-Texture@{$\sim$\-Render\-Texture}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{$\sim$\-Render\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Render\-Texture\-::$\sim$\-Render\-Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_render_texture_aa4d4ccf9bc258394db5e3c9b17a8240a}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_render_texture_a89af1bfdbbc279d24bd734aa765096b4}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!bind@{bind}}
+\index{bind@{bind}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{bind}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Render\-Texture\-::bind (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_render_texture_a89af1bfdbbc279d24bd734aa765096b4}
+\hypertarget{classburn_1_1_render_texture_a3316518369cf057633d22d06a6b1b6bb}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!clear@{clear}}
+\index{clear@{clear}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Render\-Texture\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_render_texture_a3316518369cf057633d22d06a6b1b6bb}
+\hypertarget{classburn_1_1_render_texture_aed4d20e1aa9566409e500ab4b84401b6}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!create@{create}}
+\index{create@{create}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{create}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Render\-Texture\-::create (
+\begin{DoxyParamCaption}
+\item[{const unsigned int \&}]{width = {\ttfamily 1024}, }
+\item[{const unsigned int \&}]{height = {\ttfamily 768}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_render_texture_aed4d20e1aa9566409e500ab4b84401b6}
+\hypertarget{classburn_1_1_render_texture_aa9304d9bf8985071cb73c405ee72aab3}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!draw@{draw}}
+\index{draw@{draw}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Render\-Texture\-::draw (
+\begin{DoxyParamCaption}
+\item[{{\bf Render\-Texture\-::\-Texture\-Unit}}]{tu, }
+\item[{const {\bf Vector2f} \&}]{position, }
+\item[{const {\bf Vector2f} \&}]{size}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_render_texture_aa9304d9bf8985071cb73c405ee72aab3}
+\hypertarget{classburn_1_1_render_texture_aaae0e105c24a1fb2f0d13428f1d8160b}{\index{burn\-::\-Render\-Texture@{burn\-::\-Render\-Texture}!draw\-Fullscreen@{draw\-Fullscreen}}
+\index{draw\-Fullscreen@{draw\-Fullscreen}!burn::RenderTexture@{burn\-::\-Render\-Texture}}
+\subsubsection[{draw\-Fullscreen}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Render\-Texture\-::draw\-Fullscreen (
+\begin{DoxyParamCaption}
+\item[{{\bf Render\-Texture\-::\-Texture\-Unit}}]{tu}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_render_texture_aaae0e105c24a1fb2f0d13428f1d8160b}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\hyperlink{_render_texture_8h}{Render\-Texture.\-h}\item 
+include/\-Burngine/\-Graphics/\hyperlink{_render_texture_8cpp}{Render\-Texture.\-cpp}\end{DoxyCompactItemize}
