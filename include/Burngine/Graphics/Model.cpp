@@ -116,7 +116,7 @@ bool Model::loadFromFile(const std::string& file) {
 				mat.setDiffuseColor(Vector3f(diffuseColor.r, diffuseColor.g, diffuseColor.b));
 				mat.setSpecularColor(Vector3f(specularColor.r, specularColor.g, specularColor.b));
 				_meshes[j]->setMaterial(mat);
-				_meshes[j]->data();
+				_meshes[j]->forceUpdate(); //set color buffer asap
 			}
 		}
 
@@ -154,7 +154,7 @@ bool Model::loadFromFile(const std::string& file) {
 
 void Model::update() {
 	for(size_t i = 0; i < _meshes.size(); ++i){
-		_meshes[i]->data();
+		_meshes[i]->update();
 	}
 }
 

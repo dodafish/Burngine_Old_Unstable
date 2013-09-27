@@ -143,6 +143,11 @@ public:
 	 */
 	void setMaterial(const Material& material);
 
+	void update();
+	void forceUpdate();
+
+private:
+
 	/**
 	 * @brief Fills the buffers with data or creates them if needed.
 	 * Uses _vertices as vertexdata. Internal use only.
@@ -150,8 +155,6 @@ public:
 	 * @see setVertices()
 	 */
 	void data();
-
-private:
 
 	friend Model;
 

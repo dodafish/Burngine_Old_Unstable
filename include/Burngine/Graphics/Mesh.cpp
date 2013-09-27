@@ -39,6 +39,17 @@ Mesh::~Mesh() {
 
 }
 
+void Mesh::update() {
+	if(_needUpdate){
+		data();
+		_needUpdate = false;
+	}
+}
+
+void Mesh::forceUpdate(){
+	_needUpdate = true;
+}
+
 size_t Mesh::getVertexCount() const {
 	return _vertices.size();
 }
@@ -46,8 +57,6 @@ size_t Mesh::getVertexCount() const {
 void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	_vertices = vertices;
 	_needUpdate = true;
-
-	data();
 }
 
 const GLuint& Mesh::getPositionBuffer() const {
@@ -133,8 +142,6 @@ void Mesh::data() {
 		GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind
-
-		_needUpdate = false;
 	}
 }
 

@@ -136,7 +136,7 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 		v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), Vector2f(1.f, 0.f)));
 		v.push_back(Vertex(Vector3f(1.f, 1.f, 0), Vector3f(), Vector2f(1.f, 1.f)));
 		mesh.setVertices(v);
-		mesh.data();
+		mesh.update();
 
 		BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
 
@@ -195,7 +195,7 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 		v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), Vector2f(1.f, 0.f)));
 		v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), Vector2f(1.f, 1.f)));
 		mesh.setVertices(v);
-		mesh.data();
+		mesh.update();
 
 		BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
 
