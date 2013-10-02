@@ -105,20 +105,20 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS);
+	Reporter::report("Enabled depth-test.");
 
 	glClearColor(0.1, 0.1, 0.3, 1.0);
 
-	Reporter::report("Enabled depth-test.");
-
 	glEnable(GL_BLEND);
-
 	Reporter::report("Enabled blending.");
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
-
 	Reporter::report("Enabled cullface.");
+
+	glEnable(GL_MULTISAMPLE);
+	Reporter::report("Enabled antialiasing.");
 
 	return true;
 }

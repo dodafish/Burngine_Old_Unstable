@@ -44,11 +44,11 @@ void Reporter::report(const std::string& msg, const Reporter::MessageType& type)
 	//Mark beginning
 	if(firstDump && dumpToFile){
 		std::stringstream strs;
-		strs << __TIME__;
+		strs << __DATE__ << " " << __TIME__;
 
 		out << "\n\n////////////////////////////////////////\n";
 		out << "Beginning of report: " + timestamp + "\n";
-		out << "Time of compilation of Burngine: " + strs.str() + "\n";
+		out << "Compilation of Burngine: " + strs.str() + "\n";
 		out << "////////////////////////////////////////\n";
 		firstDump = false;
 	}
