@@ -164,6 +164,8 @@ public:
 	void removeScene(const std::shared_ptr<Scene>& scene);
 
 private:
+	bool checkOpenGLVersion();
+
 	std::vector<std::shared_ptr<Scene>> _scenes;
 
 	static bool _isContextCreated;

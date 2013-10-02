@@ -77,19 +77,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		std::cout << "GLEW successfully initialited.\n";
 	}
 
-	//Check OpenGL version
-	if(GLEW_VERSION_4_3){
-		std::cout << "OpenGL 4.3 supported\n";
-	}else if(GLEW_VERSION_4_2){
-		std::cout << "OpenGL 4.2 supported\n";
-	}else if(GLEW_VERSION_4_1){
-		std::cout << "OpenGL 4.1 supported\n";
-	}else if(GLEW_VERSION_4_0){
-		std::cout << "OpenGL 4.0 supported\n";
-	}else if(GLEW_VERSION_3_3){
-		std::cout << "OpenGL 3.3 supported\n";
-	}else{
-		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
+	//Checks, if OpenGL 3.3+ is supported
+	if(!checkOpenGLVersion()){
 		return false;
 	}
 
@@ -127,6 +116,27 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	std::cout << "Cullface enabled.\n";
 
 	return true;
+}
+
+bool Window::checkOpenGLVersion() {
+
+	if(GLEW_VERSION_4_3){
+		std::cout << "OpenGL 4.3 supported\n";
+	}else if(GLEW_VERSION_4_2){
+		std::cout << "OpenGL 4.2 supported\n";
+	}else if(GLEW_VERSION_4_1){
+		std::cout << "OpenGL 4.1 supported\n";
+	}else if(GLEW_VERSION_4_0){
+		std::cout << "OpenGL 4.0 supported\n";
+	}else if(GLEW_VERSION_3_3){
+		std::cout << "OpenGL 3.3 supported\n";
+	}else{
+		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
+		return false;
+	}
+
+	return true;
+
 }
 
 const WindowSettings& Window::getSettings() const {
