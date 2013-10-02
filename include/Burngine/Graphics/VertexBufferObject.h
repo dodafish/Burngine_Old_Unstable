@@ -23,12 +23,14 @@ public:
 	void create();
 	void destroy();
 
+	void reset();
+
 	void bind(const GLint& type = GL_ARRAY_BUFFER);
 	void uploadDataToGpu(const GLint& type = GL_ARRAY_BUFFER, const GLint& usageHint = GL_STATIC_DRAW);
 
 	const GLuint& getBuffer();
 
-	void addData(void* data, const unsigned int& size);
+	void addData(const void* data, const unsigned int& size);
 
 	static GLint getLastBuffer(const GLint& type = GL_ARRAY_BUFFER);
 

@@ -13,29 +13,21 @@
 namespace burn {
 
 Mesh::Mesh() :
-				_needUpdate(false),
-				_vertexPositionBuffer(0),
-				_vertexColorBuffer(0),
-				_vertexUvBuffer(0),
-				_vertexNormalBuffer(0) {
+_needUpdate(false) {
 
-	if(Window::isContextCreated()){
-		glGenBuffers(1, &_vertexPositionBuffer);
-		glGenBuffers(1, &_vertexColorBuffer);
-		glGenBuffers(1, &_vertexUvBuffer);
-		glGenBuffers(1, &_vertexNormalBuffer);
-	}
+	_positionVbo.create();
+	_colorVbo.create();
+	_uvVbo.create();
+	_normalVbo.create();
 
 }
 
 Mesh::~Mesh() {
 
-	if(Window::isContextCreated()){
-		glDeleteBuffers(1, &_vertexPositionBuffer);
-		glDeleteBuffers(1, &_vertexColorBuffer);
-		glDeleteBuffers(1, &_vertexUvBuffer);
-		glDeleteBuffers(1, &_vertexNormalBuffer);
-	}
+	_positionVbo.destroy();
+	_colorVbo.destroy();
+	_uvVbo.destroy();
+	_normalVbo.destroy();
 
 }
 
@@ -46,7 +38,7 @@ void Mesh::update() {
 	}
 }
 
-void Mesh::forceUpdate(){
+void Mesh::forceUpdate() {
 	_needUpdate = true;
 }
 
@@ -59,20 +51,20 @@ void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	_needUpdate = true;
 }
 
-const GLuint& Mesh::getPositionBuffer() const {
-	return _vertexPositionBuffer;
+VertexBufferObject& Mesh::getPositionVbo() {
+	return _positionVbo;
 }
 
-const GLuint& Mesh::getNormalBuffer() const {
-	return _vertexNormalBuffer;
+VertexBufferObject& Mesh::getNormalVbo() {
+	return _normalVbo;
 }
 
-const GLuint& Mesh::getColorBuffer() const {
-	return _vertexColorBuffer;
+VertexBufferObject& Mesh::getColorVbo() {
+	return _colorVbo;
 }
 
-const GLuint& Mesh::getUvBuffer() const {
-	return _vertexUvBuffer;
+VertexBufferObject& Mesh::getUvVbo() {
+	return _uvVbo;
 }
 
 void Mesh::setTexture(const Texture& tex) {
@@ -94,54 +86,64 @@ void Mesh::setMaterial(Material& material) {
 void Mesh::data() {
 	if(Window::isContextCreated() && _vertices.size() != 0){
 
-		if(_vertexPositionBuffer == 0){
-			glGenBuffers(1, &_vertexPositionBuffer);
-			glGenBuffers(1, &_vertexColorBuffer);
-			glGenBuffers(1, &_vertexUvBuffer);
-			glGenBuffers(1, &_vertexNormalBuffer);
-		}
+		_positionVbo.reset();
+		_colorVbo.reset();
+		_normalVbo.reset();
+		_uvVbo.reset();
 
 		std::vector<GLfloat> pos, col, uv, norm;
 		for(size_t i = 0; i < _vertices.size(); ++i){
-			pos.push_back(_vertices[i].getPosition().x);
-			pos.push_back(_vertices[i].getPosition().y);
-			pos.push_back(_vertices[i].getPosition().z);
+			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
+
+			/*pos.push_back(_vertices[i].getPosition().x);
+			 pos.push_back(_vertices[i].getPosition().y);
+			 pos.push_back(_vertices[i].getPosition().z);*/
 
 			if(!_material.isUsingDiffuseColor()){
-				col.push_back(_vertices[i].getColor().r);
-				col.push_back(_vertices[i].getColor().g);
-				col.push_back(_vertices[i].getColor().b);
+				/*col.push_back(_vertices[i].getColor().r);
+				 col.push_back(_vertices[i].getColor().g);
+				 col.push_back(_vertices[i].getColor().b);*/
+				_colorVbo.addData(&(_vertices[i].getColor()), sizeof(Vector3f));
 			}else{
-				col.push_back(_material.getDiffuseColor().r);
-				col.push_back(_material.getDiffuseColor().g);
-				col.push_back(_material.getDiffuseColor().b);
+				/*col.push_back(_material.getDiffuseColor().r);
+				 col.push_back(_material.getDiffuseColor().g);
+				 col.push_back(_material.getDiffuseColor().b);*/
+				_colorVbo.addData(&(_material.getDiffuseColor()), sizeof(Vector3f));
 			}
 
-			uv.push_back(_vertices[i].getUv().x);
-			uv.push_back(_vertices[i].getUv().y);
+			/*uv.push_back(_vertices[i].getUv().x);
+			 uv.push_back(_vertices[i].getUv().y);*/
+			_uvVbo.addData(&(_vertices[i].getUv()), sizeof(Vector2f));
 
-			norm.push_back(_vertices[i].getNormal().x);
-			norm.push_back(_vertices[i].getNormal().y);
-			norm.push_back(_vertices[i].getNormal().z);
+			/*norm.push_back(_vertices[i].getNormal().x);
+			 norm.push_back(_vertices[i].getNormal().y);
+			 norm.push_back(_vertices[i].getNormal().z);*/
+			_normalVbo.addData(&(_vertices[i].getNormal()), sizeof(Vector3f));
 		}
 
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexPositionBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * pos.size(), &pos[0],
-		GL_STATIC_DRAW);
+		/*glBindBuffer(GL_ARRAY_BUFFER, _vertexPositionBuffer);
+		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * pos.size(), &pos[0],
+		 GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexColorBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * col.size(), &col[0],
-		GL_STATIC_DRAW);
+		 glBindBuffer(GL_ARRAY_BUFFER, _vertexColorBuffer);
+		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * col.size(), &col[0],
+		 GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexUvBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * uv.size(), &uv[0],
-		GL_STATIC_DRAW);
+		 glBindBuffer(GL_ARRAY_BUFFER, _vertexUvBuffer);
+		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * uv.size(), &uv[0],
+		 GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexNormalBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * norm.size(), &norm[0],
-		GL_STATIC_DRAW);
+		 glBindBuffer(GL_ARRAY_BUFFER, _vertexNormalBuffer);
+		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * norm.size(), &norm[0],
+		 GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind
+		 glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind*/
+
+		_positionVbo.uploadDataToGpu();
+		_colorVbo.uploadDataToGpu();
+		_normalVbo.uploadDataToGpu();
+		_uvVbo.uploadDataToGpu();
+
 	}
 }
 

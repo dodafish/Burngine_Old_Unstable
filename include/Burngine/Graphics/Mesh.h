@@ -14,6 +14,7 @@
 #include "Vertex.h"
 #include "Material.h"
 #include "Texture.h"
+#include "VertexBufferObject.h"
 
 #include <vector>
 
@@ -74,7 +75,7 @@ public:
 	 * @return Returns the id of the position-buffer or 0 if no
 	 * position-buffer exists
 	 */
-	const GLuint& getPositionBuffer() const;
+	VertexBufferObject& getPositionVbo();
 
 	/**
 	 * @brief Returns the id of the normal-buffer.
@@ -84,7 +85,7 @@ public:
 	 * @return Returns the id of the normal-buffer or 0 if no
 	 * normal-buffer exists
 	 */
-	const GLuint& getNormalBuffer() const;
+	VertexBufferObject& getNormalVbo();
 
 	/**
 	 * @brief Returns the id of the color-buffer.
@@ -94,7 +95,7 @@ public:
 	 * @return Returns the id of the color-buffer or 0 if no
 	 * color-buffer exists
 	 */
-	const GLuint& getColorBuffer() const;
+	VertexBufferObject& getColorVbo();
 
 	/**
 	 * @brief Returns the id of the UV-buffer.
@@ -104,7 +105,7 @@ public:
 	 * @return Returns the id of the UV-buffer or 0 if no
 	 * UV-buffer exists
 	 */
-	const GLuint& getUvBuffer() const;
+	VertexBufferObject& getUvVbo();
 
 	/**
 	 * @brief Sets the Texture of the mesh
@@ -163,7 +164,8 @@ private:
 	std::vector<Vertex> _vertices;
 
 	bool _needUpdate;
-	GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer, _vertexNormalBuffer;
+	//GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer, _vertexNormalBuffer;
+	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
 
 	Texture _texture;
 };

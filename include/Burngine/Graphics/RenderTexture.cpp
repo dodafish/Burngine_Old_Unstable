@@ -150,7 +150,7 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 
 		//0 = Positions
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.getPositionBuffer());
+		mesh.getPositionVbo().bind();
 		glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				3,                  // size
 				GL_FLOAT,           // type
@@ -161,7 +161,7 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 
 		//1 = UVs
 		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.getUvBuffer());
+		mesh.getUvVbo().bind();
 		glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				2,                  // size
 				GL_FLOAT,           // type
@@ -209,7 +209,7 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 
 		//0 = Positions
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.getPositionBuffer());
+		mesh.getPositionVbo().bind();
 		glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				3,                  // size
 				GL_FLOAT,           // type
@@ -220,7 +220,7 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 
 		//1 = UVs
 		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.getUvBuffer());
+		mesh.getUvVbo().bind();
 		glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				2,                  // size
 				GL_FLOAT,           // type

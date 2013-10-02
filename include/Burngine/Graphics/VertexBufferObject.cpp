@@ -39,6 +39,11 @@ void VertexBufferObject::destroy() {
 		}
 }
 
+void VertexBufferObject::reset(){
+	_data.clear();
+	_isDataUploaded = false;
+}
+
 void VertexBufferObject::bind(const GLint& type) {
 	if(Window::isContextCreated())
 		glBindBuffer(type, _buffer);
@@ -63,6 +68,7 @@ void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHi
 
 	//Upload our data
 	glBufferData(type, _data.size(), &_data[0], usageHint);
+	_isDataUploaded = true;
 
 	//Restore buffer bound before
 	glBindBuffer(type, _lastBuffer);
@@ -81,7 +87,7 @@ const GLuint& VertexBufferObject::getBuffer() {
 	return _buffer;
 }
 
-void VertexBufferObject::addData(void* data, const unsigned int& size) {
+void VertexBufferObject::addData(const void* data, const unsigned int& size) {
 	_data.insert(_data.end(), (GLbyte*)data, (GLbyte*)data + size);
 }
 

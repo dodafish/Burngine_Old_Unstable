@@ -51,7 +51,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+				_model.getMesh(i).getPositionVbo().bind();
 				glVertexAttribPointer(0, // attribute 0
 						3,                  // size
 						GL_FLOAT,           // type
@@ -62,7 +62,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 				//1 = Colors
 				glEnableVertexAttribArray(1);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getColorBuffer());
+				_model.getMesh(i).getColorVbo().bind();
 				glVertexAttribPointer(1, // attribute 1
 						3,                  // size
 						GL_FLOAT,           // type
@@ -86,7 +86,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+				_model.getMesh(i).getPositionVbo().bind();
 				glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 						3,                  // size
 						GL_FLOAT,           // type
@@ -97,7 +97,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 				//1 = UVs
 				glEnableVertexAttribArray(1);
-				glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getUvBuffer());
+				_model.getMesh(i).getUvVbo().bind();
 				glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 						2,                  // size
 						GL_FLOAT,           // type
@@ -130,7 +130,7 @@ void StaticMeshNode::drawDepthColorless(std::shared_ptr<Camera> cam) {
 
 		//0 = Positions
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+		_model.getMesh(i).getPositionVbo().bind();
 		glVertexAttribPointer(0, // attribute 0
 				3,                  // size
 				GL_FLOAT,           // type
@@ -208,7 +208,7 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 
 			//0 = Positions
 			glEnableVertexAttribArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getPositionBuffer());
+			_model.getMesh(i).getPositionVbo().bind();
 			glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 					3, // size
 					GL_FLOAT, // type
@@ -219,7 +219,7 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 
 			//1 = Normals
 			glEnableVertexAttribArray(1);
-			glBindBuffer(GL_ARRAY_BUFFER, _model.getMesh(i).getNormalBuffer());
+			_model.getMesh(i).getNormalVbo().bind();
 			glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
 					3, // size
 					GL_FLOAT, // type
