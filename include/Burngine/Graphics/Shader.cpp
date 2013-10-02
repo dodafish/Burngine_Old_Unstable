@@ -13,6 +13,8 @@
 
 #include "BurngineShaderCode.h"
 
+#include "../System/Reporter.h"
+
 namespace burn {
 
 Shader BurngineShaders::_solidColorShader;
@@ -124,7 +126,7 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 //--------------------------------------------------------------------------------------
 
 Shader::Shader() :
-				_id(0) {
+_id(0) {
 
 }
 
@@ -165,7 +167,7 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 		int InfoLogLength;
 
 		// Compile Vertex Shader
-		std::cout << "Compiling vertexshader...\n";
+		Reporter::report("Compiling vertexshader...");
 		char const * VertexSourcePointer = VertexShaderCode.c_str();
 		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 		glCompileShader(VertexShaderID);
@@ -175,10 +177,13 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		std::cout << &VertexShaderErrorMessage[0] << "\n";
+		if(!Result){
+			Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
 
 		// Compile Fragment Shader
-		std::cout << "Compiling fragmentshader...\n";
+		Reporter::report("Compiling fragmentshader...");
 		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 		glCompileShader(FragmentShaderID);
@@ -188,10 +193,13 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		std::cout << &FragmentShaderErrorMessage[0] << "\n";
+		if(!Result){
+			Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
 
 		// Link the program
-		std::cout << "Linking program...\n";
+		Reporter::report("Linking program...");
 		GLuint ProgramID = glCreateProgram();
 		glAttachShader(ProgramID, VertexShaderID);
 		glAttachShader(ProgramID, FragmentShaderID);
@@ -202,7 +210,10 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		std::cout << &ProgramErrorMessage[0] << "\n";
+		if(!Result){
+			Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
 
 		glDeleteShader(VertexShaderID);
 		glDeleteShader(FragmentShaderID);
@@ -212,6 +223,7 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 		return true;
 	}
 
+	Reporter::report("Cannot load Shader! (No valid OpenGL-Context)", Reporter::ERROR);
 	return false;
 }
 
