@@ -159,7 +159,6 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 	}
 
 	for(size_t j = 0; j < lights.size(); ++j){
-
 		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
 			//---
@@ -235,7 +234,6 @@ void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector
 			glDisableVertexAttribArray(1);
 
 		}
-
 	}
 
 }
