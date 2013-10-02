@@ -12,6 +12,9 @@
 #include "Scene.h"
 #include "Shader.h"
 
+#include "../System/Reporter.h"
+#include <sstream>
+
 namespace burn {
 
 bool Window::_isContextCreated = false;
@@ -36,14 +39,15 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	_settings = settings;
 
 	if(!_isGlfwInit && !glfwInit()){
-		std::cout << "Failed to init GLFW!\n";
+		Reporter::report("Failed to init GLFW!", Reporter::ERROR);
 		return false;
 	}else{
-		std::cout << "GLFW successfully initialized.\n";
+		Reporter::report("GLFW successfully initialized.");
 		_isGlfwInit = true;
 	}
 
-	std::cout << "-------------------------\n" << glfwGetVersionString() << "\n-------------------------\n";
+	std::stringstream ss(glfwGetVersionString());
+	Reporter::report("Version string: " + ss.str());
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
 
@@ -51,30 +55,30 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	std::cout << "All window-hints set. Attempting creation...\n";
+	Reporter::report("All window-hints set. Attempting creation...");
 
 	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
 			_settings.getTitle().c_str(), 0, 0);
 
 	if(_window == nullptr){
 		glfwTerminate();
-		std::cout << "Failed to create window!\n";
+		Reporter::report("Failed to create window!", Reporter::ERROR);
 		return false;
 	}else{
-		std::cout << "Window successfully created.\n";
+		Reporter::report("Window successfully created.");
 	}
 
 	glfwMakeContextCurrent(_window);
 	_isContextCreated = true;
 
-	std::cout << "Setting GLEW to experimental...\n";
+	Reporter::report("Setting GLEW to experimental...");
 	glewExperimental = GL_TRUE;
 
 	if(glewInit() != GLEW_OK){
-		std::cout << "Failed to init GLEW!\n";
+		Reporter::report("Failed to init GLEW!", Reporter::ERROR);
 		return false;
 	}else{
-		std::cout << "GLEW successfully initialited.\n";
+		Reporter::report("GLEW successfully initialized.");
 	}
 
 	//Checks, if OpenGL 3.3+ is supported
@@ -86,15 +90,16 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		if(!BurngineShaders::loadAllShaders()){
 			return false;
 		}
-		std::cout << "Loaded BurngineShaders.\n";
+		Reporter::report("Loaded BurngineShaders.");
 	}else{
-		std::cout << "BurngineShaders not loaded! This might cause crashes, when not loaded manually.\n";
+		Reporter::report("BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
+				Reporter::WARNING);
 	}
 
 	glGenVertexArrays(1, &_vertexArrayID);
 	glBindVertexArray(_vertexArrayID);
 
-	std::cout << "Created default VAO...\nWindow creation done.\n";
+	Reporter::report("Created default VAO. Window creation done.");
 
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
@@ -103,17 +108,17 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	glClearColor(0.1, 0.1, 0.3, 1.0);
 
-	std::cout << "Enabled depth-test.\n";
+	Reporter::report("Enabled depth-test.");
 
 	glEnable(GL_BLEND);
 
-	std::cout << "Blending enabled.\n";
+	Reporter::report("Enabled blending.");
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
-	std::cout << "Cullface enabled.\n";
+	Reporter::report("Enabled cullface.");
 
 	return true;
 }
@@ -121,17 +126,17 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 bool Window::checkOpenGLVersion() {
 
 	if(GLEW_VERSION_4_3){
-		std::cout << "OpenGL 4.3 supported\n";
+		Reporter::report("OpenGL 4.3 supported");
 	}else if(GLEW_VERSION_4_2){
-		std::cout << "OpenGL 4.2 supported\n";
+		Reporter::report("OpenGL 4.2 supported");
 	}else if(GLEW_VERSION_4_1){
-		std::cout << "OpenGL 4.1 supported\n";
+		Reporter::report("OpenGL 4.1 supported");
 	}else if(GLEW_VERSION_4_0){
-		std::cout << "OpenGL 4.0 supported\n";
+		Reporter::report("OpenGL 4.0 supported");
 	}else if(GLEW_VERSION_3_3){
-		std::cout << "OpenGL 3.3 supported\n";
+		Reporter::report("OpenGL 3.3 supported");
 	}else{
-		std::cout << "OpenGL 3.3 is not supported! Check you videocard's driver!\n";
+		Reporter::report("OpenGL 3.3 is not supported! Try updating your videocard's driver.", Reporter::ERROR);
 		return false;
 	}
 

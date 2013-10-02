@@ -25,14 +25,14 @@ void Reporter::report(const std::string& msg, const Reporter::MessageType& type)
 	time_t t = time(NULL);
 	struct tm * now = localtime(&t);
 	std::ostringstream ss;
-	ss << now->tm_year;
+	ss << (now->tm_year + 1900);
 	std::string timestamp = doubleDigit(now->tm_mday) + "-" + doubleDigit(now->tm_mon) + "-" + ss.str() + " "
 			+ doubleDigit(now->tm_hour) + doubleDigit(now->tm_min) + doubleDigit(now->tm_sec);
 
 	//Open dumping file or set to false when error occurs
 	std::ofstream out;
 	if(dumpToFile){
-		out.open(file.c_str());
+		out.open(file.c_str(), std::ios::app);
 		if(!out.is_open()){
 			dumpToFile = false;
 			if(dumpToConsole){
@@ -48,7 +48,7 @@ void Reporter::report(const std::string& msg, const Reporter::MessageType& type)
 
 		out << "\n\n////////////////////////////////////////\n";
 		out << "Beginning of report: " + timestamp + "\n";
-		out << "Time of compilation:" + strs.str() + "\n";
+		out << "Time of compilation of Burngine: " + strs.str() + "\n";
 		out << "////////////////////////////////////////\n";
 		firstDump = false;
 	}
