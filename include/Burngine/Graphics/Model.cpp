@@ -15,6 +15,9 @@
 #include "../extern/assimp/postprocess.h"     // Post processing flags
 #include <iostream>
 
+#include "../System/Reporter.h"
+#include <sstream>
+
 namespace burn {
 
 Model::Model() {
@@ -35,31 +38,45 @@ bool Model::loadFromFile(const std::string& file) {
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(file.c_str(),
-			aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices
-					| aiProcess_SortByPType);
+	aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType);
 
 	if(!scene){
-		std::cout << "Error while loading asset: " << importer.GetErrorString() << "\n";
+		Reporter::report("Cannot load asset! (" + std::stringstream(importer.GetErrorString()).str() + ")",
+		Reporter::ERROR);
 		return false;
 	}else{
-		std::cout << "Successfully loaded asset: " << file << "\n";
+		Reporter::report("Successfully loaded asset: " + file);
 	}
 
 	//Asset successfully loaded.
 
 	_meshes.clear();
 
-	std::cout << "--- Total count of meshes: " << scene->mNumMeshes << "\n";
+	{
+		std::stringstream ss;
+		ss << scene->mNumMeshes;
+		Reporter::report("--- Total count of meshes: " + ss.str());
+	}
+
 	std::vector<Vertex> vertices;
 	for(unsigned int i = 0; i < scene->mNumMeshes; ++i){
 
-		std::cout << "----- Loading mesh #" << i << "\n";
+		{
+			std::stringstream ss;
+			ss << i;
+			Reporter::report("----- Loading mesh #" + ss.str());
+		}
 
 		aiMesh* mesh = scene->mMeshes[i];
 
 		vertices.clear();
 
-		std::cout << "----- Total count of faces for mesh #" << i << ": " << mesh->mNumFaces << "\n";
+		{
+			std::stringstream ss;
+			ss << i << ": " << mesh->mNumFaces;
+			Reporter::report("----- Total count of faces for mesh #" + ss.str());
+		}
+
 		for(unsigned int j = 0; j < mesh->mNumFaces; ++j){
 
 			const aiFace& face = mesh->mFaces[j];
@@ -67,11 +84,10 @@ bool Model::loadFromFile(const std::string& file) {
 				aiVector3D pos = mesh->mVertices[face.mIndices[k]];
 
 				aiVector3D uv =
-						mesh->HasTextureCoords(0) ?
-								mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f, 0.0f, 0.0f);
+				mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f, 0.0f, 0.0f);
 
 				aiVector3D normal =
-						mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
+				mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
 
 				Vector3f color = Vector3f(0, 1, 0);
 				if(mesh->mColors[0] != 0){
@@ -79,8 +95,8 @@ bool Model::loadFromFile(const std::string& file) {
 				}
 
 				vertices.push_back(
-						Vertex(Vector3f(pos.x, pos.y, pos.z), color, Vector2f(uv.x, uv.y),
-								Vector3f(normal.x, normal.y, normal.z)));
+				Vertex(Vector3f(pos.x, pos.y, pos.z), color, Vector2f(uv.x, uv.y),
+				Vector3f(normal.x, normal.y, normal.z)));
 			}
 
 		}
@@ -92,15 +108,28 @@ bool Model::loadFromFile(const std::string& file) {
 		mat.setIndex(mesh->mMaterialIndex);
 		_meshes.back()->setMaterial(mat);
 
-		std::cout << "----- Created mesh #" << i << " - " << &_meshes.back() << "\n";
+		{
+			std::stringstream ss;
+			ss << i << " - " << &_meshes.back();
+			Reporter::report("----- Created mesh #" + ss.str());
+		}
 
 	}
 
 	//Material Settings:
-	std::cout << "----- Total count of materials: " << scene->mNumMaterials << "\n";
+	{
+		std::stringstream ss;
+		ss << scene->mNumMaterials;
+		Reporter::report("----- Total count of materials: " + ss.str());
+	}
+
 	for(unsigned int i = 0; i < scene->mNumMaterials; ++i){
 
-		std::cout << "-------- Loading material #" << i << "\n";
+		{
+			std::stringstream ss;
+			ss << i;
+			Reporter::report("-------- Loading material #" + ss.str());
+		}
 
 		aiMaterial* material = scene->mMaterials[i];
 
@@ -108,7 +137,7 @@ bool Model::loadFromFile(const std::string& file) {
 		aiColor3D specularColor(1.f, 1.f, 1.f);
 		material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
 		material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
-		std::cout << "-------- Setting diffuse/specular colors\n";
+		Reporter::report("-------- Setting diffuse/specular colors");
 		for(size_t j = 0; j < _meshes.size(); ++j){
 			if(_meshes[j]->getMaterial().getIndex() == i){
 				Material mat = _meshes[j]->getMaterial();
@@ -127,24 +156,30 @@ bool Model::loadFromFile(const std::string& file) {
 		if(material->GetTexture(aiTextureType_DIFFUSE, textureIndex, &assimpFile) == AI_SUCCESS){
 			std::string file = assimpFile.data; //convert string-type
 
-			std::cout << "-------- Searching according mesh for texture...\n";
+			Reporter::report("-------- Searching according mesh for texture...");
 			for(size_t j = 0; j < _meshes.size(); ++j){
 				if(_meshes[j]->getMaterial().getIndex() == i){
-					std::cout << "Attempting to load texture: " << file << "\n";
+					Reporter::report("-------- Attempting to load texture: " + file);
 					if(_meshes[j]->_texture.loadFromFile(file)){
 						_meshes[j]->_material.setType(Material::Type::TEXTURED);
-						std::cout << "Texture '" << file << "' successfully loaded.\n";
-						std::cout << "Linked texture to mesh (" << &_meshes[j] << "). Material index = " << i << "\n";
+						Reporter::report("-------- Texture '" + file + "' successfully loaded.");
+
+						{
+							std::stringstream ss;
+							ss << &_meshes[j] << "). Material index = " << i;
+							Reporter::report("-------- Linked texture to mesh (" + ss.str());
+						}
+
 						break;
 					}else{
-						std::cout << "!Failed to load texture: " << file << "\n";
+						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
 						return false;
 					}
 				}
 			}
 
 		}else{
-			std::cout << "!Material texture is invalid.\n";
+			Reporter::report("Material texture is invalid.", Reporter::WARNING);
 		}
 
 	}

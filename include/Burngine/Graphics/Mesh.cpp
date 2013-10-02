@@ -95,49 +95,18 @@ void Mesh::data() {
 		for(size_t i = 0; i < _vertices.size(); ++i){
 			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
 
-			/*pos.push_back(_vertices[i].getPosition().x);
-			 pos.push_back(_vertices[i].getPosition().y);
-			 pos.push_back(_vertices[i].getPosition().z);*/
-
 			if(!_material.isUsingDiffuseColor()){
-				/*col.push_back(_vertices[i].getColor().r);
-				 col.push_back(_vertices[i].getColor().g);
-				 col.push_back(_vertices[i].getColor().b);*/
+
 				_colorVbo.addData(&(_vertices[i].getColor()), sizeof(Vector3f));
 			}else{
-				/*col.push_back(_material.getDiffuseColor().r);
-				 col.push_back(_material.getDiffuseColor().g);
-				 col.push_back(_material.getDiffuseColor().b);*/
+
 				_colorVbo.addData(&(_material.getDiffuseColor()), sizeof(Vector3f));
 			}
 
-			/*uv.push_back(_vertices[i].getUv().x);
-			 uv.push_back(_vertices[i].getUv().y);*/
 			_uvVbo.addData(&(_vertices[i].getUv()), sizeof(Vector2f));
 
-			/*norm.push_back(_vertices[i].getNormal().x);
-			 norm.push_back(_vertices[i].getNormal().y);
-			 norm.push_back(_vertices[i].getNormal().z);*/
 			_normalVbo.addData(&(_vertices[i].getNormal()), sizeof(Vector3f));
 		}
-
-		/*glBindBuffer(GL_ARRAY_BUFFER, _vertexPositionBuffer);
-		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * pos.size(), &pos[0],
-		 GL_STATIC_DRAW);
-
-		 glBindBuffer(GL_ARRAY_BUFFER, _vertexColorBuffer);
-		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * col.size(), &col[0],
-		 GL_STATIC_DRAW);
-
-		 glBindBuffer(GL_ARRAY_BUFFER, _vertexUvBuffer);
-		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * uv.size(), &uv[0],
-		 GL_STATIC_DRAW);
-
-		 glBindBuffer(GL_ARRAY_BUFFER, _vertexNormalBuffer);
-		 glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * norm.size(), &norm[0],
-		 GL_STATIC_DRAW);
-
-		 glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind*/
 
 		_positionVbo.uploadDataToGpu();
 		_colorVbo.uploadDataToGpu();

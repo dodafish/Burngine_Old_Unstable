@@ -164,7 +164,7 @@ private:
 	std::vector<Vertex> _vertices;
 
 	bool _needUpdate;
-	//GLuint _vertexPositionBuffer, _vertexColorBuffer, _vertexUvBuffer, _vertexNormalBuffer;
+
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
 
 	Texture _texture;

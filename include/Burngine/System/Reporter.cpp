@@ -27,7 +27,7 @@ void Reporter::report(const std::string& msg, const Reporter::MessageType& type)
 	std::ostringstream ss;
 	ss << (now->tm_year + 1900);
 	std::string timestamp = doubleDigit(now->tm_mday) + "-" + doubleDigit(now->tm_mon) + "-" + ss.str() + " "
-			+ doubleDigit(now->tm_hour) + doubleDigit(now->tm_min) + doubleDigit(now->tm_sec);
+	+ doubleDigit(now->tm_hour) + doubleDigit(now->tm_min) + doubleDigit(now->tm_sec);
 
 	//Open dumping file or set to false when error occurs
 	std::ofstream out;
@@ -81,6 +81,9 @@ void Reporter::report(const std::string& msg, const Reporter::MessageType& type)
 		default:
 			break;
 	}
+
+	if(out.is_open())
+		out.close();
 
 }
 
