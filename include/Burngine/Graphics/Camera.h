@@ -10,6 +10,10 @@
 
 #include "../Export.h"
 #include "Transformable.h"
+#include "Scene.h"
+#include <vector>
+
+template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 
@@ -99,6 +103,10 @@ private:
 	float _aspectRatio;
 	Vector3f _lookAt;
 	float _fov;
+
+	friend void Scene::attachCamera(Camera&);
+	friend void Scene::detachCamera(Camera&);
+	std::vector<Scene*> _parents;
 };
 
 } /* namespace burn */

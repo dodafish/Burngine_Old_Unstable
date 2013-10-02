@@ -10,6 +10,9 @@
 
 #include "../Export.h"
 #include "Transformable.h"
+#include "Scene.h"
+
+template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 
@@ -39,6 +42,10 @@ private:
 	Vector3f _color;
 	float _intensity;
 	Type _type;
+
+	friend void Scene::attachLight(Light&);
+	friend void Scene::detachLight(Light&);
+	std::vector<Scene*> _parents;
 };
 
 } /* namespace burn */

@@ -16,9 +16,15 @@ SceneNode::SceneNode() {
 }
 
 SceneNode::~SceneNode() {
+	Scene* parents[_parents.size()];
+	for(size_t i = 0; i != _parents.size(); ++i)
+		parents[i] = _parents[i];
+	size_t size = _parents.size();
+	for(size_t i = 0; i != size; ++i)
+		parents[i]->detachSceneNode(*this);
 }
 
-void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, std::shared_ptr<Camera> cam) {
+void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, Camera* cam) {
 
 	glm::mat4 viewMatrix, projectionMatrix;
 	Vector3f cameraPosition; //(0,0,0)

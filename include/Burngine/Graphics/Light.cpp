@@ -10,13 +10,19 @@
 namespace burn {
 
 Light::Light(const Type& type, const Vector3f& color, const float& intensity) :
-				_color(color),
-				_intensity((intensity > 0) ? intensity : 0),
-				_type(type) {
+_color(color),
+_intensity((intensity > 0) ? intensity : 0),
+_type(type) {
 
 }
 
 Light::~Light() {
+	Scene* parents[_parents.size()];
+	for(size_t i = 0; i != _parents.size(); ++i)
+		parents[i] = _parents[i];
+	size_t size = _parents.size();
+	for(size_t i = 0; i != size; ++i)
+		parents[i]->detachLight(*this);
 }
 
 void Light::setColor(const Vector3f& color) {

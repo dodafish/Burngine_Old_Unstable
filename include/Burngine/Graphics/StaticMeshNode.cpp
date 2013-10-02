@@ -36,7 +36,7 @@ bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
-void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
+void StaticMeshNode::draw(Camera* cam) {
 
 	if(Window::isContextCreated()){
 
@@ -119,7 +119,7 @@ void StaticMeshNode::draw(std::shared_ptr<Camera> cam) {
 
 }
 
-void StaticMeshNode::drawDepthColorless(std::shared_ptr<Camera> cam) {
+void StaticMeshNode::drawDepthColorless(Camera* cam) {
 
 	_model.update();
 
@@ -148,7 +148,7 @@ void StaticMeshNode::drawDepthColorless(std::shared_ptr<Camera> cam) {
 
 }
 
-void StaticMeshNode::drawLighting(std::shared_ptr<Camera> cam, const std::vector<std::shared_ptr<Light>>& lights,
+void StaticMeshNode::drawLighting(Camera* cam, const std::vector<Light*>& lights,
 		const Vector3f& ambient) {
 
 	_model.update();

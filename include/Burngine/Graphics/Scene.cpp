@@ -18,13 +18,14 @@
 namespace burn {
 
 Scene::Scene(Window& window) :
-				_window(window) {
+_window(window),
+_activeCamera(nullptr) {
 }
 
 Scene::~Scene() {
-	removeAllNodes();
-	removeAllCameras();
-	removeAllLights();
+	//removeAllNodes();
+	//removeAllCameras();
+	//removeAllLights();
 }
 
 void Scene::drawAll() {
@@ -81,77 +82,82 @@ void Scene::drawAll() {
 	}
 }
 
-std::shared_ptr<StaticMeshNode> Scene::createStaticMeshNode() {
-	std::shared_ptr<StaticMeshNode> mesh(new StaticMeshNode());
-	_nodes.push_back(mesh);
-	return mesh;
-}
-
-void Scene::removeAllNodes() {
-	//All nodes deleted by garbage collector of std::shared_ptr
-	_nodes.clear();
-}
-
-void Scene::removeNode(std::shared_ptr<SceneNode> node) {
+void Scene::attachSceneNode(SceneNode& node) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		if(_nodes[i] == node){
+		if(_nodes[i] == &node)
+			return;
+	}
+	_nodes.push_back(&node);
+	node._parents.push_back(this);
+}
+
+void Scene::detachSceneNode(SceneNode& node) {
+	for(size_t i = 0; i < node._parents.size(); ++i){
+		if(node._parents[i] == this){
+			node._parents.erase(node._parents.begin() + i);
+			break;
+		}
+	}
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
 			return;
 		}
 	}
 }
 
-std::shared_ptr<Camera> Scene::createCamera(bool active) {
-	std::shared_ptr<Camera> cam(new Camera());
-	_cameras.push_back(cam);
-	if(active){
-		_activeCamera = cam;
+void Scene::attachLight(Light& light) {
+	for(size_t i = 0; i < _lights.size(); ++i){
+		if(_lights[i] == &light)
+			return;
 	}
-	return cam;
+	_lights.push_back(&light);
+	light._parents.push_back(this);
 }
 
-void Scene::removeCamera(std::shared_ptr<Camera> cam) {
-	if(cam != nullptr){
-		for(size_t i = 0; i < _cameras.size(); ++i){
-			if(_cameras[i] == cam){
-				if(cam == _activeCamera){
-					_activeCamera = nullptr;
-				}
-				_cameras.erase(_cameras.begin() + i);
-				return;
-			}
+void Scene::detachLight(Light& light) {
+	for(size_t i = 0; i < light._parents.size(); ++i){
+		if(light._parents[i] == this){
+			light._parents.erase(light._parents.begin() + i);
+			break;
 		}
 	}
-}
-
-void Scene::removeAllCameras() {
-	_cameras.clear();
-	_activeCamera = nullptr;
-}
-
-void Scene::setActiveCamera(std::shared_ptr<Camera> cam) {
-	if(cam != nullptr){
-		_activeCamera = cam;
-	}
-}
-
-std::shared_ptr<Light> Scene::createLight() {
-	std::shared_ptr<Light> light(new Light());
-	_lights.push_back(light);
-	return light;
-}
-
-void Scene::removeLight(std::shared_ptr<Light> light) {
 	for(size_t i = 0; i < _lights.size(); ++i){
-		if(_lights[i] == light){
+		if(_lights[i] == &light){
 			_lights.erase(_lights.begin() + i);
 			return;
 		}
 	}
 }
 
-void Scene::removeAllLights() {
-	_lights.clear(); //Smart pointers ftw!
+void Scene::attachCamera(Camera& cam) {
+	for(size_t i = 0; i < _cameras.size(); ++i){
+		if(_cameras[i] == &cam)
+			return;
+	}
+	_cameras.push_back(&cam);
+	cam._parents.push_back(this);
+}
+
+void Scene::detachCamera(Camera& cam) {
+	for(size_t i = 0; i < cam._parents.size(); ++i){
+		if(cam._parents[i] == this){
+			cam._parents.erase(cam._parents.begin() + i);
+			break;
+		}
+	}
+	for(size_t i = 0; i < _cameras.size(); ++i){
+		if(_cameras[i] == &cam){
+			_cameras.erase(_cameras.begin() + i);
+			return;
+		}
+	}
+}
+
+void Scene::setActiveCamera(Camera* cam) {
+	if(cam != nullptr){
+		_activeCamera = cam;
+	}
 }
 
 void Scene::setAmbientColor(const Vector3f& color) {
