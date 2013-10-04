@@ -60,8 +60,24 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	Reporter::report("All window-hints set. Attempting creation...");
 
-	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
-	_settings.getTitle().c_str(), 0, 0);
+	bool validVidmodeInformation = true;
+	const GLFWvidmode* vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	if(vidmode == nullptr){
+		validVidmodeInformation = false;
+	}
+
+	if(!_settings.isFullscreen()){
+		_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
+									_settings.getTitle().c_str(), 0, 0);
+	}else{
+		if(!validVidmodeInformation || !_settings.isUsingHighestResolution()){
+			_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
+										_settings.getTitle().c_str(), glfwGetPrimaryMonitor(), 0);
+		}else{
+			_window = glfwCreateWindow(vidmode->width, vidmode->height, _settings.getTitle().c_str(),
+										glfwGetPrimaryMonitor(), 0);
+		}
+	}
 
 	if(_window == nullptr){
 		glfwTerminate();
@@ -96,7 +112,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		Reporter::report("Loaded BurngineShaders.");
 	}else{
 		Reporter::report("BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
-		Reporter::WARNING);
+							Reporter::WARNING);
 	}
 
 	glGenVertexArrays(1, &_vertexArrayID);

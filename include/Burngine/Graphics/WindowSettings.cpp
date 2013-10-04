@@ -14,7 +14,8 @@ const bool& fullscreen) :
 _width(width),
 _height(height),
 _title("Burngine"),
-_isFullscreen(fullscreen) {
+_isFullscreen(fullscreen),
+_useHighestResolution(true) {
 
 }
 
@@ -52,6 +53,14 @@ const std::string& WindowSettings::getTitle() const {
 
 const bool& WindowSettings::isFullscreen() const {
 	return _isFullscreen;
+}
+
+void WindowSettings::useHighestResolution(const bool& useHighestPossible) {
+	_useHighestResolution = useHighestPossible;
+}
+
+const bool& WindowSettings::isUsingHighestResolution() const {
+	return _useHighestResolution;
 }
 
 } /* namespace burn */

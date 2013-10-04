@@ -109,10 +109,13 @@ public:
 	 */
 	const bool& isFullscreen() const;
 
+	void useHighestResolution(const bool& useHighestPossible = true);
+	const bool& isUsingHighestResolution() const;
+
 private:
 	unsigned int _width, _height;
 	std::string _title;
-	bool _isFullscreen;
+	bool _isFullscreen, _useHighestResolution;
 };
 
 } /* namespace burn */
