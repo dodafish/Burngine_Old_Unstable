@@ -14,10 +14,10 @@
 #include <vector>
 #include <memory>
 
+#include "Camera.h"
+
 namespace burn {
-class Camera;
 class Light;
-class StaticMeshNode;
 class SceneNode;
 }
 
@@ -54,9 +54,6 @@ public:
 	void attachLight(Light& light);
 	void detachLight(Light& light);
 
-	void attachCamera(Camera& camera);
-	void detachCamera(Camera& camera);
-
 	/**
 	 * @brief Sets a camera as active one. This camera will influence
 	 * the rendering behaviour of the scene.
@@ -68,7 +65,8 @@ public:
 	 * @note You can use cameras from other scenes, but it is
 	 * recommended to use cameras from the same scene only.
 	 */
-	void setActiveCamera(Camera* camera);
+	void setCamera(Camera& camera);
+	Camera& getDefaultCamera();
 
 	void setAmbientColor(const Vector3f& color);
 	const Vector3f& getAmbientColor() const;
@@ -78,9 +76,10 @@ private:
 	Vector3f _ambientColor;
 
 	std::vector<SceneNode*> _nodes;
-	std::vector<Camera*> _cameras;
 	std::vector<Light*> _lights;
-	Camera* _activeCamera;
+
+	Camera _defaultCamera;
+	Camera& _camera;
 };
 
 } /* namespace burn */

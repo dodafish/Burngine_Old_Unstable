@@ -12,7 +12,7 @@
 #include "Transformable.h"
 #include "Scene.h"
 
-template class BURNGINE_API std::vector<burn::Scene*>;
+//template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 

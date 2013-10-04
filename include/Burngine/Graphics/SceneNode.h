@@ -14,7 +14,6 @@
 #include "Shader.h"
 #include "Scene.h"
 
-#include <memory>
 #include <vector>
 
 template class BURNGINE_API std::vector<burn::Scene*>;
@@ -42,16 +41,16 @@ public:
 	 * @param camera Pointer to Camera to draw node correctly or
 	 * nullptr for default rendermode.
 	 */
-	virtual void draw(Camera* camera) = 0;
+	virtual void draw(const Camera& camera) = 0;
 
-	virtual void drawDepthColorless(Camera* camera) = 0;
+	virtual void drawDepthColorless(const Camera& camera) = 0;
 
-	virtual void drawLighting(Camera* camera, const std::vector<Light*>& lights,
+	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights,
 			const Vector3f& ambient) = 0;
 
 protected:
 
-	void setMVPUniforms(const BurngineShaders::Type& type, Camera* cam);
+	void setMVPUniforms(const BurngineShaders::Type& type, const Camera& cam);
 
 private:
 	friend void Scene::attachSceneNode(SceneNode&);

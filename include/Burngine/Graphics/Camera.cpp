@@ -6,22 +6,21 @@
  */
 
 #include "Camera.h"
+#include "Scene.h"
 
 namespace burn {
 
 Camera::Camera() :
 _aspectRatio(16.f / 9.f),
-_fov(45.f) {
+_fov(45.f),
+_parent(nullptr) {
 
 }
 
 Camera::~Camera() {
-	Scene* parents[_parents.size()];
-	for(size_t i = 0; i != _parents.size(); ++i)
-		parents[i] = _parents[i];
-	size_t size = _parents.size();
-	for(size_t i = 0; i != size; ++i)
-		parents[i]->detachCamera(*this);
+	if(_parent != nullptr){
+		_parent->setCamera(_parent->getDefaultCamera());
+	}
 }
 
 void Camera::setAspectRatio(const float& aspectRatio) {

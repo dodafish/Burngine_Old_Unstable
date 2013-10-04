@@ -65,11 +65,11 @@ public:
 	 *
 	 * @see Scene::drawAll()
 	 */
-	virtual void draw(Camera* cam);
+	virtual void draw(const Camera& cam);
 
-	virtual void drawDepthColorless(Camera* camera);
+	virtual void drawDepthColorless(const Camera& camera);
 
-	virtual void drawLighting(Camera* camera, const std::vector<Light*>& lights,
+	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights,
 			const Vector3f& ambient);
 
 private:

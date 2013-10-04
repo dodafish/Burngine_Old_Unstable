@@ -10,12 +10,11 @@
 
 #include "../Export.h"
 #include "Transformable.h"
-#include "Scene.h"
 #include <vector>
 
-template class BURNGINE_API std::vector<burn::Scene*>;
-
 namespace burn {
+
+class Scene;
 
 class BURNGINE_API Camera : public Transformable {
 public:
@@ -104,9 +103,8 @@ private:
 	Vector3f _lookAt;
 	float _fov;
 
-	friend void Scene::attachCamera(Camera&);
-	friend void Scene::detachCamera(Camera&);
-	std::vector<Scene*> _parents;
+	friend Scene;
+	Scene* _parent;
 };
 
 } /* namespace burn */

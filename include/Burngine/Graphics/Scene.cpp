@@ -19,13 +19,15 @@ namespace burn {
 
 Scene::Scene(Window& window) :
 _window(window),
-_activeCamera(nullptr) {
+_camera(_defaultCamera) {
 }
 
 Scene::~Scene() {
-	//removeAllNodes();
-	//removeAllCameras();
-	//removeAllLights();
+
+	if(&_camera != &_defaultCamera){
+		_camera._parent = nullptr;
+	}
+
 }
 
 void Scene::drawAll() {
@@ -37,7 +39,7 @@ void Scene::drawAll() {
 		glDepthFunc(GL_LESS);
 		glDisable(GL_BLEND);
 		for(size_t i = 0; i < _nodes.size(); ++i){
-			_nodes[i]->draw(_activeCamera);
+			_nodes[i]->draw(_camera);
 		}
 		glEnable(GL_BLEND);
 
@@ -50,13 +52,13 @@ void Scene::drawAll() {
 			glDepthFunc(GL_LESS);
 			Window::setBlendMode(Window::OVERWRITE);
 			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawDepthColorless(_activeCamera);
+				_nodes[i]->drawDepthColorless(_camera);
 			}
 
 			glDepthFunc(GL_EQUAL);
 			Window::setBlendMode(Window::ADD);
 			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawLighting(_activeCamera, _lights, _ambientColor);
+				_nodes[i]->drawLighting(_camera, _lights, _ambientColor);
 			}
 
 			//Add lighting to scene:
@@ -130,34 +132,12 @@ void Scene::detachLight(Light& light) {
 	}
 }
 
-void Scene::attachCamera(Camera& cam) {
-	for(size_t i = 0; i < _cameras.size(); ++i){
-		if(_cameras[i] == &cam)
-			return;
-	}
-	_cameras.push_back(&cam);
-	cam._parents.push_back(this);
+void Scene::setCamera(Camera& camera) {
+	_camera = camera;
 }
 
-void Scene::detachCamera(Camera& cam) {
-	for(size_t i = 0; i < cam._parents.size(); ++i){
-		if(cam._parents[i] == this){
-			cam._parents.erase(cam._parents.begin() + i);
-			break;
-		}
-	}
-	for(size_t i = 0; i < _cameras.size(); ++i){
-		if(_cameras[i] == &cam){
-			_cameras.erase(_cameras.begin() + i);
-			return;
-		}
-	}
-}
-
-void Scene::setActiveCamera(Camera* cam) {
-	if(cam != nullptr){
-		_activeCamera = cam;
-	}
+Camera& Scene::getDefaultCamera() {
+	return _defaultCamera;
 }
 
 void Scene::setAmbientColor(const Vector3f& color) {
