@@ -64,7 +64,7 @@ bool Model::loadFromFile(const std::string& file) {
 		{
 			std::stringstream ss;
 			ss << i;
-			Reporter::report("----- Loading mesh #" + ss.str());
+			//Reporter::report("----- Loading mesh #" + ss.str());
 		}
 
 		aiMesh* mesh = scene->mMeshes[i];
@@ -111,7 +111,7 @@ bool Model::loadFromFile(const std::string& file) {
 		{
 			std::stringstream ss;
 			ss << i << " - " << &_meshes.back();
-			Reporter::report("----- Created mesh #" + ss.str());
+			//Reporter::report("----- Created mesh #" + ss.str());
 		}
 
 	}
@@ -128,7 +128,7 @@ bool Model::loadFromFile(const std::string& file) {
 		{
 			std::stringstream ss;
 			ss << i;
-			Reporter::report("-------- Loading material #" + ss.str());
+			//Reporter::report("-------- Loading material #" + ss.str());
 		}
 
 		aiMaterial* material = scene->mMaterials[i];
@@ -137,7 +137,7 @@ bool Model::loadFromFile(const std::string& file) {
 		aiColor3D specularColor(1.f, 1.f, 1.f);
 		material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
 		material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
-		Reporter::report("-------- Setting diffuse/specular colors");
+		//Reporter::report("-------- Setting diffuse/specular colors");
 		for(size_t j = 0; j < _meshes.size(); ++j){
 			if(_meshes[j]->getMaterial().getIndex() == i){
 				Material mat = _meshes[j]->getMaterial();
@@ -156,10 +156,10 @@ bool Model::loadFromFile(const std::string& file) {
 		if(material->GetTexture(aiTextureType_DIFFUSE, textureIndex, &assimpFile) == AI_SUCCESS){
 			std::string file = assimpFile.data; //convert string-type
 
-			Reporter::report("-------- Searching according mesh for texture...");
+			//Reporter::report("-------- Searching according mesh for texture...");
 			for(size_t j = 0; j < _meshes.size(); ++j){
 				if(_meshes[j]->getMaterial().getIndex() == i){
-					Reporter::report("-------- Attempting to load texture: " + file);
+					//Reporter::report("-------- Attempting to load texture: " + file);
 					if(_meshes[j]->_texture.loadFromFile(file)){
 						_meshes[j]->_material.setType(Material::Type::TEXTURED);
 						Reporter::report("-------- Texture '" + file + "' successfully loaded.");
@@ -167,7 +167,7 @@ bool Model::loadFromFile(const std::string& file) {
 						{
 							std::stringstream ss;
 							ss << &_meshes[j] << "). Material index = " << i;
-							Reporter::report("-------- Linked texture to mesh (" + ss.str());
+							//Reporter::report("-------- Linked texture to mesh (" + ss.str());
 						}
 
 						break;
