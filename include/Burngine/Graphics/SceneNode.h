@@ -45,16 +45,16 @@ public:
 
 	virtual void drawDepthColorless(const Camera& camera) = 0;
 
-	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights,
-			const Vector3f& ambient) = 0;
+	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient) = 0;
+
+	void addParentScene(Scene* scene);
+	void removeParentScene(Scene* scene);
 
 protected:
 
 	void setMVPUniforms(const BurngineShaders::Type& type, const Camera& cam);
 
 private:
-	friend void Scene::attachSceneNode(SceneNode&);
-	friend void Scene::detachSceneNode(SceneNode&);
 	std::vector<Scene*> _parents;
 };
 

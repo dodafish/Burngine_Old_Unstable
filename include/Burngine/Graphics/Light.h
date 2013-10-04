@@ -38,13 +38,14 @@ public:
 	void setType(const Type& type);
 	const Type& getType() const;
 
+	void addParentScene(Scene* scene);
+	void removeParentScene(Scene* scene);
+
 private:
 	Vector3f _color;
 	float _intensity;
 	Type _type;
 
-	friend void Scene::attachLight(Light&);
-	friend void Scene::detachLight(Light&);
 	std::vector<Scene*> _parents;
 };
 

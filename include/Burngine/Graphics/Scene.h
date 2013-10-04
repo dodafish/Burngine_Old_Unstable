@@ -53,6 +53,8 @@ public:
 	void attachLight(Light& light);
 	void detachLight(Light& light);
 
+	void detachAll();
+
 	/**
 	 * @brief Sets a camera as active one. This camera will influence
 	 * the rendering behaviour of the scene.
@@ -65,7 +67,8 @@ public:
 	 * recommended to use cameras from the same scene only.
 	 */
 	void setCamera(Camera& camera);
-	Camera& getDefaultCamera();
+	void setDefaultCamera();
+	const Camera& getDefaultCamera();
 
 	void setAmbientColor(const Vector3f& color);
 	const Vector3f& getAmbientColor() const;

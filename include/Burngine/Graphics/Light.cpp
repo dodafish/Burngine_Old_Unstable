@@ -25,6 +25,23 @@ Light::~Light() {
 		parents[i]->detachLight(*this);
 }
 
+void Light::addParentScene(Scene* scene) {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		if(_parents[i] == scene)
+			return; //Already added as parent
+	}
+	_parents.push_back(scene); //Add to parents
+}
+
+void Light::removeParentScene(Scene* scene) {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		if(_parents[i] == scene){
+			_parents.erase(_parents.begin() + i);
+			return; //addParentScene() ensures, that a scene is added only once. So return
+		}
+	}
+}
+
 void Light::setColor(const Vector3f& color) {
 	_color = color;
 }

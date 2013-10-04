@@ -24,6 +24,23 @@ SceneNode::~SceneNode() {
 		parents[i]->detachSceneNode(*this);
 }
 
+void SceneNode::addParentScene(Scene* scene) {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		if(_parents[i] == scene)
+			return; //Already added as parent
+	}
+	_parents.push_back(scene); //Add to parents
+}
+
+void SceneNode::removeParentScene(Scene* scene) {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		if(_parents[i] == scene){
+			_parents.erase(_parents.begin() + i);
+			return; //addParentScene() ensures, that a scene is added only once. So return
+		}
+	}
+}
+
 void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, const Camera& cam) {
 
 	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);

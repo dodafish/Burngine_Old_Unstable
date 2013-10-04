@@ -19,7 +19,7 @@ _parent(nullptr) {
 
 Camera::~Camera() {
 	if(_parent != nullptr){
-		_parent->setCamera(_parent->getDefaultCamera());
+		_parent->setDefaultCamera();
 	}
 }
 

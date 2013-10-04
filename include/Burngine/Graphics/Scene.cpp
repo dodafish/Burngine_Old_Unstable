@@ -28,6 +28,8 @@ Scene::~Scene() {
 		_camera._parent = nullptr;
 	}
 
+	detachAll();
+
 }
 
 void Scene::drawAll() {
@@ -85,59 +87,76 @@ void Scene::drawAll() {
 	}
 }
 
+void Scene::detachAll() {
+	//All SceneNodes:
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->removeParentScene(this);
+	}
+	_nodes.clear();
+
+	//All Lights:
+	for(size_t i = 0; i < _lights.size(); ++i){
+		_lights[i]->removeParentScene(this);
+	}
+	_lights.clear();
+
+}
+
 void Scene::attachSceneNode(SceneNode& node) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node)
-			return;
+			return; //Already attached
 	}
 	_nodes.push_back(&node);
-	node._parents.push_back(this);
+	node.addParentScene(this);
 }
 
 void Scene::detachSceneNode(SceneNode& node) {
-	for(size_t i = 0; i < node._parents.size(); ++i){
-		if(node._parents[i] == this){
-			node._parents.erase(node._parents.begin() + i);
-			break;
-		}
-	}
+
+	node.removeParentScene(this);
+
+	//Remove from attachement-list
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
 			return;
 		}
 	}
+
 }
 
 void Scene::attachLight(Light& light) {
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light)
-			return;
+			return; //Already attached
 	}
 	_lights.push_back(&light);
-	light._parents.push_back(this);
+	light.addParentScene(this);
 }
 
 void Scene::detachLight(Light& light) {
-	for(size_t i = 0; i < light._parents.size(); ++i){
-		if(light._parents[i] == this){
-			light._parents.erase(light._parents.begin() + i);
-			break;
-		}
-	}
+
+	light.removeParentScene(this);
+
+	//Remove from attachement-list
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light){
 			_lights.erase(_lights.begin() + i);
 			return;
 		}
 	}
+
 }
 
 void Scene::setCamera(Camera& camera) {
 	_camera = camera;
 }
 
-Camera& Scene::getDefaultCamera() {
+void Scene::setDefaultCamera() {
+	_camera = _defaultCamera;
+}
+
+const Camera& Scene::getDefaultCamera() {
 	return _defaultCamera;
 }
 
