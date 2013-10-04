@@ -20,15 +20,16 @@ namespace burn {
 bool Window::_isContextCreated = false;
 
 Window::Window() :
-				_isGlfwInit(false),
-				_window(nullptr),
-				_framerateLimit(0),
-				_elapsedTime(0),
-				_lastTime(0),
-				_vertexArrayID(0) {
+_isGlfwInit(false),
+_window(nullptr),
+_framerateLimit(0),
+_elapsedTime(0),
+_lastTime(0),
+_vertexArrayID(0) {
 }
 
 Window::~Window() {
+
 	close();
 	glfwTerminate();
 }
@@ -60,7 +61,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	Reporter::report("All window-hints set. Attempting creation...");
 
 	_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
-			_settings.getTitle().c_str(), 0, 0);
+	_settings.getTitle().c_str(), 0, 0);
 
 	if(_window == nullptr){
 		glfwTerminate();
@@ -95,7 +96,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		Reporter::report("Loaded BurngineShaders.");
 	}else{
 		Reporter::report("BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
-				Reporter::WARNING);
+		Reporter::WARNING);
 	}
 
 	glGenVertexArrays(1, &_vertexArrayID);
@@ -201,21 +202,6 @@ const double& Window::getElapsedTime() const {
 void Window::bind() const {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, _settings.getWidth(), _settings.getHeight());
-}
-
-std::shared_ptr<Scene> Window::createScene() {
-	std::shared_ptr<Scene> scene(new Scene(*this));
-	_scenes.push_back(scene);
-	return scene;
-}
-
-void Window::removeScene(const std::shared_ptr<Scene>& scene) {
-	for(size_t i = 0; i < _scenes.size(); ++i){
-		if(_scenes[i] == scene){
-			_scenes.erase(_scenes.begin() + i);
-			return;
-		}
-	}
 }
 
 } /* namespace burn */

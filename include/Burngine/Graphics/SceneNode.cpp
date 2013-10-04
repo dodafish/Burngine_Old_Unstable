@@ -28,7 +28,6 @@ void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, const Camera& 
 
 	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);
 	glm::mat4 viewMatrix = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
-	Vector3f cameraPosition = cam.getPosition();
 
 	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(type, MODEL_MATRIX), 1,
 	GL_FALSE, &getModelMatrix()[0][0]);

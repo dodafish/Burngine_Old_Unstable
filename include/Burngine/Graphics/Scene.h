@@ -22,7 +22,6 @@ class SceneNode;
 }
 
 template class BURNGINE_API std::vector<burn::SceneNode*>;
-template class BURNGINE_API std::vector<burn::Camera*>;
 template class BURNGINE_API std::vector<burn::Light*>;
 
 namespace burn {
@@ -34,7 +33,7 @@ public:
 	/**
 	 * @brief The default constructor
 	 */
-	Scene(Window& window);
+	Scene(const Window& parentWindow);
 
 	/**
 	 * @brief The default destructor. When called by e.g. deleting
@@ -72,7 +71,7 @@ public:
 	const Vector3f& getAmbientColor() const;
 
 private:
-	Window& _window;
+	const Window& _window;
 	Vector3f _ambientColor;
 
 	std::vector<SceneNode*> _nodes;

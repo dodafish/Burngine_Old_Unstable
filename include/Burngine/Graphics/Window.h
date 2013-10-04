@@ -16,12 +16,6 @@
 #include <memory>
 
 namespace burn {
-class Scene;
-}
-
-template class BURNGINE_API std::vector<std::shared_ptr<burn::Scene>>;
-
-namespace burn {
 
 /**
  * @brief The most important class of Burngine.
@@ -160,13 +154,8 @@ public:
 	 */
 	static inline void setBlendMode(const BlendMode& blendMode);
 
-	std::shared_ptr<Scene> createScene();
-	void removeScene(const std::shared_ptr<Scene>& scene);
-
 private:
 	bool checkOpenGLVersion();
-
-	std::vector<std::shared_ptr<Scene>> _scenes;
 
 	static bool _isContextCreated;
 	bool _isGlfwInit;

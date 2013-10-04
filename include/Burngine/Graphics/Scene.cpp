@@ -17,8 +17,8 @@
 
 namespace burn {
 
-Scene::Scene(Window& window) :
-_window(window),
+Scene::Scene(const Window& parentWindow) :
+_window(parentWindow),
 _camera(_defaultCamera) {
 }
 
@@ -31,6 +31,7 @@ Scene::~Scene() {
 }
 
 void Scene::drawAll() {
+
 	if(Window::isContextCreated()){
 
 		//Render objects without lighting:
