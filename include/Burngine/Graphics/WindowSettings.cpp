@@ -9,13 +9,12 @@
 
 namespace burn {
 
-WindowSettings::WindowSettings(const unsigned int& width,
-		const unsigned int& height, const std::string& title,
-		const bool& fullscreen) :
-				_width(width),
-				_height(height),
-				_title("Burngine"),
-				_isFullscreen(fullscreen) {
+WindowSettings::WindowSettings(const unsigned int& width, const unsigned int& height, const std::string& title,
+const bool& fullscreen) :
+_width(width),
+_height(height),
+_title("Burngine"),
+_isFullscreen(fullscreen) {
 
 }
 

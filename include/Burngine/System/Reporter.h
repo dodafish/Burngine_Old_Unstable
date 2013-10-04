@@ -15,10 +15,8 @@ namespace burn {
 class BURNGINE_API Reporter {
 public:
 
-	enum MessageType{
-		NOTIFICATION = 0,
-		ERROR,
-		WARNING
+	enum MessageType {
+		NOTIFICATION = 0, ERROR, WARNING
 	};
 
 	/**

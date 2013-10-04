@@ -10,9 +10,9 @@
 namespace burn {
 
 Transformable::Transformable() :
-				_position(Vector3f(0.f, 0.f, 0.f)),
-				_scale(Vector3f(1.f, 1.f, 1.f)),
-				_rotation(Vector3f(0.f, 0.f, 0.f)) {
+_position(Vector3f(0.f, 0.f, 0.f)),
+_scale(Vector3f(1.f, 1.f, 1.f)),
+_rotation(Vector3f(0.f, 0.f, 0.f)) {
 
 }
 
@@ -47,12 +47,9 @@ const Matrix4f& Transformable::getModelMatrix() {
 
 	_modelMatrix = glm::translate(_position.x, _position.y, _position.z);
 	_modelMatrix = glm::scale(_modelMatrix, _scale.x, _scale.y, _scale.z);
-	_modelMatrix = glm::rotate(_modelMatrix, _rotation.x,
-			Vector3f(1.f, 0.f, 0.f));
-	_modelMatrix = glm::rotate(_modelMatrix, _rotation.y,
-			Vector3f(0.f, 1.f, 0.f));
-	_modelMatrix = glm::rotate(_modelMatrix, _rotation.z,
-			Vector3f(0.f, 0.f, 1.f));
+	_modelMatrix = glm::rotate(_modelMatrix, _rotation.x, Vector3f(1.f, 0.f, 0.f));
+	_modelMatrix = glm::rotate(_modelMatrix, _rotation.y, Vector3f(0.f, 1.f, 0.f));
+	_modelMatrix = glm::rotate(_modelMatrix, _rotation.z, Vector3f(0.f, 0.f, 1.f));
 	return _modelMatrix;
 
 }

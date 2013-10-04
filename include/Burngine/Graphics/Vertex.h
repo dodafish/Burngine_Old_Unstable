@@ -30,7 +30,7 @@ public:
 	 * @param normal The vertex Normal
 	 */
 	Vertex(const Vector3f& position = Vector3f(), const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f),
-			const Vector2f& uv = Vector2f(), const Vector3f& normal = Vector3f(1.0f, 1.0f, 1.0f));
+	const Vector2f& uv = Vector2f(), const Vector3f& normal = Vector3f(1.0f, 1.0f, 1.0f));
 
 	/**
 	 * @brief The default destructor

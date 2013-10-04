@@ -12,5 +12,4 @@
 #include "../extern/GL/glew.h"
 #include "../extern/glfw3.h"
 
-
 #endif /* OPENGL_H_ */

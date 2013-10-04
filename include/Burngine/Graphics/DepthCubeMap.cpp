@@ -11,9 +11,9 @@
 namespace burn {
 
 DepthCubeMap::DepthCubeMap() :
-				_isCreated(false),
-				_framebuffer(0),
-				_cubemap(0) {
+_isCreated(false),
+_framebuffer(0),
+_cubemap(0) {
 
 }
 

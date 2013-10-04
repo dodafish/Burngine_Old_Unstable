@@ -15,13 +15,13 @@
 namespace burn {
 
 RenderTexture::RenderTexture() :
-				_framebuffer(0),
-				_texture0(0),
-				_texture1(0),
-				_depthbuffer(0),
-				_isCreated(false),
-				_width(0),
-				_height(0) {
+_framebuffer(0),
+_texture0(0),
+_texture1(0),
+_depthbuffer(0),
+_isCreated(false),
+_width(0),
+_height(0) {
 }
 
 RenderTexture::~RenderTexture() {
@@ -152,23 +152,23 @@ void RenderTexture::drawFullscreen(RenderTexture::TextureUnit tu) {
 		glEnableVertexAttribArray(0);
 		mesh.getPositionVbo().bind();
 		glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-				3,                  // size
-				GL_FLOAT,           // type
-				GL_FALSE,           // normalized?
-				0,                  // stride
-				(void*)0            // array buffer offset
-				);
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
 		//1 = UVs
 		glEnableVertexAttribArray(1);
 		mesh.getUvVbo().bind();
 		glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-				2,                  // size
-				GL_FLOAT,           // type
-				GL_FALSE,           // normalized?
-				0,                  // stride
-				(void*)0            // array buffer offset
-				);
+		2,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
 		// Draw the triangles !
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
@@ -211,23 +211,23 @@ void RenderTexture::draw(RenderTexture::TextureUnit tu, const Vector2f& p, const
 		glEnableVertexAttribArray(0);
 		mesh.getPositionVbo().bind();
 		glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-				3,                  // size
-				GL_FLOAT,           // type
-				GL_FALSE,           // normalized?
-				0,                  // stride
-				(void*)0            // array buffer offset
-				);
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
 		//1 = UVs
 		glEnableVertexAttribArray(1);
 		mesh.getUvVbo().bind();
 		glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-				2,                  // size
-				GL_FLOAT,           // type
-				GL_FALSE,           // normalized?
-				0,                  // stride
-				(void*)0            // array buffer offset
-				);
+		2,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
 		// Draw the triangles !
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle

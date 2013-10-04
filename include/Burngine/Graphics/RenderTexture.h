@@ -24,9 +24,8 @@ public:
 	void bind() const;
 	void clear() const;
 
-	enum TextureUnit{
-		TEXTURE0,
-		TEXTURE1
+	enum TextureUnit {
+		TEXTURE0, TEXTURE1
 	};
 
 	void drawFullscreen(TextureUnit tu);

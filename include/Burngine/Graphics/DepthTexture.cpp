@@ -11,9 +11,9 @@
 namespace burn {
 
 DepthTexture::DepthTexture() :
-				_framebuffer(0),
-				_texture(0),
-				_isCreated(false) {
+_framebuffer(0),
+_texture(0),
+_isCreated(false) {
 }
 
 DepthTexture::~DepthTexture() {

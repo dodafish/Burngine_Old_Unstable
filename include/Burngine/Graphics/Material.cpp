@@ -10,11 +10,11 @@
 namespace burn {
 
 Material::Material() :
-				_type(SOLID_COLOR),
-				_specularColor(Vector3f(1.f, 1.f, 1.f)),
-				_diffuseColor(Vector3f(1.f, 0.7f, 0.f)),
-				_index(0),
-				_useDiffuseColor(false) {
+_type(SOLID_COLOR),
+_specularColor(Vector3f(1.f, 1.f, 1.f)),
+_diffuseColor(Vector3f(1.f, 0.7f, 0.f)),
+_index(0),
+_useDiffuseColor(false) {
 	_flags[LIGHTING] = false;
 }
 

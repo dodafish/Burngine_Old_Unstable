@@ -69,8 +69,7 @@ public:
 
 	virtual void drawDepthColorless(const Camera& camera);
 
-	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights,
-			const Vector3f& ambient);
+	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient);
 
 private:
 	Model _model;

@@ -39,7 +39,7 @@ void VertexBufferObject::destroy() {
 		}
 }
 
-void VertexBufferObject::reset(){
+void VertexBufferObject::reset() {
 	_data.clear();
 	_isDataUploaded = false;
 }
