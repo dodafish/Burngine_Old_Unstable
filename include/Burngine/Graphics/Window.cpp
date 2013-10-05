@@ -25,8 +25,6 @@ Window::Window() :
 _isGlfwInit(false),
 _window(nullptr),
 _framerateLimit(0),
-_elapsedTime(0),
-_lastTime(0),
 _vertexArrayID(0) {
 }
 
@@ -148,6 +146,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	//glEnable(GL_MULTISAMPLE);
 	//Reporter::report("Enabled antialiasing.");
 
+	_uptime.reset();
+
 	return true;
 }
 
@@ -181,6 +181,11 @@ bool Window::close() {
 		_isContextCreated = false;
 		glfwDestroyWindow(_window);
 		_window = nullptr;
+
+		std::stringstream ss;
+		ss << _uptime.getElapsedTime().asSeconds() << " seconds (" << _uptime.getElapsedTime().asMilliseconds()
+		<< " milliseconds; " << _uptime.getElapsedTime().asNanoseconds() << " nanoseconds)";
+		Reporter::report("Window closed. Uptime: " + ss.str());
 		return true;
 	}
 	return false;
@@ -199,16 +204,15 @@ void Window::clear() const {
 }
 
 void Window::display() {
-	double now = glfwGetTime();
-	_elapsedTime = now - _lastTime;
-	_lastTime = now;
+	_elapsedTime = _clock.getElapsedTime();
 
 	if(_framerateLimit != 0){
-		if(_elapsedTime < (1.0 / _framerateLimit)){
-			usleep(((1.0 / _framerateLimit) - _elapsedTime) * 1000000);
+		if(_elapsedTime.asMicroseconds() < (1000000 / _framerateLimit)){
+			usleep(((1000000 / _framerateLimit) - _elapsedTime.asMicroseconds()));
 		}
 	}
 
+	_clock.reset();
 	glfwSwapBuffers(_window);
 }
 
@@ -220,7 +224,7 @@ const unsigned int& Window::getFramerateLimit() const {
 	return _framerateLimit;
 }
 
-const double& Window::getElapsedTime() const {
+const Time& Window::getElapsedTime() const {
 	return _elapsedTime;
 }
 

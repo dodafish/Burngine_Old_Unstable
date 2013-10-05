@@ -16,6 +16,7 @@
 #include <memory>
 
 #include "../System/Math.h"
+#include "../System/Clock.h"
 
 namespace burn {
 
@@ -128,7 +129,7 @@ public:
 	 *
 	 * @return The elapsed time of the last frame in seconds
 	 */
-	const double& getElapsedTime() const;
+	const Time& getElapsedTime() const;
 
 	void setCursorPosition(const Vector2d& position) const;
 
@@ -167,7 +168,10 @@ private:
 	WindowSettings _settings;
 
 	unsigned int _framerateLimit;
-	double _elapsedTime, _lastTime;
+	Clock _clock; ///< Measures the time between frames
+	Time _elapsedTime;
+
+	Clock _uptime; ///< Measures the time the window exists
 
 	GLuint _vertexArrayID;
 };
