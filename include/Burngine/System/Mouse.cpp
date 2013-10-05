@@ -34,6 +34,7 @@ const Vector2d& Mouse::getCursorPosition() {
 }
 
 void Mouse::setCursorPosition(const Window& relativeWindow, const Vector2d& position) {
+	_cursorPosition = position;
 	relativeWindow.setCursorPosition(position);
 }
 
