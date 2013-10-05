@@ -10,6 +10,7 @@
 
 #include "../Export.h"
 #include "../Graphics/OpenGL.h" ///< GLFW
+#include "../Graphics/Window.h" ///< for setting cursor position
 #include "Math.h"
 namespace burn {
 
@@ -25,11 +26,13 @@ public:
 	static void cursorPosCallback(GLFWwindow * window, double x, double y);
 
 	static bool isButtonPressed(Button button);
-	static const Vector2f& getCursorPosition();
+	static const Vector2d& getCursorPosition();
+
+	static void setCursorPosition(const Window& relativeWindow, const Vector2d& position);
 
 private:
 	static bool _buttons[GLFW_MOUSE_BUTTON_LAST + 1]; ///< status of mousebuttons
-	static Vector2f _cursorPosition;
+	static Vector2d _cursorPosition;
 };
 
 } /* namespace burn */

@@ -229,4 +229,10 @@ void Window::bind() const {
 	glViewport(0, 0, _settings.getWidth(), _settings.getHeight());
 }
 
+void Window::setCursorPosition(const Vector2d& position) const {
+	if(_window != nullptr){
+		glfwSetCursorPos(_window, position.x, position.y);
+	}
+}
+
 } /* namespace burn */

@@ -10,7 +10,7 @@
 namespace burn {
 
 bool Mouse::_buttons[];
-Vector2f Mouse::_cursorPosition;
+Vector2d Mouse::_cursorPosition;
 
 void Mouse::buttonCallback(GLFWwindow * window, int button, int action, int mods) {
 	if(action == GLFW_PRESS){
@@ -21,16 +21,20 @@ void Mouse::buttonCallback(GLFWwindow * window, int button, int action, int mods
 }
 
 void Mouse::cursorPosCallback(GLFWwindow * window, double x, double y) {
-	_cursorPosition.x = static_cast<float>(x);
-	_cursorPosition.y = static_cast<float>(y);
+	_cursorPosition.x = x;
+	_cursorPosition.y = y;
 }
 
 bool Mouse::isButtonPressed(Mouse::Button button) {
 	return _buttons[button];
 }
 
-const Vector2f& Mouse::getCursorPosition() {
+const Vector2d& Mouse::getCursorPosition() {
 	return _cursorPosition;
+}
+
+void Mouse::setCursorPosition(const Window& relativeWindow, const Vector2d& position) {
+	relativeWindow.setCursorPosition(position);
 }
 
 } /* namespace burn */

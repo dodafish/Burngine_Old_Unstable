@@ -15,6 +15,8 @@
 #include <vector>
 #include <memory>
 
+#include "../System/Math.h"
+
 namespace burn {
 
 /**
@@ -127,6 +129,8 @@ public:
 	 * @return The elapsed time of the last frame in seconds
 	 */
 	const double& getElapsedTime() const;
+
+	void setCursorPosition(const Vector2d& position) const;
 
 	void bind() const;
 
