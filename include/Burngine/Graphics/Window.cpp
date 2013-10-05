@@ -76,6 +76,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		}else{
 			_window = glfwCreateWindow(vidmode->width, vidmode->height, _settings.getTitle().c_str(),
 										glfwGetPrimaryMonitor(), 0);
+			_settings.setWidth(vidmode->width);
+			_settings.setHeight(vidmode->height);
 		}
 	}
 
