@@ -13,6 +13,7 @@
 #include "Shader.h"
 
 #include "../System/Keyboard.h"
+#include "../System/Mouse.h"
 #include "../System/Reporter.h"
 #include <sstream>
 
@@ -110,6 +111,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	//Inputhandling connection to callbacks
 	glfwSetKeyCallback(_window, Keyboard::keyCallback);
+	glfwSetMouseButtonCallback(_window, Mouse::buttonCallback);
+	glfwSetCursorPosCallback(_window, Mouse::cursorPosCallback);
 
 	if(loadShaders){
 		if(!BurngineShaders::loadAllShaders()){
