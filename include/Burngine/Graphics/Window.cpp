@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "Shader.h"
 
+#include "../System/Keyboard.h"
 #include "../System/Reporter.h"
 #include <sstream>
 
@@ -106,6 +107,9 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	if(!checkOpenGLVersion()){
 		return false;
 	}
+
+	//Inputhandling connection to callbacks
+	glfwSetKeyCallback(_window, Keyboard::keyCallback);
 
 	if(loadShaders){
 		if(!BurngineShaders::loadAllShaders()){
