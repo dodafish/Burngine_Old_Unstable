@@ -25,6 +25,16 @@ typedef glm::detail::tvec4<double> Vector4d;
 typedef glm::detail::tvec3<double> Vector3d;
 typedef glm::detail::tvec2<double> Vector2d;
 
+//Int
+typedef glm::detail::tvec4<Int32> Vector4i;
+typedef glm::detail::tvec3<Int32> Vector3i;
+typedef glm::detail::tvec2<Int32> Vector2i;
+
+//Unsigned Int
+typedef glm::detail::tvec4<Uint32> Vector4ui;
+typedef glm::detail::tvec3<Uint32> Vector3ui;
+typedef glm::detail::tvec2<Uint32> Vector2ui;
+
 typedef glm::mat4 Matrix4f;
 
 }
