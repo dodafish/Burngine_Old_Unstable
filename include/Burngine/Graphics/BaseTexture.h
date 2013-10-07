@@ -27,23 +27,30 @@ public:
 	BaseTexture();
 	~BaseTexture();
 
-	bool create(const Vector2ui& dimensions, const Uint8& bpp = 24);
+	bool create(const Vector2ui& dimensions);
 	void destroy();
+
+	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 
 	void bind();
 	static void unbind();
 
+	bool isCreated() const;
+
+protected:
+	GLuint _texture; ///< Texture's ID
 private:
 	Uint32 nextPowerOf2(const Uint32& n) const;
-
+	GLint getCurrentBoundTexture() const;
 	void generate();
 	void cleanup();
+	void updateFiltering();
 
-	bool validBpp(const Uint8& bpp) const;
+	GLuint _sampler; ///< Sampler's ID
 
-	GLuint _texture, _sampler; ///< Texture's and Sampler's ID
-	Vector2ui _dimensions; ///< Width and height
-	Uint8 _bpp; ///< Bits per pixel
+	Vector2ui _dimensions; ///< Width and height. Always a power of 2
+	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
+
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method

@@ -16,7 +16,6 @@ namespace burn {
 BaseTexture::BaseTexture() :
 _texture(0),
 _sampler(0),
-_bpp(0),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
 _mipmapsGenerated(false) {
@@ -26,7 +25,7 @@ BaseTexture::~BaseTexture() {
 	cleanup();
 }
 
-bool BaseTexture::create(const Vector2ui& dimensions, const Uint8& bpp) {
+bool BaseTexture::create(const Vector2ui& dimensions) {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated()){
@@ -37,26 +36,20 @@ bool BaseTexture::create(const Vector2ui& dimensions, const Uint8& bpp) {
 	//Generate texture and sampler
 	generate();
 
-	//Check BPP
-	if(!validBpp(bpp)){
-		std::stringstream ss;
-		ss << bpp;
-		Reporter::report("Unable to create texture (No valid BPP format)! BPP: " + ss.str(), Reporter::ERROR);
-		return false;
-	}
-	_bpp = bpp;
-	//TODO RETURN WORKING HERE
+	//Set values
+	_originalDimensions = dimensions;
+	//Real texture dimensions are power of 2
+	_dimensions.x = nextPowerOf2(_originalDimensions.x);
+	_dimensions.y = nextPowerOf2(_originalDimensions.y);
 
 	return true;
 
 }
 
-bool BaseTexture::validBpp(const Uint8& bpp) const {
-
-	if(bpp == 8 || bpp == 16 || bpp == 24 || bpp == 32 || bpp == 48 || bpp == 64 || bpp == 96 || bpp == 128)
-		return true;
-	return false;
-
+GLint BaseTexture::getCurrentBoundTexture() const {
+	GLint t = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &t);
+	return t;
 }
 
 void BaseTexture::destroy() {
@@ -72,6 +65,36 @@ void BaseTexture::bind() {
 	//If not created before, this will produce the same effect
 	//as unbind()
 	glBindTexture(GL_TEXTURE_2D, _texture);
+	glBindSampler(_sampler);
+
+	//Tell OpenGL our filtering
+	updateFiltering();
+
+}
+
+void BaseTexture::updateFiltering() {
+
+	if(!Window::isContextCreated() || !isCreated()){
+		return;
+	}
+
+	// Set magnification filter
+	if(_magnificationFiltering == MAG_NEAREST)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	else if(_magnificationFiltering == MAG_BILINEAR)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Set minification filter
+	if(_minificationFiltering == MIN_NEAREST)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	else if(_minificationFiltering == MIN_BILINEAR)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	else if(_minificationFiltering == MIN_NEAREST_MIPMAP)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	else if(_minificationFiltering == MIN_BILINEAR_MIPMAP)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	else if(_minificationFiltering == MIN_TRILINEAR)
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 }
 
@@ -82,6 +105,7 @@ void BaseTexture::unbind() {
 		return;
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindSampler(0);
 
 }
 
@@ -97,6 +121,15 @@ Uint32 BaseTexture::nextPowerOf2(const Uint32& n) const {
 
 	return p2;
 
+}
+
+bool BaseTexture::isCreated() const {
+	return (_texture != 0);
+}
+
+void BaseTexture::setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min) {
+	_magnificationFiltering = mag;
+	_minificationFiltering = min;
 }
 
 void BaseTexture::generate() {
@@ -131,9 +164,6 @@ void BaseTexture::cleanup() {
 	//Reset values
 	_texture = 0;
 	_sampler = 0;
-	_bpp = 0;
-	_magnificationFiltering = MAG_NEAREST;
-	_minificationFiltering = MIN_NEAREST;
 	_mipmapsGenerated = false;
 
 }
