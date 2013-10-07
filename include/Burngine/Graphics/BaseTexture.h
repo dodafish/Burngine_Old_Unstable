@@ -25,31 +25,38 @@ public:
 	};
 
 	BaseTexture();
-	~BaseTexture();
+	virtual ~BaseTexture();
 
-	bool create(const Vector2ui& dimensions);
+	virtual bool create(const Vector2ui& dimensions);
 	void destroy();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 
-	void bind();
+	virtual void bind() const ;
 	static void unbind();
 
 	bool isCreated() const;
 
+	const Vector2ui& getDimensions() const;
+	const Vector2ui& getOriginalDimensions() const;
+
 protected:
-	GLuint _texture; ///< Texture's ID
-private:
-	Uint32 nextPowerOf2(const Uint32& n) const;
-	GLint getCurrentBoundTexture() const;
 	void generate();
 	void cleanup();
-	void updateFiltering();
 
+	GLint getCurrentBoundTexture() const;
+	void calculateDimensions(const Vector2ui& dimensions);
+	void updateFiltering() const;
+	Vector2f mapUvCoordsToTexture(const Vector2f& uv) const;
+
+	GLuint _texture; ///< Texture's ID
 	GLuint _sampler; ///< Sampler's ID
+	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
+
+private:
+	Uint32 nextPowerOf2(const Uint32& n) const;
 
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
-	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
 
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method

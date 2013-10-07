@@ -16,9 +16,9 @@ namespace burn {
 BaseTexture::BaseTexture() :
 _texture(0),
 _sampler(0),
+_mipmapsGenerated(false),
 _magnificationFiltering(MAG_NEAREST),
-_minificationFiltering(MIN_NEAREST),
-_mipmapsGenerated(false) {
+_minificationFiltering(MIN_NEAREST) {
 }
 
 BaseTexture::~BaseTexture() {
@@ -33,17 +33,21 @@ bool BaseTexture::create(const Vector2ui& dimensions) {
 		return false;
 	}
 
-	//Generate texture and sampler
+	//Generate texture and sampler. Does cleanup before if needed
 	generate();
 
 	//Set values
 	_originalDimensions = dimensions;
 	//Real texture dimensions are power of 2
-	_dimensions.x = nextPowerOf2(_originalDimensions.x);
-	_dimensions.y = nextPowerOf2(_originalDimensions.y);
+	calculateDimensions(_originalDimensions);
 
 	return true;
 
+}
+
+void BaseTexture::calculateDimensions(const Vector2ui& dimensions) {
+	_dimensions.x = nextPowerOf2(dimensions.x);
+	_dimensions.y = nextPowerOf2(dimensions.y);
 }
 
 GLint BaseTexture::getCurrentBoundTexture() const {
@@ -56,7 +60,7 @@ void BaseTexture::destroy() {
 	cleanup();
 }
 
-void BaseTexture::bind() {
+void BaseTexture::bind() const {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated())
@@ -65,16 +69,16 @@ void BaseTexture::bind() {
 	//If not created before, this will produce the same effect
 	//as unbind()
 	glBindTexture(GL_TEXTURE_2D, _texture);
-	glBindSampler(_sampler);
+	glBindSampler(0, _sampler);
 
 	//Tell OpenGL our filtering
 	updateFiltering();
 
 }
 
-void BaseTexture::updateFiltering() {
+void BaseTexture::updateFiltering() const {
 
-	if(!Window::isContextCreated() || !isCreated()){
+	if(!Window::isContextCreated() || !isCreated() || glIsSampler(_sampler) != GL_TRUE){
 		return;
 	}
 
@@ -105,7 +109,7 @@ void BaseTexture::unbind() {
 		return;
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindSampler(0);
+	glBindSampler(0, 0);
 
 }
 
@@ -116,7 +120,7 @@ Uint32 BaseTexture::nextPowerOf2(const Uint32& n) const {
 
 	//Look for the next greater power of 2
 	while(n > p2){
-		p2 << 1; //Shift one to the left. Equals p2 *= 2
+		p2 <<= 1; //Shift one to the left. Equals p2 *= 2
 	}
 
 	return p2;
@@ -166,6 +170,20 @@ void BaseTexture::cleanup() {
 	_sampler = 0;
 	_mipmapsGenerated = false;
 
+}
+
+const Vector2ui& BaseTexture::getDimensions() const {
+	return _dimensions;
+}
+
+const Vector2ui& BaseTexture::getOriginalDimensions() const {
+	return _originalDimensions;
+}
+
+Vector2f BaseTexture::mapUvCoordsToTexture(const Vector2f& uv) const {
+	return Vector2f(
+	static_cast<float>(uv.x) * (static_cast<float>(_originalDimensions.x) / static_cast<float>(_dimensions.x)),
+	static_cast<float>(uv.y) * (static_cast<float>(_originalDimensions.y) / static_cast<float>(_dimensions.y)));
 }
 
 } /* namespace burn */

@@ -82,7 +82,7 @@ void StaticMeshNode::draw(const Camera& cam) {
 				BurngineShaders::useShader(BurngineShaders::TEXTURED);
 				setMVPUniforms(BurngineShaders::TEXTURED, cam);
 
-				glBindTexture(GL_TEXTURE_2D, _model.getMesh(i).getTexture().getTextureBuffer());
+				_model.getMesh(i).getTexture().bind();
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -148,7 +148,8 @@ void StaticMeshNode::drawDepthColorless(const Camera& cam) {
 
 }
 
-void StaticMeshNode::drawLighting(const Camera& cam, const std::vector<Light*>& lights, const Vector3f& ambient) {
+void StaticMeshNode::drawLighting(LightingType type, const Camera& cam, const std::vector<Light*>& lights,
+const Vector3f& ambient) {
 
 	_model.update();
 
@@ -174,26 +175,34 @@ void StaticMeshNode::drawLighting(const Camera& cam, const std::vector<Light*>& 
 			}
 
 			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, NORMAL_MATRIX), 1,
-			GL_FALSE, &normalMatrix[0][0]);
+			GL_FALSE,
+								&normalMatrix[0][0]);
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, CAMERA_POSITION),
-			camPosition.x, camPosition.y, camPosition.z);
+						camPosition.x, camPosition.y, camPosition.z);
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_POSITION),
-			lights[j]->getPosition().x, lights[j]->getPosition().y, lights[j]->getPosition().z);
+						lights[j]->getPosition().x, lights[j]->getPosition().y, lights[j]->getPosition().z);
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_COLOR),
-			lights[j]->getColor().r, lights[j]->getColor().g, lights[j]->getColor().b);
+						lights[j]->getColor().r, lights[j]->getColor().g, lights[j]->getColor().b);
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_AMBIENT), ambient.r,
-			ambient.g, ambient.b);
+						ambient.g, ambient.b);
 
 			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_SPECULAR),
-			_model.getMesh(i).getMaterial().getSpecularColor().r, _model.getMesh(i).getMaterial().getSpecularColor().g,
-			_model.getMesh(i).getMaterial().getSpecularColor().b);
+						_model.getMesh(i).getMaterial().getSpecularColor().r,
+						_model.getMesh(i).getMaterial().getSpecularColor().g,
+						_model.getMesh(i).getMaterial().getSpecularColor().b);
 
 			glUniform1f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_INTENSITY),
-			lights[j]->getIntensity());
+						lights[j]->getIntensity());
+
+			if(type == DIFFUSE){
+				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_TYPE), 1);
+			}else{
+				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_TYPE), 2);
+			}
 
 			//0 = Positions
 			glEnableVertexAttribArray(0);

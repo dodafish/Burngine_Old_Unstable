@@ -46,11 +46,12 @@ void Scene::drawAll() {
 		}
 		glEnable(GL_BLEND);
 
-		RenderTexture rt;
-		if(rt.create(_window.getSettings().getWidth(), _window.getSettings().getHeight())){
+		RenderTexture rtDiffuse, rtSpecular;
+		if(rtDiffuse.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
 			//Render objects' lightings:
-			rt.bind();
-			rt.clear();
+
+			rtDiffuse.clear();
+			rtDiffuse.bind();
 
 			glDepthFunc(GL_LESS);
 			Window::setBlendMode(Window::OVERWRITE);
@@ -61,28 +62,59 @@ void Scene::drawAll() {
 			glDepthFunc(GL_EQUAL);
 			Window::setBlendMode(Window::ADD);
 			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawLighting(_camera, _lights, _ambientColor);
+				_nodes[i]->drawLighting(SceneNode::DIFFUSE, _camera, _lights, _ambientColor);
 			}
 
 			//Add lighting to scene:
 			glDepthMask(GL_FALSE);
 			glDisable(GL_DEPTH_TEST);
+
 			_window.bind();
 			Window::setBlendMode(Window::MULTIPLY);
-			rt.drawFullscreen(RenderTexture::TEXTURE0); //Diffuse lightings
-			_window.bind();
-			Window::setBlendMode(Window::ADD);
-			rt.drawFullscreen(RenderTexture::TEXTURE1); //Specular lightings
-
-			//Debug-view:
-			Window::setBlendMode(Window::OVERWRITE);
-			rt.draw(RenderTexture::TEXTURE0, Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
-			rt.draw(RenderTexture::TEXTURE1, Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
+			rtDiffuse.drawFullscreen(); //Diffuse lightings
 
 			glDepthMask(GL_TRUE);
 			glEnable(GL_DEPTH_TEST);
 
 		}
+		if(rtSpecular.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+
+			rtSpecular.clear();
+			rtSpecular.bind();
+
+			glDepthFunc(GL_LESS);
+			Window::setBlendMode(Window::OVERWRITE);
+			for(size_t i = 0; i < _nodes.size(); ++i){
+				_nodes[i]->drawDepthColorless(_camera);
+			}
+
+			glDepthFunc(GL_EQUAL);
+			Window::setBlendMode(Window::ADD);
+			for(size_t i = 0; i < _nodes.size(); ++i){
+				_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
+			}
+
+			//Add lighting to scene:
+			glDepthMask(GL_FALSE);
+			glDisable(GL_DEPTH_TEST);
+
+			_window.bind();
+			Window::setBlendMode(Window::ADD);
+			rtSpecular.drawFullscreen(); //Specular lightings
+
+			glDepthMask(GL_TRUE);
+			glEnable(GL_DEPTH_TEST);
+
+		}
+
+		//Debug-view:
+		glDepthMask(GL_FALSE);
+		glDisable(GL_DEPTH_TEST);
+		Window::setBlendMode(Window::OVERWRITE);
+		rtDiffuse.draw(Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
+		rtSpecular.draw(Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
+		glDepthMask(GL_TRUE);
+		glEnable(GL_DEPTH_TEST);
 
 	}
 }

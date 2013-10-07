@@ -10,13 +10,14 @@
 
 #include "../Export.h"
 #include "OpenGL.h"
+#include "BaseTexture.h"
 
 namespace burn {
 
 /**
  * @brief Holds OpenGL comfort images as textures.
  */
-class BURNGINE_API Texture {
+class BURNGINE_API Texture : public BaseTexture {
 public:
 	/**
 	 * @brief The default constructor
@@ -38,22 +39,6 @@ public:
 	 */
 	bool loadFromFile(const std::string& file);
 
-	/**
-	 * @brief Returns the ID of the texturebuffer
-	 *
-	 * @return The ID of the texturebuffer or 0 if no buffer exists
-	 *
-	 * @see loadFromFile()
-	 */
-	const GLuint& getTextureBuffer() const;
-
-private:
-
-	void generate();
-	void erase();
-
-	bool _isTextureGenerated;
-	GLuint _texture; ///< OpenGL ID for the texture
 };
 
 } /* namespace burn */
