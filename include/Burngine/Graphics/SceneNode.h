@@ -45,7 +45,12 @@ public:
 
 	virtual void drawDepthColorless(const Camera& camera) = 0;
 
-	virtual void drawLighting(const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient) = 0;
+	enum LightingType{
+		DIFFUSE,
+		SPECULAR
+	};
+
+	virtual void drawLighting(LightingType type, const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient) = 0;
 
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);

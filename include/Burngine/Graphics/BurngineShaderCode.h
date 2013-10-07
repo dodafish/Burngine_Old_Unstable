@@ -117,8 +117,7 @@ const std::string lightingF = "#version 330\n"
 "in vec3 position_camspace;"
 "in vec3 cameraPosition_camspace;"
 
-"layout(location = 0) out vec3 diffuseColor;"
-"layout(location = 1) out vec3 specularColor;"
+"layout(location = 0) out vec3 color;"
 
 "uniform vec3 " + LIGHT_COLOR + ";"
 "uniform float " + LIGHT_INTENSITY + ";"
@@ -126,26 +125,33 @@ const std::string lightingF = "#version 330\n"
 "uniform vec3 " + LIGHT_SPECULAR + ";"
 
 "uniform int " + LIGHT_ENABLED + ";"
+"uniform int " + LIGHT_TYPE + ";"
 
 "void main(){"
 	"if(" + LIGHT_ENABLED + " == 1){"
+		"float dist = distance(lightPosition_camspace, position_camspace);"
 		"vec3 n = normalize(normal_camspace);"
 		"vec3 l = normalize(lightPosition_camspace - position_camspace);"
-		"vec3 E = normalize(cameraPosition_camspace - position_camspace);"
-		"vec3 R = reflect(-l, n);"
 
-		"float cosTheta = clamp( dot( n,l ), 0,1 );"
-		"float cosAlpha = clamp( dot( E,R ), 0,1 );"
+		"if(" + LIGHT_TYPE + " == 1){"
+			"float cosTheta = clamp( dot( n,l ), 0,1 );"
 
-		"float dist = distance(lightPosition_camspace, position_camspace);"
+			"color = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
+		"}else{"
+			"vec3 E = normalize(cameraPosition_camspace - position_camspace);"
+			"vec3 R = reflect(-l, n);"
+			"float cosAlpha = clamp( dot( E,R ), 0,1 );"
 
-		"diffuseColor = " + LIGHT_AMBIENT + " + " + LIGHT_COLOR + " * " + LIGHT_INTENSITY + " * cosTheta / (dist*dist);"
-		"specularColor = " + LIGHT_SPECULAR + " * " + LIGHT_COLOR + " * " + LIGHT_INTENSITY
-		+ " * pow(cosAlpha,5) / (dist*dist);"
+			"color = " + LIGHT_SPECULAR + " * " + LIGHT_COLOR + " * " + LIGHT_INTENSITY
+			+ " * pow(cosAlpha,5) / (dist*dist);"
+		"}"
 	"}"
 	"else{"
-		"diffuseColor = vec3(1.0);"
-		"specularColor = vec3(0.0);"
+		"if(" + LIGHT_TYPE + " == 1){"
+			"color = vec3(1.0);"
+		"}else{"
+			"color = vec3(0.0);"
+		"}"
 	"}"
 "}";
 
