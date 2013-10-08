@@ -178,19 +178,13 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 
 	Mesh mesh;
 	std::vector<Vertex> v;
-	/*v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), (Vector2f(0.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), (Vector2f(1.f, 1.f))));*/
 
 	v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 0.f))));
-	 v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	 v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	 v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	 v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	 v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 1.f))));
 
 	mesh.setVertices(v);
 	mesh.update();
