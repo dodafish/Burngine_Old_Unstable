@@ -30,7 +30,7 @@ bool Texture::loadFromFile(const std::string& file) {
 	file.c_str(), SOIL_LOAD_AUTO, _texture,
 	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
-	if(_texture != 0){
+	if(isCreated()){
 		std::cout << "Created texturebuffer. ID: " << _texture << "\n";
 		return true;
 	}
