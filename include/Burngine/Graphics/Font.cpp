@@ -49,14 +49,14 @@ bool Font::loadFromFile(const std::string& file) {
 	//Font's first face is successfully loaded :)
 
 	//Cleanup
-	FT_Done_FreeType (library);
+	FT_Done_FreeType(lib);
 
 	_isLoaded = true;
 
 	return _isLoaded;
 }
 
-void Font::cleanup(){
+void Font::cleanup() {
 
 	//Free allocated memory
 	for(size_t i = 0; i < _characters.size(); ++i){
@@ -68,7 +68,7 @@ void Font::cleanup(){
 
 }
 
-const Character& Font::getCharacter(const char32_t& c) {
+const Character& Font::getCharacter(const Uint32& codePoint) {
 
 	//Return if already loaded
 	for(size_t i = 0; i < _characters.size(); ++i){
@@ -102,11 +102,15 @@ const Character& Font::createCharacter(const char32_t& c) {
 	//the texture they hold is not destroyed automatically
 	_characters.push_back(ch);
 
-	return ch;
+	return *ch;
 }
 
 int Font::charToInt(const char32_t& c) const {
 	return static_cast<int>(c);
+}
+
+bool Font::isLoaded() const {
+	return _isLoaded;
 }
 
 } /* namespace burn */

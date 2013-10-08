@@ -19,7 +19,7 @@ namespace burn {
 
 class BURNGINE_API Character {
 public:
-	Character(const char32_t& c);
+	Character(const char32_t& c = '\0');
 	~Character();
 
 	void createFromFtBitmap(FT_Bitmap* bitmap);

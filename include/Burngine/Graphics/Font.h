@@ -24,7 +24,9 @@ public:
 
 	bool loadFromFile(const std::string& file);
 
-	const Character& getCharacter(const char32_t& c);
+	const Character& getCharacter(const Uint32& codePoint);
+
+	bool isLoaded() const;
 
 private:
 	void cleanup();
