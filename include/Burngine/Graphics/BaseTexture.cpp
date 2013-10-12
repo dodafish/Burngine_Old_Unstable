@@ -102,6 +102,10 @@ void BaseTexture::updateFiltering() const {
 
 }
 
+void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
+	glSamplerParameteri(_sampler, parameter, value);
+}
+
 void BaseTexture::unbind() {
 
 	//Valid OpenGL-Context is needed

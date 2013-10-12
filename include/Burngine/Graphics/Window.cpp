@@ -20,6 +20,7 @@
 namespace burn {
 
 bool Window::_isContextCreated = false;
+glm::mat4 Window::_orthoMatrix;
 
 Window::Window() :
 _isGlfwInit(false),
@@ -146,6 +147,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	//glEnable(GL_MULTISAMPLE);
 	//Reporter::report("Enabled antialiasing.");
 
+	updateOrthoMatrix();
+
 	_uptime.reset();
 
 	return true;
@@ -226,6 +229,15 @@ const unsigned int& Window::getFramerateLimit() const {
 
 const Time& Window::getElapsedTime() const {
 	return _elapsedTime;
+}
+
+glm::mat4 Window::getOrthoMatrix() {
+	return _orthoMatrix;
+}
+
+void Window::updateOrthoMatrix() {
+	_orthoMatrix = glm::ortho(0.f, static_cast<float>(_settings.getWidth()), 0.f,
+								static_cast<float>(_settings.getHeight()));
 }
 
 void Window::bind() const {

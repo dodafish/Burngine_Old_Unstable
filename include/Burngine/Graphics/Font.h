@@ -28,15 +28,17 @@ public:
 
 	bool isLoaded() const;
 
+	const int& getLineHeight() const;
+
 private:
 	void cleanup();
-	const Character& createCharacter(const char32_t& c);
-	int charToInt(const char32_t& c) const;
+	const Character& createCharacter(const Uint32& codePoint);
 
 	std::vector<Character*> _characters;
 
-	FT_Face _face;
+	void* _face;
 	bool _isLoaded;
+	int _lineHeight; ///< The height of a line. Used for linebreaks
 };
 
 } /* namespace burn */

@@ -22,6 +22,7 @@ Shader BurngineShaders::_texturedShader;
 Shader BurngineShaders::_rawTextureShader;
 Shader BurngineShaders::_lightingShader;
 Shader BurngineShaders::_colorlessShader;
+Shader BurngineShaders::_fontShader;
 
 bool BurngineShaders::loadAllShaders() {
 
@@ -38,6 +39,9 @@ bool BurngineShaders::loadAllShaders() {
 		return false;
 	}
 	if(!_colorlessShader.loadFromString(colorlessV, colorlessF)){
+		return false;
+	}
+	if(!_fontShader.loadFromString(fontV, fontF)){
 		return false;
 	}
 
@@ -60,6 +64,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 			break;
 		case COLORLESS:
 			return _colorlessShader.loadFromString(colorlessV, colorlessF);
+			break;
+		case FONT:
+			return _fontShader.loadFromString(fontV, fontF);
 			break;
 		default:
 			return false;
@@ -87,6 +94,9 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 		case COLORLESS:
 			_colorlessShader.activate();
 			break;
+		case FONT:
+			_fontShader.activate();
+			break;
 		default:
 			return;
 			break;
@@ -111,6 +121,9 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 			break;
 		case COLORLESS:
 			return _colorlessShader.getUniformLocation(uniformName);
+			break;
+		case FONT:
+			return _fontShader.getUniformLocation(uniformName);
 			break;
 		default:
 			return 0;

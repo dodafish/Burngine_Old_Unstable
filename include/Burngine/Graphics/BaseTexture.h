@@ -31,6 +31,7 @@ public:
 	void destroy();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
+	void setSamplerParameter(GLenum parameter, GLenum value);
 
 	virtual void bind() const ;
 	static void unbind();
@@ -48,14 +49,13 @@ protected:
 	void calculateDimensions(const Vector2ui& dimensions);
 	void updateFiltering() const;
 	Vector2f mapUvCoordsToTexture(const Vector2f& uv) const;
+	Uint32 nextPowerOf2(const Uint32& n) const;
 
 	GLuint _texture; ///< Texture's ID
 	GLuint _sampler; ///< Sampler's ID
 	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
 
 private:
-	Uint32 nextPowerOf2(const Uint32& n) const;
-
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
 
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated

@@ -10,27 +10,31 @@
 
 #include "../Export.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include "Texture.h"
+#include "VertexBufferObject.h"
 
 namespace burn {
 
 class BURNGINE_API Character {
 public:
-	Character(const char32_t& c = '\0');
+	Character(const Uint32& codePoint);
 	~Character();
 
-	void createFromFtBitmap(FT_Bitmap* bitmap);
+	void createFromFtGlyph(void* glyph);
 
-	void draw(const Vector2i& coordinates) const;
+	void draw() const;
 
-	bool operator==(const char32_t& c) const;
+	bool operator==(const Uint32& codePoint) const;
+
+	const Vector2i& getDimensions() const;
+	const Vector2i& getAdvance() const;
+	const Vector2i& getBearing() const;
 
 private:
 	Texture _texture;
-	char32_t _character;
+	Uint32 _codePoint;
+	Vector2i _dimensions, _advance, _bearing;
+	VertexBufferObject* _vbo;
 };
 
 } /* namespace burn */

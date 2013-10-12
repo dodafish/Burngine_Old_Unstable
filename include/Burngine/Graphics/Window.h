@@ -135,6 +135,8 @@ public:
 
 	void bind() const;
 
+	static glm::mat4 getOrthoMatrix();
+
 	/**
 	 * @brief This function is used to ensure, that an
 	 * OpenGL-Context exists. Calling OpenGL-Methods will result
@@ -160,6 +162,7 @@ public:
 	static inline void setBlendMode(const BlendMode& blendMode);
 
 private:
+	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
 
 	static bool _isContextCreated;
@@ -174,6 +177,8 @@ private:
 	Clock _uptime; ///< Measures the time the window exists
 
 	GLuint _vertexArrayID;
+
+	static glm::mat4 _orthoMatrix;
 };
 
 bool Window::isContextCreated() {

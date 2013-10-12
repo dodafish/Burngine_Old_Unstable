@@ -19,7 +19,7 @@
 
 namespace burn {
 
-class BURNGINE_API Text : public Transformable {
+class BURNGINE_API Text {
 public:
 	Text();
 	~Text();
@@ -31,10 +31,13 @@ public:
 
 	void setFont(const Font& font);
 
+	void setPosition(const Vector2f& pos);
+
 private:
-	String _string;
+	String _text;
 	Uint32 _fontSize;
 	Font _font;
+	Vector2f _position;
 };
 
 } /* namespace burn */

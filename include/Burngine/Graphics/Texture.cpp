@@ -38,4 +38,21 @@ bool Texture::loadFromFile(const std::string& file) {
 	return false;
 }
 
+bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format) {
+
+	//Create Texture on GPU. Dimensions will be power of 2
+	create(dimensions);
+
+	//Bind the texture
+	bind();
+
+	//Fill with data
+	glTexImage2D(GL_TEXTURE_2D, 0, format, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
+
+	//Unbind texture to protect against modifications
+	unbind();
+
+	return true;
+}
+
 } /* namespace burn */

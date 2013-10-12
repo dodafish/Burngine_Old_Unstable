@@ -30,6 +30,8 @@ const std::string LIGHT_INTENSITY = "LIGHT_INTENSITY_";
 const std::string LIGHT_AMBIENT = "LIGHT_AMBIENT_";
 const std::string LIGHT_SPECULAR = "LIGHT_SPECULAR_";
 
+const std::string FONT_COLOR = "FONT_COLOR_";
+
 //----------------------------------------------------------------
 // see BurngineShaderCode.h
 //----------------------------------------------------------------
@@ -106,7 +108,8 @@ struct BURNGINE_API BurngineShaders {
 		TEXTURED, ///< Simple 1-Texture Shader
 		RAW_TEXTURE, ///< This renders a texture without matrices. (Internal use)
 		LIGHTING, ///< Renders the model's lighting
-		COLORLESS ///< Draws only black color (internal use for depthbufferwriting)
+		COLORLESS, ///< Draws only black color (internal use for depthbufferwriting)
+		FONT
 	};
 
 	/**
@@ -160,6 +163,7 @@ private:
 	static Shader _rawTextureShader;
 	static Shader _lightingShader;
 	static Shader _colorlessShader;
+	static Shader _fontShader;
 };
 
 } /* namespace burn */

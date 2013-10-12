@@ -39,6 +39,8 @@ public:
 	 */
 	bool loadFromFile(const std::string& file);
 
+	bool loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format);
+
 };
 
 } /* namespace burn */

@@ -174,6 +174,34 @@ const std::string colorlessF = "#version 330\n"
 	"color1 = vec3(0,0,0);"
 "}";
 
+const std::string fontV = "#version 330\n"
+"layout(location = 0) in vec2 vertexPosition;"
+"layout(location = 1) in vec2 vertexUv;"
+
+"out vec2 Uv;"
+
+"uniform mat4 " + PROJECTION_MATRIX + ";"
+"uniform mat4 " + VIEW_MATRIX + ";"
+
+"void main(){"
+	"gl_Position = " + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "* vec4(vertexPosition, 0.0, 1.0);"
+	//"gl_Position = vec4(vertexPosition, 0.0, 1.0);"
+	"Uv = vertexUv;"
+"}";
+
+const std::string fontF = "#version 330\n"
+"in vec2 Uv;"
+"out vec4 color;"
+
+"uniform sampler2D gSampler;"
+//"uniform vec4 " + FONT_COLOR + ";"
+
+"void main(){"
+	"vec4 texColor = texture2D(gSampler, Uv);"
+	"color = (texColor.r, texColor.r, texColor.r, texColor.r) * vec4(1.0);"
+	//"color = vec3(1.0);"
+"}";
+
 }
 
 #endif /* BURNGINESHADERCODE_H_ */

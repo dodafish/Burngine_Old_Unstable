@@ -44,7 +44,7 @@ void VertexBufferObject::reset() {
 	_isDataUploaded = false;
 }
 
-void VertexBufferObject::bind(const GLint& type) {
+void VertexBufferObject::bind(const GLint& type) const {
 	if(Window::isContextCreated())
 		glBindBuffer(type, _buffer);
 }
@@ -83,7 +83,7 @@ GLint VertexBufferObject::getLastBuffer(const GLint& type) {
 	return last;
 }
 
-const GLuint& VertexBufferObject::getBuffer() {
+const GLuint& VertexBufferObject::getBuffer() const {
 	return _buffer;
 }
 
