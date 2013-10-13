@@ -24,21 +24,21 @@ public:
 
 	bool loadFromFile(const std::string& file);
 
-	const Character& getCharacter(const Uint32& codePoint);
+	const Character& getCharacter(const Uint32& codePoint, const unsigned int& fontSize);
 
 	bool isLoaded() const;
-
-	const int& getLineHeight() const;
 
 private:
 	void cleanup();
 	const Character& createCharacter(const Uint32& codePoint);
+	bool setFontSize(const unsigned int& fontSize);
 
 	std::vector<Character*> _characters;
+	Character _emptyCharacter; ///< Will be return on errors and fails
 
 	void* _face;
 	bool _isLoaded;
-	int _lineHeight; ///< The height of a line. Used for linebreaks
+	unsigned int _loadedFontSize;
 };
 
 } /* namespace burn */

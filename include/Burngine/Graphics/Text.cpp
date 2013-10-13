@@ -40,25 +40,24 @@ void Text::draw() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Vector2i curPosition(static_cast<int>(_position.x), static_cast<int>(_position.y));
-	float scale = 1.f;
 	for(size_t i = 0; i < _text.getSize(); ++i){
 
 		if(_text[i] == '\n'){
 			curPosition.x = _position.x;
-			curPosition.y -= _font.getLineHeight() * scale;
+			curPosition.y -= (_fontSize * 1.2f);
 			continue;
 		}else if(_text[i] == ' '){
-			curPosition.x += 16.f * scale;
+			curPosition.x += 10.f;
 			continue;
 		}
 
-		const Character& character = _font.getCharacter(_text[i]);
+		const Character& character = _font.getCharacter(_text[i], _fontSize);
 		curPosition.x += character.getBearing().x;
 
 		glm::mat4 modelView = glm::translate(glm::mat4(1.0f),
 												glm::vec3(float(curPosition.x), float(curPosition.y), 0.0f));
 
-		modelView = glm::scale(modelView, glm::vec3(scale));
+		modelView = glm::rotate(modelView, _rotation, Vector3f(0.f, 0.f, 1.f));
 
 		glm::mat4 ortho = Window::getOrthoMatrix();
 
@@ -73,7 +72,7 @@ void Text::draw() {
 
 		character.draw();
 
-		curPosition.x += (character.getAdvance().x - character.getBearing().x) * scale;
+		curPosition.x += (character.getAdvance().x - character.getBearing().x);
 	}
 
 	glEnable(GL_DEPTH_TEST);
@@ -86,10 +85,6 @@ void Text::setFontSize(const Uint32& size) {
 
 void Text::setFont(const Font& font) {
 	_font = font;
-}
-
-void Text::setPosition(const Vector2f& pos) {
-	_position = pos;
 }
 
 } /* namespace burn */

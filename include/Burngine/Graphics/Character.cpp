@@ -15,8 +15,9 @@
 
 namespace burn {
 
-Character::Character(const Uint32& codePoint) :
-_codePoint(codePoint) {
+Character::Character(const Uint32& codePoint, const unsigned int& size) :
+_codePoint(codePoint),
+_size(size) {
 }
 
 Character::~Character() {
@@ -182,6 +183,10 @@ void Character::draw() const {
 
 bool Character::operator==(const Uint32& codePoint) const {
 	return (_codePoint == codePoint);
+}
+
+const unsigned int& Character::getSize() const {
+	return _size;
 }
 
 } /* namespace burn */

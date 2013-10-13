@@ -27,7 +27,7 @@ public:
 	void move(const Vector2f& offset);
 	void move(const float& offsetX, const float& offsetY);
 
-private:
+protected:
 	Vector2f _position;
 	float _rotation;
 };
