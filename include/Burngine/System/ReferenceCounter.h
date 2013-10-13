@@ -8,12 +8,34 @@
 #ifndef REFERENCECOUNTER_H_
 #define REFERENCECOUNTER_H_
 
+#include "../Export.h"
+
 namespace burn {
 
-class ReferenceCounter {
+class BURNGINE_API ReferenceCounter {
 public:
+	//Ctor
 	ReferenceCounter();
+
+	//CopyCtor
+	ReferenceCounter(const ReferenceCounter& other);
+
+	//MoveCtor
+	ReferenceCounter(const ReferenceCounter&& other);
+
+	//Dtor
 	~ReferenceCounter();
+
+	//CopyAssignment
+	ReferenceCounter& operator=(const ReferenceCounter& other);
+
+	//MoveAssignment
+	ReferenceCounter& operator=(const ReferenceCounter&& other);
+
+private:
+	void checkForDelete();
+
+	unsigned int* _counter;
 };
 
 } /* namespace burn */
