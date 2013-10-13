@@ -38,7 +38,6 @@ void Text::draw() {
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//Window::setBlendMode(Window::OVERWRITE);
 
 	Vector2i curPosition(static_cast<int>(_position.x), static_cast<int>(_position.y));
 	float scale = 1.f;
@@ -71,11 +70,6 @@ void Text::draw() {
 		glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::FONT, VIEW_MATRIX), 1,
 		GL_FALSE,
 							&modelView[0][0]);
-
-		//std::cout << "Character " << _text.toAnsiString()[i] << ". Position: " << curPosition.x << "/" << curPosition.y << "\n";
-
-		//Vector4f endPos = ortho * modelView * Vector4f(float(curPosition.x), float(curPosition.y), 0.0f, 1.0f);
-		//std::cout << "CharPos: " << endPos.x << "/" << endPos.y << "/" << endPos.z << "\n";
 
 		character.draw();
 
