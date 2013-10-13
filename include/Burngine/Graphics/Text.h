@@ -11,9 +11,6 @@
 #include "../Export.h"
 #include "Transformable.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include "Font.h"
 #include "../System/String.h"
 

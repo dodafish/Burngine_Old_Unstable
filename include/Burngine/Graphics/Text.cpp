@@ -11,6 +11,9 @@
 #include "Shader.h"
 #include <iostream>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 namespace burn {
 
 Text::Text() :
@@ -38,21 +41,25 @@ void Text::draw() {
 	//Window::setBlendMode(Window::OVERWRITE);
 
 	Vector2i curPosition(static_cast<int>(_position.x), static_cast<int>(_position.y));
+	float scale = 1.f;
 	for(size_t i = 0; i < _text.getSize(); ++i){
 
 		if(_text[i] == '\n'){
 			curPosition.x = _position.x;
-			curPosition.y -= _font.getLineHeight();
+			curPosition.y -= _font.getLineHeight() * scale;
+			continue;
+		}else if(_text[i] == ' '){
+			curPosition.x += 16.f * scale;
 			continue;
 		}
+
 		const Character& character = _font.getCharacter(_text[i]);
 		curPosition.x += character.getBearing().x;
 
 		glm::mat4 modelView = glm::translate(glm::mat4(1.0f),
-		 glm::vec3(float(curPosition.x), float(curPosition.y), 0.0f));
-		//glm::mat4 modelView = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.0f));
+												glm::vec3(float(curPosition.x), float(curPosition.y), 0.0f));
 
-		modelView = glm::scale(modelView, glm::vec3(1.f));
+		modelView = glm::scale(modelView, glm::vec3(scale));
 
 		glm::mat4 ortho = Window::getOrthoMatrix();
 
@@ -72,7 +79,7 @@ void Text::draw() {
 
 		character.draw();
 
-		curPosition.x += character.getAdvance().x - character.getBearing().x;
+		curPosition.x += (character.getAdvance().x - character.getBearing().x) * scale;
 	}
 
 	glEnable(GL_DEPTH_TEST);

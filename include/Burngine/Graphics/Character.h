@@ -31,10 +31,12 @@ public:
 	const Vector2i& getBearing() const;
 
 private:
+	void removePixelErrors(GLubyte* data, const unsigned int& width, const unsigned int& height);
+
 	Texture _texture;
 	Uint32 _codePoint;
 	Vector2i _dimensions, _advance, _bearing;
-	VertexBufferObject* _vbo;
+	VertexBufferObject _vbo;
 };
 
 } /* namespace burn */
