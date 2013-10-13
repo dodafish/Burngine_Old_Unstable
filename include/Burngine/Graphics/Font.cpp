@@ -17,8 +17,8 @@ namespace burn {
 Font::Font() :
 _face(0),
 _isLoaded(false),
-_loadedFontSize(0),
-_emptyCharacter('a', 1) {
+_loadedFontSize(32),
+_emptyCharacter() {
 
 }
 
@@ -67,11 +67,6 @@ bool Font::loadFromFile(const std::string& file) {
 }
 
 void Font::cleanup() {
-
-	//Free allocated memory
-	for(size_t i = 0; i < _characters.size(); ++i){
-		//delete _characters[i];
-	}
 
 	_characters.clear();
 	_isLoaded = false;
@@ -140,7 +135,7 @@ const Character& Font::createCharacter(const Uint32& codePoint) {
 	FT_BitmapGlyph bitmapGlyph = (FT_BitmapGlyph)(glyph);
 
 	//Create the character
-	Character* ch = new Character(codePoint, _loadedFontSize);
+	std::shared_ptr<burn::Character> ch(new Character(codePoint, _loadedFontSize));
 	ch->createFromFtGlyph(face->glyph, &bitmapGlyph->bitmap);
 
 	//Store in vector

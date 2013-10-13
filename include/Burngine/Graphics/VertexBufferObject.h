@@ -19,9 +19,10 @@ namespace burn {
 class BURNGINE_API VertexBufferObject {
 public:
 	VertexBufferObject();
+	~VertexBufferObject();
 
 	void create();
-	void destroy();
+	void cleanup();
 
 	void reset();
 

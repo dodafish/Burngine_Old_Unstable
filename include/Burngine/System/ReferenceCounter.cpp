@@ -23,16 +23,14 @@ ReferenceCounter::ReferenceCounter(const ReferenceCounter& other) {
 //MoveCtor
 ReferenceCounter::ReferenceCounter(const ReferenceCounter&& other) {
 	_counter = other._counter;
-	other._counter = nullptr;
 }
 
 //Dtor
 ReferenceCounter::~ReferenceCounter() {
-	//Nullptr after move
-	if(_counter != nullptr){
-		--(*_counter);
-		checkForDelete();
-	}
+
+	--(*_counter);
+	checkForDelete();
+
 }
 
 //CopyAssignment
@@ -50,7 +48,6 @@ ReferenceCounter& ReferenceCounter::operator=(const ReferenceCounter&& other) {
 	--(*_counter);
 	checkForDelete();
 	_counter = other._counter;
-	other._counter = nullptr;
 
 	return *this;
 }
@@ -59,6 +56,10 @@ void ReferenceCounter::checkForDelete() {
 	if(*_counter == 0){
 		delete _counter;
 	}
+}
+
+bool ReferenceCounter::isLastReference() const {
+	return (*_counter == 1);
 }
 
 } /* namespace burn */

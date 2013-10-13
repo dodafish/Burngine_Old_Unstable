@@ -17,6 +17,10 @@ _isDataUploaded(false),
 _buffer(0) {
 }
 
+VertexBufferObject::~VertexBufferObject() {
+	cleanup();
+}
+
 void VertexBufferObject::create() {
 	if(Window::isContextCreated())
 		if(!_isCreated){
@@ -28,7 +32,7 @@ void VertexBufferObject::create() {
 		}
 }
 
-void VertexBufferObject::destroy() {
+void VertexBufferObject::cleanup() {
 	if(Window::isContextCreated())
 		if(_isCreated){
 

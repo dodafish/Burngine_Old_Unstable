@@ -12,8 +12,9 @@
 #include "Character.h"
 
 #include <vector>
+#include <memory>
 
-template class BURNGINE_API std::vector<burn::Character*>;
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Character>>;
 
 namespace burn {
 
@@ -33,12 +34,12 @@ private:
 	const Character& createCharacter(const Uint32& codePoint);
 	bool setFontSize(const unsigned int& fontSize);
 
-	std::vector<Character*> _characters;
-	Character _emptyCharacter; ///< Will be return on errors and fails
-
 	void* _face;
 	bool _isLoaded;
 	unsigned int _loadedFontSize;
+
+	std::vector<std::shared_ptr<burn::Character>> _characters;
+	Character _emptyCharacter; ///< Will be return on errors and fails
 };
 
 } /* namespace burn */

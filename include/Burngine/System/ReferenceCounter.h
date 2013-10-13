@@ -32,6 +32,8 @@ public:
 	//MoveAssignment
 	ReferenceCounter& operator=(const ReferenceCounter&& other);
 
+	bool isLastReference() const;
+
 private:
 	void checkForDelete();
 

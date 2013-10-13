@@ -24,10 +24,10 @@ _needUpdate(false) {
 
 Mesh::~Mesh() {
 
-	_positionVbo.destroy();
-	_colorVbo.destroy();
-	_uvVbo.destroy();
-	_normalVbo.destroy();
+	_positionVbo.cleanup();
+	_colorVbo.cleanup();
+	_uvVbo.cleanup();
+	_normalVbo.cleanup();
 
 }
 

@@ -56,10 +56,6 @@ GLint BaseTexture::getCurrentBoundTexture() const {
 	return t;
 }
 
-void BaseTexture::destroy() {
-	cleanup();
-}
-
 void BaseTexture::bind() const {
 
 	//Valid OpenGL-Context is needed
@@ -161,13 +157,12 @@ void BaseTexture::cleanup() {
 	if(!Window::isContextCreated())
 		return;
 
-	//Delete texture and sampler from GPU when needed
-	if(_texture != 0){
-		glDeleteTextures(1, &_texture);
-	}
-	if(_sampler != 0){
-		glDeleteSamplers(1, &_sampler);
-	}
+	if(!isCreated())
+		return;
+
+	//Delete texture and sampler from GPU
+	glDeleteTextures(1, &_texture);
+	glDeleteSamplers(1, &_sampler);
 
 	//Reset values
 	_texture = 0;

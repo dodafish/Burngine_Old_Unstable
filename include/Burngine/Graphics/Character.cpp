@@ -22,6 +22,9 @@ _size(size) {
 
 Character::~Character() {
 
+	_vbo.cleanup();
+	_texture.cleanup();
+
 }
 
 void Character::createFromFtGlyph(void* g, void* b) {

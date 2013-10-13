@@ -17,7 +17,7 @@ namespace burn {
 
 class BURNGINE_API Character {
 public:
-	Character(const Uint32& codePoint, const unsigned int& size);
+	Character(const Uint32& codePoint = 0, const unsigned int& size = 0);
 	~Character();
 
 	void createFromFtGlyph(void* glyph, void* bitmap);
@@ -40,6 +40,7 @@ private:
 	Vector2i _dimensions, _advance, _bearing;
 	VertexBufferObject _vbo;
 	unsigned int _size;
+
 };
 
 } /* namespace burn */

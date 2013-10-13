@@ -62,7 +62,8 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	//Configure:
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _texture, 0);
-	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	GLenum DrawBuffers[1] = {
+	GL_COLOR_ATTACHMENT0 };
 	glDrawBuffers(1, DrawBuffers);
 
 	//Check:

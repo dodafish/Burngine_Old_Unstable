@@ -8,7 +8,6 @@
 #include "StaticMeshNode.h"
 #include "Window.h"
 #include "Shader.h"
-#include "DepthCubeMap.h"
 #include "Material.h"
 #include "Camera.h"
 #include "Mesh.h"

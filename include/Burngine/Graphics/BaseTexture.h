@@ -11,6 +11,7 @@
 #include "../Export.h"
 #include "OpenGL.h"
 #include "../System/Math.h"
+#include "../System/ReferenceCounter.h"
 
 namespace burn {
 
@@ -28,12 +29,12 @@ public:
 	virtual ~BaseTexture();
 
 	virtual bool create(const Vector2ui& dimensions);
-	void destroy();
+	virtual void cleanup();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 	void setSamplerParameter(GLenum parameter, GLenum value);
 
-	virtual void bind() const ;
+	virtual void bind() const;
 	static void unbind();
 
 	bool isCreated() const;
@@ -43,7 +44,6 @@ public:
 
 protected:
 	void generate();
-	void cleanup();
 
 	GLint getCurrentBoundTexture() const;
 	void calculateDimensions(const Vector2ui& dimensions);
@@ -54,13 +54,14 @@ protected:
 	GLuint _texture; ///< Texture's ID
 	GLuint _sampler; ///< Sampler's ID
 	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
-
+	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 private:
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
 
-	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
+
+	ReferenceCounter _refCounter;
 };
 
 } /* namespace burn */

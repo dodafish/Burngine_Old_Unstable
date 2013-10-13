@@ -109,12 +109,12 @@ void Scene::drawAll() {
 
 		//Debug-view:
 		/*glDepthMask(GL_FALSE);
-		glDisable(GL_DEPTH_TEST);
-		Window::setBlendMode(Window::OVERWRITE);
-		rtDiffuse.draw(Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
-		rtSpecular.draw(Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
-		glDepthMask(GL_TRUE);
-		glEnable(GL_DEPTH_TEST);*/
+		 glDisable(GL_DEPTH_TEST);
+		 Window::setBlendMode(Window::OVERWRITE);
+		 rtDiffuse.draw(Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
+		 rtSpecular.draw(Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
+		 glDepthMask(GL_TRUE);
+		 glEnable(GL_DEPTH_TEST);*/
 
 		glDepthFunc(GL_LESS);
 
