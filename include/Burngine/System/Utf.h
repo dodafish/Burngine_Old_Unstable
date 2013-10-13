@@ -8,7 +8,7 @@
 #ifndef UTF_H_
 #define UTF_H_
 
-#include "../Export.h"
+#include <Burngine/Export.h>
 #include <algorithm>
 #include <locale>
 #include <string>
@@ -707,7 +707,7 @@ public :
     static Out encodeWide(Uint32 codepoint, Out output, wchar_t replacement = 0);
 };
 
-#include "Utf.inline"
+#include <Burngine/System/Utf.inline>
 
 // Make typedefs to get rid of the template syntax
 typedef Utf<8>  Utf8;

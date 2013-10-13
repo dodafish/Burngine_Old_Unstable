@@ -1,8 +1,8 @@
 #include <iterator>
 #include <cstring>
 
-#include "String.h"
-#include "../System/Utf.h"
+#include <Burngine/System/String.h>
+#include <Burngine/System/Utf.h>
 
 namespace burn {
 

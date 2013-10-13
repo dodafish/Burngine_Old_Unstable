@@ -8,8 +8,8 @@
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
 
-#include "../Export.h"
-#include "../Graphics/OpenGL.h" ///<- GLFW
+#include <Burngine/Export.h>
+#include <Burngine/Graphics/General/OpenGL.h> ///<- GLFW
 namespace burn {
 
 class BURNGINE_API Keyboard {

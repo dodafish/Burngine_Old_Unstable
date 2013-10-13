@@ -7,7 +7,7 @@
 #ifndef STRING_H_
 #define STRING_H_
 
-#include "../Export.h"
+#include <Burngine/Export.h>
 #include <string>
 #include <locale>
 

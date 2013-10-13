@@ -8,8 +8,8 @@
 #ifndef CLOCK_H_
 #define CLOCK_H_
 
-#include "../Export.h"
-#include "Time.h"
+#include <Burngine/Export.h>
+#include <Burngine/System/Time.h>
 
 namespace burn {
 

@@ -5,7 +5,7 @@
  *      Author: Dominik
  */
 
-#include "Reporter.h"
+#include <Burngine/System/Reporter.h>
 #include <iostream>
 #include <fstream>
 #include <string>

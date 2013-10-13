@@ -5,7 +5,7 @@
  *      Author: Dominik
  */
 
-#include "Time.h"
+#include <Burngine/System/Time.h>
 
 namespace burn {
 

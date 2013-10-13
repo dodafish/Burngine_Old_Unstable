@@ -5,7 +5,7 @@
  *      Author: Dominik
  */
 
-#include "Clock.h"
+#include <Burngine/System/Clock.h>
 
 namespace burn {
 

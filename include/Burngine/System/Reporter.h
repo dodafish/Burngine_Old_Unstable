@@ -8,7 +8,7 @@
 #ifndef REPORTER_H_
 #define REPORTER_H_
 
-#include "../Export.h"
+#include <Burngine/Export.h>
 
 namespace burn {
 

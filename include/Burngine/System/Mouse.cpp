@@ -5,7 +5,7 @@
  *      Author: Dominik
  */
 
-#include "Mouse.h"
+#include <Burngine/System/Mouse.h>
 
 namespace burn {
 

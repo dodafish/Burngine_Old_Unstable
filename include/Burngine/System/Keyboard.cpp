@@ -5,7 +5,7 @@
  *      Author: Dominik
  */
 
-#include "Keyboard.h"
+#include <Burngine/System/Keyboard.h>
 
 namespace burn {
 

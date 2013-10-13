@@ -8,10 +8,10 @@
 #ifndef MATH_H_
 #define MATH_H_
 
-#include "../Export.h"
-#include "../extern/glm/glm.hpp"
-#include "../extern/glm/gtc/matrix_transform.hpp"
-#include "../extern/glm/gtx/transform.hpp"
+#include <Burngine/Export.h>
+#include <Burngine/extern/glm/glm.hpp>
+#include <Burngine/extern/glm/gtc/matrix_transform.hpp>
+#include <Burngine/extern/glm/gtx/transform.hpp>
 
 namespace burn {
 

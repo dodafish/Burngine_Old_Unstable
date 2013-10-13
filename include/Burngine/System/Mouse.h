@@ -8,10 +8,10 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
-#include "../Export.h"
-#include "../Graphics/OpenGL.h" ///< GLFW
-#include "../Graphics/Window.h" ///< for setting cursor position
-#include "Math.h"
+#include <Burngine/Export.h>
+#include <Burngine/Graphics/General/OpenGL.h> ///< GLFW
+#include <Burngine/Graphics/Window/Window.h> ///< for setting cursor position
+#include <Burngine/System/Math.h>
 namespace burn {
 
 class BURNGINE_API Mouse {
