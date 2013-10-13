@@ -20,7 +20,7 @@ public:
 	Character(const Uint32& codePoint);
 	~Character();
 
-	void createFromFtGlyph(void* glyph);
+	void createFromFtGlyph(void* glyph, void* bitmap);
 
 	void draw() const;
 

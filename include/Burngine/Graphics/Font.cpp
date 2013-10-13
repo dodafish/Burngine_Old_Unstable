@@ -10,6 +10,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_GLYPH_H
 
 namespace burn {
 
@@ -51,7 +52,7 @@ bool Font::loadFromFile(const std::string& file) {
 		return false;
 	}
 
-	FT_Set_Pixel_Sizes(face, 32, 32);
+	FT_Set_Pixel_Sizes(face, 0, 32);
 
 	//Font's first face is successfully loaded :)
 
@@ -100,17 +101,22 @@ const Character& Font::createCharacter(const Uint32& codePoint) {
 	FT_Load_Glyph(face, FT_Get_Char_Index(face, codePoint), FT_LOAD_DEFAULT);
 
 	//Render it to a bitmap
-	FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
-
+	//FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
 	//Shortcut to the created glyph
-	FT_GlyphSlot glyph = face->glyph;
+	//FT_GlyphSlot glyph = face->glyph;
+
+	FT_Glyph glyph;
+	FT_Get_Glyph(face->glyph, &glyph);
+
+	FT_Glyph_To_Bitmap(&glyph, ft_render_mode_normal, 0, 1);
+	FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
 
 	//Update lineheight information if needed
-	_lineHeight = std::max(_lineHeight, static_cast<int>(glyph->metrics.height >> 6));
+	_lineHeight = std::max(_lineHeight, static_cast<int>(face->glyph->metrics.height >> 6));
 
 	//Create the character
 	Character* ch = new Character(codePoint);
-	ch->createFromFtGlyph(glyph);
+	ch->createFromFtGlyph(face->glyph, &bitmap_glyph->bitmap);
 
 	//Store in vector
 	//Pushing at back should not recreate the others, so

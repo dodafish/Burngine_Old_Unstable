@@ -23,12 +23,13 @@ Character::~Character() {
 
 }
 
-void Character::createFromFtGlyph(void* g) {
+void Character::createFromFtGlyph(void* g, void* b) {
 
 	FT_GlyphSlot glyph = static_cast<FT_GlyphSlot>(g);
+	FT_Bitmap* bitmap = static_cast<FT_Bitmap*>(b);
 
 	//Get dimensions of the glyph
-	Vector2ui glyphDimensions(glyph->bitmap.width, glyph->bitmap.rows);
+	Vector2ui glyphDimensions(bitmap->width, bitmap->rows);
 
 	//Create a texture so we know its final dimensions
 	_texture.create(glyphDimensions);
@@ -44,8 +45,7 @@ void Character::createFromFtGlyph(void* g) {
 			if(i > glyphDimensions.y || j > glyphDimensions.x){
 				data[i * textureDimensions.x + j] = 0;
 			}else{
-				data[i * textureDimensions.x + j] = glyph->bitmap.buffer[(glyphDimensions.y - i - 1) * glyphDimensions.x
-				+ j];
+				data[i * textureDimensions.x + j] = bitmap->buffer[(glyphDimensions.y - i - 1) * glyphDimensions.x + j];
 			}
 		}
 	}

@@ -207,7 +207,7 @@ void Window::clear() const {
 }
 
 void Window::display() {
-	_elapsedTime = _clock.getElapsedTime();
+	_elapsedTime = _clock.reset();
 
 	if(_framerateLimit != 0){
 		if(_elapsedTime.asMicroseconds() < (1000000 / _framerateLimit)){
@@ -215,7 +215,6 @@ void Window::display() {
 		}
 	}
 
-	_clock.reset();
 	glfwSwapBuffers(_window);
 }
 
