@@ -5,8 +5,8 @@
  *      Author: Dominik
  */
 
-#include "VertexBufferObject.h"
-#include "../Window/Window.h"
+#include <Burngine/Graphics/General/VertexBufferObject.h>
+#include <Burngine/Graphics/Window/Window.h>
 
 namespace burn {
 
