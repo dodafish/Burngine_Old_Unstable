@@ -46,7 +46,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	for(unsigned int i = 0; i != textureDimensions.y; ++i){
 		for(unsigned int j = 0; j != textureDimensions.x; ++j){
 			//No bufferdata in bitmap, store 0 (transparent)
-			if(i > glyphDimensions.y || j > glyphDimensions.x){
+			if(i >= glyphDimensions.y || j >= glyphDimensions.x){
 				data[i * textureDimensions.x + j] = 0;
 			}else{
 				data[i * textureDimensions.x + j] = bitmap->buffer[(glyphDimensions.y - i - 1) * glyphDimensions.x + j];
@@ -55,7 +55,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	}
 
 	//Remove pixel errors
-	removePixelErrors(data, textureDimensions.x, textureDimensions.y);
+	//removePixelErrors(data, textureDimensions.x, textureDimensions.y); has to work without!
 
 	//Fill texture with data
 	_texture.loadFromData(data, glyphDimensions, 16, GL_DEPTH_COMPONENT);
