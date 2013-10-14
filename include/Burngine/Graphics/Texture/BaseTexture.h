@@ -34,7 +34,7 @@ public:
 	void setSamplerParameter(GLenum parameter, GLenum value);
 
 	virtual void bind() const;
-	static void unbind();
+	void unbind();
 
 	bool isCreated() const;
 

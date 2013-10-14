@@ -47,7 +47,10 @@ bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int
 	bind();
 
 	//Fill with data
-	glTexImage2D(GL_TEXTURE_2D, 0, format, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
+	if(format == GL_RGB || format == GL_BGR)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
+	else
+		glTexImage2D(GL_TEXTURE_2D, 0, format, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
 
 	//Unbind texture to protect against modifications
 	unbind();

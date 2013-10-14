@@ -65,17 +65,15 @@ void BaseTexture::bind() const {
 
 	//If not created before, this will produce the same effect
 	//as unbind()
+	glActiveTexture(GL_TEXTURE0 + _unit);
 	glBindTexture(GL_TEXTURE_2D, _texture);
-	glBindSampler(0, _sampler);
-
-	//Tell OpenGL our filtering
-	updateFiltering();
+	glBindSampler(_unit, _sampler);
 
 }
 
 void BaseTexture::updateFiltering() const {
 
-	if(!Window::isContextCreated() || !isCreated() || glIsSampler(_sampler) != GL_TRUE){
+	if(!Window::isContextCreated() || !isCreated()){
 		return;
 	}
 
@@ -100,7 +98,8 @@ void BaseTexture::updateFiltering() const {
 }
 
 void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
-	glSamplerParameteri(_sampler, parameter, value);
+	if(Window::isContextCreated())
+		glSamplerParameteri(_sampler, parameter, value);
 }
 
 void BaseTexture::unbind() {
@@ -109,8 +108,9 @@ void BaseTexture::unbind() {
 	if(!Window::isContextCreated())
 		return;
 
+	glActiveTexture(GL_TEXTURE0 + _unit);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindSampler(0, 0);
+	glBindSampler(_unit, 0);
 
 }
 
@@ -135,6 +135,9 @@ bool BaseTexture::isCreated() const {
 void BaseTexture::setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min) {
 	_magnificationFiltering = mag;
 	_minificationFiltering = min;
+
+	//Tell OpenGL our filtering
+	updateFiltering();
 }
 
 void BaseTexture::generate() {
