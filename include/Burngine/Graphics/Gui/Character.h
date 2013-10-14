@@ -32,8 +32,6 @@ public:
 	const unsigned int& getSize() const;
 
 private:
-	void removePixelErrors(GLubyte* data, const unsigned int& width, const unsigned int& height);
-
 	Texture _texture;
 	Uint32 _codePoint;
 	Vector2i _dimensions, _advance, _bearing;

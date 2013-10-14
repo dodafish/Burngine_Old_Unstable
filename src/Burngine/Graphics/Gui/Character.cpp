@@ -54,9 +54,6 @@ void Character::createFromFtGlyph(void* g, void* b) {
 		}
 	}
 
-	//Remove pixel errors
-	//removePixelErrors(data, textureDimensions.x, textureDimensions.y); has to work without!
-
 	//Fill texture with data
 	_texture.loadFromData(data, glyphDimensions, 16, GL_DEPTH_COMPONENT);
 
@@ -100,54 +97,6 @@ void Character::createFromFtGlyph(void* g, void* b) {
 
 	//Free allocated memory
 	delete[] data;
-}
-
-void Character::removePixelErrors(GLubyte* data, const unsigned int& width, const unsigned int& height) {
-
-	//Pixels which have at least 2 neighbours being not null are no
-	//errors.
-	//Neighbours are one unit up, left, down and right. Not diagonal.
-
-	unsigned int size = width * height;
-	for(unsigned int i = 0; i != size; ++i){
-		//Cast unsigned to signed for proper testing
-		int pixel = static_cast<int>(i);
-
-		//Counts the number of neighbours being not 0
-		int neighbours = 0;
-
-		//To the top
-		if(pixel - width >= 0){
-			if(data[pixel - width] != 0){
-				++neighbours;
-			}
-		}
-		//To the bottom
-		if(pixel + width < size){
-			if(data[pixel + width] != 0){
-				++neighbours;
-			}
-		}
-		//To the left
-		if(pixel - 1 >= 0){
-			if(data[pixel - 1] != 0){
-				++neighbours;
-			}
-		}
-		//To the right
-		if(static_cast<unsigned int>(pixel + 1) < size){
-			if(data[pixel + 1] != 0){
-				++neighbours;
-			}
-		}
-
-		//Update pixel
-		if(neighbours < 2){
-			data[i] = 0;
-		}
-
-	}
-
 }
 
 const Vector2i& Character::getDimensions() const {
