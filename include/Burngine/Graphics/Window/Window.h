@@ -147,19 +147,7 @@ public:
 	 */
 	static inline bool isContextCreated();
 
-	enum BlendMode {
-		OVERWRITE, ADD, MULTIPLY
-	};
 
-	/**
-	 * @brief This is used to set the blending mode when rendering.
-	 * Initially OVERWRITE is used. So everything you draw will ignore,
-	 * what was already drawn.
-	 * @note Setting the blendmode will only work, when an OpenGL context
-	 * is created!
-	 * @see isContextCreated()
-	 */
-	static inline void setBlendMode(const BlendMode& blendMode);
 
 private:
 	void updateOrthoMatrix();
@@ -183,18 +171,6 @@ private:
 
 bool Window::isContextCreated() {
 	return (_isContextCreated);
-}
-
-void Window::setBlendMode(const Window::BlendMode& blendMode) {
-	if(isContextCreated()){
-		if(blendMode == OVERWRITE){
-			glBlendFunc(GL_ONE, GL_ZERO);
-		}else if(blendMode == ADD){
-			glBlendFunc(GL_ONE, GL_ONE);
-		}else if(blendMode == MULTIPLY){
-			glBlendFunc(GL_ZERO, GL_SRC_COLOR);
-		}
-	}
 }
 
 } /* namespace burn */
