@@ -185,7 +185,6 @@ const std::string fontV = "#version 330\n"
 
 "void main(){"
 	"gl_Position = " + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "* vec4(vertexPosition, 0.0, 1.0);"
-	//"gl_Position = vec4(vertexPosition, 0.0, 1.0);"
 	"Uv = vertexUv;"
 "}";
 
@@ -194,12 +193,11 @@ const std::string fontF = "#version 330\n"
 "out vec4 color;"
 
 "uniform sampler2D gSampler;"
-//"uniform vec4 " + FONT_COLOR + ";"
+"uniform vec4 " + FONT_COLOR + ";"
 
 "void main(){"
 	"vec4 texColor = texture2D(gSampler, Uv);"
-	"color = (texColor.r, texColor.r, texColor.r, texColor.r) * vec4(1.0);"
-	//"color = vec3(1.0);"
+	"color = (texColor.r, texColor.r, texColor.r, texColor.r) * " + FONT_COLOR + ";"
 "}";
 
 }

@@ -53,6 +53,11 @@ bool Font::loadFromFile(const std::string& file) {
 		return false;
 	}
 
+	if(FT_Set_Pixel_Sizes(face, 0, 32) != 0){
+		Reporter::report("Failed to load font. (Failed to set Fontsize of 32)", Reporter::ERROR);
+		return false;
+	}
+
 	//Font's first face is successfully loaded :)
 
 	//Store the face in the beatiful void pointer

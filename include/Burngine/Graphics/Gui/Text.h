@@ -31,10 +31,14 @@ public:
 	void setFont(const Font& font);
 	const Font& getFont() const;
 
+	void setColor(const Vector4f& color);
+	const Vector4f& getColor() const;
+
 private:
 	String _text;
 	Uint32 _fontSize;
 	Font _font;
+	Vector4f _color;
 };
 
 } /* namespace burn */

@@ -17,7 +17,8 @@
 namespace burn {
 
 Text::Text() :
-_fontSize(32) {
+_fontSize(32),
+_color(Vector4f(1.f, 1.f, 1.f, 1.f)) {
 }
 
 Text::~Text() {
@@ -70,6 +71,9 @@ void Text::draw() {
 		GL_FALSE,
 							&modelView[0][0]);
 
+		glUniform4f(BurngineShaders::getShaderUniformLocation(BurngineShaders::FONT, FONT_COLOR), _color.r, _color.g,
+					_color.b, _color.a);
+
 		character.draw();
 
 		curPosition.x += (character.getAdvance().x - character.getBearing().x);
@@ -85,6 +89,14 @@ void Text::setFontSize(const Uint32& size) {
 
 void Text::setFont(const Font& font) {
 	_font = font;
+}
+
+void Text::setColor(const Vector4f& color) {
+	_color = color;
+}
+
+const Vector4f& Text::getColor() const {
+	return _color;
 }
 
 } /* namespace burn */
