@@ -11,11 +11,20 @@
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
 
+#include <vector>
+
+namespace burn{
+class Gui;
+}
+
+template class BURNGINE_API std::vector<burn::Gui*>;
+
 namespace burn {
 
 class BURNGINE_API GuiNode {
 public:
 	GuiNode();
+	~GuiNode();
 
 	void setPosition(const Vector2f& position);
 	const Vector2f& getPosition() const;
@@ -27,9 +36,13 @@ public:
 	void move(const Vector2f& offset);
 	void move(const float& offsetX, const float& offsetY);
 
+	void addParentGui(Gui* parent);
+	void removeParentGui(Gui* parent);
+
 protected:
 	Vector2f _position;
 	float _rotation;
+	std::vector<Gui*> _parents;
 };
 
 } /* namespace burn */
