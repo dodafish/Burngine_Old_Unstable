@@ -18,7 +18,8 @@ _texture(0),
 _sampler(0),
 _mipmapsGenerated(false),
 _magnificationFiltering(MAG_NEAREST),
-_minificationFiltering(MIN_NEAREST) {
+_minificationFiltering(MIN_NEAREST),
+_unit(0) {
 }
 
 BaseTexture::~BaseTexture() {
@@ -183,6 +184,10 @@ Vector2f BaseTexture::mapUvCoordsToTexture(const Vector2f& uv) const {
 	return Vector2f(
 	static_cast<float>(uv.x) * (static_cast<float>(_originalDimensions.x) / static_cast<float>(_dimensions.x)),
 	static_cast<float>(uv.y) * (static_cast<float>(_originalDimensions.y) / static_cast<float>(_dimensions.y)));
+}
+
+void BaseTexture::setToUnit(const unsigned int& unit) {
+	_unit = unit;
 }
 
 } /* namespace burn */

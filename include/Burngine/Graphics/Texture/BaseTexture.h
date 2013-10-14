@@ -41,6 +41,8 @@ public:
 	const Vector2ui& getDimensions() const;
 	const Vector2ui& getOriginalDimensions() const;
 
+	void setToUnit(const unsigned int& unit);
+
 protected:
 	void generate();
 
@@ -59,6 +61,8 @@ private:
 
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
+
+	unsigned int _unit;
 };
 
 } /* namespace burn */
