@@ -92,6 +92,7 @@ void Scene::draw() {
 
 			oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
 			oglSettings.setBlendMode(OpenGlControl::ADD);
+			OpenGlControl::useSettings(oglSettings);
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
 			}
@@ -106,15 +107,6 @@ void Scene::draw() {
 			rtSpecular.drawFullscreen(); //Specular lightings
 
 		}
-
-		//Debug-view:
-		/*glDepthMask(GL_FALSE);
-		 glDisable(GL_DEPTH_TEST);
-		 Window::setBlendMode(Window::OVERWRITE);
-		 rtDiffuse.draw(Vector2f(-1.f, 1.f), Vector2f(0.4f, 0.4f));
-		 rtSpecular.draw(Vector2f(-0.6f, 1.f), Vector2f(0.4f, 0.4f));
-		 glDepthMask(GL_TRUE);
-		 glEnable(GL_DEPTH_TEST);*/
 
 		//Restore default OpenGL settings
 		OpenGlControl::useSettings(OpenGlControl::Settings());
