@@ -11,7 +11,8 @@
 namespace burn {
 
 GuiNode::GuiNode() :
-_rotation(0.f) {
+_rotation(0.f),
+_zIndex(0) {
 }
 
 GuiNode::~GuiNode() {
@@ -66,6 +67,24 @@ void GuiNode::move(const Vector2f& offset) {
 void GuiNode::move(const float& offsetX, const float& offsetY) {
 	_position.x += offsetX;
 	_position.y += offsetY;
+}
+
+void GuiNode::setZIndex(const Int32& zIndex) {
+
+	bool needSort = (_zIndex != zIndex) ? true : false;
+
+	_zIndex = zIndex;
+
+	if(needSort){
+		for(size_t i = 0; i < _parents.size(); ++i){
+			_parents[i]->sortNodes();
+		}
+	}
+
+}
+
+const Int32& GuiNode::getZIndex() const {
+	return _zIndex;
 }
 
 } /* namespace burn */

@@ -27,6 +27,9 @@ void Gui::attachNode(GuiNode& node) {
 	//Store node
 	_nodes.push_back(&node);
 	node.addParentGui(this);
+
+	//Sort all nodes by Z-Index for proper rendering
+	sortNodes();
 }
 
 void Gui::detachNode(GuiNode& node) {
@@ -44,6 +47,30 @@ void Gui::detachAll() {
 		_nodes[i]->removeParentGui(this);
 	}
 	_nodes.clear();
+}
+
+void Gui::draw() {
+	//They are sorted by Z-Index
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->draw();
+	}
+}
+
+void Gui::sortNodes() {
+
+	bool sorted = false;
+	while(!sorted){
+		sorted = true;
+		for(size_t i = 0; i < (_nodes.size() - 1); ++i){
+			if(_nodes[i]->getZIndex() > _nodes[i + 1]->getZIndex()){
+				GuiNode* temp = _nodes[i];
+				_nodes[i] = _nodes[i + i];
+				_nodes[i + 1] = temp;
+				sorted = false;
+			}
+		}
+	}
+
 }
 
 } /* namespace burn */

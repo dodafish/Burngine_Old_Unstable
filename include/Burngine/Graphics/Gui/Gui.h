@@ -12,7 +12,7 @@
 
 #include <vector>
 
-namespace burn{
+namespace burn {
 class GuiNode;
 }
 
@@ -28,6 +28,9 @@ public:
 	void attachNode(GuiNode& node);
 	void detachNode(GuiNode& node);
 	void detachAll();
+
+	void draw();
+	void sortNodes();
 
 private:
 	std::vector<GuiNode*> _nodes;

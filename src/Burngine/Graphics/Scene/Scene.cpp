@@ -33,7 +33,7 @@ Scene::~Scene() {
 
 }
 
-void Scene::drawAll() {
+void Scene::draw() {
 
 	if(Window::isContextCreated()){
 

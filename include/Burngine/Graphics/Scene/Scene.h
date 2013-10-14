@@ -45,7 +45,7 @@ public:
 	/**
 	 * @brief Draws every SceneNode.
 	 */
-	void drawAll();
+	void draw();
 
 	void attachSceneNode(SceneNode& node);
 	void detachSceneNode(SceneNode& node);

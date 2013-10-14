@@ -24,7 +24,9 @@ namespace burn {
 class BURNGINE_API GuiNode {
 public:
 	GuiNode();
-	~GuiNode();
+	virtual ~GuiNode();
+
+	virtual void draw() = 0;
 
 	void setPosition(const Vector2f& position);
 	const Vector2f& getPosition() const;
@@ -36,12 +38,16 @@ public:
 	void move(const Vector2f& offset);
 	void move(const float& offsetX, const float& offsetY);
 
+	void setZIndex(const Int32& zIndex);
+	const Int32& getZIndex() const;
+
 	void addParentGui(Gui* parent);
 	void removeParentGui(Gui* parent);
 
 protected:
 	Vector2f _position;
 	float _rotation;
+	Int32 _zIndex;
 	std::vector<Gui*> _parents;
 };
 
