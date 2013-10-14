@@ -23,20 +23,23 @@ class OpenGlControl {
 	};
 
 	enum DepthtestTechnique {
-		LESS, EQUAL, LEQUAL
+		LESS = GL_LESS, EQUAL = GL_EQUAL, LEQUA = GL_LEQUAL
 	};
 
 	enum CullSide {
-		OUTSIDE, INSIDE
+		OUTSIDE = GL_FRONT, INSIDE = GL_BACK
 	};
 
 	enum VertexOrder {
-		COUNTER_CLOCKWISE, CLOCKWISE
+		COUNTER_CLOCKWISE = GL_CCW, CLOCKWISE = GL_CW
 	};
 
 	class Settings {
 	public:
-		Settings();
+		Settings(bool isBlendingEnabled = true, const BlendMode& blendMode = OVERWRITE, bool isCullingEnabled = true,
+		const CullSide& culledSide = INSIDE, const VertexOrder& vertexOrder = COUNTER_CLOCKWISE,
+		bool isDepthtestEnabled = true, const DepthtestTechnique& technique = LESS, bool isDepthbufferWritingEnabled =
+		true);
 
 		void enableBlending(bool enabled = true);
 		bool isBlendingEnabled() const;
@@ -54,6 +57,8 @@ class OpenGlControl {
 		bool isDepthtestEnabled() const;
 		void setDepthtestTechnique(const DepthtestTechnique& technique);
 		const DepthtestTechnique& getDepthtestTechnique() const;
+		void enableDepthbufferWriting(bool enabled = true);
+		bool isDepthbufferWritingEnabled() const;
 
 	private:
 		bool _isBlendingEnabled;
@@ -65,18 +70,10 @@ class OpenGlControl {
 
 		bool _isDepthtestEnabled;
 		DepthtestTechnique _depthtestTechnique;
+		bool _isDepthbufferWritingEnabled;
 	};
 
-	/**
-	 * @brief This is used to set the blending mode when rendering.
-	 * Initially OVERWRITE is used. So everything you draw will ignore,
-	 * what was already drawn.
-	 * @note Setting the blendmode will only work, when an OpenGL context
-	 * is created!
-	 * @see isContextCreated()
-	 */
-	static void setBlendMode(const BlendMode& blendMode);
-
+	static void useSettings(const Settings& settings);
 };
 
 } /* namespace burn */
