@@ -9,6 +9,7 @@
 
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <Burngine/Graphics/Scene/SceneNode.h>
 #include <Burngine/Graphics/Scene/StaticMeshNode.h>
@@ -38,72 +39,71 @@ void Scene::drawAll() {
 
 		//Render objects without lighting:
 		_window.bind();
-		Window::setBlendMode(Window::OVERWRITE);
-		glDepthFunc(GL_LESS);
-		glDisable(GL_BLEND);
+		OpenGlControl::useSettings(OpenGlControl::Settings());
 		for(size_t i = 0; i < _nodes.size(); ++i){
 			_nodes[i]->draw(_camera);
 		}
-		glEnable(GL_BLEND);
 
 		RenderTexture rtDiffuse, rtSpecular;
 		if(rtDiffuse.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
 			//Render objects' lightings:
 
+			OpenGlControl::Settings oglSettings;
+			oglSettings.setClearColor(Vector4f(1.f));
+			OpenGlControl::useSettings(oglSettings);
+
 			rtDiffuse.clear();
 			rtDiffuse.bind();
 
-			glDepthFunc(GL_LESS);
-			Window::setBlendMode(Window::OVERWRITE);
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawDepthColorless(_camera);
 			}
 
-			glDepthFunc(GL_EQUAL);
-			Window::setBlendMode(Window::ADD);
+			oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
+			oglSettings.setBlendMode(OpenGlControl::ADD);
+			OpenGlControl::useSettings(oglSettings);
+
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawLighting(SceneNode::DIFFUSE, _camera, _lights, _ambientColor);
 			}
 
 			//Add lighting to scene:
-			glDepthMask(GL_FALSE);
-			glDisable(GL_DEPTH_TEST);
-
+			oglSettings = OpenGlControl::Settings(); //default
+			oglSettings.setBlendMode(OpenGlControl::MULTIPLY);
+			oglSettings.enableDepthtest(false);
+			oglSettings.enableDepthbufferWriting(false);
+			OpenGlControl::useSettings(oglSettings);
 			_window.bind();
-			Window::setBlendMode(Window::MULTIPLY);
 			rtDiffuse.drawFullscreen(); //Diffuse lightings
-
-			glDepthMask(GL_TRUE);
-			glEnable(GL_DEPTH_TEST);
 
 		}
 		if(rtSpecular.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
 
+			OpenGlControl::Settings oglSettings;
+			oglSettings.setClearColor(Vector4f(0.f, 0.f, 0.f, 1.f));
+			OpenGlControl::useSettings(oglSettings);
+
 			rtSpecular.clear();
 			rtSpecular.bind();
 
-			glDepthFunc(GL_LESS);
-			Window::setBlendMode(Window::OVERWRITE);
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawDepthColorless(_camera);
 			}
 
-			glDepthFunc(GL_EQUAL);
-			Window::setBlendMode(Window::ADD);
+			oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
+			oglSettings.setBlendMode(OpenGlControl::ADD);
 			for(size_t i = 0; i < _nodes.size(); ++i){
 				_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
 			}
 
 			//Add lighting to scene:
-			glDepthMask(GL_FALSE);
-			glDisable(GL_DEPTH_TEST);
-
+			oglSettings = OpenGlControl::Settings(); //default
+			oglSettings.setBlendMode(OpenGlControl::ADD);
+			oglSettings.enableDepthtest(false);
+			oglSettings.enableDepthbufferWriting(false);
+			OpenGlControl::useSettings(oglSettings);
 			_window.bind();
-			Window::setBlendMode(Window::ADD);
 			rtSpecular.drawFullscreen(); //Specular lightings
-
-			glDepthMask(GL_TRUE);
-			glEnable(GL_DEPTH_TEST);
 
 		}
 
@@ -116,7 +116,8 @@ void Scene::drawAll() {
 		 glDepthMask(GL_TRUE);
 		 glEnable(GL_DEPTH_TEST);*/
 
-		glDepthFunc(GL_LESS);
+		//Restore default OpenGL settings
+		OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	}
 }

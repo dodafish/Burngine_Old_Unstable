@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <Burngine/System/Keyboard.h>
 #include <Burngine/System/Mouse.h>
@@ -127,24 +128,8 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	Reporter::report("Created default VAO. Window creation done.");
 
-	// Enable depth test
-	glEnable(GL_DEPTH_TEST);
-	// Accept fragment if it closer to the camera than the former one
-	glDepthFunc(GL_LESS);
-	Reporter::report("Enabled depth-test.");
-
-	glClearColor(0.1, 0.1, 0.3, 1.0);
-
-	glEnable(GL_BLEND);
-	Reporter::report("Enabled blending.");
-
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
-	Reporter::report("Enabled cullface.");
-
-	//glEnable(GL_MULTISAMPLE);
-	//Reporter::report("Enabled antialiasing.");
+	//Set default (for Burngine) OpenGL settings
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	updateOrthoMatrix();
 

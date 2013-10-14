@@ -10,11 +10,12 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/System/Math.h>
 
 namespace burn {
 
 class OpenGlControl {
-
+public:
 	//Static only
 	OpenGlControl() = delete;
 
@@ -39,7 +40,7 @@ class OpenGlControl {
 		Settings(bool isBlendingEnabled = true, const BlendMode& blendMode = OVERWRITE, bool isCullingEnabled = true,
 		const CullSide& culledSide = INSIDE, const VertexOrder& vertexOrder = COUNTER_CLOCKWISE,
 		bool isDepthtestEnabled = true, const DepthtestTechnique& technique = LESS, bool isDepthbufferWritingEnabled =
-		true);
+		true, const Vector4f& clearColor = Vector4f(0.1, 0.1, 0.3, 1.0));
 
 		void enableBlending(bool enabled = true);
 		bool isBlendingEnabled() const;
@@ -60,6 +61,9 @@ class OpenGlControl {
 		void enableDepthbufferWriting(bool enabled = true);
 		bool isDepthbufferWritingEnabled() const;
 
+		void setClearColor(const Vector4f& color);
+		const Vector4f& getClearColor() const;
+
 	private:
 		bool _isBlendingEnabled;
 		BlendMode _blendMode;
@@ -71,6 +75,8 @@ class OpenGlControl {
 		bool _isDepthtestEnabled;
 		DepthtestTechnique _depthtestTechnique;
 		bool _isDepthbufferWritingEnabled;
+
+		Vector4f _clearColor;
 	};
 
 	static void useSettings(const Settings& settings);

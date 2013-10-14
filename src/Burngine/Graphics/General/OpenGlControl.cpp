@@ -12,7 +12,7 @@ namespace burn {
 
 OpenGlControl::Settings::Settings(bool isBlendingEnabled, const BlendMode& blendMode, bool isCullingEnabled,
 const CullSide& culledSide, const VertexOrder& vertexOrder, bool isDepthtestEnabled,
-const DepthtestTechnique& technique, bool isDepthbufferWritingEnabled) :
+const DepthtestTechnique& technique, bool isDepthbufferWritingEnabled, const Vector4f& clearColor) :
 _isBlendingEnabled(isBlendingEnabled),
 _blendMode(blendMode),
 _isCullingEnabled(isCullingEnabled),
@@ -20,11 +20,12 @@ _cullSide(culledSide),
 _vertexOrder(vertexOrder),
 _isDepthtestEnabled(isDepthtestEnabled),
 _depthtestTechnique(technique),
-_isDepthbufferWritingEnabled(isDepthbufferWritingEnabled) {
+_isDepthbufferWritingEnabled(isDepthbufferWritingEnabled),
+_clearColor(clearColor) {
 
 }
 
-static void OpenGlControl::useSettings(const Settings& settings) {
+void OpenGlControl::useSettings(const Settings& settings) {
 
 	if(!Window::isContextCreated())
 		return;
@@ -65,9 +66,12 @@ static void OpenGlControl::useSettings(const Settings& settings) {
 	glFrontFace(settings.getVertexOrder());
 	glDepthFunc(settings.getDepthtestTechnique());
 
+	const Vector4f& c = settings.getClearColor();
+	glClearColor(c.r, c.g, c.b, c.a);
+
 }
 
-void OpenGlControl::Settings::enableBlending(bool enabled = true) {
+void OpenGlControl::Settings::enableBlending(bool enabled) {
 	_isBlendingEnabled = enabled;
 }
 
@@ -83,7 +87,7 @@ const OpenGlControl::BlendMode& OpenGlControl::Settings::getBlendMode() const {
 	return _blendMode;
 }
 
-void OpenGlControl::Settings::enableCulling(bool enabled = true) {
+void OpenGlControl::Settings::enableCulling(bool enabled) {
 	_isCullingEnabled = enabled;
 }
 
@@ -107,7 +111,7 @@ const OpenGlControl::VertexOrder& OpenGlControl::Settings::getVertexOrder() cons
 	return _vertexOrder;
 }
 
-void OpenGlControl::Settings::enableDepthtest(bool enabled = true) {
+void OpenGlControl::Settings::enableDepthtest(bool enabled) {
 	_isDepthtestEnabled = enabled;
 }
 
@@ -121,6 +125,21 @@ void OpenGlControl::Settings::setDepthtestTechnique(const DepthtestTechnique& te
 
 const OpenGlControl::DepthtestTechnique& OpenGlControl::Settings::getDepthtestTechnique() const {
 	return _depthtestTechnique;
+}
+
+void OpenGlControl::Settings::enableDepthbufferWriting(bool enabled) {
+	_isDepthbufferWritingEnabled = enabled;
+}
+bool OpenGlControl::Settings::isDepthbufferWritingEnabled() const {
+	return _isDepthbufferWritingEnabled;
+}
+
+void OpenGlControl::Settings::setClearColor(const Vector4f& color) {
+	_clearColor = color;
+}
+
+const Vector4f& OpenGlControl::Settings::getClearColor() const {
+	return _clearColor;
 }
 
 } /* namespace burn */
