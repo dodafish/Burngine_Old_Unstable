@@ -68,11 +68,11 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	_bearing = Vector2i(glyph->metrics.horiBearingX >> 6, glyph->metrics.horiBearingY >> 6);
 	_advance = Vector2i(glyph->advance.x >> 6, (glyph->metrics.height - glyph->metrics.horiBearingY) >> 6);
 
-	//Create VBO for rendering
+	//Create VBO-Data for rendering
 	Vector2f quad[] = {
-	Vector2f(0.0f, float(-_advance.y + textureDimensions.y)),
+	Vector2f(0.0f, float(-_advance.y) + float(textureDimensions.y)),
 	Vector2f(0.0f, float(-_advance.y)),
-	Vector2f(float(textureDimensions.x), float(-_advance.y + textureDimensions.y)),
+	Vector2f(float(textureDimensions.x), float(-_advance.y) + float(textureDimensions.y)),
 	Vector2f(float(textureDimensions.x), float(-_advance.y)) };
 
 	Vector2f texQuad[] = {
