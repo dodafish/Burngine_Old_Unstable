@@ -42,10 +42,11 @@ protected:
 	 */
 	void drawString();
 
-private:
 	String _text;
-	Uint32 _fontSize;
 	Font _font;
+	Uint32 _fontSize;
+
+private:
 	Vector4f _color;
 };
 

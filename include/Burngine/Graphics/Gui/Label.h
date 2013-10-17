@@ -18,6 +18,8 @@ public:
 	Label();
 	~Label();
 
+	virtual void draw();
+
 private:
 
 };
