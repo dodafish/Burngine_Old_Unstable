@@ -20,6 +20,8 @@ const std::string PROJECTION_MATRIX = "P_";
 const std::string MVP = "(" + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "*" + MODEL_MATRIX + ")";
 const std::string NORMAL_MATRIX = "NORM_MAT_";
 
+const std::string COLOR = "SOME_COLOR_1_";
+
 const std::string CAMERA_POSITION = "CAM_";
 
 const std::string LIGHT_ENABLED = "LIGHTIGHT_ENABLED_HOOOOODOOOOR_";
@@ -109,7 +111,8 @@ struct BURNGINE_API BurngineShaders {
 		RAW_TEXTURE, ///< This renders a texture without matrices. (Internal use)
 		LIGHTING, ///< Renders the model's lighting
 		COLORLESS, ///< Draws only black color (internal use for depthbufferwriting)
-		FONT
+		FONT,
+		ORTHO_COLORED
 	};
 
 	/**
@@ -164,6 +167,7 @@ private:
 	static Shader _lightingShader;
 	static Shader _colorlessShader;
 	static Shader _fontShader;
+	static Shader _orthoColoredShader;
 };
 
 } /* namespace burn */

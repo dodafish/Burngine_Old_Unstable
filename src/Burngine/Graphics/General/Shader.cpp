@@ -21,6 +21,7 @@ Shader BurngineShaders::_rawTextureShader;
 Shader BurngineShaders::_lightingShader;
 Shader BurngineShaders::_colorlessShader;
 Shader BurngineShaders::_fontShader;
+Shader BurngineShaders::_orthoColoredShader;
 
 bool BurngineShaders::loadAllShaders() {
 
@@ -40,6 +41,9 @@ bool BurngineShaders::loadAllShaders() {
 		return false;
 	}
 	if(!_fontShader.loadFromString(fontV, fontF)){
+		return false;
+	}
+	if(!_orthoColoredShader.loadFromString(orthoColoredV, orthoColoredF)){
 		return false;
 	}
 
@@ -65,6 +69,9 @@ bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
 			break;
 		case FONT:
 			return _fontShader.loadFromString(fontV, fontF);
+			break;
+		case ORTHO_COLORED:
+			_orthoColoredShader.loadFromString(orthoColoredV, orthoColoredF);
 			break;
 		default:
 			return false;
@@ -95,6 +102,9 @@ void BurngineShaders::useShader(const BurngineShaders::Type& type) {
 		case FONT:
 			_fontShader.activate();
 			break;
+		case ORTHO_COLORED:
+			_orthoColoredShader.activate();
+			break;
 		default:
 			return;
 			break;
@@ -122,6 +132,9 @@ GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::st
 			break;
 		case FONT:
 			return _fontShader.getUniformLocation(uniformName);
+			break;
+		case ORTHO_COLORED:
+			return _orthoColoredShader.getUniformLocation(uniformName);
 			break;
 		default:
 			return 0;

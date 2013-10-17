@@ -200,6 +200,25 @@ const std::string fontF = "#version 330\n"
 	"color = (texColor.r, texColor.r, texColor.r, texColor.r) * " + FONT_COLOR + ";"
 "}";
 
+const std::string orthoColoredV = "#version 330\n"
+"layout(location = 0) in vec2 vertexPosition;"
+
+"uniform mat4 " + PROJECTION_MATRIX + ";"
+"uniform mat4 " + VIEW_MATRIX + ";"
+
+"void main(){"
+	"gl_Position = " + PROJECTION_MATRIX + "*" + VIEW_MATRIX + "* vec4(vertexPosition, 0.0, 1.0);"
+"}";
+
+const std::string orthoColoredF = "#version 330\n"
+
+"out vec4 color;"
+"uniform vec4 " + COLOR + ";"
+
+"void main(){"
+	"color = " + COLOR + ";"
+"}";
+
 }
 
 #endif /* BURNGINESHADERCODE_H_ */

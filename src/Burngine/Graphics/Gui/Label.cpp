@@ -7,6 +7,7 @@
 
 #include <Burngine/Graphics/Gui/Label.h>
 #include <Burngine/System/Rectangle.h>
+#include <Burngine/Graphics/Gui/2D/RectangleShape.h>
 
 namespace burn {
 
@@ -28,7 +29,10 @@ void Label::draw() {
 	}
 
 	//Draw the label's background
-
+	RectangleShape shape;
+	shape.setPosition(Vector2f(static_cast<float>(rect.left), static_cast<float>(rect.bottom)));
+	shape.setDimensions(Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height)));
+	shape.draw();
 
 	//Draw the string on it
 	drawString();

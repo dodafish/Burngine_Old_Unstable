@@ -16,13 +16,19 @@ namespace burn {
 
 class BURNGINE_API RectangleShape : public GuiNode {
 public:
+	RectangleShape();
+
 	void setDimensions(const Vector2f& dimensions);
 	const Vector2f& getDimensions() const;
+
+	void setColor(const Vector4f& color);
+	const Vector4f& getColor() const;
 
 	void draw();
 
 private:
 	Vector2f _dimensions;
+	Vector4f _color;
 };
 
 } /* namespace burn */
