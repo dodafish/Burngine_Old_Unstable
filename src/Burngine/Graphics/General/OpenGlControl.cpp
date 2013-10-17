@@ -60,6 +60,9 @@ void OpenGlControl::useSettings(const Settings& settings) {
 		case MULTIPLY:
 			glBlendFunc(GL_ZERO, GL_SRC_COLOR);
 			break;
+		case MIX:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			break;
 	}
 
 	glCullFace(settings.getCulledSide());

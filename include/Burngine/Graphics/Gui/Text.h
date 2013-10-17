@@ -26,13 +26,21 @@ public:
 	void setText(const String& text);
 	const String& getText() const;
 
-	void draw();
+	virtual void draw();
 
 	void setFont(const Font& font);
 	const Font& getFont() const;
 
 	void setColor(const Vector4f& color);
 	const Vector4f& getColor() const;
+
+protected:
+	/**
+	 * @brief Extra function for drawing the text.
+	 * Used by other classes like Label, that inherit from
+	 * Text
+	 */
+	void drawString();
 
 private:
 	String _text;

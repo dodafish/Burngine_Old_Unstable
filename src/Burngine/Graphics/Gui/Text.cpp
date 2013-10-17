@@ -9,6 +9,7 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 #include <iostream>
 
 #include <ft2build.h>
@@ -30,15 +31,27 @@ void Text::setText(const String& text) {
 
 void Text::draw() {
 
-	if(!_font.isLoaded())
-		return;
-
+	//Valid OpenGL context has to exist
 	if(!Window::isContextCreated())
 		return;
 
-	glEnable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//Draw the string to screen
+	drawString();
+
+}
+
+void Text::drawString() {
+
+	//The font has to be loaded obviously
+	if(!_font.isLoaded())
+		return;
+
+	//Setup OpenGL for textrendering
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableDepthtest(false);
+	ogl.setBlendMode(OpenGlControl::MIX);
+	OpenGlControl::useSettings(ogl);
 
 	Vector2i curPosition(static_cast<int>(_position.x), static_cast<int>(_position.y));
 	for(size_t i = 0; i < _text.getSize(); ++i){
@@ -79,10 +92,11 @@ void Text::draw() {
 		curPosition.x += (character.getAdvance().x - character.getBearing().x);
 	}
 
-	glEnable(GL_DEPTH_TEST);
+	//Restore default OGL settings
+	ogl = OpenGlControl::Settings();
+	OpenGlControl::useSettings(ogl);
 
 }
-
 void Text::setFontSize(const Uint32& size) {
 	_fontSize = size;
 }

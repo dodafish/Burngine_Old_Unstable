@@ -20,7 +20,7 @@ public:
 	OpenGlControl() = delete;
 
 	enum BlendMode {
-		OVERWRITE, ADD, MULTIPLY
+		OVERWRITE, ADD, MULTIPLY, MIX
 	};
 
 	enum DepthtestTechnique {
