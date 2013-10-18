@@ -35,6 +35,10 @@ public:
 	 */
 	virtual ~SceneNode();
 
+	SceneNode(const SceneNode& other);
+
+	SceneNode& operator=(const SceneNode& other);
+
 	/**
 	 * @brief Virtual method for rendering.
 	 *

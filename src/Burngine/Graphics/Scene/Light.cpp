@@ -16,6 +16,27 @@ _type(type) {
 
 }
 
+Light::Light(const Light& other) :
+_color(other._color),
+_intensity(other._intensity),
+_type(other._type) {
+	for(size_t i = 0; i < other._parents.size(); ++i){
+		other._parents[i]->attachLight(*this);
+	}
+}
+
+Light& Light::operator=(const Light& other) {
+	_color = other._color;
+	_intensity = other._intensity;
+	_type = other._type;
+
+	for(size_t i = 0; i < other._parents.size(); ++i){
+		other._parents[i]->attachLight(*this);
+	}
+
+	return *this;
+}
+
 Light::~Light() {
 	Scene* parents[_parents.size()];
 	for(size_t i = 0; i != _parents.size(); ++i)

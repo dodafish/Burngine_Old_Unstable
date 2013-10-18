@@ -24,6 +24,19 @@ SceneNode::~SceneNode() {
 		parents[i]->detachSceneNode(*this);
 }
 
+SceneNode::SceneNode(const SceneNode& other) {
+	for(size_t i = 0; i < other._parents.size(); ++i){
+		other._parents[i]->attachSceneNode(*this);
+	}
+}
+
+SceneNode& SceneNode::operator=(const SceneNode& other) {
+	for(size_t i = 0; i < other._parents.size(); ++i){
+		other._parents[i]->attachSceneNode(*this);
+	}
+	return *this;
+}
+
 void SceneNode::addParentScene(Scene* scene) {
 	for(size_t i = 0; i < _parents.size(); ++i){
 		if(_parents[i] == scene)

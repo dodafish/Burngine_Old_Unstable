@@ -27,6 +27,11 @@ public:
 	};
 
 	Light(const Type& type = POINT, const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f), const float& intensity = 1.0f);
+
+	Light(const Light& other);
+
+	Light& operator=(const Light& other);
+
 	~Light();
 
 	void setColor(const Vector3f& color);
