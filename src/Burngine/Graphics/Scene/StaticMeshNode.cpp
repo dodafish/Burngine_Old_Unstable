@@ -174,7 +174,7 @@ const Vector3f& ambient) {
 
 			//Calculate matrices. Projection- and Viewmatrix used for Normalmatrix
 			Matrix4f normalMatrix, view, projection;
-			projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);
+			projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
 			view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 

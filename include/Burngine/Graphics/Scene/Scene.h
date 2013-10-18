@@ -15,6 +15,7 @@
 #include <memory>
 
 #include <Burngine/Graphics/Scene/Camera.h>
+#include <Burngine/Graphics/Texture/RenderTexture.h>
 
 namespace burn {
 class Light;
@@ -42,10 +43,18 @@ public:
 	 */
 	~Scene();
 
+	enum RenderModus{
+		ALL,
+		COLOR,
+		DIFFUSE,
+		SPECULAR,
+		LIGHTING
+	};
+
 	/**
 	 * @brief Draws every SceneNode.
 	 */
-	void draw();
+	void draw(const RenderModus& modus = ALL);
 
 	void attachSceneNode(SceneNode& node);
 	void detachSceneNode(SceneNode& node);
@@ -74,6 +83,10 @@ public:
 	const Vector3f& getAmbientColor() const;
 
 private:
+	void drawNodes();
+	bool drawDiffusepart();
+	bool drawSpecularpart();
+
 	const Window& _window;
 	Vector3f _ambientColor;
 
@@ -82,6 +95,8 @@ private:
 
 	Camera _defaultCamera;
 	Camera& _camera;
+
+	RenderTexture _diffuseLightTexture, _specularLightTexture;
 };
 
 } /* namespace burn */

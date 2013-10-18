@@ -52,12 +52,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	Reporter::report("Version string: " + ss.str());
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
-
-	//The following will be checked after creation
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //We want OpenGL 3.3 at minimum
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-	//glfwWindowHint(GLFW_SAMPLES, 8);
+	glfwWindowHint(GLFW_SAMPLES, 16);
 
 	Reporter::report("All window-hints set. Attempting creation...");
 

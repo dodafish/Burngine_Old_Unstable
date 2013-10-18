@@ -44,7 +44,7 @@ void SceneNode::removeParentScene(Scene* scene) {
 void SceneNode::setMVPUniforms(const Shader& shader, const Camera& cam) {
 
 	//Calculate matrices
-	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);
+	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
 	glm::mat4 viewMatrix = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 
 	//Set uniforms

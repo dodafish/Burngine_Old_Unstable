@@ -8,7 +8,6 @@
 #include <Burngine/Graphics/Scene/Scene.h>
 
 #include <Burngine/Graphics/Window/Window.h>
-#include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <Burngine/Graphics/Scene/SceneNode.h>
@@ -21,6 +20,10 @@ namespace burn {
 Scene::Scene(const Window& parentWindow) :
 _window(parentWindow),
 _camera(_defaultCamera) {
+
+	_diffuseLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()));
+	_specularLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()));
+
 }
 
 Scene::~Scene() {
@@ -33,85 +36,150 @@ Scene::~Scene() {
 
 }
 
-void Scene::draw() {
+void Scene::draw(const RenderModus& modus) {
 
-	if(Window::isContextCreated()){
+	if(!Window::isContextCreated())
+		return;
 
-		//Render objects without lighting:
-		_window.bind();
-		OpenGlControl::useSettings(OpenGlControl::Settings());
-		for(size_t i = 0; i < _nodes.size(); ++i){
-			_nodes[i]->draw(_camera);
-		}
+	switch (modus) {
+		case ALL:
+			drawNodes();
 
-		RenderTexture rtDiffuse, rtSpecular;
-		if(rtDiffuse.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
-			//Render objects' lightings:
+			if(drawDiffusepart()){
+				//Add diffuse lighting to scene:
+				OpenGlControl::Settings oglSettings; //default
+				oglSettings.setBlendMode(OpenGlControl::MULTIPLY);
+				oglSettings.enableDepthtest(false);
+				oglSettings.enableDepthbufferWriting(false);
+				OpenGlControl::useSettings(oglSettings);
+				_window.bind();
+				_diffuseLightTexture.drawFullscreen(); //Diffuse lightings
 
-			OpenGlControl::Settings oglSettings;
-			oglSettings.setClearColor(Vector4f(1.f));
-			OpenGlControl::useSettings(oglSettings);
-
-			rtDiffuse.clear();
-			rtDiffuse.bind();
-
-			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawDepthColorless(_camera);
+				if(drawSpecularpart()){
+					//Add specular lighting to scene:
+					oglSettings = OpenGlControl::Settings(); //default
+					oglSettings.setBlendMode(OpenGlControl::ADD);
+					oglSettings.enableDepthtest(false);
+					oglSettings.enableDepthbufferWriting(false);
+					OpenGlControl::useSettings(oglSettings);
+					_window.bind();
+					_specularLightTexture.drawFullscreen(); //Specular lightings
+				}
 			}
 
-			oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
-			oglSettings.setBlendMode(OpenGlControl::ADD);
-			OpenGlControl::useSettings(oglSettings);
-
-			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawLighting(SceneNode::DIFFUSE, _camera, _lights, _ambientColor);
+			break;
+		case COLOR:
+			drawNodes();
+			break;
+		case DIFFUSE:
+			if(drawDiffusepart()){
+				//Add diffuse lighting to scene:
+				OpenGlControl::Settings oglSettings; //default
+				OpenGlControl::useSettings(oglSettings);
+				_window.bind();
+				_diffuseLightTexture.drawFullscreen(); //Diffuse lightings
 			}
-
-			//Add lighting to scene:
-			oglSettings = OpenGlControl::Settings(); //default
-			oglSettings.setBlendMode(OpenGlControl::MULTIPLY);
-			oglSettings.enableDepthtest(false);
-			oglSettings.enableDepthbufferWriting(false);
-			OpenGlControl::useSettings(oglSettings);
-			_window.bind();
-			rtDiffuse.drawFullscreen(); //Diffuse lightings
-
-		}
-		if(rtSpecular.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
-
-			OpenGlControl::Settings oglSettings;
-			oglSettings.setClearColor(Vector4f(0.f, 0.f, 0.f, 1.f));
-			OpenGlControl::useSettings(oglSettings);
-
-			rtSpecular.clear();
-			rtSpecular.bind();
-
-			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawDepthColorless(_camera);
+			break;
+		case SPECULAR:
+			if(drawSpecularpart()){
+				//Add diffuse lighting to scene:
+				OpenGlControl::Settings oglSettings; //default
+				OpenGlControl::useSettings(oglSettings);
+				_window.bind();
+				_specularLightTexture.drawFullscreen(); //Diffuse lightings
 			}
+			break;
+		case LIGHTING:
+			if(drawDiffusepart()){
+				//Add diffuse lighting to scene:
+				OpenGlControl::Settings oglSettings; //default
+				oglSettings.setBlendMode(OpenGlControl::OVERWRITE);
+				oglSettings.enableDepthtest(false);
+				oglSettings.enableDepthbufferWriting(false);
+				OpenGlControl::useSettings(oglSettings);
+				_window.bind();
+				_diffuseLightTexture.drawFullscreen(); //Diffuse lightings
 
-			oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
-			oglSettings.setBlendMode(OpenGlControl::ADD);
-			OpenGlControl::useSettings(oglSettings);
-			for(size_t i = 0; i < _nodes.size(); ++i){
-				_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
+				if(drawSpecularpart()){
+					//Add specular lighting to scene:
+					oglSettings = OpenGlControl::Settings(); //default
+					oglSettings.setBlendMode(OpenGlControl::ADD);
+					oglSettings.enableDepthtest(false);
+					oglSettings.enableDepthbufferWriting(false);
+					OpenGlControl::useSettings(oglSettings);
+					_window.bind();
+					_specularLightTexture.drawFullscreen(); //Specular lightings
+				}
 			}
-
-			//Add lighting to scene:
-			oglSettings = OpenGlControl::Settings(); //default
-			oglSettings.setBlendMode(OpenGlControl::ADD);
-			oglSettings.enableDepthtest(false);
-			oglSettings.enableDepthbufferWriting(false);
-			OpenGlControl::useSettings(oglSettings);
-			_window.bind();
-			rtSpecular.drawFullscreen(); //Specular lightings
-
-		}
-
-		//Restore default OpenGL settings
-		OpenGlControl::useSettings(OpenGlControl::Settings());
-
+			break;
 	}
+
+	//Restore default OpenGL settings
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
+}
+
+void Scene::drawNodes() {
+	//Render objects without lighting:
+	_window.bind();
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->draw(_camera);
+	}
+}
+
+bool Scene::drawDiffusepart() {
+
+	if(!_diffuseLightTexture.isCreated())
+		return false;
+
+	//Render objects' lightings:
+
+	OpenGlControl::Settings oglSettings;
+	oglSettings.setClearColor(Vector4f(1.f));
+	OpenGlControl::useSettings(oglSettings);
+
+	_diffuseLightTexture.clear();
+	_diffuseLightTexture.bind();
+
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->drawDepthColorless(_camera);
+	}
+
+	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
+	oglSettings.setBlendMode(OpenGlControl::ADD);
+	OpenGlControl::useSettings(oglSettings);
+
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->drawLighting(SceneNode::DIFFUSE, _camera, _lights, _ambientColor);
+	}
+
+	return true;
+}
+
+bool Scene::drawSpecularpart() {
+	if(!_specularLightTexture.isCreated())
+		return false;
+
+	OpenGlControl::Settings oglSettings;
+	oglSettings.setClearColor(Vector4f(0.f, 0.f, 0.f, 1.f));
+	OpenGlControl::useSettings(oglSettings);
+
+	_specularLightTexture.clear();
+	_specularLightTexture.bind();
+
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->drawDepthColorless(_camera);
+	}
+
+	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
+	oglSettings.setBlendMode(OpenGlControl::ADD);
+	OpenGlControl::useSettings(oglSettings);
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
+	}
+
+	return true;
 }
 
 void Scene::detachAll() {

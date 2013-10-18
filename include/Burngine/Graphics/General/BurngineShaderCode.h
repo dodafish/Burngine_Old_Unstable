@@ -103,12 +103,12 @@ const std::string lightingV = "#version 330\n"
 	"gl_Position = " + MVP + " * vec4(vertexPosition, 1);"
 
 	"vec3 singleLight = " + LIGHT_POSITION + ";"
-	"lightPosition_camspace = (" + VIEW_MATRIX + " * vec4(singleLight,1)).xyz;"
+	"lightPosition_camspace = (" + VIEW_MATRIX + " * vec4(singleLight, 1.0)).xyz;"
 
-	"cameraPosition_camspace = (" + VIEW_MATRIX + " * vec4(" + CAMERA_POSITION + ",1)).xyz;"
+	"cameraPosition_camspace = (" + VIEW_MATRIX + " * vec4(" + CAMERA_POSITION + ", 1.0)).xyz;"
 
-	"normal_camspace = (" + NORMAL_MATRIX + "* vec4(vertexNormal, 0)).xyz;"
-	"position_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(vertexPosition, 1)).xyz;"
+	"normal_camspace = (" + NORMAL_MATRIX + "* vec4(vertexNormal, 0.0)).xyz;"
+	"position_camspace = (" + VIEW_MATRIX + "*" + MODEL_MATRIX + "* vec4(vertexPosition, 1.0)).xyz;"
 "}";
 
 const std::string lightingF = "#version 330\n"
