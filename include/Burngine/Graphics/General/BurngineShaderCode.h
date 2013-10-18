@@ -95,8 +95,8 @@ const std::string lightingV = "#version 330\n"
 "uniform vec3 " + LIGHT_POSITION + ";"
 
 "out vec3 lightPosition_camspace;"
-"out vec3 normal_camspace;"
-"out vec3 position_camspace;"
+"smooth out vec3 normal_camspace;"
+"smooth out vec3 position_camspace;"
 "out vec3 cameraPosition_camspace;"
 
 "void main(){"
@@ -113,8 +113,8 @@ const std::string lightingV = "#version 330\n"
 
 const std::string lightingF = "#version 330\n"
 "in vec3 lightPosition_camspace;"
-"in vec3 normal_camspace;"
-"in vec3 position_camspace;"
+"smooth in vec3 normal_camspace;"
+"smooth in vec3 position_camspace;"
 "in vec3 cameraPosition_camspace;"
 
 "layout(location = 0) out vec3 color;"

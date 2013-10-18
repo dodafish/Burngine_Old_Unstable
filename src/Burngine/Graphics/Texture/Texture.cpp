@@ -35,6 +35,8 @@ bool Texture::loadFromFile(const std::string& file) {
 		return true;
 	}
 
+	setFiltering(MAG_BILINEAR, MIN_TRILINEAR);
+
 	return false;
 }
 

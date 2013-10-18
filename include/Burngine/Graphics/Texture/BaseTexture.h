@@ -43,6 +43,11 @@ public:
 
 	void setToUnit(const unsigned int& unit);
 
+	static GLfloat getMaxAnisotropicLevel();
+
+	void setAnisotropicLevel(const GLfloat& level);
+	const GLfloat& getAnisotropicLevel() const;
+
 protected:
 	void generate();
 
@@ -61,6 +66,7 @@ private:
 
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
+	GLfloat _anisotropicLevel;
 
 	unsigned int _unit;
 };

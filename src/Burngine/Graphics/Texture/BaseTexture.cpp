@@ -19,7 +19,8 @@ _sampler(0),
 _mipmapsGenerated(false),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
-_unit(0) {
+_unit(0),
+_anisotropicLevel(1.f) {
 }
 
 BaseTexture::~BaseTexture() {
@@ -97,6 +98,9 @@ void BaseTexture::updateFiltering() const {
 		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	else if(_minificationFiltering == MIN_TRILINEAR)
 		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	//Set Anisotropic
+	glSamplerParameteri(_sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, _anisotropicLevel);
 
 }
 
@@ -194,6 +198,20 @@ Vector2f BaseTexture::mapUvCoordsToTexture(const Vector2f& uv) const {
 
 void BaseTexture::setToUnit(const unsigned int& unit) {
 	_unit = unit;
+}
+
+GLfloat BaseTexture::getMaxAnisotropicLevel() {
+	GLfloat maxAniso = 0.0f;
+	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
+	return maxAniso;
+}
+
+void BaseTexture::setAnisotropicLevel(const GLfloat& level) {
+	_anisotropicLevel = level;
+}
+
+const GLfloat& BaseTexture::getAnisotropicLevel() const {
+	return _anisotropicLevel;
 }
 
 } /* namespace burn */
