@@ -19,8 +19,9 @@ _sampler(0),
 _mipmapsGenerated(false),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
-_unit(0),
-_anisotropicLevel(1.f) {
+_anisotropicLevel(1.f),
+_unit(0)
+ {
 }
 
 BaseTexture::~BaseTexture() {

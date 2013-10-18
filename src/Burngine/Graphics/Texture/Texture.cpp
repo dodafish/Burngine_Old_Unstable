@@ -35,7 +35,10 @@ bool Texture::loadFromFile(const std::string& file) {
 		return true;
 	}
 
-	setFiltering(MAG_BILINEAR, MIN_TRILINEAR);
+	_mipmapsGenerated = true;
+
+	setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	return false;
 }
