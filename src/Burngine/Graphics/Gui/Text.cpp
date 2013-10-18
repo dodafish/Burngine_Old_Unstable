@@ -58,10 +58,10 @@ void Text::drawString() {
 
 		if(_text[i] == '\n'){
 			curPosition.x = _position.x;
-			curPosition.y -= (_fontSize * 1.2f);
+			curPosition.y -= _font.getNextLineOffset();
 			continue;
 		}else if(_text[i] == ' '){
-			curPosition.x += 10.f;
+			curPosition.x += _font.getSpaceOffset();
 			continue;
 		}
 

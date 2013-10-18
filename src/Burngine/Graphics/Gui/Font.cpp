@@ -26,6 +26,14 @@ Font::~Font() {
 	cleanup();
 }
 
+float Font::getNextLineOffset() const {
+	return (_loadedFontSize * 1.4f);
+}
+
+float Font::getSpaceOffset() const {
+	return (_loadedFontSize * 0.5f);
+}
+
 bool Font::loadFromFile(const std::string& file) {
 
 	//Do some cleanup if needed

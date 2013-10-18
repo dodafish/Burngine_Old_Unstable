@@ -14,7 +14,7 @@
 namespace burn {
 
 RectangleShape::RectangleShape() :
-_color(0.3f, 0.3f, 0.3f, 0.3f) {
+_color(0.3f, 0.3f, 0.3f, 0.5f) {
 
 }
 
@@ -53,7 +53,7 @@ void RectangleShape::draw() {
 	glUniform4f(BurngineShaders::getShaderUniformLocation(BurngineShaders::ORTHO_COLORED, COLOR), _color.r, _color.g,
 				_color.b, _color.a);
 
-	//Setup OpenGL for textrendering
+	//Setup OpenGL for rendering
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthbufferWriting(false);
 	ogl.enableDepthtest(false);

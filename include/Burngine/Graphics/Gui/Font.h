@@ -29,6 +29,9 @@ public:
 
 	bool isLoaded() const;
 
+	float getNextLineOffset() const;
+	float getSpaceOffset() const;
+
 private:
 	void cleanup();
 	const Character& createCharacter(const Uint32& codePoint);
