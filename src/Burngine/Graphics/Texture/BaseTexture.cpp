@@ -63,6 +63,9 @@ void BaseTexture::bind() const {
 	if(!Window::isContextCreated())
 		return;
 
+	//Tell our filter
+	updateFiltering();
+
 	//If not created before, this will produce the same effect
 	//as unbind()
 	glActiveTexture(GL_TEXTURE0 + _unit);

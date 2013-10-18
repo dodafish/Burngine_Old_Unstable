@@ -27,6 +27,7 @@
 #include <Burngine/Graphics/Gui/GuiNode.h>
 #include <Burngine/Graphics/Gui/Text.h>
 #include <Burngine/Graphics/Gui/Gui.h>
+#include <Burngine/Graphics/Gui/Label.h>
 
 #include <Burngine/System/Clock.h>
 #include <Burngine/System/Keyboard.h>

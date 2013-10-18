@@ -11,7 +11,8 @@
 
 namespace burn {
 
-Label::Label() {
+Label::Label() :
+_border(0.f) {
 }
 
 Label::~Label() {
@@ -31,7 +32,6 @@ void Label::draw() {
 		//Handle special characters
 		if(_text[i] == '\n'){
 			finalHeight -= _font.getNextLineOffset();
-			finalWidth = std::max(finalWidth, rect.width);
 
 			if(firstLine){
 				rect.bottom += rect.height;
@@ -53,24 +53,45 @@ void Label::draw() {
 		+ _font.getCharacter(_text[i], _fontSize).getBearing().x;
 		rect.height = std::max(_font.getCharacter(_text[i], _fontSize).getDimensions().y, rect.height);
 		highestAdvanceY = std::max(highestAdvanceY, _font.getCharacter(_text[i], _fontSize).getAdvance().y);
+		finalWidth = std::max(finalWidth, rect.width);
 	}
 	if(!firstLine){
 		rect.height = static_cast<int>(finalHeight);
 		rect.width = finalWidth;
 	}else{
 		rect.bottom += rect.height;
+		rect.height *= -1;
 	}
 	rect.height -= highestAdvanceY;
 
 	//Draw the label's background
 	RectangleShape shape;
-	shape.setPosition(Vector2f(static_cast<float>(rect.left), static_cast<float>(rect.bottom)));
-	shape.setDimensions(Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height)));
+	shape.setColor(_backgroundColor);
+	shape.setPosition(Vector2f(static_cast<float>(rect.left) - _border, static_cast<float>(rect.bottom) + _border));
+	shape.setDimensions(
+	Vector2f(static_cast<float>(rect.width) + _border * 2.f, static_cast<float>(rect.height) - _border * 2.f));
+	shape.setRotation(_rotation);
 	shape.draw();
 
 	//Draw the string on it
 	drawString();
 
+}
+
+void Label::setBackgroundColor(const Vector4f& color) {
+	_backgroundColor = color;
+}
+
+const Vector4f& Label::getBackgroundColor() const {
+	return _backgroundColor;
+}
+
+void Label::setBorder(const float& border) {
+	_border = border;
+}
+
+const float& Label::getBorder() const {
+	return _border;
 }
 
 } /* namespace burn */

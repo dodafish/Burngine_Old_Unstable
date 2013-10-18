@@ -10,6 +10,7 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Gui/Text.h>
+#include <Burngine/System/Math.h>
 
 namespace burn {
 
@@ -20,8 +21,15 @@ public:
 
 	virtual void draw();
 
-private:
+	void setBackgroundColor(const Vector4f& color);
+	const Vector4f& getBackgroundColor() const;
 
+	void setBorder(const float& border);
+	const float& getBorder() const;
+
+private:
+	Vector4f _backgroundColor;
+	float _border;
 };
 
 } /* namespace burn */

@@ -27,7 +27,7 @@ Font::~Font() {
 }
 
 float Font::getNextLineOffset() const {
-	return (_loadedFontSize * 1.4f);
+	return (_loadedFontSize * 1.3f);
 }
 
 float Font::getSpaceOffset() const {
