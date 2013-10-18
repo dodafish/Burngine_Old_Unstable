@@ -16,7 +16,7 @@ class BURNGINE_API Reporter {
 public:
 
 	enum MessageType {
-		NOTIFICATION = 0, ERROR, WARNING
+		NOTIFICATION = 0, WARNING, ERROR
 	};
 
 	/**
@@ -32,6 +32,8 @@ private:
 	static bool dumpToFile, dumpToConsole; ///< Where to report to
 	static std::string file; ///< The "logfile"
 	static bool firstDump; ///< To be able to mark beginnings
+
+	static MessageType _level;
 };
 
 } /* namespace burn */

@@ -85,13 +85,10 @@ void Character::createFromFtGlyph(void* g, void* b) {
 
 	_vbo.create();
 
-	std::cout << "Quad data: ";
 	for(int i = 0; i != 4; ++i){
-		std::cout << quad[i].x << "/" << quad[i].y << " ";
 		_vbo.addData(&quad[i], sizeof(Vector2f));
 		_vbo.addData(&texQuad[i], sizeof(Vector2f));
 	}
-	std::cout << "\n";
 
 	_vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 

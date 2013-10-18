@@ -18,8 +18,14 @@ bool Reporter::dumpToFile = true;
 bool Reporter::dumpToConsole = true;
 std::string Reporter::file = "log.txt";
 bool Reporter::firstDump = true;
+Reporter::MessageType Reporter::_level = ERROR;
 
 void Reporter::report(const std::string& msg, const Reporter::MessageType& type) {
+
+	//Only pass when hiher or equal to level
+	if(type < _level){
+		return;
+	}
 
 	//Generate Timestamp
 	time_t t = time(NULL);
