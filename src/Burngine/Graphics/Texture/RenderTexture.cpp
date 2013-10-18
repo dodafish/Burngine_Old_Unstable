@@ -9,6 +9,7 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <iostream>
 
@@ -132,7 +133,8 @@ void RenderTexture::drawFullscreen() {
 	mesh.setVertices(v);
 	mesh.update();
 
-	BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
+	//Get shader
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::RAW_TEXTURE);
 
 	GLint lastTex = getCurrentBoundTexture();
 
@@ -162,8 +164,7 @@ void RenderTexture::drawFullscreen() {
 	(void*)0            // array buffer offset
 	);
 
-	// Draw the triangles !
-	glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -190,7 +191,8 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	mesh.setVertices(v);
 	mesh.update();
 
-	BurngineShaders::useShader(BurngineShaders::RAW_TEXTURE);
+	//Get shader
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::RAW_TEXTURE);
 
 	GLint lastTex = getCurrentBoundTexture();
 
@@ -220,8 +222,7 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	(void*)0            // array buffer offset
 	);
 
-	// Draw the triangles !
-	glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

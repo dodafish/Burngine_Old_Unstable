@@ -11,6 +11,7 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/Scene/Light.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <iostream>
 
@@ -44,8 +45,11 @@ void StaticMeshNode::draw(const Camera& cam) {
 
 			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
 
-				BurngineShaders::useShader(BurngineShaders::SOLID_COLOR);
-				setMVPUniforms(BurngineShaders::SOLID_COLOR, cam);
+				//Get shader
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::SOLID_COLOR);
+
+				//Set uniforms
+				setMVPUniforms(shader, cam);
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);
@@ -69,16 +73,19 @@ void StaticMeshNode::draw(const Camera& cam) {
 				(void*)0            // array buffer offset
 				);
 
-				// Draw the triangle !
-				glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+				//Draw
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
 
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
-				BurngineShaders::useShader(BurngineShaders::TEXTURED);
-				setMVPUniforms(BurngineShaders::TEXTURED, cam);
+				//Get shader
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURED);
+
+				//Set uniforms
+				setMVPUniforms(shader, cam);
 
 				_model.getMesh(i).getTexture().bind();
 
@@ -104,8 +111,8 @@ void StaticMeshNode::draw(const Camera& cam) {
 				(void*)0            // array buffer offset
 				);
 
-				// Draw the triangles !
-				glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+				//Draw
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
@@ -123,8 +130,11 @@ void StaticMeshNode::drawDepthColorless(const Camera& cam) {
 
 	for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
-		BurngineShaders::useShader(BurngineShaders::COLORLESS);
-		setMVPUniforms(BurngineShaders::COLORLESS, cam);
+		//Get shader
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::COLORLESS);
+
+		//Set uniforms
+		setMVPUniforms(shader, cam);
 
 		//0 = Positions
 		glEnableVertexAttribArray(0);
@@ -137,8 +147,8 @@ void StaticMeshNode::drawDepthColorless(const Camera& cam) {
 		(void*)0            // array buffer offset
 		);
 
-		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+		//Draw
+		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
 
 		glDisableVertexAttribArray(0);
 
@@ -156,50 +166,36 @@ const Vector3f& ambient) {
 	for(size_t j = 0; j < lights.size(); ++j){
 		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
-			//---
-			//Draw the actual lighting:
-			BurngineShaders::useShader(BurngineShaders::LIGHTING);
-			setMVPUniforms(BurngineShaders::LIGHTING, cam);
+			//Get shader
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::LIGHTING);
 
+			//Set uniforms
+			setMVPUniforms(shader, cam);
+
+			//Calculate matrices. Projection- and Viewmatrix used for Normalmatrix
 			Matrix4f normalMatrix, view, projection;
 			projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);
 			view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 
 			if(_model.getMesh(i).getMaterial().isFlagSet(Material::LIGHTING)){
-				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_ENABLED), 1);
+				shader.setUniform(LIGHT_ENABLED, 1);
 			}else{
-				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_ENABLED), 0);
+				shader.setUniform(LIGHT_ENABLED, 0);
 			}
 
-			glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, NORMAL_MATRIX), 1,
-			GL_FALSE,
-								&normalMatrix[0][0]);
-
-			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, CAMERA_POSITION),
-						camPosition.x, camPosition.y, camPosition.z);
-
-			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_POSITION),
-						lights[j]->getPosition().x, lights[j]->getPosition().y, lights[j]->getPosition().z);
-
-			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_COLOR),
-						lights[j]->getColor().r, lights[j]->getColor().g, lights[j]->getColor().b);
-
-			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_AMBIENT), ambient.r,
-						ambient.g, ambient.b);
-
-			glUniform3f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_SPECULAR),
-						_model.getMesh(i).getMaterial().getSpecularColor().r,
-						_model.getMesh(i).getMaterial().getSpecularColor().g,
-						_model.getMesh(i).getMaterial().getSpecularColor().b);
-
-			glUniform1f(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_INTENSITY),
-						lights[j]->getIntensity());
+			shader.setUniform(NORMAL_MATRIX, normalMatrix);
+			shader.setUniform(CAMERA_POSITION, camPosition);
+			shader.setUniform(LIGHT_POSITION, lights[j]->getPosition());
+			shader.setUniform(LIGHT_COLOR, lights[j]->getColor());
+			shader.setUniform(LIGHT_AMBIENT, ambient);
+			shader.setUniform(LIGHT_SPECULAR, _model.getMesh(i).getMaterial().getSpecularColor());
+			shader.setUniform(LIGHT_INTENSITY, lights[j]->getIntensity());
 
 			if(type == DIFFUSE){
-				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_TYPE), 1);
+				shader.setUniform(LIGHT_TYPE, 1);
 			}else{
-				glUniform1i(BurngineShaders::getShaderUniformLocation(BurngineShaders::LIGHTING, LIGHT_TYPE), 2);
+				shader.setUniform(LIGHT_TYPE, 2);
 			}
 
 			//0 = Positions
@@ -224,8 +220,8 @@ const Vector3f& ambient) {
 			(void*)0 // array buffer offset
 			);
 
-			// Draw the triangles !
-			glDrawArrays(GL_TRIANGLES, 0, _model.getMesh(i).getVertexCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+			//Draw
+			OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
 
 			glDisableVertexAttribArray(0);
 			glDisableVertexAttribArray(1);

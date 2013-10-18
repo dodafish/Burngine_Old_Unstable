@@ -46,14 +46,7 @@ void Text::drawString() {
 	if(!_font.isLoaded())
 		return;
 
-	//Setup OpenGL for textrendering
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableDepthtest(false);
-	ogl.setBlendMode(OpenGlControl::MIX);
-	OpenGlControl::useSettings(ogl);
-
-	Vector2i curPosition(static_cast<int>(_position.x), static_cast<int>(_position.y));
+	Vector2f curPosition(_position.x, _position.y);
 	for(size_t i = 0; i < _text.getSize(); ++i){
 
 		if(_text[i] == '\n'){
@@ -68,33 +61,10 @@ void Text::drawString() {
 		const Character& character = _font.getCharacter(_text[i], _fontSize);
 		curPosition.x += character.getBearing().x;
 
-		glm::mat4 modelView = glm::translate(glm::mat4(1.0f),
-												glm::vec3(float(curPosition.x), float(curPosition.y), 0.0f));
-
-		modelView = glm::rotate(modelView, _rotation, Vector3f(0.f, 0.f, 1.f));
-
-		glm::mat4 ortho = Window::getOrthoMatrix();
-
-		BurngineShaders::useShader(BurngineShaders::FONT);
-		glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::FONT, PROJECTION_MATRIX), 1,
-		GL_FALSE,
-							&ortho[0][0]);
-
-		glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::FONT, VIEW_MATRIX), 1,
-		GL_FALSE,
-							&modelView[0][0]);
-
-		glUniform4f(BurngineShaders::getShaderUniformLocation(BurngineShaders::FONT, FONT_COLOR), _color.r, _color.g,
-					_color.b, _color.a);
-
-		character.draw();
+		character.draw(curPosition, _color);
 
 		curPosition.x += (character.getAdvance().x - character.getBearing().x);
 	}
-
-	//Restore default OGL settings
-	ogl = OpenGlControl::Settings();
-	OpenGlControl::useSettings(ogl);
 
 }
 void Text::setFontSize(const Uint32& size) {

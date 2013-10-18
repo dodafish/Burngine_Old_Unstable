@@ -7,8 +7,23 @@
 
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/Graphics/General/Shader.h>
 
 namespace burn {
+
+void OpenGlControl::draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader){
+
+	//Activates shader and uploads uniforms
+	shader.activate();
+
+	if(tech == TRIANGLES){
+		glDrawArrays(GL_TRIANGLES, first, count);
+	}
+	else{ //TRIANGLE_STRIP
+		glDrawArrays(GL_TRIANGLE_STRIP, first, count);
+	}
+
+}
 
 OpenGlControl::Settings::Settings(bool isBlendingEnabled, const BlendMode& blendMode, bool isCullingEnabled,
 const CullSide& culledSide, const VertexOrder& vertexOrder, bool isDepthtestEnabled,

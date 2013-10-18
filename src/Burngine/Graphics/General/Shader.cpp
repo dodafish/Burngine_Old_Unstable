@@ -50,99 +50,33 @@ bool BurngineShaders::loadAllShaders() {
 	return true;
 }
 
-bool BurngineShaders::loadShader(const BurngineShaders::Type& type) {
+const Shader& BurngineShaders::getShader(const Type& type) {
 	switch (type) {
 		case SOLID_COLOR:
-			return _solidColorShader.loadFromString(solidColorV, solidColorF);
+			//Will be returned at end of function, so it always returns.
+			//This makes the compiler happy :)
 			break;
 		case TEXTURED:
-			return _texturedShader.loadFromString(texturedV, texturedF);
+			return _texturedShader;
 			break;
 		case RAW_TEXTURE:
-			return _rawTextureShader.loadFromString(rawTextureV, rawTextureF);
+			return _rawTextureShader;
 			break;
 		case LIGHTING:
-			return _lightingShader.loadFromString(lightingV, lightingF);
+			return _lightingShader;
 			break;
 		case COLORLESS:
-			return _colorlessShader.loadFromString(colorlessV, colorlessF);
+			return _colorlessShader;
 			break;
 		case FONT:
-			return _fontShader.loadFromString(fontV, fontF);
+			return _fontShader;
 			break;
 		case ORTHO_COLORED:
-			_orthoColoredShader.loadFromString(orthoColoredV, orthoColoredF);
-			break;
-		default:
-			return false;
+			return _orthoColoredShader;
 			break;
 	}
-
-	return false;
-}
-
-void BurngineShaders::useShader(const BurngineShaders::Type& type) {
-	switch (type) {
-
-		case SOLID_COLOR:
-			_solidColorShader.activate();
-			break;
-		case TEXTURED:
-			_texturedShader.activate();
-			break;
-		case RAW_TEXTURE:
-			_rawTextureShader.activate();
-			break;
-		case LIGHTING:
-			_lightingShader.activate();
-			break;
-		case COLORLESS:
-			_colorlessShader.activate();
-			break;
-		case FONT:
-			_fontShader.activate();
-			break;
-		case ORTHO_COLORED:
-			_orthoColoredShader.activate();
-			break;
-		default:
-			return;
-			break;
-	}
-
-}
-
-GLuint BurngineShaders::getShaderUniformLocation(const Type& type, const std::string& uniformName) {
-
-	switch (type) {
-		case SOLID_COLOR:
-			return _solidColorShader.getUniformLocation(uniformName);
-			break;
-		case TEXTURED:
-			return _texturedShader.getUniformLocation(uniformName);
-			break;
-		case RAW_TEXTURE:
-			return _rawTextureShader.getUniformLocation(uniformName);
-			break;
-		case LIGHTING:
-			return _lightingShader.getUniformLocation(uniformName);
-			break;
-		case COLORLESS:
-			return _colorlessShader.getUniformLocation(uniformName);
-			break;
-		case FONT:
-			return _fontShader.getUniformLocation(uniformName);
-			break;
-		case ORTHO_COLORED:
-			return _orthoColoredShader.getUniformLocation(uniformName);
-			break;
-		default:
-			return 0;
-			break;
-	}
-
-	return 0;
-
+	//See case of SOLID_COLOR above
+	return _solidColorShader;
 }
 
 //--------------------------------------------------------------------------------------
@@ -160,9 +94,120 @@ Shader::~Shader() {
 	}
 }
 
+void Shader::setUniform(const std::string& name, const Matrix4f& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
+		if(_matrix4fUniforms[i].first == name){
+			_matrix4fUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_matrix4fUniforms.push_back(std::pair<std::string, Matrix4f>(name, value));
+}
+
+void Shader::setUniform(const std::string& name, const Vector4f& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
+		if(_vector4fUniforms[i].first == name){
+			_vector4fUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_vector4fUniforms.push_back(std::pair<std::string, Vector4f>(name, value));
+}
+
+void Shader::setUniform(const std::string& name, const Vector3f& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
+		if(_vector3fUniforms[i].first == name){
+			_vector3fUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_vector3fUniforms.push_back(std::pair<std::string, Vector3f>(name, value));
+}
+
+void Shader::setUniform(const std::string& name, const Vector2f& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
+		if(_vector2fUniforms[i].first == name){
+			_vector2fUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_vector2fUniforms.push_back(std::pair<std::string, Vector2f>(name, value));
+}
+
+void Shader::setUniform(const std::string& name, const int& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _intUniforms.size(); ++i){
+		if(_intUniforms[i].first == name){
+			_intUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_intUniforms.push_back(std::pair<std::string, int>(name, value));
+}
+
+void Shader::setUniform(const std::string& name, const float& value) const {
+	//Scan and set when found
+	for(size_t i = 0; i < _floatUniforms.size(); ++i){
+		if(_floatUniforms[i].first == name){
+			_floatUniforms[i].second = value;
+			return;
+		}
+	}
+	//Not found. Create a pair
+	_floatUniforms.push_back(std::pair<std::string, float>(name, value));
+}
+
 void Shader::activate() const {
-	if(Window::isContextCreated()){
-		glUseProgram(_id);
+	if(!Window::isContextCreated())
+		return;
+
+	glUseProgram(_id);
+	uploadUniforms();
+}
+
+void Shader::uploadUniforms() const {
+	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
+		glUniformMatrix4fv(glGetUniformLocation(_id, _matrix4fUniforms[i].first.c_str()), 1,
+		GL_FALSE,
+							&(_matrix4fUniforms[i].second[0][0]));
+	}
+	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
+		glUniform4fv(glGetUniformLocation(_id, _vector4fUniforms[i].first.c_str()), 1,
+
+		&(_vector4fUniforms[i].second[0]));
+	}
+	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
+		glUniform3fv(glGetUniformLocation(_id, _vector3fUniforms[i].first.c_str()), 1,
+
+		&(_vector3fUniforms[i].second[0]));
+	}
+	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
+		glUniform2fv(glGetUniformLocation(_id, _vector2fUniforms[i].first.c_str()), 1,
+
+		&(_vector2fUniforms[i].second[0]));
+	}
+	for(size_t i = 0; i < _intUniforms.size(); ++i){
+		glUniform1i(glGetUniformLocation(_id, _intUniforms[i].first.c_str()), (_intUniforms[i].second));
+	}
+	for(size_t i = 0; i < _floatUniforms.size(); ++i){
+		glUniform1f(glGetUniformLocation(_id, _floatUniforms[i].first.c_str()), (_floatUniforms[i].second));
+	}
+
+	//Testcode: delete after pass
+	Vector3f test;
+	test.r = 0.45f;
+	test.y = 0.25252f;
+	if(test[0] != test.r || test[1] != test.y){
+		std::cout << "FLAME";
 	}
 }
 

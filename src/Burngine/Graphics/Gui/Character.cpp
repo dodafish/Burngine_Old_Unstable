@@ -7,6 +7,8 @@
 
 #include <Burngine/Graphics/Gui/Character.h>
 #include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
+#include <Burngine/Graphics/Window/Window.h>
 
 #include <iostream>
 
@@ -109,27 +111,48 @@ const Vector2i& Character::getBearing() const {
 	return _bearing;
 }
 
-void Character::draw() const {
+void Character::draw(const Vector2f& position, const Vector4f& color) const {
 
 	if(!_texture.isCreated())
 		return;
 
-//std::cout << "VBO ID: " << _vbo.getBuffer() << "\n";
+	//Setup OpenGL for textrendering
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableDepthtest(false);
+	ogl.setBlendMode(OpenGlControl::MIX);
+	ogl.enableCulling(false);
+	OpenGlControl::useSettings(ogl);
 
+	//Calculate matrices
+	glm::mat4 modelView = glm::translate(glm::mat4(1.0f), glm::vec3(position, 0.0f));
+	glm::mat4 ortho = Window::getOrthoMatrix();
+
+	//Get shader
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::FONT);
+
+	//Set uniforms
+	shader.setUniform(PROJECTION_MATRIX, ortho);
+	shader.setUniform(VIEW_MATRIX, modelView);
+	shader.setUniform(FONT_COLOR, color);
+
+	//Bind and draw
 	_texture.bind();
-
-	glEnableVertexAttribArray(0);
 	_vbo.bind();
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) * 2, 0);
+	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) * 2, 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) * 2, (void*)sizeof(Vector2f));
 
-	glDisable(GL_CULL_FACE);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glEnable(GL_CULL_FACE);
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+	//Restore default OGL settings
+	ogl = OpenGlControl::Settings();
+	OpenGlControl::useSettings(ogl);
 
 }
 

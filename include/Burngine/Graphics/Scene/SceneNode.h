@@ -57,7 +57,7 @@ public:
 
 protected:
 
-	void setMVPUniforms(const BurngineShaders::Type& type, const Camera& cam);
+	void setMVPUniforms(const Shader& shader, const Camera& cam);
 
 private:
 	std::vector<Scene*> _parents;

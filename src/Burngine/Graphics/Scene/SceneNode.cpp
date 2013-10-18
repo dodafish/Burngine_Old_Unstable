@@ -41,17 +41,16 @@ void SceneNode::removeParentScene(Scene* scene) {
 	}
 }
 
-void SceneNode::setMVPUniforms(const BurngineShaders::Type& type, const Camera& cam) {
+void SceneNode::setMVPUniforms(const Shader& shader, const Camera& cam) {
 
+	//Calculate matrices
 	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 100.0f);
 	glm::mat4 viewMatrix = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 
-	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(type, MODEL_MATRIX), 1,
-	GL_FALSE, &getModelMatrix()[0][0]);
-	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(type, VIEW_MATRIX), 1,
-	GL_FALSE, &viewMatrix[0][0]);
-	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(type, PROJECTION_MATRIX), 1,
-	GL_FALSE, &projectionMatrix[0][0]);
+	//Set uniforms
+	shader.setUniform(MODEL_MATRIX, getModelMatrix());
+	shader.setUniform(VIEW_MATRIX, viewMatrix);
+	shader.setUniform(PROJECTION_MATRIX, projectionMatrix);
 
 }
 

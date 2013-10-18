@@ -11,6 +11,17 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <string>
+#include <Burngine/System/Math.h>
+#include <vector>
+#include <utility>
+
+//Vectors that store set uniforms
+template class BURNGINE_API std::vector<std::pair<std::string, burn::Matrix4f> >;
+template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector4f> >;
+template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector3f> >;
+template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector2f> >;
+template class BURNGINE_API std::vector<std::pair<std::string, int> >;
+template class BURNGINE_API std::vector<std::pair<std::string, float> >;
 
 namespace burn {
 
@@ -89,8 +100,23 @@ public:
 	 */
 	GLuint getUniformLocation(const std::string& uniformName) const;
 
+	void setUniform(const std::string& name, const Matrix4f& value) const;
+	void setUniform(const std::string& name, const Vector4f& value) const;
+	void setUniform(const std::string& name, const Vector3f& value) const;
+	void setUniform(const std::string& name, const Vector2f& value) const;
+	void setUniform(const std::string& name, const int& value) const;
+	void setUniform(const std::string& name, const float& value) const;
+
 private:
+	void uploadUniforms() const;
 	GLuint _id;
+
+	mutable std::vector<std::pair<std::string, Matrix4f> > _matrix4fUniforms;
+	mutable std::vector<std::pair<std::string, Vector4f> > _vector4fUniforms;
+	mutable std::vector<std::pair<std::string, Vector3f> > _vector3fUniforms;
+	mutable std::vector<std::pair<std::string, Vector2f> > _vector2fUniforms;
+	mutable std::vector<std::pair<std::string, int> > _intUniforms;
+	mutable std::vector<std::pair<std::string, float> > _floatUniforms;
 };
 
 struct BURNGINE_API BurngineShaders {
@@ -116,49 +142,13 @@ struct BURNGINE_API BurngineShaders {
 	};
 
 	/**
-	 * @brief Loads and creates a predefined shader.
-	 *
-	 * @param type The shader to load/create.
-	 *
-	 * @return Returns true on success.
-	 *
-	 * @see loadAllShaders()
-	 * @see useShader()
-	 * @see Type
-	 */
-	static bool loadShader(const Type& type);
-
-	/**
 	 * @brief Loads and creates all predefined shaders.
 	 *
 	 * @see loadShader()
 	 */
 	static bool loadAllShaders();
 
-	/**
-	 * @brief Activates a predefined shader.
-	 *
-	 * @param type The shader to activate.
-	 *
-	 * @note Ensure that the predefined shader has been loaded!
-	 *
-	 * @see loadShader()
-	 * @see loadAllShaders()
-	 */
-	static void useShader(const Type& type);
-
-	/**
-	 * @brief Does the same like Shader::getUniformLocation() but on
-	 * the predefined ones.
-	 *
-	 * @param type The shader in which the uniform will be searched
-	 * @param uniformName The uniform name in the shaderprogram
-	 *
-	 * @return Returns the position of the uniform or -1 when failed
-	 *
-	 * @see Shader::getUniformLocation()
-	 */
-	static GLuint getShaderUniformLocation(const Type& type, const std::string& uniformName);
+	static const Shader& getShader(const Type& type);
 
 private:
 	static Shader _solidColorShader;

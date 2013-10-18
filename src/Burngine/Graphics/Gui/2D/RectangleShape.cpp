@@ -34,41 +34,32 @@ void RectangleShape::draw() {
 	vbo.addData(&vboData[3], sizeof(Vector2f));
 	vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 
-	//Activate and set shader
+	//Calculate matrices
 	glm::mat4 modelView = glm::translate(glm::mat4(1.0f), Vector3f(_position, 0.0f));
-
 	modelView = glm::rotate(modelView, _rotation, Vector3f(0.f, 0.f, 1.f));
+	Matrix4f ortho = Window::getOrthoMatrix();
 
-	glm::mat4 ortho = Window::getOrthoMatrix();
+	//Get the shader we want to use
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::ORTHO_COLORED);
 
-	BurngineShaders::useShader(BurngineShaders::ORTHO_COLORED);
-	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::ORTHO_COLORED, PROJECTION_MATRIX), 1,
-	GL_FALSE,
-						&ortho[0][0]);
-
-	glUniformMatrix4fv(BurngineShaders::getShaderUniformLocation(BurngineShaders::ORTHO_COLORED, VIEW_MATRIX), 1,
-	GL_FALSE,
-						&modelView[0][0]);
-
-	glUniform4f(BurngineShaders::getShaderUniformLocation(BurngineShaders::ORTHO_COLORED, COLOR), _color.r, _color.g,
-				_color.b, _color.a);
+	//Set uniforms
+	shader.setUniform(PROJECTION_MATRIX, ortho);
+	shader.setUniform(VIEW_MATRIX, modelView);
+	shader.setUniform(COLOR, _color);
 
 	//Setup OpenGL for rendering
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthbufferWriting(false);
 	ogl.enableDepthtest(false);
 	ogl.setBlendMode(OpenGlControl::MIX);
+	ogl.enableCulling(false);
 	OpenGlControl::useSettings(ogl);
 
 	//Draw
 	vbo.bind();
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-	glDisable(GL_CULL_FACE);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glEnable(GL_CULL_FACE);
-
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 	glDisableVertexAttribArray(0);
 
 	//Restore default OGL settings

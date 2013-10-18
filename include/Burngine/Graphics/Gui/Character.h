@@ -21,7 +21,7 @@ public:
 
 	void createFromFtGlyph(void* glyph, void* bitmap);
 
-	void draw() const;
+	void draw(const Vector2f& position, const Vector4f& color) const;
 
 	bool operator==(const Uint32& codePoint) const;
 

@@ -14,6 +14,8 @@
 
 namespace burn {
 
+class Shader;
+
 class OpenGlControl {
 public:
 	//Static only
@@ -80,6 +82,13 @@ public:
 	};
 
 	static void useSettings(const Settings& settings);
+
+	enum DrawingTechnique{
+		TRIANGLES,
+		TRIANGLE_STRIP
+	};
+
+	static void draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader);
 };
 
 } /* namespace burn */
