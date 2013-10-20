@@ -52,6 +52,8 @@ private:
 	Type _type;
 
 	std::vector<Scene*> _parents;
+
+	void removeAllParents();
 };
 
 } /* namespace burn */

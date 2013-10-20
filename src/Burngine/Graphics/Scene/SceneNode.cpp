@@ -12,16 +12,20 @@
 
 namespace burn {
 
-SceneNode::SceneNode() {
-}
-
-SceneNode::~SceneNode() {
+void SceneNode::removeAllParents() {
 	Scene* parents[_parents.size()];
 	for(size_t i = 0; i != _parents.size(); ++i)
 		parents[i] = _parents[i];
 	size_t size = _parents.size();
 	for(size_t i = 0; i != size; ++i)
 		parents[i]->detachSceneNode(*this);
+}
+
+SceneNode::SceneNode() {
+}
+
+SceneNode::~SceneNode() {
+	removeAllParents();
 }
 
 SceneNode::SceneNode(const SceneNode& other) {
@@ -31,6 +35,8 @@ SceneNode::SceneNode(const SceneNode& other) {
 }
 
 SceneNode& SceneNode::operator=(const SceneNode& other) {
+	removeAllParents();
+
 	for(size_t i = 0; i < other._parents.size(); ++i){
 		other._parents[i]->attachSceneNode(*this);
 	}

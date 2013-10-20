@@ -64,6 +64,8 @@ protected:
 	void setMVPUniforms(const Shader& shader, const Camera& cam);
 
 private:
+	void removeAllParents();
+
 	std::vector<Scene*> _parents;
 };
 
