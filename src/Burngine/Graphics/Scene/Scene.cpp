@@ -143,7 +143,7 @@ bool Scene::drawDiffusepart() {
 	_diffuseLightTexture.bind();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawDepthColorless(_camera);
+		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));
 	}
 
 	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
@@ -169,7 +169,7 @@ bool Scene::drawSpecularpart() {
 	_specularLightTexture.bind();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawDepthColorless(_camera);
+		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));
 	}
 
 	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);

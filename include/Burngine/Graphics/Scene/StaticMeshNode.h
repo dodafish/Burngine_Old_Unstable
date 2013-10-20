@@ -67,7 +67,7 @@ public:
 	 */
 	virtual void draw(const Camera& cam);
 
-	virtual void drawDepthColorless(const Camera& camera);
+	virtual void drawSingleColor(const Camera& camera, const Vector4f& color);
 
 	virtual void drawLighting(LightingType type, const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient);
 

@@ -18,7 +18,7 @@ bool Reporter::dumpToFile = true;
 bool Reporter::dumpToConsole = true;
 std::string Reporter::file = "log.txt";
 bool Reporter::firstDump = true;
-Reporter::MessageType Reporter::_level = ERROR;
+Reporter::MessageType Reporter::_level = NOTIFICATION;
 
 void Reporter::report(const std::string& msg, const Reporter::MessageType& type) {
 

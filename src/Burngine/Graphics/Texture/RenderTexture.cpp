@@ -134,7 +134,11 @@ void RenderTexture::drawFullscreen() {
 	mesh.update();
 
 	//Get shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::RAW_TEXTURE);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
 	GLint lastTex = getCurrentBoundTexture();
 
@@ -192,7 +196,11 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	mesh.update();
 
 	//Get shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::RAW_TEXTURE);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
 	GLint lastTex = getCurrentBoundTexture();
 

@@ -67,9 +67,9 @@ void SceneNode::setMVPUniforms(const Shader& shader, const Camera& cam) {
 	glm::mat4 viewMatrix = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 
 	//Set uniforms
-	shader.setUniform(MODEL_MATRIX, getModelMatrix());
-	shader.setUniform(VIEW_MATRIX, viewMatrix);
-	shader.setUniform(PROJECTION_MATRIX, projectionMatrix);
+	shader.setUniform("modelMatrix", getModelMatrix());
+	shader.setUniform("viewMatrix", viewMatrix);
+	shader.setUniform("projectionMatrix", projectionMatrix);
 
 }
 

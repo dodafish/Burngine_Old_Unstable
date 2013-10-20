@@ -46,7 +46,7 @@ void StaticMeshNode::draw(const Camera& cam) {
 			if(_model.getMesh(i).getMaterial().getType() == Material::Type::SOLID_COLOR){
 
 				//Get shader
-				const Shader& shader = BurngineShaders::getShader(BurngineShaders::SOLID_COLOR);
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::COLOR);
 
 				//Set uniforms
 				setMVPUniforms(shader, cam);
@@ -82,7 +82,7 @@ void StaticMeshNode::draw(const Camera& cam) {
 			}else if(_model.getMesh(i).getMaterial().getType() == Material::Type::TEXTURED){
 
 				//Get shader
-				const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURED);
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 
 				//Set uniforms
 				setMVPUniforms(shader, cam);
@@ -124,17 +124,18 @@ void StaticMeshNode::draw(const Camera& cam) {
 
 }
 
-void StaticMeshNode::drawDepthColorless(const Camera& cam) {
+void StaticMeshNode::drawSingleColor(const Camera& cam, const Vector4f& color) {
 
 	_model.update();
 
 	for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
 		//Get shader
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::COLORLESS);
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
 
 		//Set uniforms
 		setMVPUniforms(shader, cam);
+		shader.setUniform("color", color);
 
 		//0 = Positions
 		glEnableVertexAttribArray(0);
@@ -166,8 +167,21 @@ const Vector3f& ambient) {
 	for(size_t j = 0; j < lights.size(); ++j){
 		for(size_t i = 0; i < _model.getMeshCount(); ++i){
 
+			//Check if lighting is enabled
+			if(!_model.getMesh(i).getMaterial().isFlagSet(Material::LIGHTING)){
+				if(type == DIFFUSE){
+					//Draw full white, so multiplication does not affect materialcolor
+					drawSingleColor(cam, Vector4f(1.f));
+					continue;
+				}
+				else{
+					//Draw nothing. Specular will be added and adding 0 makes no difference
+					continue;
+				}
+			}
+
 			//Get shader
-			const Shader& shader = BurngineShaders::getShader(BurngineShaders::LIGHTING);
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 
 			//Set uniforms
 			setMVPUniforms(shader, cam);
@@ -178,24 +192,18 @@ const Vector3f& ambient) {
 			view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
 			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 
-			if(_model.getMesh(i).getMaterial().isFlagSet(Material::LIGHTING)){
-				shader.setUniform(LIGHT_ENABLED, 1);
-			}else{
-				shader.setUniform(LIGHT_ENABLED, 0);
-			}
-
-			shader.setUniform(NORMAL_MATRIX, normalMatrix);
-			shader.setUniform(CAMERA_POSITION, camPosition);
-			shader.setUniform(LIGHT_POSITION, lights[j]->getPosition());
-			shader.setUniform(LIGHT_COLOR, lights[j]->getColor());
-			shader.setUniform(LIGHT_AMBIENT, ambient);
-			shader.setUniform(LIGHT_SPECULAR, _model.getMesh(i).getMaterial().getSpecularColor());
-			shader.setUniform(LIGHT_INTENSITY, lights[j]->getIntensity());
+			shader.setUniform("normalMatrix", normalMatrix);
+			shader.setUniform("cameraPosition", camPosition);
+			shader.setUniform("lightPosition", lights[j]->getPosition());
+			shader.setUniform("lightColor", lights[j]->getColor());
+			shader.setUniform("ambientColor", ambient);
+			shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
+			shader.setUniform("lightIntensity", lights[j]->getIntensity());
 
 			if(type == DIFFUSE){
-				shader.setUniform(LIGHT_TYPE, 1);
+				shader.setUniform("lightingType", 1);
 			}else{
-				shader.setUniform(LIGHT_TYPE, 2);
+				shader.setUniform("lightingType", 2);
 			}
 
 			//0 = Positions

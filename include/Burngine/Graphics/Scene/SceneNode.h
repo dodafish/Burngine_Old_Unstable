@@ -47,7 +47,7 @@ public:
 	 */
 	virtual void draw(const Camera& camera) = 0;
 
-	virtual void drawDepthColorless(const Camera& camera) = 0;
+	virtual void drawSingleColor(const Camera& camera, const Vector4f& color) = 0;
 
 	enum LightingType{
 		DIFFUSE,

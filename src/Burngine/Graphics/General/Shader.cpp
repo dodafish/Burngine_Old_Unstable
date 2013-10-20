@@ -7,43 +7,40 @@
 
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/Window/Window.h>
-#include <Burngine/Graphics/General/BurngineShaderCode.h>
 #include <Burngine/System/Reporter.h>
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 namespace burn {
 
-Shader BurngineShaders::_solidColorShader;
-Shader BurngineShaders::_texturedShader;
-Shader BurngineShaders::_rawTextureShader;
-Shader BurngineShaders::_lightingShader;
-Shader BurngineShaders::_colorlessShader;
+Shader BurngineShaders::_colorShader;
+Shader BurngineShaders::_textureShader;
+Shader BurngineShaders::_pointlightShader;
+Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
-Shader BurngineShaders::_orthoColoredShader;
 
-bool BurngineShaders::loadAllShaders() {
+bool BurngineShaders::load(const std::string& d) {
 
-	if(!_solidColorShader.loadFromString(solidColorV, solidColorF)){
+	std::string dir = d;
+
+	if(d[d.size()-1] != '/' || d[d.size()-1] != '\\')
+		dir = d + "/";
+
+	if(!_colorShader.loadFromFile(dir + "color.vert", dir + "color.frag")){
 		return false;
 	}
-	if(!_texturedShader.loadFromString(texturedV, texturedF)){
+	if(!_textureShader.loadFromFile(dir + "texture.vert", dir + "texture.frag")){
 		return false;
 	}
-	if(!_rawTextureShader.loadFromString(rawTextureV, rawTextureF)){
+	if(!_pointlightShader.loadFromFile(dir + "pointlight.vert", dir + "pointlight.frag")){
 		return false;
 	}
-	if(!_lightingShader.loadFromString(lightingV, lightingF)){
+	if(!_singleColorShader.loadFromFile(dir + "singleColor.vert", dir + "singleColor.frag")){
 		return false;
 	}
-	if(!_colorlessShader.loadFromString(colorlessV, colorlessF)){
-		return false;
-	}
-	if(!_fontShader.loadFromString(fontV, fontF)){
-		return false;
-	}
-	if(!_orthoColoredShader.loadFromString(orthoColoredV, orthoColoredF)){
+	if(!_fontShader.loadFromFile(dir + "texture.vert", dir + "font.frag")){
 		return false;
 	}
 
@@ -52,31 +49,25 @@ bool BurngineShaders::loadAllShaders() {
 
 const Shader& BurngineShaders::getShader(const Type& type) {
 	switch (type) {
-		case SOLID_COLOR:
+		case COLOR:
 			//Will be returned at end of function, so it always returns.
 			//This makes the compiler happy :)
 			break;
-		case TEXTURED:
-			return _texturedShader;
+		case TEXTURE:
+			return _textureShader;
 			break;
-		case RAW_TEXTURE:
-			return _rawTextureShader;
+		case POINTLIGHT:
+			return _pointlightShader;
 			break;
-		case LIGHTING:
-			return _lightingShader;
-			break;
-		case COLORLESS:
-			return _colorlessShader;
+		case SINGLECOLOR:
+			return _singleColorShader;
 			break;
 		case FONT:
 			return _fontShader;
 			break;
-		case ORTHO_COLORED:
-			return _orthoColoredShader;
-			break;
 	}
 	//See case of SOLID_COLOR above
-	return _solidColorShader;
+	return _colorShader;
 }
 
 //--------------------------------------------------------------------------------------
@@ -231,6 +222,97 @@ bool Shader::loadFromString(const std::string& vertexShader, const std::string& 
 
 		// Read the Fragment Shader code from the file
 		std::string FragmentShaderCode = fragmentShader;
+
+		GLint Result = GL_FALSE;
+		int InfoLogLength;
+
+		// Compile Vertex Shader
+		Reporter::report("Compiling vertexshader...");
+		char const * VertexSourcePointer = VertexShaderCode.c_str();
+		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+		glCompileShader(VertexShaderID);
+
+		// Check Vertex Shader
+		glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+		if(!Result){
+			Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
+
+		// Compile Fragment Shader
+		Reporter::report("Compiling fragmentshader...");
+		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
+		glCompileShader(FragmentShaderID);
+
+		// Check Fragment Shader
+		glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+		if(!Result){
+			Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
+
+		// Link the program
+		Reporter::report("Linking program...");
+		GLuint ProgramID = glCreateProgram();
+		glAttachShader(ProgramID, VertexShaderID);
+		glAttachShader(ProgramID, FragmentShaderID);
+		glLinkProgram(ProgramID);
+
+		// Check the program
+		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
+		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+		if(!Result){
+			Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+			return false;
+		}
+
+		glDeleteShader(VertexShaderID);
+		glDeleteShader(FragmentShaderID);
+
+		_id = ProgramID;
+
+		return true;
+	}
+
+	Reporter::report("Cannot load Shader! (No valid OpenGL-Context)", Reporter::ERROR);
+	return false;
+}
+
+bool Shader::loadFromFile(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
+	if(Window::isContextCreated()){
+
+		// Create the shaders
+		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+		GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+		// Read the Vertex Shader code from the file
+		std::string VertexShaderCode;
+		std::ifstream VertexShaderStream(vertexShaderFile, std::ios::in);
+		if(VertexShaderStream.is_open()){
+			std::string Line = "";
+			while(getline(VertexShaderStream, Line))
+				VertexShaderCode += "\n" + Line;
+			VertexShaderStream.close();
+		}
+
+		// Read the Fragment Shader code from the file
+		std::string FragmentShaderCode;
+		std::ifstream FragmentShaderStream(fragmentShaderFile, std::ios::in);
+		if(FragmentShaderStream.is_open()){
+			std::string Line = "";
+			while(getline(FragmentShaderStream, Line))
+				FragmentShaderCode += "\n" + Line;
+			FragmentShaderStream.close();
+		}
 
 		GLint Result = GL_FALSE;
 		int InfoLogLength;

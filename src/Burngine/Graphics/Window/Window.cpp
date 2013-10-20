@@ -109,7 +109,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	glfwSetCursorPosCallback(_window, Mouse::cursorPosCallback);
 
 	if(loadShaders){
-		if(!BurngineShaders::loadAllShaders()){
+		if(!BurngineShaders::load("Shaders/")){
 			return false;
 		}
 		Reporter::report("Loaded BurngineShaders.");

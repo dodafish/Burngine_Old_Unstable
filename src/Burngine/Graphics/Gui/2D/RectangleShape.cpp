@@ -21,17 +21,17 @@ _color(0.3f, 0.3f, 0.3f, 0.5f) {
 void RectangleShape::draw() {
 
 	//Create and set a vbo
-	Vector2f vboData[4] = {
-	Vector2f(0.f),
-	Vector2f(_dimensions.x, 0.f),
-	Vector2f(0.f, _dimensions.y),
-	Vector2f(_dimensions.x, _dimensions.y) };
+	Vector3f vboData[4] = {
+	Vector3f(0.f),
+	Vector3f(_dimensions.x, 0.f, 0.f),
+	Vector3f(0.f, _dimensions.y, 0.f),
+	Vector3f(_dimensions.x, _dimensions.y, 0.f) };
 
 	VertexBufferObject vbo;
-	vbo.addData(&vboData[0], sizeof(Vector2f));
-	vbo.addData(&vboData[1], sizeof(Vector2f));
-	vbo.addData(&vboData[2], sizeof(Vector2f));
-	vbo.addData(&vboData[3], sizeof(Vector2f));
+	vbo.addData(&vboData[0], sizeof(Vector3f));
+	vbo.addData(&vboData[1], sizeof(Vector3f));
+	vbo.addData(&vboData[2], sizeof(Vector3f));
+	vbo.addData(&vboData[3], sizeof(Vector3f));
 	vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 
 	//Calculate matrices
@@ -40,12 +40,13 @@ void RectangleShape::draw() {
 	Matrix4f ortho = Window::getOrthoMatrix();
 
 	//Get the shader we want to use
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::ORTHO_COLORED);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
 
 	//Set uniforms
-	shader.setUniform(PROJECTION_MATRIX, ortho);
-	shader.setUniform(VIEW_MATRIX, modelView);
-	shader.setUniform(COLOR, _color);
+	shader.setUniform("projectionMatrix", ortho);
+	shader.setUniform("viewMatrix", modelView);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("color", _color);
 
 	//Setup OpenGL for rendering
 	OpenGlControl::Settings ogl;
@@ -58,7 +59,7 @@ void RectangleShape::draw() {
 	//Draw
 	vbo.bind();
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 	glDisableVertexAttribArray(0);
 

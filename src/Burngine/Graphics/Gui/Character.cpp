@@ -71,11 +71,11 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	_advance = Vector2i(glyph->advance.x >> 6, (glyph->metrics.height - glyph->metrics.horiBearingY) >> 6);
 
 	//Create VBO-Data for rendering
-	Vector2f quad[] = {
-	Vector2f(0.0f, float(-_advance.y) + float(textureDimensions.y)),
-	Vector2f(0.0f, float(-_advance.y)),
-	Vector2f(float(textureDimensions.x), float(-_advance.y) + float(textureDimensions.y)),
-	Vector2f(float(textureDimensions.x), float(-_advance.y)) };
+	Vector3f quad[] = {
+	Vector3f(0.0f, float(-_advance.y) + float(textureDimensions.y), 0.f),
+	Vector3f(0.0f, float(-_advance.y), 0.f),
+	Vector3f(float(textureDimensions.x), float(-_advance.y) + float(textureDimensions.y), 0.f),
+	Vector3f(float(textureDimensions.x), float(-_advance.y), 0.f) };
 
 	Vector2f texQuad[] = {
 	Vector2f(0.0f, 1.0f),
@@ -86,7 +86,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	_vbo.create();
 
 	for(int i = 0; i != 4; ++i){
-		_vbo.addData(&quad[i], sizeof(Vector2f));
+		_vbo.addData(&quad[i], sizeof(Vector3f));
 		_vbo.addData(&texQuad[i], sizeof(Vector2f));
 	}
 
@@ -129,9 +129,10 @@ void Character::draw(const Vector2f& position, const Vector4f& color) const {
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::FONT);
 
 	//Set uniforms
-	shader.setUniform(PROJECTION_MATRIX, ortho);
-	shader.setUniform(VIEW_MATRIX, modelView);
-	shader.setUniform(FONT_COLOR, color);
+	shader.setUniform("projectionMatrix", ortho);
+	shader.setUniform("viewMatrix", modelView);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("fontColor", color);
 
 	//Bind and draw
 	_texture.bind();
@@ -139,8 +140,8 @@ void Character::draw(const Vector2f& position, const Vector4f& color) const {
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) * 2, 0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) * 2, (void*)sizeof(Vector2f));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), (void*)sizeof(Vector3f));
 
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
