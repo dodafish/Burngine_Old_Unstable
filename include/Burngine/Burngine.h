@@ -5,7 +5,6 @@
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/Vertex.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
-#include <Burngine/Graphics/General/BurngineShaderCode.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <Burngine/Graphics/Texture/BaseTexture.h>

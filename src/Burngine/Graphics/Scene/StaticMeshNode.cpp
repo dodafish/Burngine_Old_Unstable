@@ -173,66 +173,135 @@ const Vector3f& ambient) {
 					//Draw full white, so multiplication does not affect materialcolor
 					drawSingleColor(cam, Vector4f(1.f));
 					continue;
-				}
-				else{
+				}else{
 					//Draw nothing. Specular will be added and adding 0 makes no difference
 					continue;
 				}
 			}
 
-			//Get shader
-			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+			if(lights[j]->getType() == Light::POINT){
 
-			//Set uniforms
-			setMVPUniforms(shader, cam);
+				//Get shader
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 
-			//Calculate matrices. Projection- and Viewmatrix used for Normalmatrix
-			Matrix4f normalMatrix, view, projection;
-			projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
-			view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
-			normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
+				//Set uniforms
+				setMVPUniforms(shader, cam);
 
-			shader.setUniform("normalMatrix", normalMatrix);
-			shader.setUniform("cameraPosition", camPosition);
-			shader.setUniform("lightPosition", lights[j]->getPosition());
-			shader.setUniform("lightColor", lights[j]->getColor());
-			shader.setUniform("ambientColor", ambient);
-			shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
-			shader.setUniform("lightIntensity", lights[j]->getIntensity());
+				//Calculate matrices. Projection- and Viewmatrix used for Normalmatrix
+				Matrix4f normalMatrix, view, projection;
+				projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
+				view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
+				normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
 
-			if(type == DIFFUSE){
-				shader.setUniform("lightingType", 1);
-			}else{
-				shader.setUniform("lightingType", 2);
+				shader.setUniform("normalMatrix", normalMatrix);
+				shader.setUniform("cameraPosition", camPosition);
+				shader.setUniform("lightPosition", lights[j]->getPosition());
+				shader.setUniform("lightColor", lights[j]->getColor());
+				shader.setUniform("ambientColor", ambient);
+				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
+				shader.setUniform("lightIntensity", lights[j]->getIntensity());
+
+				if(type == DIFFUSE){
+					shader.setUniform("lightingType", 1);
+				}else{
+					shader.setUniform("lightingType", 2);
+				}
+
+				//0 = Positions
+				glEnableVertexAttribArray(0);
+				_model.getMesh(i).getPositionVbo().bind();
+				glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				3, // size
+				GL_FLOAT, // type
+				GL_FALSE, // normalized?
+				0, // stride
+				(void*)0 // array buffer offset
+				);
+
+				//1 = Normals
+				glEnableVertexAttribArray(1);
+				_model.getMesh(i).getNormalVbo().bind();
+				glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				3, // size
+				GL_FLOAT, // type
+				GL_FALSE, // normalized?
+				0, // stride
+				(void*)0 // array buffer offset
+				);
+
+				//Draw
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
+
+				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+
+			}else if(lights[j]->getType() == Light::SPOT){
+
+				//Get shader
+				const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
+
+				//Set uniforms
+				setMVPUniforms(shader, cam);
+
+				//Calculate matrices. Projection- and Viewmatrix used for Normalmatrix
+				Matrix4f normalMatrix, view, projection;
+				projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
+				view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
+				normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
+
+				//Calculate some values for the lightsource
+				float lightConeCosine = std::cos((lights[j]->getCutoffAngle() / (180.f / 3.1415f)));
+				Matrix4f rotMat = glm::rotate(Matrix4f(1.f), lights[j]->getRotation().x, Vector3f(1.f, 0.f, 0.f));
+				rotMat = glm::rotate(rotMat, lights[j]->getRotation().y, Vector3f(0.f, 1.f, 0.f));
+				rotMat = glm::rotate(rotMat, lights[j]->getRotation().z, Vector3f(0.f, 0.f, 1.f));
+				Vector4f lightDir = rotMat * Vector4f(1.f, 0.f, 0.f, 1.f);
+
+				shader.setUniform("normalMatrix", normalMatrix);
+				shader.setUniform("cameraPosition", camPosition);
+				shader.setUniform("lightPosition", lights[j]->getPosition());
+				shader.setUniform("lightColor", lights[j]->getColor());
+				shader.setUniform("ambientColor", ambient);
+				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
+				shader.setUniform("lightIntensity", lights[j]->getIntensity());
+				shader.setUniform("cutoffAngle", lights[j]->getCutoffAngle());
+				shader.setUniform("lightConeCosine", lightConeCosine);
+				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
+
+				if(type == DIFFUSE){
+					shader.setUniform("lightingType", 1);
+				}else{
+					shader.setUniform("lightingType", 2);
+				}
+
+				//0 = Positions
+				glEnableVertexAttribArray(0);
+				_model.getMesh(i).getPositionVbo().bind();
+				glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				3, // size
+				GL_FLOAT, // type
+				GL_FALSE, // normalized?
+				0, // stride
+				(void*)0 // array buffer offset
+				);
+
+				//1 = Normals
+				glEnableVertexAttribArray(1);
+				_model.getMesh(i).getNormalVbo().bind();
+				glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				3, // size
+				GL_FLOAT, // type
+				GL_FALSE, // normalized?
+				0, // stride
+				(void*)0 // array buffer offset
+				);
+
+				//Draw
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
+
+				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+
 			}
-
-			//0 = Positions
-			glEnableVertexAttribArray(0);
-			_model.getMesh(i).getPositionVbo().bind();
-			glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3, // size
-			GL_FLOAT, // type
-			GL_FALSE, // normalized?
-			0, // stride
-			(void*)0 // array buffer offset
-			);
-
-			//1 = Normals
-			glEnableVertexAttribArray(1);
-			_model.getMesh(i).getNormalVbo().bind();
-			glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3, // size
-			GL_FLOAT, // type
-			GL_FALSE, // normalized?
-			0, // stride
-			(void*)0 // array buffer offset
-			);
-
-			//Draw
-			OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, _model.getMesh(i).getVertexCount(), shader);
-
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
 
 		}
 	}

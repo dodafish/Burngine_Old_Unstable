@@ -43,6 +43,9 @@ public:
 	void setType(const Type& type);
 	const Type& getType() const;
 
+	void setCutoffAngle(const float& angle);
+	const float& getCutoffAngle() const;
+
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
@@ -50,6 +53,7 @@ private:
 	Vector3f _color;
 	float _intensity;
 	Type _type;
+	float _cutoffAngle;
 
 	std::vector<Scene*> _parents;
 

@@ -117,6 +117,7 @@ struct BURNGINE_API BurngineShaders {
 		COLOR, ///< Color Shader. Material colors eg.
 		TEXTURE, ///< Simple 1-Texture Shader
 		POINTLIGHT, ///< Renders a pointlight
+		SPOTLIGHT,
 		SINGLECOLOR, ///< Draws with only one color (internal use for depthbufferwriting)
 		FONT
 	};
@@ -134,6 +135,7 @@ private:
 	static Shader _colorShader;
 	static Shader _textureShader;
 	static Shader _pointlightShader;
+	static Shader _spotlightShader;
 	static Shader _singleColorShader;
 	static Shader _fontShader;
 };

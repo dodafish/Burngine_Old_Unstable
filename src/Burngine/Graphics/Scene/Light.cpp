@@ -21,14 +21,16 @@ void Light::removeAllParents() {
 Light::Light(const Type& type, const Vector3f& color, const float& intensity) :
 _color(color),
 _intensity((intensity > 0) ? intensity : 0),
-_type(type) {
+_type(type),
+_cutoffAngle(20.f) {
 
 }
 
 Light::Light(const Light& other) :
 _color(other._color),
 _intensity(other._intensity),
-_type(other._type) {
+_type(other._type),
+_cutoffAngle(other._cutoffAngle) {
 	for(size_t i = 0; i < other._parents.size(); ++i){
 		other._parents[i]->attachLight(*this);
 	}
@@ -38,6 +40,7 @@ Light& Light::operator=(const Light& other) {
 	_color = other._color;
 	_intensity = other._intensity;
 	_type = other._type;
+	_cutoffAngle = other._cutoffAngle;
 
 	removeAllParents();
 
@@ -91,6 +94,22 @@ void Light::setType(const Light::Type& type) {
 
 const Light::Type& Light::getType() const {
 	return _type;
+}
+
+void Light::setCutoffAngle(const float& angle) {
+	if(angle < 0.f){
+		_cutoffAngle = 0.f;
+	}
+	else if(angle > 360.f){
+		_cutoffAngle = 360.f;
+	}
+	else{
+		_cutoffAngle = angle;
+	}
+}
+
+const float& Light::getCutoffAngle() const {
+	return _cutoffAngle;
 }
 
 } /* namespace burn */

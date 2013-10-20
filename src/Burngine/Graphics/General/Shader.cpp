@@ -18,6 +18,7 @@ namespace burn {
 Shader BurngineShaders::_colorShader;
 Shader BurngineShaders::_textureShader;
 Shader BurngineShaders::_pointlightShader;
+Shader BurngineShaders::_spotlightShader;
 Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
 
@@ -25,7 +26,7 @@ bool BurngineShaders::load(const std::string& d) {
 
 	std::string dir = d;
 
-	if(d[d.size()-1] != '/' || d[d.size()-1] != '\\')
+	if(d[d.size() - 1] != '/' || d[d.size() - 1] != '\\')
 		dir = d + "/";
 
 	if(!_colorShader.loadFromFile(dir + "color.vert", dir + "color.frag")){
@@ -35,6 +36,9 @@ bool BurngineShaders::load(const std::string& d) {
 		return false;
 	}
 	if(!_pointlightShader.loadFromFile(dir + "pointlight.vert", dir + "pointlight.frag")){
+		return false;
+	}
+	if(!_spotlightShader.loadFromFile(dir + "spotlight.vert", dir + "spotlight.frag")){
 		return false;
 	}
 	if(!_singleColorShader.loadFromFile(dir + "singleColor.vert", dir + "singleColor.frag")){
@@ -58,6 +62,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case POINTLIGHT:
 			return _pointlightShader;
+			break;
+		case SPOTLIGHT:
+			return _spotlightShader;
 			break;
 		case SINGLECOLOR:
 			return _singleColorShader;
