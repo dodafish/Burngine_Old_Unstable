@@ -300,7 +300,7 @@ bool Shader::loadFromFile(const std::string& vertexShaderFile, const std::string
 		if(VertexShaderStream.is_open()){
 			std::string Line = "";
 			while(getline(VertexShaderStream, Line))
-				VertexShaderCode += "\n" + Line;
+				VertexShaderCode += Line + "\n";
 			VertexShaderStream.close();
 		}
 
