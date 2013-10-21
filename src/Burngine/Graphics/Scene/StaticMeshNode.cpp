@@ -191,7 +191,7 @@ const Vector3f& ambient) {
 				Matrix4f normalMatrix, view, projection;
 				projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
 				view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
-				normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
+				normalMatrix = projection * view * glm::inverse(glm::transpose(getModelMatrix()));
 
 				shader.setUniform("normalMatrix", normalMatrix);
 				shader.setUniform("cameraPosition", camPosition);
@@ -247,7 +247,7 @@ const Vector3f& ambient) {
 				Matrix4f normalMatrix, view, projection;
 				projection = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
 				view = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
-				normalMatrix = projection * view * glm::transpose(glm::inverse(getModelMatrix()));
+				normalMatrix = projection * view * glm::inverse(glm::transpose(getModelMatrix()));
 
 				//Calculate some values for the lightsource
 				float lightConeCosine = std::cos((lights[j]->getCutoffAngle() / (180.f / 3.1415f)));
