@@ -20,12 +20,48 @@ _mipmapsGenerated(false),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
 _anisotropicLevel(1.f),
-_unit(0)
- {
+_unit(0),
+_referenceCount(new unsigned int(1)) {
+}
+
+BaseTexture::BaseTexture(const BaseTexture& other) :
+_texture(other._texture),
+_sampler(other._sampler),
+_mipmapsGenerated(other._mipmapsGenerated),
+_magnificationFiltering(other._magnificationFiltering),
+_minificationFiltering(other._minificationFiltering),
+_anisotropicLevel(other._anisotropicLevel),
+_unit(other._unit),
+_referenceCount(other._referenceCount) {
+	++(*_referenceCount);
+}
+
+BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
+
+	--(*_referenceCount);
+
+	if(*_referenceCount == 0)
+		cleanup();
+
+	_texture = other._texture;
+	_sampler = other._sampler;
+	_mipmapsGenerated = other._mipmapsGenerated;
+	_magnificationFiltering = other._magnificationFiltering;
+	_minificationFiltering = other._minificationFiltering;
+	_anisotropicLevel = other._anisotropicLevel;
+	_unit = other._unit;
+	_referenceCount = other._referenceCount;
+
+	++(*_referenceCount);
+
+	return *this;
 }
 
 BaseTexture::~BaseTexture() {
-	cleanup();
+	--(*_referenceCount);
+
+	if(*_referenceCount == 0)
+		cleanup();
 }
 
 bool BaseTexture::create(const Vector2ui& dimensions) {

@@ -27,6 +27,9 @@ public:
 	BaseTexture();
 	virtual ~BaseTexture();
 
+	BaseTexture(const BaseTexture& other);
+	BaseTexture& operator=(const BaseTexture& other);
+
 	virtual bool create(const Vector2ui& dimensions);
 	virtual void cleanup();
 
@@ -69,6 +72,7 @@ private:
 	GLfloat _anisotropicLevel;
 
 	unsigned int _unit;
+	unsigned int* _referenceCount;
 };
 
 } /* namespace burn */

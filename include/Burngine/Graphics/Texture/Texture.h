@@ -19,15 +19,6 @@ namespace burn {
  */
 class BURNGINE_API Texture : public BaseTexture {
 public:
-	/**
-	 * @brief The default constructor
-	 */
-	Texture();
-
-	/**
-	 * @brief The default destructor
-	 */
-	~Texture();
 
 	/**
 	 * @brief Loads an image from file and stores it

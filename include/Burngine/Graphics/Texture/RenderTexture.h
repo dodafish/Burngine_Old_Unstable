@@ -20,6 +20,9 @@ public:
 	RenderTexture();
 	~RenderTexture();
 
+	RenderTexture(const RenderTexture& other) = delete;
+	RenderTexture& operator=(const RenderTexture& other) = delete;
+
 	virtual bool create(const Vector2ui& dimensions);
 
 	virtual void bind() const;

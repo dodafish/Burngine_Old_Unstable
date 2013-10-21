@@ -13,12 +13,6 @@
 
 namespace burn {
 
-Texture::Texture() {
-}
-
-Texture::~Texture() {
-}
-
 bool Texture::loadFromFile(const std::string& file) {
 
 	if(!Window::isContextCreated())
@@ -34,6 +28,8 @@ bool Texture::loadFromFile(const std::string& file) {
 		std::cout << "Created texturebuffer. ID: " << _texture << "\n";
 		return true;
 	}
+
+	setFiltering(MAG_BILINEAR, MIN_TRILINEAR);
 
 	_mipmapsGenerated = true;
 

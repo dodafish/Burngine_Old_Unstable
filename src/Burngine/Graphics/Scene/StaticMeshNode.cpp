@@ -179,7 +179,7 @@ const Vector3f& ambient) {
 				}
 			}
 
-			if(lights[j]->getType() == Light::POINT){
+			if(lights[j]->getType() == Light::POINTLIGHT){
 
 				//Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
@@ -235,7 +235,7 @@ const Vector3f& ambient) {
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
 
-			}else if(lights[j]->getType() == Light::SPOT){
+			}else if(lights[j]->getType() == Light::SPOTLIGHT){
 
 				//Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
