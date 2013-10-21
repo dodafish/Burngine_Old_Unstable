@@ -23,10 +23,10 @@ namespace burn {
 class BURNGINE_API Light : public Transformable {
 public:
 	enum Type {
-		POINT, SPOT, DIRECTIONAL
+		POINTLIGHT, SPOTLIGHT, DIRECTIONAL_LIGHT
 	};
 
-	Light(const Type& type = POINT, const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f), const float& intensity = 1.0f);
+	Light(const Type& type = POINTLIGHT, const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f), const float& intensity = 1.0f);
 
 	Light(const Light& other);
 
