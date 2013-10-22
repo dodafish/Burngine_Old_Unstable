@@ -19,6 +19,7 @@ Shader BurngineShaders::_colorShader;
 Shader BurngineShaders::_textureShader;
 Shader BurngineShaders::_pointlightShader;
 Shader BurngineShaders::_spotlightShader;
+Shader BurngineShaders::_dirlightShader;
 Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
 
@@ -39,6 +40,9 @@ bool BurngineShaders::load(const std::string& d) {
 		return false;
 	}
 	if(!_spotlightShader.loadFromFile(dir + "spotlight.vert", dir + "spotlight.frag")){
+		return false;
+	}
+	if(!_dirlightShader.loadFromFile(dir + "dirlight.vert", dir + "dirlight.frag")){
 		return false;
 	}
 	if(!_singleColorShader.loadFromFile(dir + "singleColor.vert", dir + "singleColor.frag")){
@@ -65,6 +69,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case SPOTLIGHT:
 			return _spotlightShader;
+			break;
+		case DIRECTIONAL_LIGHT:
+			return _dirlightShader;
 			break;
 		case SINGLECOLOR:
 			return _singleColorShader;
