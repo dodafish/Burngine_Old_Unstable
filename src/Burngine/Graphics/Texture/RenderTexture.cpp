@@ -73,6 +73,9 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 		return false;
 	}
 
+	//Set filtering
+	updateFiltering();
+
 	//Unbind all:
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
@@ -81,22 +84,24 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	return true;
 }
 
-void RenderTexture::bind() const {
+void RenderTexture::bind(bool asRendertarget) const {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated())
 		return;
 
-	//If not created before, this will produce the same effect
-	//as unbind()
-	glBindTexture(GL_TEXTURE_2D, _texture);
-	glBindSampler(0, _sampler);
+	if(!isCreated())
+		return;
 
-	//Tell OpenGL our filtering
-	updateFiltering();
+	if(asRendertarget){
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+		glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
+	}else{
+		glActiveTexture(GL_TEXTURE0 + _unit);
+		glBindTexture(GL_TEXTURE_2D, _texture);
+		glBindSampler(_unit, _sampler);
+	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
 }
 
 void RenderTexture::clear() const {
@@ -142,9 +147,8 @@ void RenderTexture::drawFullscreen() {
 
 	GLint lastTex = getCurrentBoundTexture();
 
-	//A call to bind() would bind its own framebuffer as current
-	//-> It would render on itself!? lol
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	//Bind texture only
+	bind(false);
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);
@@ -204,9 +208,8 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 
 	GLint lastTex = getCurrentBoundTexture();
 
-	//A call to bind() would bind its own framebuffer as current
-	//-> It would render on itself!? lol
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	//Bind texture only
+	bind(false);
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);

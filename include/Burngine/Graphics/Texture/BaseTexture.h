@@ -36,8 +36,8 @@ public:
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 	void setSamplerParameter(GLenum parameter, GLenum value);
 
-	virtual void bind() const;
 	void unbind();
+	void bind() const;
 
 	bool isCreated() const;
 
@@ -64,6 +64,7 @@ protected:
 	GLuint _sampler; ///< Sampler's ID
 	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
+	unsigned int _unit;
 private:
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
 
@@ -71,7 +72,6 @@ private:
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
 	GLfloat _anisotropicLevel;
 
-	unsigned int _unit;
 	unsigned int* _referenceCount;
 };
 

@@ -17,10 +17,10 @@ BaseTexture::BaseTexture() :
 _texture(0),
 _sampler(0),
 _mipmapsGenerated(false),
+_unit(0),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
 _anisotropicLevel(1.f),
-_unit(0),
 _referenceCount(new unsigned int(1)) {
 }
 
@@ -28,10 +28,10 @@ BaseTexture::BaseTexture(const BaseTexture& other) :
 _texture(other._texture),
 _sampler(other._sampler),
 _mipmapsGenerated(other._mipmapsGenerated),
+_unit(other._unit),
 _magnificationFiltering(other._magnificationFiltering),
 _minificationFiltering(other._minificationFiltering),
 _anisotropicLevel(other._anisotropicLevel),
-_unit(other._unit),
 _referenceCount(other._referenceCount) {
 	++(*_referenceCount);
 }
@@ -95,23 +95,6 @@ GLint BaseTexture::getCurrentBoundTexture() const {
 	return t;
 }
 
-void BaseTexture::bind() const {
-
-	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated())
-		return;
-
-	//Tell our filter
-	updateFiltering();
-
-	//If not created before, this will produce the same effect
-	//as unbind()
-	glActiveTexture(GL_TEXTURE0 + _unit);
-	glBindTexture(GL_TEXTURE_2D, _texture);
-	glBindSampler(_unit, _sampler);
-
-}
-
 void BaseTexture::updateFiltering() const {
 
 	if(!Window::isContextCreated() || !isCreated()){
@@ -145,6 +128,8 @@ void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
 	if(Window::isContextCreated())
 		glSamplerParameteri(_sampler, parameter, value);
 }
+
+void BaseTexture::bind() const {}
 
 void BaseTexture::unbind() {
 

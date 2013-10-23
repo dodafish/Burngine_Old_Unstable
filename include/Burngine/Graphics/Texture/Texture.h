@@ -32,6 +32,8 @@ public:
 
 	bool loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format);
 
+	void bind() const;
+
 };
 
 } /* namespace burn */

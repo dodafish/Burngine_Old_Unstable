@@ -53,10 +53,27 @@ bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int
 	//glGenerateMipmap(GL_TEXTURE_2D);
 	//_mipmapsGenerated = true;
 
+	updateFiltering();
+
 	//Unbind texture to protect against modifications
 	unbind();
 
 	return true;
+}
+
+void Texture::bind() const {
+
+	//Valid OpenGL-Context is needed
+	if(!Window::isContextCreated())
+		return;
+
+	if(!isCreated())
+		return;
+
+	glActiveTexture(GL_TEXTURE0 + _unit);
+	glBindTexture(GL_TEXTURE_2D, _texture);
+	glBindSampler(_unit, _sampler);
+
 }
 
 } /* namespace burn */
