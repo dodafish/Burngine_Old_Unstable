@@ -10,12 +10,17 @@
 namespace burn {
 
 void Light::removeAllParents() {
+	if(_parents.size() == 0)
+		return;
+
 	Scene* parents[_parents.size()];
 	for(size_t i = 0; i != _parents.size(); ++i)
 		parents[i] = _parents[i];
 	size_t size = _parents.size();
 	for(size_t i = 0; i != size; ++i)
 		parents[i]->detachLight(*this);
+
+	_parents.clear();
 }
 
 Light::Light(const Type& type, const Vector3f& color, const float& intensity) :
@@ -31,8 +36,9 @@ _color(other._color),
 _intensity(other._intensity),
 _type(other._type),
 _cutoffAngle(other._cutoffAngle) {
-	for(size_t i = 0; i < other._parents.size(); ++i){
-		other._parents[i]->attachLight(*this);
+	_parents = other._parents;
+	for(size_t i = 0; i < _parents.size(); ++i){
+		_parents[i]->attachLight(*this);
 	}
 }
 
@@ -44,8 +50,9 @@ Light& Light::operator=(const Light& other) {
 
 	removeAllParents();
 
-	for(size_t i = 0; i < other._parents.size(); ++i){
-		other._parents[i]->attachLight(*this);
+	_parents = other._parents;
+	for(size_t i = 0; i < _parents.size(); ++i){
+		_parents[i]->attachLight(*this);
 	}
 
 	return *this;
