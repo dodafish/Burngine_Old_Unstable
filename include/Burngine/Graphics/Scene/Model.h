@@ -10,10 +10,15 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Material.h>
-#include <Burngine/Graphics/Scene/Mesh.h>
 
 #include <vector>
 #include <memory>
+
+namespace burn {
+class Mesh;
+}
+
+template class BURNGINE_API std::vector<std::shared_ptr<burn::Mesh>>;
 
 namespace burn {
 
@@ -23,9 +28,6 @@ namespace burn {
 class BURNGINE_API Model {
 public:
 	Model();
-	Model(const Model& other);
-	Model& operator=(const Model& other);
-
 	~Model();
 
 	bool loadFromFile(const std::string& file);
@@ -52,9 +54,7 @@ public:
 	bool isUpdated() const;
 
 private:
-	std::vector<Mesh*> _meshes;
-
-	unsigned int* _referenceCounter;
+	std::vector<std::shared_ptr<Mesh>> _meshes;
 };
 
 } /* namespace burn */

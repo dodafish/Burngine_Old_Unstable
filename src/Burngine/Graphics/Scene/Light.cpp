@@ -168,12 +168,10 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	shader.setUniform("viewMatrix", viewMatrix);
 	shader.setUniform("projectionMatrix", projectionMatrix);
 
-	std::cout << "1";
-
 	//Scan through all nodes
 	for(size_t i = 0; i < nodes.size(); ++i){
 
-		/*if(typeid(*nodes[i]) == typeid(StaticMeshNode)){
+		if(typeid(*nodes[i]) == typeid(StaticMeshNode)){
 			StaticMeshNode* node = static_cast<StaticMeshNode*>(nodes[i]);
 
 			node->update();
@@ -200,11 +198,9 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 
 		}else{
 			std::cout << "SceneNode unknown: " << typeid(*nodes[i]).name() << "\n";
-		}*/
+		}
 
 	}
-
-	std::cout << "2";
 
 }
 

@@ -17,7 +17,8 @@ namespace burn {
 Font::Font() :
 _face(0),
 _isLoaded(false),
-_loadedFontSize(32) {
+_loadedFontSize(32),
+_emptyCharacter() {
 
 }
 
@@ -89,7 +90,7 @@ const Character& Font::getCharacter(const Uint32& codePoint, const unsigned int&
 
 	//Update the wished fontsize
 	if(!setFontSize(fontSize))
-		exit(1);
+		return _emptyCharacter;
 
 	//Return if already loaded
 	for(size_t i = 0; i < _characters.size(); ++i){
@@ -129,20 +130,20 @@ const Character& Font::createCharacter(const Uint32& codePoint) {
 	//Load the glyph in face
 	if(FT_Load_Glyph(face, FT_Get_Char_Index(face, codePoint), FT_LOAD_DEFAULT) != 0){
 		Reporter::report("Failed to load glyph!", Reporter::ERROR);
-		exit(4);
+		return _emptyCharacter;
 	}
 
 	//Get the glyph
 	FT_Glyph glyph;
 	if(FT_Get_Glyph(face->glyph, &glyph) != 0){
 		Reporter::report("Failed get glyph!", Reporter::ERROR);
-		exit(2);
+		return _emptyCharacter;
 	}
 
 	//Render to a bitmap
 	if(FT_Glyph_To_Bitmap(&glyph, ft_render_mode_normal, 0, 1) != 0){
 		Reporter::report("Failed to render glyph to bitmap!", Reporter::ERROR);
-		exit(3);
+		return _emptyCharacter;
 	}
 	FT_BitmapGlyph bitmapGlyph = (FT_BitmapGlyph)(glyph);
 
