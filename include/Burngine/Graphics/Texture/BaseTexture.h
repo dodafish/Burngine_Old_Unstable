@@ -30,8 +30,6 @@ public:
 
 	virtual ~BaseTexture();
 
-	virtual void cleanup();
-
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 	void setSamplerParameter(GLenum parameter, GLenum value);
 
@@ -53,6 +51,9 @@ public:
 	static Vector2ui calculateDimensions(const Vector2ui& dimensions);
 
 protected:
+	void cleanup();
+
+	bool isLastReference() const;
 	void generate(const Vector2ui& dimensions);
 
 	GLint getCurrentBoundTexture() const;
@@ -65,6 +66,7 @@ protected:
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 	unsigned int _unit;
 private:
+
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
 
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method

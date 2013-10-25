@@ -13,6 +13,10 @@
 
 namespace burn {
 
+bool BaseTexture::isLastReference() const {
+	return (*_referenceCount < 2);
+}
+
 BaseTexture::BaseTexture() :
 _texture(0),
 _sampler(0),
@@ -40,8 +44,7 @@ BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
 
 	--(*_referenceCount);
 
-	if(*_referenceCount == 0)
-		cleanup();
+	cleanup();
 
 	_texture = other._texture;
 	_sampler = other._sampler;
@@ -60,8 +63,7 @@ BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
 BaseTexture::~BaseTexture() {
 	--(*_referenceCount);
 
-	if(*_referenceCount == 0)
-		cleanup();
+	cleanup();
 }
 
 /////////////////////////////////////////////////////////////////
@@ -175,6 +177,9 @@ void BaseTexture::generate(const Vector2ui& dimensions) {
 	//Reset before generating new texture, sampler etc.
 	cleanup();
 
+	if(_referenceCount == nullptr)
+		_referenceCount = new unsigned int(1);
+
 	//Set values
 	_originalDimensions = dimensions;
 	_dimensions = calculateDimensions(dimensions);
@@ -194,10 +199,13 @@ void BaseTexture::cleanup() {
 	if(!isCreated())
 		return;
 
-	if(*_referenceCount == 1){
+	if(isLastReference()){
 		//Delete texture and sampler from GPU
 		glDeleteTextures(1, &_texture);
 		glDeleteSamplers(1, &_sampler);
+
+		delete _referenceCount;
+		_referenceCount = nullptr;
 	}
 
 	//Reset values
