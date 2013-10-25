@@ -180,21 +180,25 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 			if(!node->getModel().isUpdated())
 				continue;
 
-			//0 = Positions
-			glEnableVertexAttribArray(0);
-			node->getModel().getMesh(i).getPositionVbo().bind();
-			glVertexAttribPointer(0, // attribute 0
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-			);
+			for(size_t j = 0; j < node->getModel().getMeshCount(); ++j){
 
-			//Draw
-			OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, node->getModel().getMesh(i).getVertexCount(), shader);
+				//0 = Positions
+				glEnableVertexAttribArray(0);
+				node->getModel().getMesh(j).getPositionVbo().bind();
+				glVertexAttribPointer(0, // attribute 0
+				3,                  // size
+				GL_FLOAT,           // type
+				GL_FALSE,           // normalized?
+				0,                  // stride
+				(void*)0            // array buffer offset
+				);
 
-			glDisableVertexAttribArray(0);
+				//Draw
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, node->getModel().getMesh(j).getVertexCount(), shader);
+
+				glDisableVertexAttribArray(0);
+
+			}
 
 		}else{
 			std::cout << "SceneNode unknown: " << typeid(*nodes[i]).name() << "\n";
