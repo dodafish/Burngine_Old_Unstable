@@ -51,7 +51,11 @@ public:
 	 *
 	 * @see setModel()
 	 */
-	Model& getModel();
+	const Model& getModel() const;
+
+	void setFlag(const Material::Flag& flag, const bool& enabled = true);
+
+	void update();
 
 	bool loadFromFile(const std::string& file);
 

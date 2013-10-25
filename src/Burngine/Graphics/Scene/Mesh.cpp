@@ -31,11 +31,13 @@ Mesh::~Mesh() {
 
 }
 
-void Mesh::update() {
+bool Mesh::update() {
+	bool updated = false;
 	if(_needUpdate){
-		data();
-		_needUpdate = false;
+		updated = data();
+		_needUpdate = !updated;
 	}
+	return updated;
 }
 
 void Mesh::forceUpdate() {
@@ -46,24 +48,26 @@ size_t Mesh::getVertexCount() const {
 	return _vertices.size();
 }
 
-void Mesh::setVertices(const std::vector<Vertex>& vertices) {
+void Mesh::setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly) {
 	_vertices = vertices;
 	_needUpdate = true;
+	if(updateImmediatly)
+		update();
 }
 
-VertexBufferObject& Mesh::getPositionVbo() {
+const VertexBufferObject& Mesh::getPositionVbo() const {
 	return _positionVbo;
 }
 
-VertexBufferObject& Mesh::getNormalVbo() {
+const VertexBufferObject& Mesh::getNormalVbo() const {
 	return _normalVbo;
 }
 
-VertexBufferObject& Mesh::getColorVbo() {
+const VertexBufferObject& Mesh::getColorVbo() const {
 	return _colorVbo;
 }
 
-VertexBufferObject& Mesh::getUvVbo() {
+const VertexBufferObject& Mesh::getUvVbo() const {
 	return _uvVbo;
 }
 
@@ -75,7 +79,7 @@ const Texture& Mesh::getTexture() const {
 	return _texture;
 }
 
-Material& Mesh::getMaterial() {
+const Material& Mesh::getMaterial() const {
 	return _material;
 }
 
@@ -83,7 +87,7 @@ void Mesh::setMaterial(Material& material) {
 	_material = material;
 }
 
-void Mesh::data() {
+bool Mesh::data() {
 	if(Window::isContextCreated() && _vertices.size() != 0){
 
 		_positionVbo.reset();
@@ -113,7 +117,14 @@ void Mesh::data() {
 		_normalVbo.uploadDataToGpu();
 		_uvVbo.uploadDataToGpu();
 
+		return true;
+
 	}
+	return false;
+}
+
+bool Mesh::isUpdated() const{
+	return (!_needUpdate);
 }
 
 } /* namespace burn */

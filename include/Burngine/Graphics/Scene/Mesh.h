@@ -54,7 +54,7 @@ public:
 	 *
 	 * @see Vertex
 	 */
-	void setVertices(const std::vector<Vertex>& vertices);
+	void setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly = true);
 
 	/**
 	 * @brief Returns the count of the vertices which the mesh
@@ -74,7 +74,7 @@ public:
 	 * @return Returns the id of the position-buffer or 0 if no
 	 * position-buffer exists
 	 */
-	VertexBufferObject& getPositionVbo();
+	const VertexBufferObject& getPositionVbo() const;
 
 	/**
 	 * @brief Returns the id of the normal-buffer.
@@ -84,7 +84,7 @@ public:
 	 * @return Returns the id of the normal-buffer or 0 if no
 	 * normal-buffer exists
 	 */
-	VertexBufferObject& getNormalVbo();
+	const VertexBufferObject& getNormalVbo() const;
 
 	/**
 	 * @brief Returns the id of the color-buffer.
@@ -94,7 +94,7 @@ public:
 	 * @return Returns the id of the color-buffer or 0 if no
 	 * color-buffer exists
 	 */
-	VertexBufferObject& getColorVbo();
+	const VertexBufferObject& getColorVbo() const;
 
 	/**
 	 * @brief Returns the id of the UV-buffer.
@@ -104,7 +104,7 @@ public:
 	 * @return Returns the id of the UV-buffer or 0 if no
 	 * UV-buffer exists
 	 */
-	VertexBufferObject& getUvVbo();
+	const VertexBufferObject& getUvVbo() const;
 
 	/**
 	 * @brief Sets the Texture of the mesh
@@ -131,7 +131,7 @@ public:
 	 *
 	 * @see setMaterial()
 	 */
-	Material& getMaterial();
+	const Material& getMaterial() const;
 
 	/**
 	 * @brief Sets the material of the node. Influences the rendering
@@ -143,8 +143,10 @@ public:
 	 */
 	void setMaterial(Material& material);
 
-	void update();
+	bool update();
 	void forceUpdate();
+
+	bool isUpdated() const;
 
 private:
 
@@ -154,7 +156,7 @@ private:
 	 *
 	 * @see setVertices()
 	 */
-	void data();
+	bool data();
 
 	friend Model;
 

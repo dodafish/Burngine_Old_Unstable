@@ -33,7 +33,7 @@ public:
 	bool loadFromFile(const std::string& file);
 
 	size_t getMeshCount() const;
-	Mesh& getMesh(const size_t& index) const;
+	const Mesh& getMesh(const size_t& index) const;
 
 	/**
 	 * @brief Changes the flags of all meshes to the given parameter.
@@ -51,6 +51,7 @@ public:
 	void setFlag(const Material::Flag& flag, const bool& enabled = true);
 
 	void update();
+	bool isUpdated() const;
 
 private:
 	std::vector<std::shared_ptr<Mesh>> _meshes;

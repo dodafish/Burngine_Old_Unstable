@@ -27,12 +27,20 @@ void StaticMeshNode::setModel(const Model& model) {
 	_model = model;
 }
 
-Model& StaticMeshNode::getModel() {
+const Model& StaticMeshNode::getModel() const {
 	return _model;
 }
 
 bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
+}
+
+void StaticMeshNode::setFlag(const Material::Flag& flag, const bool& enabled){
+	_model.setFlag(flag, enabled);
+}
+
+void StaticMeshNode::update(){
+	_model.update();
 }
 
 void StaticMeshNode::draw(const Camera& cam) {

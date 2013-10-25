@@ -30,7 +30,7 @@ size_t Model::getMeshCount() const {
 	return _meshes.size();
 }
 
-Mesh& Model::getMesh(const size_t& index) const {
+const Mesh& Model::getMesh(const size_t& index) const {
 	return *(_meshes[index]);
 }
 
@@ -190,7 +190,9 @@ bool Model::loadFromFile(const std::string& file) {
 
 void Model::setFlag(const Material::Flag& flag, const bool& enabled) {
 	for(size_t i = 0; i < _meshes.size(); ++i){
-		_meshes[i]->getMaterial().setFlag(flag, enabled);
+		Material temp = _meshes[i]->getMaterial();
+		temp.setFlag(flag, enabled);
+		_meshes[i]->setMaterial(temp);
 	}
 }
 
@@ -198,6 +200,14 @@ void Model::update() {
 	for(size_t i = 0; i < _meshes.size(); ++i){
 		_meshes[i]->update();
 	}
+}
+
+bool Model::isUpdated() const {
+	for(size_t i = 0; i < _meshes.size(); ++i){
+		if(!_meshes[i]->isUpdated())
+			return false;
+	}
+	return true;
 }
 
 } /* namespace burn */
