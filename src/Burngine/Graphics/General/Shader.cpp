@@ -22,6 +22,7 @@ Shader BurngineShaders::_spotlightShader;
 Shader BurngineShaders::_dirlightShader;
 Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
+Shader BurngineShaders::_depthShader;
 
 bool BurngineShaders::load(const std::string& d) {
 
@@ -51,6 +52,9 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_fontShader.loadFromFile(dir + "texture.vert", dir + "font.frag")){
 		return false;
 	}
+	if(!_depthShader.loadFromFile(dir + "depth.vert", dir + "depth.frag")){
+		return false;
+	}
 
 	return true;
 }
@@ -78,6 +82,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case FONT:
 			return _fontShader;
+			break;
+		case DEPTH:
+			return _depthShader;
 			break;
 	}
 	//See case of SOLID_COLOR above

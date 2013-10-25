@@ -11,6 +11,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
 #include <Burngine/Graphics/Scene/Scene.h>
+#include <Burngine/Graphics/Texture/ShadowMap.h>
 
 //template class BURNGINE_API std::vector<burn::Scene*>;
 
@@ -49,14 +50,17 @@ public:
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
+	void updateShadowMap(const std::vector<SceneNode*> nodes);
+
 private:
 	Vector3f _color;
 	float _intensity;
 	Type _type;
 	float _cutoffAngle;
 
-	std::vector<Scene*> _parents;
+	ShadowMap _shadowMap;
 
+	std::vector<Scene*> _parents;
 	void removeAllParents();
 };
 

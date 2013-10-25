@@ -41,6 +41,11 @@ void Scene::draw(const RenderModus& modus) {
 	if(!Window::isContextCreated())
 		return;
 
+	//Update all lights' shadowMaps
+	for(size_t i = 0; i < _lights.size(); ++i){
+		_lights[i]->updateShadowMap(_nodes);
+	}
+
 	switch (modus) {
 		case ALL:
 			drawNodes();

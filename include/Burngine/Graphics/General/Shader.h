@@ -120,7 +120,8 @@ struct BURNGINE_API BurngineShaders {
 		SPOTLIGHT,
 		DIRECTIONAL_LIGHT,
 		SINGLECOLOR, ///< Draws with only one color (internal use for depthbufferwriting)
-		FONT
+		FONT,
+		DEPTH
 	};
 
 	/**
@@ -140,6 +141,7 @@ private:
 	static Shader _dirlightShader;
 	static Shader _singleColorShader;
 	static Shader _fontShader;
+	static Shader _depthShader;
 };
 
 } /* namespace burn */
