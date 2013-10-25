@@ -52,6 +52,8 @@ public:
 
 	void updateShadowMap(const std::vector<SceneNode*> nodes);
 
+	Vector4f getDirection() const;
+
 private:
 	Vector3f _color;
 	float _intensity;
