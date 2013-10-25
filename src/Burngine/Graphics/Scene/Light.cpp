@@ -143,6 +143,10 @@ const Matrix4f& Light::getBiasMatrix() const {
 	return _biasMatrix;
 }
 
+void Light::bindShadowMap() const{
+	_shadowMap.bind();
+}
+
 void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 
 	if(!Window::isContextCreated())

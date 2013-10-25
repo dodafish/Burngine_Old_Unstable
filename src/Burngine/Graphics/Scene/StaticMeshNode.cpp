@@ -318,10 +318,7 @@ const Vector3f& ambient) {
 				normalMatrix = glm::transpose(glm::inverse(view * getModelMatrix()));
 
 				//Calculate some values for the lightsource
-				Matrix4f rotMat = glm::rotate(Matrix4f(1.f), lights[j]->getRotation().x, Vector3f(1.f, 0.f, 0.f));
-				rotMat = glm::rotate(rotMat, lights[j]->getRotation().y, Vector3f(0.f, 1.f, 0.f));
-				rotMat = glm::rotate(rotMat, lights[j]->getRotation().z, Vector3f(0.f, 0.f, 1.f));
-				Vector4f lightDir = rotMat * Vector4f(1.f, 0.f, 0.f, 1.f);
+				Vector4f lightDir = lights[j]->getDirection();
 
 				shader.setUniform("normalMatrix", normalMatrix);
 				shader.setUniform("cameraPosition", camPosition);
@@ -329,6 +326,9 @@ const Vector3f& ambient) {
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
 				shader.setUniform("lightIntensity", lights[j]->getIntensity());
 				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
+				shader.setUniform("depthBiasMvp", lights[j]->getBiasMatrix());
+
+				lights[j]->bindShadowMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);

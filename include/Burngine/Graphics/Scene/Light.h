@@ -56,6 +56,8 @@ public:
 
 	const Matrix4f& getBiasMatrix() const;
 
+	void bindShadowMap() const;
+
 private:
 	Vector3f _color;
 	float _intensity;
