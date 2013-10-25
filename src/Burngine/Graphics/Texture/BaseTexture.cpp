@@ -64,10 +64,50 @@ BaseTexture::~BaseTexture() {
 		cleanup();
 }
 
-void BaseTexture::calculateDimensions(const Vector2ui& dimensions) {
-	_dimensions.x = nextPowerOf2(dimensions.x);
-	_dimensions.y = nextPowerOf2(dimensions.y);
+void BaseTexture::create(const Vector2ui& dimensions) {
+
+	if(!Window::isContextCreated())
+		return;
+
+	//Clear memory when this is the only reference
+	cleanup();
+	//Otherwise override texture
+
+	//Set values
+	_originalDimensions = dimensions;
+	_dimensions = calculateDimensions(dimensions);
+
+	//Create new
+	generate();
+
 }
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+Uint32 nextPowerOf2(const Uint32& n) {
+
+	//The power of 2 value to return
+	Uint32 p2 = 1;
+
+	//Look for the next greater power of 2
+	while(n > p2){
+		p2 <<= 1; //Shift one to the left. Equals p2 *= 2
+	}
+
+	return p2;
+
+}
+
+Vector2ui BaseTexture::calculateDimensions(const Vector2ui& dimensions) {
+	Vector2ui dim;
+	dim.x = nextPowerOf2(dimensions.x);
+	dim.y = nextPowerOf2(dimensions.y);
+	return dim;
+}
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 GLint BaseTexture::getCurrentBoundTexture() const {
 	GLint t = 0;
@@ -111,6 +151,9 @@ void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
 
 void BaseTexture::bind() const {
 
+	if(!isCreated())
+		return;
+
 	glActiveTexture(GL_TEXTURE0 + _unit);
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	glBindSampler(_unit, _sampler);
@@ -126,20 +169,6 @@ void BaseTexture::unbind() {
 	glActiveTexture(GL_TEXTURE0 + _unit);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindSampler(_unit, 0);
-
-}
-
-Uint32 BaseTexture::nextPowerOf2(const Uint32& n) const {
-
-	//The power of 2 value to return
-	Uint32 p2 = 1;
-
-	//Look for the next greater power of 2
-	while(n > p2){
-		p2 <<= 1; //Shift one to the left. Equals p2 *= 2
-	}
-
-	return p2;
 
 }
 
@@ -179,9 +208,11 @@ void BaseTexture::cleanup() {
 	if(!isCreated())
 		return;
 
-	//Delete texture and sampler from GPU
-	glDeleteTextures(1, &_texture);
-	glDeleteSamplers(1, &_sampler);
+	if(*_referenceCount == 1){
+		//Delete texture and sampler from GPU
+		glDeleteTextures(1, &_texture);
+		glDeleteSamplers(1, &_sampler);
+	}
 
 	//Reset values
 	_texture = 0;

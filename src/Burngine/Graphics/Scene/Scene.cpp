@@ -140,7 +140,7 @@ bool Scene::drawDiffusepart() {
 	OpenGlControl::useSettings(oglSettings);
 
 	_diffuseLightTexture.clear();
-	_diffuseLightTexture.bind();
+	_diffuseLightTexture.bindAsRendertarget();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));
@@ -166,7 +166,7 @@ bool Scene::drawSpecularpart() {
 	OpenGlControl::useSettings(oglSettings);
 
 	_specularLightTexture.clear();
-	_specularLightTexture.bind();
+	_specularLightTexture.bindAsRendertarget();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));

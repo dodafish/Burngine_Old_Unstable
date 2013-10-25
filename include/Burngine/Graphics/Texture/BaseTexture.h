@@ -24,17 +24,19 @@ public:
 		MIN_NEAREST, MIN_BILINEAR, MIN_TRILINEAR, MIN_NEAREST_MIPMAP, MIN_BILINEAR_MIPMAP
 	};
 
-	BaseTexture() = delete;
+	BaseTexture();
+	BaseTexture(const BaseTexture& other);
+	BaseTexture& operator=(const BaseTexture& other);
+
 	virtual ~BaseTexture();
 
-	virtual bool create(const Vector2ui& dimensions) = 0;
 	virtual void cleanup();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 	void setSamplerParameter(GLenum parameter, GLenum value);
 
 	void unbind();
-	void bind() const;
+	virtual void bind() const;
 
 	bool isCreated() const;
 
@@ -48,14 +50,16 @@ public:
 	void setAnisotropicLevel(const GLfloat& level);
 	const GLfloat& getAnisotropicLevel() const;
 
+	static Vector2ui calculateDimensions(const Vector2ui& dimensions);
+
 protected:
+	void create(const Vector2ui& dimensions);
+
 	void generate();
 
 	GLint getCurrentBoundTexture() const;
-	void calculateDimensions(const Vector2ui& dimensions);
 	void updateFiltering() const;
 	Vector2f mapUvCoordsToTexture(const Vector2f& uv) const;
-	Uint32 nextPowerOf2(const Uint32& n) const;
 
 	GLuint _texture; ///< Texture's ID
 	GLuint _sampler; ///< Sampler's ID

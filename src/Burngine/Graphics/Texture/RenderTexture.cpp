@@ -84,7 +84,7 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	return true;
 }
 
-void RenderTexture::bind(bool asRendertarget) const {
+void RenderTexture::bindAsRendertarget() const {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated())
@@ -93,14 +93,8 @@ void RenderTexture::bind(bool asRendertarget) const {
 	if(!isCreated())
 		return;
 
-	if(asRendertarget){
-		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-		glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
-	}else{
-		glActiveTexture(GL_TEXTURE0 + _unit);
-		glBindTexture(GL_TEXTURE_2D, _texture);
-		glBindSampler(_unit, _sampler);
-	}
+	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
 
 }
 
@@ -148,7 +142,7 @@ void RenderTexture::drawFullscreen() {
 	GLint lastTex = getCurrentBoundTexture();
 
 	//Bind texture only
-	bind(false);
+	bind();
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);
@@ -209,7 +203,7 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	GLint lastTex = getCurrentBoundTexture();
 
 	//Bind texture only
-	bind(false);
+	bind();
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);

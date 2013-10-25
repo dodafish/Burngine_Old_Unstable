@@ -25,7 +25,8 @@ public:
 
 	virtual bool create(const Vector2ui& dimensions);
 
-	void bind(bool asRendertarget = true) const;
+	void bindAsRendertarget() const;
+
 	void clear() const;
 
 	void drawFullscreen();
