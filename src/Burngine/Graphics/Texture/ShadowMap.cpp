@@ -6,6 +6,8 @@
  */
 
 #include <Burngine/Graphics/Texture/ShadowMap.h>
+#include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/System/Reporter.h>
 
 namespace burn {
 
@@ -79,7 +81,7 @@ bool ShadowMap::create(const Resolution& resolution) {
 
 	// Always check that our framebuffer is ok
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		std::cout << "ShadowMap: Failed to create framebuffer!\n";
+		Reporter::report("ShadowMap: Failed to create framebuffer!\n", Reporter::ERROR);
 		return false;
 	}
 

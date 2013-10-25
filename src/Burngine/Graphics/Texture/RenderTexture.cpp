@@ -10,6 +10,7 @@
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
+#include <Burngine/System/Reporter.h>
 
 #include <iostream>
 
@@ -65,7 +66,7 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	//Check:
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		std::cout << "RenderTexture: Failed to create framebuffer!\n";
+		Reporter::report("RenderTexture: Failed to create framebuffer!\n", Reporter::ERROR);
 		return false;
 	}
 
