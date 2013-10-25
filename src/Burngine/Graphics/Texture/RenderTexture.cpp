@@ -35,11 +35,7 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 		return false;
 
 	//Generate texture and sampler. Does cleanup before if needed
-	generate();
-
-	//Set values:
-	_originalDimensions = dimensions;
-	calculateDimensions(_originalDimensions); //Calculate power of 2 dimensions
+	generate(dimensions);
 
 	GLint lastFB = 0;
 	GLint lastRB = 0;

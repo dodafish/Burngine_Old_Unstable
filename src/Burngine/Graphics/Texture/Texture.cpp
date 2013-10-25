@@ -18,7 +18,7 @@ bool Texture::loadFromFile(const std::string& file) {
 	if(!Window::isContextCreated())
 		return false;
 
-	generate();
+	generate(Vector2ui(1, 1));
 
 	_texture = SOIL_load_OGL_texture(
 	file.c_str(), SOIL_LOAD_AUTO, _texture,
@@ -39,7 +39,7 @@ bool Texture::loadFromFile(const std::string& file) {
 bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format) {
 
 	//Create Texture on GPU. Dimensions will be power of 2
-	create(dimensions);
+	generate(dimensions);
 
 	//Bind the texture
 	bind();

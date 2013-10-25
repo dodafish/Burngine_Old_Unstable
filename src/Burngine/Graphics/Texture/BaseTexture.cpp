@@ -64,24 +64,6 @@ BaseTexture::~BaseTexture() {
 		cleanup();
 }
 
-void BaseTexture::create(const Vector2ui& dimensions) {
-
-	if(!Window::isContextCreated())
-		return;
-
-	//Clear memory when this is the only reference
-	cleanup();
-	//Otherwise override texture
-
-	//Set values
-	_originalDimensions = dimensions;
-	_dimensions = calculateDimensions(dimensions);
-
-	//Create new
-	generate();
-
-}
-
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 
@@ -184,7 +166,7 @@ void BaseTexture::setFiltering(const MagnificationFiltering& mag, const Minifica
 	updateFiltering();
 }
 
-void BaseTexture::generate() {
+void BaseTexture::generate(const Vector2ui& dimensions) {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated())
@@ -192,6 +174,10 @@ void BaseTexture::generate() {
 
 	//Reset before generating new texture, sampler etc.
 	cleanup();
+
+	//Set values
+	_originalDimensions = dimensions;
+	_dimensions = calculateDimensions(dimensions);
 
 	//Generate
 	glGenTextures(1, &_texture);

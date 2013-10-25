@@ -53,9 +53,7 @@ public:
 	static Vector2ui calculateDimensions(const Vector2ui& dimensions);
 
 protected:
-	void create(const Vector2ui& dimensions);
-
-	void generate();
+	void generate(const Vector2ui& dimensions);
 
 	GLint getCurrentBoundTexture() const;
 	void updateFiltering() const;

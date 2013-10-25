@@ -23,7 +23,7 @@ public:
 	RenderTexture(const RenderTexture& other) = delete;
 	RenderTexture& operator=(const RenderTexture& other) = delete;
 
-	virtual bool create(const Vector2ui& dimensions);
+	bool create(const Vector2ui& dimensions);
 
 	void bindAsRendertarget() const;
 
