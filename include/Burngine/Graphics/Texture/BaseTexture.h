@@ -24,13 +24,10 @@ public:
 		MIN_NEAREST, MIN_BILINEAR, MIN_TRILINEAR, MIN_NEAREST_MIPMAP, MIN_BILINEAR_MIPMAP
 	};
 
-	BaseTexture();
+	BaseTexture() = delete;
 	virtual ~BaseTexture();
 
-	BaseTexture(const BaseTexture& other);
-	BaseTexture& operator=(const BaseTexture& other);
-
-	virtual bool create(const Vector2ui& dimensions);
+	virtual bool create(const Vector2ui& dimensions) = 0;
 	virtual void cleanup();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);

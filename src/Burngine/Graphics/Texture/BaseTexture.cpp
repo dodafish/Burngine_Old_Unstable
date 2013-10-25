@@ -64,26 +64,6 @@ BaseTexture::~BaseTexture() {
 		cleanup();
 }
 
-bool BaseTexture::create(const Vector2ui& dimensions) {
-
-	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create texture (No valid OpenGL-Context)!", Reporter::ERROR);
-		return false;
-	}
-
-	//Generate texture and sampler. Does cleanup before if needed
-	generate();
-
-	//Set values
-	_originalDimensions = dimensions;
-	//Real texture dimensions are power of 2
-	calculateDimensions(_originalDimensions);
-
-	return true;
-
-}
-
 void BaseTexture::calculateDimensions(const Vector2ui& dimensions) {
 	_dimensions.x = nextPowerOf2(dimensions.x);
 	_dimensions.y = nextPowerOf2(dimensions.y);
@@ -129,7 +109,13 @@ void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
 		glSamplerParameteri(_sampler, parameter, value);
 }
 
-void BaseTexture::bind() const {}
+void BaseTexture::bind() const {
+
+	glActiveTexture(GL_TEXTURE0 + _unit);
+	glBindTexture(GL_TEXTURE_2D, _texture);
+	glBindSampler(_unit, _sampler);
+
+}
 
 void BaseTexture::unbind() {
 
