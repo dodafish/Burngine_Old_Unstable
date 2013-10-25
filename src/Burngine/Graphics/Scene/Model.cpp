@@ -20,10 +20,47 @@
 
 namespace burn {
 
-Model::Model() {
+Model::Model() :
+_referenceCounter(new unsigned int(1)) {
+}
+
+Model::Model(const Model& other) :
+_referenceCounter(other._referenceCounter) {
+
+	++(*_referenceCounter);
+
+}
+
+Model& Model::operator=(const Model& other) {
+
+	if(*_referenceCounter < 2){
+		for(size_t i = 0; i < _meshes.size(); ++i){
+			delete _meshes[i];
+		}
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
+
+	_referenceCounter = other._referenceCounter;
+	_meshes = other._meshes;
+
+	++(*_referenceCounter);
+
+	return *this;
 }
 
 Model::~Model() {
+
+	if(*_referenceCounter < 2){
+		for(size_t i = 0; i < _meshes.size(); ++i){
+			delete _meshes[i];
+		}
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
+
 }
 
 size_t Model::getMeshCount() const {
@@ -102,12 +139,14 @@ bool Model::loadFromFile(const std::string& file) {
 
 		}
 
-		_meshes.push_back(std::shared_ptr<Mesh>(new Mesh()));
-		_meshes.back()->setVertices(vertices);
-
-		Material mat = _meshes.back()->getMaterial();
-		mat.setIndex(mesh->mMaterialIndex);
-		_meshes.back()->setMaterial(mat);
+		{
+			Mesh* tempMesh = new Mesh();
+			tempMesh->setVertices(vertices);
+			Material mat = tempMesh->getMaterial();
+			mat.setIndex(mesh->mMaterialIndex);
+			tempMesh->setMaterial(mat);
+			_meshes.push_back(tempMesh);
+		}
 
 		{
 			std::stringstream ss;

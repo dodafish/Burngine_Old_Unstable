@@ -14,11 +14,49 @@ VertexBufferObject::VertexBufferObject() :
 _lastBuffer(0),
 _isCreated(false),
 _isDataUploaded(false),
-_buffer(0) {
+_buffer(0),
+_referenceCounter(new unsigned int(1)) {
+}
+
+VertexBufferObject::VertexBufferObject(const VertexBufferObject& other) :
+_lastBuffer(other._lastBuffer),
+_isCreated(other._isCreated),
+_isDataUploaded(other._isDataUploaded),
+_buffer(other._buffer),
+_data(other._data),
+_referenceCounter(other._referenceCounter)
+{
+	++(*_referenceCounter);
+}
+
+VertexBufferObject& VertexBufferObject::operator=(const VertexBufferObject& other) {
+
+	if(*_referenceCounter < 2){
+		//cleanup();
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
+
+	_lastBuffer = other._lastBuffer;
+	_isCreated = other._isCreated;
+	_isDataUploaded = other._isDataUploaded;
+	_buffer = other._buffer;
+	_referenceCounter = other._referenceCounter;
+	_data = other._data;
+
+	++(*_referenceCounter);
+
+	return *this;
 }
 
 VertexBufferObject::~VertexBufferObject() {
-	cleanup();
+	if(*_referenceCounter < 2){
+		//cleanup();
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
 }
 
 void VertexBufferObject::create() {
@@ -49,11 +87,14 @@ void VertexBufferObject::reset() {
 }
 
 void VertexBufferObject::bind(const GLint& type) const {
-	if(Window::isContextCreated())
+	if(Window::isContextCreated() && _isCreated && _isDataUploaded)
 		glBindBuffer(type, _buffer);
 }
 
 void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHint) {
+	if(_data.size() == 0)
+		return;
+
 	//Don't do anything, when there is no OpenGL-Context
 	if(!Window::isContextCreated()){
 		return;

@@ -19,6 +19,9 @@ namespace burn {
 class BURNGINE_API VertexBufferObject {
 public:
 	VertexBufferObject();
+	VertexBufferObject(const VertexBufferObject& other);
+	VertexBufferObject& operator=(const VertexBufferObject& other);
+
 	~VertexBufferObject();
 
 	void create();
@@ -42,6 +45,8 @@ private:
 	bool _isCreated, _isDataUploaded;
 	GLuint _buffer;
 	std::vector<GLbyte> _data;
+
+	unsigned int* _referenceCounter;
 };
 
 } /* namespace burn */

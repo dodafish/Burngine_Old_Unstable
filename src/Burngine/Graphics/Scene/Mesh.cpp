@@ -13,7 +13,8 @@
 namespace burn {
 
 Mesh::Mesh() :
-_needUpdate(false) {
+_needUpdate(false),
+_referenceCounter(new unsigned int(1)) {
 
 	_positionVbo.create();
 	_colorVbo.create();
@@ -22,12 +23,55 @@ _needUpdate(false) {
 
 }
 
+Mesh::Mesh(const Mesh& other) :
+_material(other._material),
+_vertices(other._vertices),
+_needUpdate(other._needUpdate),
+_positionVbo(other._positionVbo),
+_colorVbo(other._colorVbo),
+_uvVbo(other._uvVbo),
+_normalVbo(other._normalVbo),
+_texture(other._texture),
+_referenceCounter(other._referenceCounter) {
+
+	++(*_referenceCounter);
+
+}
+
+Mesh& Mesh::operator=(const Mesh& other) {
+
+	if(*_referenceCounter < 2){
+		/*_positionVbo.cleanup();
+		_colorVbo.cleanup();
+		_uvVbo.cleanup();
+		_normalVbo.cleanup();*/
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
+
+	_material = other._material;
+	_vertices = other._vertices;
+	_needUpdate = other._needUpdate;
+	_positionVbo = other._positionVbo;
+	_colorVbo = other._colorVbo;
+	_uvVbo = other._uvVbo;
+	_normalVbo = other._normalVbo;
+	_texture = other._texture;
+	_referenceCounter = other._referenceCounter;
+
+	++(*_referenceCounter);
+
+	return *this;
+}
+
 Mesh::~Mesh() {
 
-	_positionVbo.cleanup();
-	_colorVbo.cleanup();
-	_uvVbo.cleanup();
-	_normalVbo.cleanup();
+	if(*_referenceCounter < 2){
+		delete _referenceCounter;
+	}else{
+		--(*_referenceCounter);
+	}
 
 }
 
@@ -123,7 +167,7 @@ bool Mesh::data() {
 	return false;
 }
 
-bool Mesh::isUpdated() const{
+bool Mesh::isUpdated() const {
 	return (!_needUpdate);
 }
 

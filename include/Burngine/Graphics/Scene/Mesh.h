@@ -30,6 +30,10 @@ public:
 	 */
 	Mesh();
 
+	Mesh(const Mesh& other);
+
+	Mesh& operator=(const Mesh& other);
+
 	/**
 	 * @brief The default destructor
 	 */
@@ -54,7 +58,7 @@ public:
 	 *
 	 * @see Vertex
 	 */
-	void setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly = true);
+	void setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly = false);
 
 	/**
 	 * @brief Returns the count of the vertices which the mesh
@@ -169,6 +173,8 @@ private:
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
 
 	Texture _texture;
+
+	unsigned int* _referenceCounter;
 };
 
 } /* namespace burn */
