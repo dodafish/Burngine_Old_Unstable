@@ -257,10 +257,7 @@ const Vector3f& ambient) {
 
 				//Calculate some values for the lightsource
 				float lightConeCosine = std::cos((lights[j]->getCutoffAngle() / (180.f / 3.1415f)));
-				Matrix4f rotMat = glm::rotate(Matrix4f(1.f), lights[j]->getRotation().x, Vector3f(1.f, 0.f, 0.f));
-				rotMat = glm::rotate(rotMat, lights[j]->getRotation().y, Vector3f(0.f, 1.f, 0.f));
-				rotMat = glm::rotate(rotMat, lights[j]->getRotation().z, Vector3f(0.f, 0.f, 1.f));
-				Vector4f lightDir = rotMat * Vector4f(1.f, 0.f, 0.f, 1.f);
+				Vector4f lightDir = lights[j]->getDirection();
 
 				shader.setUniform("normalMatrix", normalMatrix);
 				shader.setUniform("cameraPosition", camPosition);

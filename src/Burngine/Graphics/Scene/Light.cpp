@@ -154,10 +154,7 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 
 	//Calculate matrices
-	Matrix4f rotMat = glm::rotate(Matrix4f(1.f), _rotation.x, Vector3f(1.f, 0.f, 0.f));
-	rotMat = glm::rotate(rotMat, _rotation.y, Vector3f(0.f, 1.f, 0.f));
-	rotMat = glm::rotate(rotMat, _rotation.z, Vector3f(0.f, 0.f, 1.f));
-	Vector4f lightDirTemp = rotMat * Vector4f(1.f, 0.f, 0.f, 1.0f);
+	Vector4f lightDirTemp = getDirection();
 	Vector3f lightDir(lightDirTemp.x, lightDirTemp.y, lightDirTemp.z);
 	Matrix4f projectionMatrix = glm::ortho<float>(-50, 50, -50, 50, -50, 50);
 	Matrix4f viewMatrix = glm::lookAt(-lightDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
