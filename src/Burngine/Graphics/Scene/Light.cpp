@@ -15,6 +15,8 @@
 
 namespace burn {
 
+const Matrix4f MVP_TO_BIAS(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
+
 void Light::removeAllParents() {
 	if(_parents.size() == 0)
 		return;
@@ -137,6 +139,10 @@ Vector4f Light::getDirection() const {
 	return (rotMat * Vector4f(1.f, 0.f, 0.f, 1.0f));
 }
 
+const Matrix4f& Light::getBiasMatrix() const {
+	return _biasMatrix;
+}
+
 void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 
 	if(!Window::isContextCreated())
@@ -159,6 +165,9 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	Matrix4f projectionMatrix = glm::ortho<float>(-50, 50, -50, 50, -50, 50);
 	Matrix4f viewMatrix = glm::lookAt(-lightDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	Matrix4f modelMatrix = glm::mat4(1.0);
+
+	//No ModelMatrix because it's an identity matrix
+	_biasMatrix = MVP_TO_BIAS * projectionMatrix * viewMatrix;
 
 	//Set uniforms
 	shader.setUniform("modelMatrix", modelMatrix);

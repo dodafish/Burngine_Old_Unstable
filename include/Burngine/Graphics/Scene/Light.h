@@ -54,6 +54,8 @@ public:
 
 	Vector4f getDirection() const;
 
+	const Matrix4f& getBiasMatrix() const;
+
 private:
 	Vector3f _color;
 	float _intensity;
@@ -64,6 +66,8 @@ private:
 
 	std::vector<Scene*> _parents;
 	void removeAllParents();
+
+	Matrix4f _biasMatrix;
 };
 
 } /* namespace burn */
