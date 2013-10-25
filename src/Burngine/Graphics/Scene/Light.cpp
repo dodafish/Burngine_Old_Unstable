@@ -10,6 +10,7 @@
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/Scene/StaticMeshNode.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
+#include <Burngine/Graphics/Window/Window.h>
 #include <iostream>
 
 namespace burn {
@@ -138,20 +139,16 @@ Vector4f Light::getDirection() const {
 
 void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 
+	if(!Window::isContextCreated())
+		return;
+
 	//Testing for dirlights only
 	if(_type == POINTLIGHT || _type == SPOTLIGHT)
 		return;
 
-	/*
-	 * This is testing code. We assume all nodes are StaticMeshNodes
-	 */
-
-	//std::cout << "1";
 	//Clear old shadowMap and bind it for rendering
 	_shadowMap.clear();
 	_shadowMap.bindAsRendertarget();
-
-	//std::cout << "2";
 
 	//Select shader
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
@@ -170,8 +167,6 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	shader.setUniform("modelMatrix", modelMatrix);
 	shader.setUniform("viewMatrix", viewMatrix);
 	shader.setUniform("projectionMatrix", projectionMatrix);
-
-	//std::cout << "3";
 
 	//Scan through all nodes
 	for(size_t i = 0; i < nodes.size(); ++i){
@@ -206,8 +201,6 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 		}
 
 	}
-
-	//std::cout << "4";
 
 }
 
