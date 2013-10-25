@@ -166,12 +166,12 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	//Calculate matrices
 	Vector4f lightDirTemp = getDirection();
 	Vector3f lightDir(lightDirTemp.x, lightDirTemp.y, lightDirTemp.z);
-	Matrix4f projectionMatrix = glm::ortho<float>(-50, 50, -50, 50, -50, 50);
+	Matrix4f projectionMatrix = glm::ortho<float>(-50.f, 50.f, -50.f, 50.f, -50.f, 50.f);
 	Matrix4f viewMatrix = glm::lookAt(-lightDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	Matrix4f modelMatrix = glm::mat4(1.0);
 
 	//No ModelMatrix because it's an identity matrix
-	_biasMatrix = MVP_TO_BIAS * projectionMatrix * viewMatrix;
+	_biasMatrix = MVP_TO_BIAS * projectionMatrix * viewMatrix * modelMatrix;
 
 	//Set uniforms
 	shader.setUniform("modelMatrix", modelMatrix);

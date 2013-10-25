@@ -85,6 +85,9 @@ bool ShadowMap::create(const Resolution& resolution) {
 		return false;
 	}
 
+	//Set filtering
+	updateFiltering();
+
 	//Restore old bindings
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
@@ -112,7 +115,8 @@ void ShadowMap::clear() const {
 	GLint previousTexture = getCurrentBoundTexture();
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, getDimensions().x, getDimensions().y, 0, GL_DEPTH_COMPONENT,
-					GL_FLOAT, 0);
+	GL_FLOAT,
+					0);
 	glBindTexture(GL_TEXTURE_2D, previousTexture);
 
 	GLint lastFB = 0;
