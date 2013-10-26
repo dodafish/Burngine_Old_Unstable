@@ -273,6 +273,11 @@ const Vector3f& ambient) {
 				shader.setUniform("cutoffAngle", light->getConeAngle());
 				shader.setUniform("lightConeCosine", lightConeCosine);
 				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
+				shader.setUniform(
+				"depthBiasMvp",
+				MVP_TO_BIAS * light->getBiasProjectionMatrix() * light->getBiasViewMatrix() * getModelMatrix());
+
+				light->bindShadowMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);

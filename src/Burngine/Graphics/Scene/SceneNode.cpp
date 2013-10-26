@@ -21,24 +21,30 @@ void SceneNode::removeAllParents() {
 		parents[i]->detachSceneNode(*this);
 }
 
-SceneNode::SceneNode() {
+SceneNode::SceneNode() :
+_isCastingShadows(true) {
 }
 
 SceneNode::~SceneNode() {
 	removeAllParents();
 }
 
-SceneNode::SceneNode(const SceneNode& other) {
-	for(size_t i = 0; i < other._parents.size(); ++i){
-		other._parents[i]->attachSceneNode(*this);
+SceneNode::SceneNode(const SceneNode& other) :
+_parents(other._parents),
+_isCastingShadows(other._isCastingShadows) {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		_parents[i]->attachSceneNode(*this);
 	}
 }
 
 SceneNode& SceneNode::operator=(const SceneNode& other) {
 	removeAllParents();
 
-	for(size_t i = 0; i < other._parents.size(); ++i){
-		other._parents[i]->attachSceneNode(*this);
+	_isCastingShadows = other._isCastingShadows;
+
+	_parents = other._parents;
+	for(size_t i = 0; i < _parents.size(); ++i){
+		_parents[i]->attachSceneNode(*this);
 	}
 	return *this;
 }
@@ -71,6 +77,14 @@ void SceneNode::setMVPUniforms(const Shader& shader, const Camera& cam) {
 	shader.setUniform("viewMatrix", viewMatrix);
 	shader.setUniform("projectionMatrix", projectionMatrix);
 
+}
+
+bool SceneNode::isCastingShadows() const {
+	return _isCastingShadows;
+}
+
+void SceneNode::setCastingShadows(bool enabled) {
+	_isCastingShadows = enabled;
 }
 
 } /* namespace burn */

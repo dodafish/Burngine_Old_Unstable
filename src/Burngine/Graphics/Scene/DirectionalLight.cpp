@@ -15,8 +15,7 @@
 
 namespace burn {
 
-DirectionalLight::DirectionalLight()
-{
+DirectionalLight::DirectionalLight() {
 	_shadowMap.create(ShadowMap::VERY_HIGH);
 }
 
@@ -57,6 +56,9 @@ void DirectionalLight::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 
 	//Scan through all nodes
 	for(size_t i = 0; i < nodes.size(); ++i){
+
+		if(!nodes[i]->isCastingShadows())
+			continue;
 
 		if(typeid(*(nodes[i])) == typeid(StaticMeshNode)){
 			StaticMeshNode* node = static_cast<StaticMeshNode*>(nodes[i]);

@@ -16,7 +16,7 @@
 
 #include <vector>
 
-template class BURNGINE_API std::vector<burn::Scene*>;
+//template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 
@@ -59,6 +59,9 @@ public:
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
+	bool isCastingShadows() const;
+	void setCastingShadows(bool enabled);
+
 protected:
 
 	void setMVPUniforms(const Shader& shader, const Camera& cam);
@@ -67,6 +70,8 @@ private:
 	void removeAllParents();
 
 	std::vector<Scene*> _parents;
+
+	bool _isCastingShadows;
 };
 
 } /* namespace burn */
