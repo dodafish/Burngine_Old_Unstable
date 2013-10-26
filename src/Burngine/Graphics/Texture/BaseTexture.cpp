@@ -37,78 +37,41 @@ Vector2ui BaseTexture::calculatePow2Dimensions(const Vector2ui& dimensions) {
 	return dim;
 }
 
-GLfloat BaseTexture::getMaxAnisotropicLevel() {
-	GLfloat maxAniso = 0.0f;
-	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
-	return maxAniso;
-}
-
-
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 
-BaseTexture::BaseTexture() :
-_sampler(0),
-_referenceCount(new unsigned int(1)),
-_magnificationFiltering(MAG_NEAREST),
-_minificationFiltering(MIN_NEAREST),
-_anisotropicLevel(1.f) {
-}
-
-BaseTexture::BaseTexture(const BaseTexture& other) :
-_sampler(other._sampler),
-_referenceCount(other._referenceCount),
-_magnificationFiltering(other._magnificationFiltering),
-_minificationFiltering(other._minificationFiltering),
-_anisotropicLevel(other._anisotropicLevel) {
-	++(*_referenceCount);
-}
-
-BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
-
-	if(*_referenceCount < 2){
-		glDeleteSamplers(1, &_sampler);
-		delete _referenceCount;
-	}else{
-		--(*_referenceCount);
-	}
-
-	_sampler = other._sampler;
-	_magnificationFiltering = other._magnificationFiltering;
-	_minificationFiltering = other._minificationFiltering;
-	_anisotropicLevel = other._anisotropicLevel;
-	_referenceCount = other._referenceCount;
-
-	++(*_referenceCount);
-
-	return *this;
+BaseTexture::BaseTexture() {
+	_sampler.create();
 }
 
 BaseTexture::~BaseTexture() {
-	if(*_referenceCount < 2){
-		glDeleteSamplers(1, &_sampler);
-		delete _referenceCount;
-	}else{
-		--(*_referenceCount);
-	}
-}
-
-bool BaseTexture::createSampler(){
-
-	if(*_referenceCount < 2){
-		destroySampler();
-	}
 
 }
 
-void BaseTexture::destroySampler(){
+void BaseTexture::bind(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated() && _sampler != 0)
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to bind. No valid context created!", Reporter::ERROR);
 		return;
+	}
 
-	glDeleteSamplers(1, &_sampler);
+	glActiveTexture(GL_TEXTURE0 + unit);
+	Sampler::bind(_sampler, unit);
+	onBind(unit);
 
 }
 
+void BaseTexture::unbind(const unsigned int& unit) const {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to unbind. No valid context created!", Reporter::ERROR);
+		return;
+	}
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	Sampler::unbind(unit);
+	onUnbind(unit);
+
+}
 
 } /* namespace burn */

@@ -20,6 +20,11 @@ namespace burn {
 class BURNGINE_API Texture : public BaseTexture {
 public:
 
+	Texture();
+	Texture(const Texture& other);
+	Texture& operator=(const Texture& other);
+	~Texture();
+
 	/**
 	 * @brief Loads an image from file and stores it
 	 * as texture ready for use.
@@ -32,6 +37,17 @@ public:
 
 	bool loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format);
 
+protected:
+	GLuint _textureId;
+
+	virtual void onBind(const unsigned int& unit) const;
+	virtual void onUnbind(const unsigned int& unit) const;
+
+private:
+	void generate();
+	void cleanup();
+
+	unsigned int* _referenceCount;
 };
 
 } /* namespace burn */

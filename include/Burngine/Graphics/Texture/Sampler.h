@@ -16,6 +16,7 @@ namespace burn {
 class BURNGINE_API Sampler {
 public:
 	static void bind(const Sampler& sampler, const unsigned int& unit = 0);
+	static void unbind(const unsigned int& unit = 0);
 
 	//////////////////////////////////////////////////
 

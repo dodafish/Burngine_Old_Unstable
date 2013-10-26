@@ -13,52 +13,133 @@
 
 namespace burn {
 
-bool Texture::loadFromFile(const std::string& file) {
+Texture::Texture() :
+_textureId(0),
+_referenceCount(new unsigned int(1)) {
 
-	if(!Window::isContextCreated())
-		return false;
+}
 
-	generate(Vector2ui(1, 1));
+Texture::Texture(const Texture& other) :
+_textureId(other._textureId),
+_referenceCount(other._referenceCount) {
+	++(*_referenceCount);
+}
 
-	_texture = SOIL_load_OGL_texture(
-	file.c_str(), SOIL_LOAD_AUTO, _texture,
-	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+Texture& Texture::operator=(const Texture& other) {
 
-	if(isCreated()){
-		std::cout << "Created texturebuffer. ID: " << _texture << "\n";
-		return true;
+	if(this == &other)
+		return *this;
+
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
 	}
 
-	setFiltering(MAG_BILINEAR, MIN_TRILINEAR);
+	_textureId = other._textureId;
+	_referenceCount = other._referenceCount;
 
-	_mipmapsGenerated = true;
+	++(*_referenceCount);
 
-	return false;
+	return *this;
+}
+
+Texture::~Texture() {
+
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
+	}
+
+}
+
+void Texture::generate() {
+	if(*_referenceCount < 2){
+		cleanup();
+	}else{
+		--(*_referenceCount);
+		_referenceCount = new unsigned int(1);
+	}
+	glGenTextures(1, &_textureId);
+
+	if(_textureId == 0){
+		Reporter::report("Texture creation failed!", Reporter::ERROR);
+	}
+
+}
+
+void Texture::cleanup() {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to cleanup texture. No valid context created!", Reporter::ERROR);
+		return;
+	}
+
+	glDeleteTextures(1, &_textureId);
+
+	_textureId = 0;
+
+}
+
+bool Texture::loadFromFile(const std::string& file) {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to load texture. No valid context created!", Reporter::ERROR);
+		return false;
+	}
+
+	generate();
+
+	_textureId = SOIL_load_OGL_texture(
+	file.c_str(), SOIL_LOAD_AUTO, _textureId,
+	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+
+	return true;
 }
 
 bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format) {
 
-	//Create Texture on GPU. Dimensions will be power of 2
-	generate(dimensions);
+	generate();
 
 	//Bind the texture
 	bind();
 
 	//Fill with data
 	if(format == GL_RGB || format == GL_BGR)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, dimensions.x, dimensions.y, 0, format, GL_UNSIGNED_BYTE, data);
 	else
-		glTexImage2D(GL_TEXTURE_2D, 0, format, getDimensions().x, getDimensions().y, 0, format, GL_UNSIGNED_BYTE, data);
-
-	//glGenerateMipmap(GL_TEXTURE_2D);
-	//_mipmapsGenerated = true;
-
-	updateFiltering();
-
-	//Unbind texture to protect against modifications
-	unbind();
+		glTexImage2D(GL_TEXTURE_2D, 0, format, dimensions.x, dimensions.y, 0, format, GL_UNSIGNED_BYTE, data);
 
 	return true;
+}
+
+void Texture::onBind(const unsigned int& unit) const {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to bind texture. No valid context created!", Reporter::ERROR);
+		return;
+	}
+
+	if(_textureId == 0){
+		Reporter::report("Binding uncreated texture. ID: 0!", Reporter::WARNING);
+	}
+
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+
+}
+
+void Texture::onUnbind(const unsigned int& unit) const {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to unbind texture. No valid context created!", Reporter::ERROR);
+		return;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 } /* namespace burn */

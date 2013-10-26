@@ -12,8 +12,10 @@
 namespace burn {
 
 void bind(const Sampler& sampler, const unsigned int& unit) {
-	if(!Window::isContextCreated() || !sampler.isCreated())
+	if(!Window::isContextCreated() || !sampler.isCreated()){
+		Reporter::report("Unable to bind sampler. No valid context or sampler is not created!", Reporter::ERROR);
 		return;
+	}
 
 	if(sampler._needsFilteringUpdate){
 		if(!sampler.updateFiltering())
@@ -21,6 +23,15 @@ void bind(const Sampler& sampler, const unsigned int& unit) {
 	}
 
 	glBindSampler(unit, sampler._id);
+}
+
+void unbind(const unsigned int& unit) {
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to unbind sampler. No valid context created!", Reporter::ERROR);
+		return;
+	}
+
+	glBindSampler(unit, 0);
 }
 
 //////////////////////////////////////////////////////////
@@ -81,8 +92,10 @@ Sampler::~Sampler() {
 
 bool Sampler::create() {
 
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to create sampler. No valid context available!", Reporter::ERROR);
 		return false;
+	}
 
 	if(*_referenceCounter < 2){
 		destroy();
@@ -98,7 +111,12 @@ bool Sampler::create() {
 
 void Sampler::destroy() {
 
-	if(!Window::isContextCreated() || !isCreated())
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to destroy sampler. No valid context available!", Reporter::ERROR);
+		return;
+	}
+
+	if(!isCreated())
 		return;
 
 	glDeleteSamplers(1, &_id);
@@ -118,6 +136,8 @@ bool Sampler::isCreated() const {
 bool Sampler::updateFiltering() const {
 
 	if(!Window::isContextCreated() || !isCreated()){
+		Reporter::report("Unable to update sampler's filtering. No valid context available or sampler not created!",
+							Reporter::ERROR);
 		return false;
 	}
 
@@ -152,6 +172,8 @@ bool Sampler::setSamplerParameter(GLenum parameter, GLenum value) {
 		glSamplerParameteri(_id, parameter, value);
 		return true;
 	}
+	Reporter::report("Unable to set sampler's parameter. No valid context available or sampelr not created!",
+						Reporter::ERROR);
 	return false;
 }
 

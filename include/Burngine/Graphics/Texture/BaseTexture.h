@@ -11,35 +11,27 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/System/Math.h>
+#include <Burngine/Graphics/Texture/Sampler.h>
 
 namespace burn {
 
 class BURNGINE_API BaseTexture {
 public:
-
-	static GLfloat getMaxAnisotropicLevel();
 	static Vector2ui calculatePow2Dimensions(const Vector2ui& dimensions);
 
-
-
 	BaseTexture();
-	BaseTexture(const BaseTexture& other);
-	BaseTexture& operator=(const BaseTexture& other);
 	virtual ~BaseTexture();
 
-	virtual void bind(const unsigned int& unit) const = 0;
-	bool isCreated() const = 0;
+	void bind(const unsigned int& unit = 0) const;
+	void unbind(const unsigned int& unit = 0) const;
 
 protected:
-	bool createSampler();
 
-	GLuint _sampler; ///< Sampler's ID
+	virtual void onBind(const unsigned int& unit) const = 0;
+	virtual void onUnbind(const unsigned int& unit) const = 0;
 
-	unsigned int* _referenceCount;
 private:
-	void destroySampler();
-
-
+	Sampler _sampler;
 };
 
 } /* namespace burn */
