@@ -22,15 +22,6 @@ _needUpdate(false) {
 
 }
 
-Mesh::~Mesh() {
-
-	_positionVbo.cleanup();
-	_colorVbo.cleanup();
-	_uvVbo.cleanup();
-	_normalVbo.cleanup();
-
-}
-
 bool Mesh::update() {
 	bool updated = false;
 	if(_needUpdate){

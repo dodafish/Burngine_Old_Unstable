@@ -31,11 +31,6 @@ public:
 	Mesh();
 
 	/**
-	 * @brief The default destructor
-	 */
-	~Mesh();
-
-	/**
 	 * @brief Loads a 3D-model into the Mesh object.
 	 * It uses the assimp importer, so it supports the files
 	 * that assimp does.

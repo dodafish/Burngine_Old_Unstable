@@ -20,12 +20,6 @@
 
 namespace burn {
 
-Model::Model() {
-}
-
-Model::~Model() {
-}
-
 size_t Model::getMeshCount() const {
 	return _meshes.size();
 }

@@ -27,8 +27,6 @@ namespace burn {
  */
 class BURNGINE_API Model {
 public:
-	Model();
-	~Model();
 
 	bool loadFromFile(const std::string& file);
 
