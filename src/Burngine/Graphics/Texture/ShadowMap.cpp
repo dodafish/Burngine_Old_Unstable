@@ -24,33 +24,40 @@ _resolution(other._resolution) {
 
 ShadowMap& ShadowMap::operator=(const ShadowMap& other) {
 
-	if(isLastReference()){
+	if(*_referenceCount < 2){
+		cleanup();
 		glDeleteFramebuffers(1, &_framebuffer);
+		delete _referenceCount;
 	}
-	cleanup();
+	else{
+		--(*_referenceCount);
+	}
 
 	_framebuffer = other._framebuffer;
 	_resolution = other._resolution;
+	_referenceCount = other._referenceCount;
 
 	return *this;
 
 }
 
 ShadowMap::~ShadowMap() {
-	if(isLastReference()){
+	if(*_referenceCount < 2){
 		glDeleteFramebuffers(1, &_framebuffer);
 	}
-
-	cleanup();
 }
 
 bool ShadowMap::create(const Resolution& resolution) {
 
 	//Cleanup first
-	if(isLastReference()){
+	if(*_referenceCount < 2){
 		glDeleteFramebuffers(1, &_framebuffer);
+		cleanup();
 	}
-	cleanup();
+	else{
+		--(*_referenceCount);
+		_referenceCount = new unsigned int(1);
+	}
 
 	//Save old bindings
 	GLint lastFB = 0;

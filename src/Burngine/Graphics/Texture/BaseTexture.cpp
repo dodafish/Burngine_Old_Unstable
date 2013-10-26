@@ -13,19 +13,15 @@
 
 namespace burn {
 
-bool BaseTexture::isLastReference() const {
-	return (*_referenceCount < 2);
-}
-
 BaseTexture::BaseTexture() :
 _texture(0),
 _sampler(0),
 _mipmapsGenerated(false),
 _unit(0),
+_referenceCount(new unsigned int(1)),
 _magnificationFiltering(MAG_NEAREST),
 _minificationFiltering(MIN_NEAREST),
-_anisotropicLevel(1.f),
-_referenceCount(new unsigned int(1)) {
+_anisotropicLevel(1.f) {
 }
 
 BaseTexture::BaseTexture(const BaseTexture& other) :
@@ -33,18 +29,21 @@ _texture(other._texture),
 _sampler(other._sampler),
 _mipmapsGenerated(other._mipmapsGenerated),
 _unit(other._unit),
+_referenceCount(other._referenceCount),
 _magnificationFiltering(other._magnificationFiltering),
 _minificationFiltering(other._minificationFiltering),
-_anisotropicLevel(other._anisotropicLevel),
-_referenceCount(other._referenceCount) {
+_anisotropicLevel(other._anisotropicLevel) {
 	++(*_referenceCount);
 }
 
 BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
 
-	--(*_referenceCount);
-
-	cleanup();
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
+	}
 
 	_texture = other._texture;
 	_sampler = other._sampler;
@@ -61,9 +60,12 @@ BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
 }
 
 BaseTexture::~BaseTexture() {
-	--(*_referenceCount);
-
-	cleanup();
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
+	}
 }
 
 /////////////////////////////////////////////////////////////////
@@ -175,10 +177,12 @@ void BaseTexture::generate(const Vector2ui& dimensions) {
 		return;
 
 	//Reset before generating new texture, sampler etc.
-	cleanup();
-
-	if(_referenceCount == nullptr)
+	if(*_referenceCount < 2){
+		cleanup();
+	}else{
+		--(*_referenceCount);
 		_referenceCount = new unsigned int(1);
+	}
 
 	//Set values
 	_originalDimensions = dimensions;
@@ -199,14 +203,9 @@ void BaseTexture::cleanup() {
 	if(!isCreated())
 		return;
 
-	if(isLastReference()){
-		//Delete texture and sampler from GPU
-		glDeleteTextures(1, &_texture);
-		glDeleteSamplers(1, &_sampler);
-
-		delete _referenceCount;
-		_referenceCount = nullptr;
-	}
+	//Delete texture and sampler from GPU
+	glDeleteTextures(1, &_texture);
+	glDeleteSamplers(1, &_sampler);
 
 	//Reset values
 	_texture = 0;

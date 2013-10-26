@@ -53,7 +53,6 @@ public:
 protected:
 	void cleanup();
 
-	bool isLastReference() const;
 	void generate(const Vector2ui& dimensions);
 
 	GLint getCurrentBoundTexture() const;
@@ -65,6 +64,8 @@ protected:
 	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
 	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
 	unsigned int _unit;
+
+	unsigned int* _referenceCount;
 private:
 
 	Vector2ui _dimensions; ///< Width and height. Always a power of 2
@@ -72,8 +73,6 @@ private:
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
 	GLfloat _anisotropicLevel;
-
-	unsigned int* _referenceCount;
 };
 
 } /* namespace burn */
