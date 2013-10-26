@@ -17,6 +17,9 @@ namespace burn {
 class BURNGINE_API BaseTexture {
 public:
 
+	static GLfloat getMaxAnisotropicLevel();
+	static Vector2ui calculatePow2Dimensions(const Vector2ui& dimensions);
+
 	enum MagnificationFiltering {
 		MAG_NEAREST, MAG_BILINEAR
 	};
@@ -27,48 +30,26 @@ public:
 	BaseTexture();
 	BaseTexture(const BaseTexture& other);
 	BaseTexture& operator=(const BaseTexture& other);
-
 	virtual ~BaseTexture();
 
 	void setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
 	void setSamplerParameter(GLenum parameter, GLenum value);
-
-	void unbind();
-	virtual void bind() const;
-
-	bool isCreated() const;
-
-	const Vector2ui& getDimensions() const;
-	const Vector2ui& getOriginalDimensions() const;
-
-	void setToUnit(const unsigned int& unit);
-
-	static GLfloat getMaxAnisotropicLevel();
-
 	void setAnisotropicLevel(const GLfloat& level);
 	const GLfloat& getAnisotropicLevel() const;
 
-	static Vector2ui calculateDimensions(const Vector2ui& dimensions);
+	virtual void bind(const unsigned int& unit) const = 0;
+	bool isCreated() const = 0;
 
 protected:
-	void cleanup();
+	bool createSampler();
 
-	void generate(const Vector2ui& dimensions);
-
-	GLint getCurrentBoundTexture() const;
 	void updateFiltering() const;
-	Vector2f mapUvCoordsToTexture(const Vector2f& uv) const;
 
-	GLuint _texture; ///< Texture's ID
 	GLuint _sampler; ///< Sampler's ID
-	Vector2ui _originalDimensions; ///< Original dimension. May be no power of 2
-	bool _mipmapsGenerated; ///< Whether or not mipmaps have been generated
-	unsigned int _unit;
 
 	unsigned int* _referenceCount;
 private:
-
-	Vector2ui _dimensions; ///< Width and height. Always a power of 2
+	void destroySampler();
 
 	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
