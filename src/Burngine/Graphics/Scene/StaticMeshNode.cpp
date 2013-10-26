@@ -10,7 +10,7 @@
 #include <Burngine/Graphics/Scene/Material.h>
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
-#include <Burngine/Graphics/Scene/Light.h>
+#include <Burngine/Graphics/Scene/SpotLight.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <iostream>
@@ -189,7 +189,7 @@ const Vector3f& ambient) {
 				}
 			}
 
-			if(lights[j]->getType() == Light::POINTLIGHT){
+			if(typeid(*(lights[j])) == typeid(Light)){ //It's a pointlight
 
 				//Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
@@ -244,7 +244,9 @@ const Vector3f& ambient) {
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
 
-			}else if(lights[j]->getType() == Light::SPOTLIGHT){
+			}else if(typeid(*(lights[j])) == typeid(SpotLight)){
+
+				SpotLight* light = static_cast<SpotLight*>(lights[j]);
 
 				//Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
@@ -258,17 +260,17 @@ const Vector3f& ambient) {
 				normalMatrix = glm::transpose(glm::inverse(view * getModelMatrix()));
 
 				//Calculate some values for the lightsource
-				float lightConeCosine = std::cos((lights[j]->getCutoffAngle() / (180.f / 3.1415f)));
-				Vector4f lightDir = lights[j]->getDirection();
+				float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
+				Vector4f lightDir = light->getDirection();
 
 				shader.setUniform("normalMatrix", normalMatrix);
 				shader.setUniform("cameraPosition", camPosition);
-				shader.setUniform("lightPosition", lights[j]->getPosition());
-				shader.setUniform("lightColor", lights[j]->getColor());
+				shader.setUniform("lightPosition", light->getPosition());
+				shader.setUniform("lightColor", light->getColor());
 				shader.setUniform("ambientColor", ambient);
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
-				shader.setUniform("lightIntensity", lights[j]->getIntensity());
-				shader.setUniform("cutoffAngle", lights[j]->getCutoffAngle());
+				shader.setUniform("lightIntensity", light->getIntensity());
+				shader.setUniform("cutoffAngle", light->getConeAngle());
 				shader.setUniform("lightConeCosine", lightConeCosine);
 				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
 
@@ -308,6 +310,8 @@ const Vector3f& ambient) {
 
 			}else{ //Directional Light
 
+				DirectionalLight* light = static_cast<DirectionalLight*>(lights[j]);
+
 				//Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 
@@ -320,19 +324,19 @@ const Vector3f& ambient) {
 				normalMatrix = glm::transpose(glm::inverse(view * getModelMatrix()));
 
 				//Calculate some values for the lightsource
-				Vector4f lightDir = lights[j]->getDirection();
+				Vector4f lightDir = light->getDirection();
 
 				shader.setUniform("normalMatrix", normalMatrix);
 				shader.setUniform("cameraPosition", camPosition);
-				shader.setUniform("lightColor", lights[j]->getColor());
+				shader.setUniform("lightColor", light->getColor());
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
-				shader.setUniform("lightIntensity", lights[j]->getIntensity());
+				shader.setUniform("lightIntensity", light->getIntensity());
 				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
 				shader.setUniform(
 				"depthBiasMvp",
-				MVP_TO_BIAS * lights[j]->getBiasProjectionMatrix() * lights[j]->getBiasViewMatrix() * getModelMatrix());
+				MVP_TO_BIAS * light->getBiasProjectionMatrix() * light->getBiasViewMatrix() * getModelMatrix());
 
-				lights[j]->bindShadowMap();
+				light->bindShadowMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);

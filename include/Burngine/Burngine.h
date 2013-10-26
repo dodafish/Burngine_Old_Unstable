@@ -14,7 +14,7 @@
 #include <Burngine/Graphics/Scene/Scene.h>
 #include <Burngine/Graphics/Scene/SceneNode.h>
 #include <Burngine/Graphics/Scene/StaticMeshNode.h>
-#include <Burngine/Graphics/Scene/Light.h>
+#include <Burngine/Graphics/Scene/SpotLight.h>
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Material.h>
 #include <Burngine/Graphics/Scene/Mesh.h>

@@ -1,7 +1,7 @@
 /*
- * Light.h
+ * BaseLight.h
  *
- *  Created on: 20.09.2013
+ *  Created on: 26.10.2013
  *      Author: Dominik
  */
 
@@ -11,29 +11,16 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
 #include <Burngine/Graphics/Scene/Scene.h>
-#include <Burngine/Graphics/Texture/ShadowMap.h>
-
-//template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 
-/**
- * @brief Inherits from Transformable. Obviously the scale will have
- * no effect.
- */
-class BURNGINE_API Light : public Transformable {
+class BURNGINE_API Light : public Transformable{
 public:
-	enum Type {
-		POINTLIGHT, SPOTLIGHT, DIRECTIONAL_LIGHT
-	};
-
-	Light(const Type& type = POINTLIGHT, const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f), const float& intensity = 1.0f);
-
+	Light();
 	Light(const Light& other);
-
 	Light& operator=(const Light& other);
 
-	~Light();
+	virtual ~Light();
 
 	void setColor(const Vector3f& color);
 	const Vector3f& getColor() const;
@@ -41,37 +28,24 @@ public:
 	void setIntensity(const float& intensity);
 	const float& getIntensity() const;
 
-	void setType(const Type& type);
-	const Type& getType() const;
-
-	void setCutoffAngle(const float& angle);
-	const float& getCutoffAngle() const;
-
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
-	void updateShadowMap(const std::vector<SceneNode*> nodes);
+	virtual void updateShadowMap(const std::vector<SceneNode*>& nodes);
 
-	Vector4f getDirection() const;
+	virtual const Matrix4f& getBiasViewMatrix() const;
+	virtual const Matrix4f& getBiasProjectionMatrix() const;
 
-	const Matrix4f& getBiasViewMatrix() const;
-	const Matrix4f& getBiasProjectionMatrix() const;
-
-	void bindShadowMap() const;
-
-private:
+protected:
 
 	Vector3f _color;
 	float _intensity;
-	Type _type;
-	float _cutoffAngle;
-
-	ShadowMap _shadowMap;
 
 	std::vector<Scene*> _parents;
 	void removeAllParents();
 
 	Matrix4f _biasViewMatrix, _biasProjectionMatrix;
+
 };
 
 } /* namespace burn */
