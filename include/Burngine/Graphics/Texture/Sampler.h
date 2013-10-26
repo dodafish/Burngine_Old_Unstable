@@ -29,9 +29,30 @@ public:
 
 	bool isCreated() const;
 
+	enum MagnificationFiltering {
+		MAG_NEAREST, MAG_BILINEAR
+	};
+	enum MinificationFiltering {
+		MIN_NEAREST, MIN_BILINEAR, MIN_TRILINEAR, MIN_NEAREST_MIPMAP, MIN_BILINEAR_MIPMAP
+	};
+
+	bool setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
+	bool setSamplerParameter(GLenum parameter, GLenum value);
+	bool setAnisotropicLevel(const GLfloat& level);
+
+	const GLfloat& getAnisotropicLevel() const;
+
 private:
+	bool updateFiltering() const;
+
 	GLuint _id;
 	unsigned int* _referenceCounter;
+
+	MagnificationFiltering _magnificationFiltering; ///< Used magnification filtering method
+	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
+	GLfloat _anisotropicLevel;
+
+	bool _needsFilteringUpdate;
 };
 
 } /* namespace burn */

@@ -93,54 +93,22 @@ BaseTexture::~BaseTexture() {
 	}
 }
 
-void BaseTexture::updateFiltering() const {
+bool BaseTexture::createSampler(){
 
-	if(!Window::isContextCreated() || !isCreated()){
-		return;
+	if(*_referenceCount < 2){
+		destroySampler();
 	}
 
-	// Set magnification filter
-	if(_magnificationFiltering == MAG_NEAREST)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	else if(_magnificationFiltering == MAG_BILINEAR)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
 
-	// Set minification filter
-	if(_minificationFiltering == MIN_NEAREST)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	else if(_minificationFiltering == MIN_BILINEAR)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	else if(_minificationFiltering == MIN_NEAREST_MIPMAP)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	else if(_minificationFiltering == MIN_BILINEAR_MIPMAP)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-	else if(_minificationFiltering == MIN_TRILINEAR)
-		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+void BaseTexture::destroySampler(){
 
-	//Set Anisotropic
-	glSamplerParameteri(_sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, _anisotropicLevel);
+	if(!Window::isContextCreated() && _sampler != 0)
+		return;
+
+	glDeleteSamplers(1, &_sampler);
 
 }
 
-void BaseTexture::setSamplerParameter(GLenum parameter, GLenum value) {
-	if(Window::isContextCreated())
-		glSamplerParameteri(_sampler, parameter, value);
-}
-
-void BaseTexture::setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min) {
-	_magnificationFiltering = mag;
-	_minificationFiltering = min;
-
-	//Tell OpenGL our filtering
-	updateFiltering();
-}
-
-void BaseTexture::setAnisotropicLevel(const GLfloat& level) {
-	_anisotropicLevel = level;
-}
-
-const GLfloat& BaseTexture::getAnisotropicLevel() const {
-	return _anisotropicLevel;
-}
 
 } /* namespace burn */
