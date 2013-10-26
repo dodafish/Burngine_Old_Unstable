@@ -17,6 +17,8 @@
 
 namespace burn {
 
+const Matrix4f MVP_TO_BIAS(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
+
 StaticMeshNode::StaticMeshNode() {
 }
 
@@ -35,11 +37,11 @@ bool StaticMeshNode::loadFromFile(const std::string& file) {
 	return _model.loadFromFile(file);
 }
 
-void StaticMeshNode::setFlag(const Material::Flag& flag, const bool& enabled){
+void StaticMeshNode::setFlag(const Material::Flag& flag, const bool& enabled) {
 	_model.setFlag(flag, enabled);
 }
 
-void StaticMeshNode::update(){
+void StaticMeshNode::update() {
 	_model.update();
 }
 
@@ -326,7 +328,9 @@ const Vector3f& ambient) {
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
 				shader.setUniform("lightIntensity", lights[j]->getIntensity());
 				shader.setUniform("lightDirection", Vector3f(lightDir.x, lightDir.y, lightDir.z));
-				shader.setUniform("depthBiasMvp", lights[j]->getBiasMatrix());
+				shader.setUniform(
+				"depthBiasMvp",
+				MVP_TO_BIAS * lights[j]->getBiasProjectionMatrix() * lights[j]->getBiasViewMatrix() * getModelMatrix());
 
 				lights[j]->bindShadowMap();
 

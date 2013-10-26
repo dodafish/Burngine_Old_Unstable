@@ -15,8 +15,6 @@
 
 namespace burn {
 
-const Matrix4f MVP_TO_BIAS(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
-
 void Light::removeAllParents() {
 	if(_parents.size() == 0)
 		return;
@@ -139,11 +137,15 @@ Vector4f Light::getDirection() const {
 	return (rotMat * Vector4f(1.f, 0.f, 0.f, 1.0f));
 }
 
-const Matrix4f& Light::getBiasMatrix() const {
-	return _biasMatrix;
+const Matrix4f& Light::getBiasViewMatrix() const {
+	return _biasViewMatrix;
 }
 
-void Light::bindShadowMap() const{
+const Matrix4f& Light::getBiasProjectionMatrix() const {
+	return _biasProjectionMatrix;
+}
+
+void Light::bindShadowMap() const {
 	_shadowMap.bind();
 }
 
@@ -168,15 +170,12 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 	Vector3f lightDir(lightDirTemp.x, lightDirTemp.y, lightDirTemp.z);
 	Matrix4f projectionMatrix = glm::ortho<float>(-50.f, 50.f, -50.f, 50.f, -50.f, 50.f);
 	Matrix4f viewMatrix = glm::lookAt(-lightDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	Matrix4f modelMatrix = glm::mat4(1.0);
-
-	//No ModelMatrix because it's an identity matrix
-	_biasMatrix = MVP_TO_BIAS * projectionMatrix * viewMatrix * modelMatrix;
 
 	//Set uniforms
-	shader.setUniform("modelMatrix", modelMatrix);
 	shader.setUniform("viewMatrix", viewMatrix);
 	shader.setUniform("projectionMatrix", projectionMatrix);
+	_biasViewMatrix = viewMatrix;
+	_biasProjectionMatrix = projectionMatrix;
 
 	//Scan through all nodes
 	for(size_t i = 0; i < nodes.size(); ++i){
@@ -189,6 +188,9 @@ void Light::updateShadowMap(const std::vector<SceneNode*> nodes) {
 			//Skip if updating failed or is incomplete
 			if(!node->getModel().isUpdated())
 				continue;
+
+			Matrix4f modelMatrix = node->getModelMatrix();
+			shader.setUniform("modelMatrix", modelMatrix);
 
 			for(size_t j = 0; j < node->getModel().getMeshCount(); ++j){
 

@@ -54,11 +54,13 @@ public:
 
 	Vector4f getDirection() const;
 
-	const Matrix4f& getBiasMatrix() const;
+	const Matrix4f& getBiasViewMatrix() const;
+	const Matrix4f& getBiasProjectionMatrix() const;
 
 	void bindShadowMap() const;
 
 private:
+
 	Vector3f _color;
 	float _intensity;
 	Type _type;
@@ -69,7 +71,7 @@ private:
 	std::vector<Scene*> _parents;
 	void removeAllParents();
 
-	Matrix4f _biasMatrix;
+	Matrix4f _biasViewMatrix, _biasProjectionMatrix;
 };
 
 } /* namespace burn */
