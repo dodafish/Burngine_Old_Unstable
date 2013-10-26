@@ -17,7 +17,7 @@ namespace burn {
 
 SpotLight::SpotLight() :
 _coneAngle(30.f) {
-	_shadowMap.create(ShadowMap::VERY_HIGH);
+	_shadowMap.create(ShadowMap::HIGH);
 }
 
 void SpotLight::setConeAngle(const float& angle) {

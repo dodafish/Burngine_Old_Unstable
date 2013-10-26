@@ -14,11 +14,49 @@ VertexBufferObject::VertexBufferObject() :
 _lastBuffer(0),
 _isCreated(false),
 _isDataUploaded(false),
-_buffer(0) {
+_buffer(0),
+_referenceCount(new unsigned int(1)) {
+}
+
+VertexBufferObject::VertexBufferObject(const VertexBufferObject& other) :
+_lastBuffer(other._lastBuffer),
+_isCreated(other._isCreated),
+_isDataUploaded(other._isDataUploaded),
+_buffer(other._buffer),
+_data(other._data),
+_referenceCount(other._referenceCount) {
+	++(*_referenceCount);
+}
+
+VertexBufferObject& VertexBufferObject::operator=(const VertexBufferObject& other) {
+
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
+	}
+
+	_lastBuffer = other._lastBuffer;
+	_isCreated = other._isCreated;
+	_isDataUploaded = other._isDataUploaded;
+	_buffer = other._buffer;
+	_data = other._data;
+	_referenceCount = other._referenceCount;
+
+	++(*_referenceCount);
+
+	return *this;
+
 }
 
 VertexBufferObject::~VertexBufferObject() {
-	cleanup();
+	if(*_referenceCount < 2){
+		cleanup();
+		delete _referenceCount;
+	}else{
+		--(*_referenceCount);
+	}
 }
 
 void VertexBufferObject::create() {
