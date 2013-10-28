@@ -54,7 +54,7 @@ void RenderTexture::onUnbind(const unsigned int& unit) const {
 
 void RenderTexture::cleanup() {
 
-	if(!_isCreated)
+	if(!isCreated())
 		return;
 
 	if(!Window::isContextCreated()){

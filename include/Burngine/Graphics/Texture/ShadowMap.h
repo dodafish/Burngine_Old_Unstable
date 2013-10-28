@@ -16,8 +16,10 @@ namespace burn {
 class BURNGINE_API ShadowMap : public BaseTexture {
 public:
 	ShadowMap();
-	ShadowMap(const ShadowMap& other);
-	ShadowMap& operator=(const ShadowMap& other);
+
+	//Rendertargets are not copyable!
+	ShadowMap(const ShadowMap& other) = delete;
+	ShadowMap& operator=(const ShadowMap& other) = delete;
 
 	~ShadowMap();
 
@@ -34,9 +36,17 @@ public:
 	void clear() const;
 	void bindAsRendertarget() const;
 
+	bool isCreated() const;
+
 private:
-	GLuint _framebuffer;
+	void onBind(const unsigned int& unit) const;
+	void onUnbind(const unsigned int& unit) const;
+
+	void cleanup();
+
+	GLuint _framebuffer, _texture;
 	Resolution _resolution;
+	bool _isCreated;
 };
 
 } /* namespace burn */

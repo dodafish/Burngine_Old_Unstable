@@ -48,6 +48,18 @@ BaseTexture::~BaseTexture() {
 	//Default D-Tor for virtual causes
 }
 
+bool BaseTexture::setFiltering(const Sampler::MagnificationFiltering& mag, const Sampler::MinificationFiltering& min){
+	return _sampler.setFiltering(mag, min);
+}
+
+bool BaseTexture::setSamplerParameter(GLenum parameter, GLenum value){
+	return _sampler.setSamplerParameter(parameter, value);
+}
+
+bool BaseTexture::setAnisotropicLevel(const GLfloat& level){
+	return _sampler.setAnisotropicLevel(level);
+}
+
 void BaseTexture::bind(const unsigned int& unit) const {
 
 	if(!Window::isContextCreated()){

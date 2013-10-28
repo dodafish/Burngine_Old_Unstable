@@ -13,50 +13,41 @@ namespace burn {
 
 ShadowMap::ShadowMap() :
 _framebuffer(0),
-_resolution(HIGH) {
+_texture(0),
+_resolution(HIGH),
+_isCreated(false){
 }
 
-ShadowMap::ShadowMap(const ShadowMap& other) :
-_framebuffer(other._framebuffer),
-_resolution(other._resolution) {
 
-}
-
-ShadowMap& ShadowMap::operator=(const ShadowMap& other) {
-
-	if(*_referenceCount < 2){
-		cleanup();
-		glDeleteFramebuffers(1, &_framebuffer);
-		delete _referenceCount;
-	}
-	else{
-		--(*_referenceCount);
-	}
-
-	_framebuffer = other._framebuffer;
-	_resolution = other._resolution;
-	_referenceCount = other._referenceCount;
-
-	return *this;
-
-}
 
 ShadowMap::~ShadowMap() {
-	if(*_referenceCount < 2){
-		glDeleteFramebuffers(1, &_framebuffer);
+}
+
+void ShadowMap::cleanup(){
+
+	if(!isCreated())
+		return;
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to cleanup shadowmap. No valid context!", Reporter::ERROR);
+		return;
 	}
+
+	glDeleteTextures(1, &_texture);
+	glDeleteFramebuffers(1, &_framebuffer);
+
+	_isCreated = false;
+
 }
 
 bool ShadowMap::create(const Resolution& resolution) {
 
 	//Cleanup first
-	if(*_referenceCount < 2){
-		glDeleteFramebuffers(1, &_framebuffer);
-		cleanup();
-	}
-	else{
-		--(*_referenceCount);
-		_referenceCount = new unsigned int(1);
+	cleanup();
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to create ShadowMap. No valid context!", Reporter::ERROR);
+		return false;
 	}
 
 	//Save old bindings
@@ -68,8 +59,8 @@ bool ShadowMap::create(const Resolution& resolution) {
 	//Save resolution
 	_resolution = resolution;
 
-	//Generate texture and sampler
-	generate(Vector2ui(resolution, resolution));
+	//Generate texture
+	glGenTextures(1, &_texture);
 
 	//Generate framebuffer
 	glGenFramebuffers(1, &_framebuffer);
@@ -94,45 +85,80 @@ bool ShadowMap::create(const Resolution& resolution) {
 		return false;
 	}
 
-	//Set filtering
-	updateFiltering();
-
 	//Restore old bindings
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
+
+	_isCreated = true;
 
 	return true;
 }
 
 void ShadowMap::bindAsRendertarget() const {
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to bind ShadowMap. No valid context!", Reporter::ERROR);
 		return;
+	}
 
-	if(!isCreated())
+	if(!isCreated()){
+		Reporter::report("Binding of uncreated ShadowMap disallowed!", Reporter::WARNING);
 		return;
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
+	glViewport(0, 0, _resolution, _resolution);
+}
+
+bool ShadowMap::isCreated() const {
+	return _isCreated;
 }
 
 void ShadowMap::clear() const {
 
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated()){
+			Reporter::report("Unable to clear ShadowMap. No valid context!", Reporter::ERROR);
+			return;
+		}
+
+		if(!isCreated()){
+			Reporter::report("Unable to clear ShadowMap. ShadowMap not created!", Reporter::WARNING);
+			return;
+		}
+
+		//Get previous bindings
+		GLint previousTexture = 0;
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+		GLint lastFB = 0;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+
+		//Clear texture
+		glBindTexture(GL_TEXTURE_2D, _texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _resolution, _resolution, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+		//Clear buffers
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		//Restore previous bindings
+		glBindTexture(GL_TEXTURE_2D, previousTexture);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+
+}
+
+void ShadowMap::onBind(const unsigned int& unit) const {
+
+	if(!isCreated()){
+		Reporter::report("Unable to bind ShadowMap. ShadowMap not created!", Reporter::ERROR);
 		return;
+	}
 
-	GLint previousTexture = getCurrentBoundTexture();
 	glBindTexture(GL_TEXTURE_2D, _texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, getDimensions().x, getDimensions().y, 0, GL_DEPTH_COMPONENT,
-	GL_FLOAT,
-					0);
-	glBindTexture(GL_TEXTURE_2D, previousTexture);
+}
 
-	GLint lastFB = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+void ShadowMap::onUnbind(const unsigned int& unit) const {
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
 

@@ -25,6 +25,10 @@ public:
 	void bind(const unsigned int& unit = 0) const;
 	void unbind(const unsigned int& unit = 0) const;
 
+	bool setFiltering(const Sampler::MagnificationFiltering& mag, const Sampler::MinificationFiltering& min);
+	bool setSamplerParameter(GLenum parameter, GLenum value);
+	bool setAnisotropicLevel(const GLfloat& level);
+
 protected:
 
 	virtual void onBind(const unsigned int& unit) const = 0;
