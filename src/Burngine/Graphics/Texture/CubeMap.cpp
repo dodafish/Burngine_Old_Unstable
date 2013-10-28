@@ -65,7 +65,7 @@ const std::string& fileNegativeZ) {
 	SOIL_load_OGL_cubemap(
 	filePositiveX.c_str(), fileNegativeX.c_str(), filePositiveY.c_str(), fileNegativeY.c_str(), filePositiveZ.c_str(),
 	fileNegativeZ.c_str(), SOIL_LOAD_AUTO, _cubemap,
-	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
 	//Avoid ugly edge-artifacts
 	setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

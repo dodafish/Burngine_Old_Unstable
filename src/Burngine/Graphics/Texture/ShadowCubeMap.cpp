@@ -10,6 +10,8 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Window/Window.h>
 
+#include <iostream>
+
 namespace burn {
 
 ShadowCubeMap::ShadowCubeMap() :
@@ -28,6 +30,8 @@ bool ShadowCubeMap::create(const Resolution& resolution) {
 	//Cleanup first
 	cleanup();
 
+	std::cout << "o";
+
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to create ShadowCubeMap. No valid context!", Reporter::ERROR);
 		return false;
@@ -38,47 +42,47 @@ bool ShadowCubeMap::create(const Resolution& resolution) {
 	GLint lastTex = 0;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
 	glGetIntegerv(GL_TEXTURE_BINDING_CUBE_MAP, &lastTex);
-
+	std::cout << "o";
 	//Save resolution
 	_resolution = resolution;
 
 	//Generate cubemap
 	glGenTextures(1, &_cubeMap);
-
+	std::cout << "o";
 	//Generate framebuffer
 	glGenFramebuffers(1, &_framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-
+	std::cout << "o";
 	//Bind and modify cubemap
 	glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMap);
-
+	std::cout << "o";
 	for(int i = 0; i != 6; ++i)
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT16, resolution, resolution, 0,
 		GL_DEPTH_COMPONENT,
 						GL_FLOAT, 0);
-
+	std::cout << "o";
 	setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	setSamplerParameter(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	setSamplerParameter(GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	setSamplerParameter(GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-
+	std::cout << "o";
 	//Bind cubemap to framebuffer
-	for(int i = 0; i != 6; ++i)
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, _cubeMap, 0);
-
+	//for(int i = 0; i != 6; ++i)
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X, _cubeMap, 0);
+	std::cout << "o";
 	glDrawBuffer(GL_NONE); // No color buffer is drawn to.
-
+	std::cout << "o";
 	// Always check that our framebuffer is ok
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
 		Reporter::report("ShadowCubeMap: Failed to create framebuffer!\n", Reporter::ERROR);
 		return false;
 	}
-
+	std::cout << "o";
 	//Restore old bindings
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, lastTex);
-
+	std::cout << "o";
 	_isCreated = true;
 
 	return true;
@@ -134,7 +138,7 @@ void ShadowCubeMap::bindAsRendertarget(const int& face) const {
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, face, _cubeMap, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, face, _cubeMap, 0);
 	glViewport(0, 0, _resolution, _resolution);
 }
 
@@ -168,6 +172,9 @@ void ShadowCubeMap::cleanup() {
 	}
 
 	glDeleteTextures(1, &_cubeMap);
+	glDeleteFramebuffers(1, &_framebuffer);
+
+	_isCreated = false;
 }
 
 } /* namespace burn */

@@ -209,6 +209,11 @@ const Vector3f& ambient) {
 				shader.setUniform("ambientColor", ambient);
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
 				shader.setUniform("lightIntensity", lights[j]->getIntensity());
+				shader.setUniform(
+				"depthBiasMvp",
+				lights[j]->getBiasViewMatrix() * lights[j]->getBiasViewMatrix() * getModelMatrix());
+
+				lights[j]->bindShadowCubeMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);

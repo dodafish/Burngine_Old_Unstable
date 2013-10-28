@@ -11,6 +11,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
 #include <Burngine/Graphics/Scene/Scene.h>
+#include <Burngine/Graphics/Texture/ShadowCubeMap.h>
 
 namespace burn {
 
@@ -36,6 +37,8 @@ public:
 	virtual const Matrix4f& getBiasViewMatrix() const;
 	virtual const Matrix4f& getBiasProjectionMatrix() const;
 
+	void bindShadowCubeMap() const;
+
 protected:
 
 	Vector3f _color;
@@ -45,6 +48,12 @@ protected:
 	void removeAllParents();
 
 	Matrix4f _biasViewMatrix, _biasProjectionMatrix;
+
+	ShadowCubeMap _shadowCubeMap;
+
+private:
+
+	Matrix4f findViewMatrix(const int& face) const;
 
 };
 
