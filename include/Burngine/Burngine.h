@@ -21,6 +21,9 @@
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/Scene/Model.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
+#include <Burngine/Graphics/Scene/SkyBox.h>
+#include <Burngine/Graphics/Scene/DirectionalLight.h>
+#include <Burngine/Graphics/Scene/Light.h>
 
 #include <Burngine/Graphics/Gui/Character.h>
 #include <Burngine/Graphics/Gui/Font.h>

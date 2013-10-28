@@ -26,7 +26,7 @@ public:
 	};
 
 	enum DepthtestTechnique {
-		LESS = GL_LESS, EQUAL = GL_EQUAL, LEQUA = GL_LEQUAL
+		LESS = GL_LESS, EQUAL = GL_EQUAL, LEQUAL = GL_LEQUAL
 	};
 
 	enum CullSide {

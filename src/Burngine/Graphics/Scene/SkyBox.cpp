@@ -95,9 +95,12 @@ void SkyBox::draw() {
 	OpenGlControl::Settings ogl;
 	ogl.enableCulling(false);
 	ogl.enableDepthbufferWriting(false);
+	ogl.setDepthtestTechnique(OpenGlControl::LEQUAL);
 	OpenGlControl::useSettings(ogl);
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SKY_BOX);
+
+	_cubeMap.bind();
 
 	glEnableVertexAttribArray(0);
 	_boxVbo.bind();
