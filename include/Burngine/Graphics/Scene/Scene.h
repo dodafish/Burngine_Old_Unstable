@@ -17,6 +17,8 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
 
+#include <Burngine/Graphics/Scene/SkyBox.h>
+
 namespace burn {
 class Light;
 class SceneNode;
@@ -64,6 +66,8 @@ public:
 
 	void detachAll();
 
+	void setSkyBox(const SkyBox& skyBox);
+
 	/**
 	 * @brief Sets a camera as active one. This camera will influence
 	 * the rendering behaviour of the scene.
@@ -95,6 +99,8 @@ private:
 
 	Camera _defaultCamera;
 	Camera& _camera;
+
+	SkyBox _skyBox;
 
 	RenderTexture _diffuseLightTexture, _specularLightTexture;
 };

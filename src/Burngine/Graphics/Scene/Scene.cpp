@@ -130,6 +130,8 @@ void Scene::draw(const RenderModus& modus) {
 	//Restore default OpenGL settings
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
+	_skyBox.draw();
+
 }
 
 void Scene::drawNodes() {
@@ -274,6 +276,10 @@ void Scene::setAmbientColor(const Vector3f& color) {
 
 const Vector3f& Scene::getAmbientColor() const {
 	return _ambientColor;
+}
+
+void Scene::setSkyBox(const SkyBox& skyBox){
+	_skyBox = skyBox;
 }
 
 } /* namespace burn */
