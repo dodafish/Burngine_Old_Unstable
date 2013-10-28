@@ -61,6 +61,7 @@ void Texture::generate() {
 	}else{
 		--(*_referenceCount);
 		_referenceCount = new unsigned int(1);
+		_textureId = 0;
 	}
 	glGenTextures(1, &_textureId);
 
