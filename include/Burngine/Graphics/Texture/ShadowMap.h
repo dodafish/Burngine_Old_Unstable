@@ -33,7 +33,7 @@ public:
 
 	bool create(const Resolution& resolution = HIGH);
 
-	void clear() const;
+	void clear();
 	void bindAsRendertarget() const;
 
 	bool isCreated() const;

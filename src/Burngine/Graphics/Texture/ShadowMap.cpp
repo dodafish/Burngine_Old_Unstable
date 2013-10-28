@@ -15,15 +15,14 @@ ShadowMap::ShadowMap() :
 _framebuffer(0),
 _texture(0),
 _resolution(HIGH),
-_isCreated(false){
+_isCreated(false) {
 }
-
-
 
 ShadowMap::~ShadowMap() {
+	cleanup();
 }
 
-void ShadowMap::cleanup(){
+void ShadowMap::cleanup() {
 
 	if(!isCreated())
 		return;
@@ -114,35 +113,35 @@ bool ShadowMap::isCreated() const {
 	return _isCreated;
 }
 
-void ShadowMap::clear() const {
+void ShadowMap::clear() {
 
 	if(!Window::isContextCreated()){
-			Reporter::report("Unable to clear ShadowMap. No valid context!", Reporter::ERROR);
-			return;
-		}
+		Reporter::report("Unable to clear ShadowMap. No valid context!", Reporter::ERROR);
+		return;
+	}
 
-		if(!isCreated()){
-			Reporter::report("Unable to clear ShadowMap. ShadowMap not created!", Reporter::WARNING);
-			return;
-		}
+	if(!isCreated()){
+		Reporter::report("Unable to clear ShadowMap. ShadowMap not created!", Reporter::WARNING);
+		return;
+	}
 
-		//Get previous bindings
-		GLint previousTexture = 0;
-		glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
-		GLint lastFB = 0;
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+	//Get previous bindings
+	GLint previousTexture = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+	GLint lastFB = 0;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
 
-		//Clear texture
-		glBindTexture(GL_TEXTURE_2D, _texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, _resolution, _resolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	//Clear texture
+	glBindTexture(GL_TEXTURE_2D, _texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, _resolution, _resolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 
-		//Clear buffers
-		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-		glClear(GL_DEPTH_BUFFER_BIT);
+	//Clear buffers
+	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	glClear(GL_DEPTH_BUFFER_BIT);
 
-		//Restore previous bindings
-		glBindTexture(GL_TEXTURE_2D, previousTexture);
-		glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+	//Restore previous bindings
+	glBindTexture(GL_TEXTURE_2D, previousTexture);
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 
 }
 
