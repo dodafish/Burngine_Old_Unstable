@@ -11,20 +11,6 @@
 
 namespace burn {
 
-void bind(const Sampler& sampler, const unsigned int& unit) {
-	if(!Window::isContextCreated() || !sampler.isCreated()){
-		Reporter::report("Unable to bind sampler. No valid context or sampler is not created!", Reporter::ERROR);
-		return;
-	}
-
-	if(sampler._needsFilteringUpdate){
-		if(!sampler.updateFiltering())
-			Reporter::report("Unable to update sampler's filtering!", Reporter::ERROR);
-	}
-
-	glBindSampler(unit, sampler._id);
-}
-
 void unbind(const unsigned int& unit) {
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to unbind sampler. No valid context created!", Reporter::ERROR);
@@ -88,6 +74,22 @@ Sampler::~Sampler() {
 	}else{
 		--(*_referenceCounter);
 	}
+}
+
+void Sampler::bind(const unsigned int& unit) const {
+
+	if(!Window::isContextCreated() || !isCreated()){
+		Reporter::report("Unable to bind sampler. No valid context or sampler is not created!", Reporter::ERROR);
+		return;
+	}
+
+	if(_needsFilteringUpdate){
+		if(!updateFiltering())
+			Reporter::report("Unable to update sampler's filtering!", Reporter::ERROR);
+	}
+
+	glBindSampler(unit, _id);
+
 }
 
 bool Sampler::create() {

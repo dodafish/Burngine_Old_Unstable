@@ -20,6 +20,7 @@ public:
 	RenderTexture();
 	~RenderTexture();
 
+	//Rendertargets are not copyable
 	RenderTexture(const RenderTexture& other) = delete;
 	RenderTexture& operator=(const RenderTexture& other) = delete;
 
@@ -32,8 +33,17 @@ public:
 	void drawFullscreen();
 	void draw(const Vector2f& position, const Vector2f& size);
 
+	bool isCreated() const;
+
 private:
-	GLuint _framebuffer, _depthbuffer;
+	virtual void onBind(const unsigned int& unit) const;
+	virtual void onUnbind(const unsigned int& unit) const;
+
+	void cleanup();
+
+	GLuint _framebuffer, _depthbuffer, _texture;
+	bool _isCreated;
+	Vector2ui _dimensions;
 };
 
 } /* namespace burn */

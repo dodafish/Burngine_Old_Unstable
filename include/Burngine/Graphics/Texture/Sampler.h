@@ -15,7 +15,7 @@ namespace burn {
 
 class BURNGINE_API Sampler {
 public:
-	static void bind(const Sampler& sampler, const unsigned int& unit = 0);
+
 	static void unbind(const unsigned int& unit = 0);
 
 	//////////////////////////////////////////////////
@@ -29,6 +29,8 @@ public:
 	void destroy();
 
 	bool isCreated() const;
+
+	void bind(const unsigned int& unit = 0) const ;
 
 	enum MagnificationFiltering {
 		MAG_NEAREST, MAG_BILINEAR

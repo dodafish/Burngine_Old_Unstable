@@ -8,8 +8,7 @@
 #include <Burngine/Graphics/Texture/Texture.h>
 
 #include <Burngine/Graphics/Window/Window.h>
-
-#include <iostream>
+#include <Burngine/System/Reporter.h>
 
 namespace burn {
 

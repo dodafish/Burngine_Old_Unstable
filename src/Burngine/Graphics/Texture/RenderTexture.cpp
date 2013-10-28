@@ -18,7 +18,9 @@ namespace burn {
 
 RenderTexture::RenderTexture() :
 _framebuffer(0),
-_depthbuffer(0) {
+_depthbuffer(0),
+_texture(0),
+_isCreated(false){
 }
 
 RenderTexture::~RenderTexture() {
@@ -30,13 +32,53 @@ RenderTexture::~RenderTexture() {
 
 }
 
+bool RenderTexture::isCreated() const {
+	return _isCreated;
+}
+
+void RenderTexture::onBind(const unsigned int& unit) const {
+
+	if(!isCreated()){
+		Reporter::report("Unable to bind rendertextue. Rendertexture not created!", Reporter::ERROR);
+		return;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, _texture);
+}
+
+void RenderTexture::onUnbind(const unsigned int& unit) const {
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+}
+
+void RenderTexture::cleanup() {
+
+	if(!_isCreated)
+		return;
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to cleanup rendertexture! No valid context.", Reporter::ERROR);
+		return;
+	}
+
+	glDeleteTextures(1, &_texture);
+	glDeleteFramebuffers(1, &_framebuffer);
+	glDeleteRenderbuffers(1, &_depthbuffer);
+
+	_isCreated = false;
+	_dimensions = Vector2ui(0);
+
+}
+
 bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	if(!Window::isContextCreated())
 		return false;
 
-	//Generate texture and sampler. Does cleanup before if needed
-	generate(dimensions);
+	cleanup();
+
+	_dimensions = dimensions;
 
 	GLint lastFB = 0;
 	GLint lastRB = 0;
@@ -50,12 +92,13 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
 
 	//Texture:
+	glGenTextures(1, &_texture);
 	clear(); //Make it black
 
 	//Depthbuffer:
 	glGenRenderbuffers(1, &_depthbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, _depthbuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, getDimensions().x, getDimensions().y);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
 	//Configure:
@@ -70,13 +113,12 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 		return false;
 	}
 
-	//Set filtering
-	updateFiltering();
-
-	//Unbind all:
+	//Restore previous bindings
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
 	glBindRenderbuffer(GL_RENDERBUFFER, lastRB);
+
+	_isCreated = true;
 
 	return true;
 }
@@ -84,48 +126,66 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 void RenderTexture::bindAsRendertarget() const {
 
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to bind rendertexture. No valid context!", Reporter::ERROR);
 		return;
+	}
 
-	if(!isCreated())
+	if(!isCreated()){
+		Reporter::report("Binding uncreated rendertexture disallowed!", Reporter::WARNING);
 		return;
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	glViewport(0, 0, getOriginalDimensions().x, getOriginalDimensions().y);
+	glViewport(0, 0, _dimensions.x, _dimensions.y);
 
 }
 
 void RenderTexture::clear() const {
 
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to clear rendertexture. No valid context!", Reporter::ERROR);
 		return;
+	}
 
-	GLint previousTexture = getCurrentBoundTexture();
-	glBindTexture(GL_TEXTURE_2D, _texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, getDimensions().x, getDimensions().y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-	glBindTexture(GL_TEXTURE_2D, previousTexture);
+	if(!isCreated()){
+		Reporter::report("Unable to clear rendertexture. Rendertexture not created!", Reporter::WARNING);
+		return;
+	}
 
+	//Get previous bindings
+	GLint previousTexture = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 	GLint lastFB = 0;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+
+	//Clear texture
+	glBindTexture(GL_TEXTURE_2D, _texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	//Clear buffers
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Restore previous bindings
+	glBindTexture(GL_TEXTURE_2D, previousTexture);
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
 
 }
 
 void RenderTexture::drawFullscreen() {
 
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated() || !isCreated())
 		return;
 
 	Mesh mesh;
 	std::vector<Vertex> v;
-	v.push_back(Vertex(Vector3f(-1.f, -1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 0.f))));
-	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(1.f, 1.f, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 1.f))));
+	v.push_back(Vertex(Vector3f(-1.f, -1.f, 0), Vector3f(), (Vector2f(0.f, 0.f))));
+	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(1.f, 1.f, 0), Vector3f(), (Vector2f(1.f, 1.f))));
 	mesh.setVertices(v);
 	mesh.update();
 
@@ -136,7 +196,9 @@ void RenderTexture::drawFullscreen() {
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	GLint lastTex = getCurrentBoundTexture();
+	//Get previous binding
+	GLint previousTexture = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
 	//Bind texture only
 	bind();
@@ -168,24 +230,24 @@ void RenderTexture::drawFullscreen() {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 
-	glBindTexture(GL_TEXTURE_2D, lastTex);
+	glBindTexture(GL_TEXTURE_2D, previousTexture);
 
 }
 
 void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 
-	if(!Window::isContextCreated())
+	if(!Window::isContextCreated() || !isCreated())
 		return;
 
 	Mesh mesh;
 	std::vector<Vertex> v;
 
-	v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), mapUvCoordsToTexture(Vector2f(1.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), (Vector2f(0.f, 0.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+	v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), (Vector2f(1.f, 1.f))));
 
 	mesh.setVertices(v);
 	mesh.update();
@@ -197,7 +259,9 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	GLint lastTex = getCurrentBoundTexture();
+	//Get previous binding
+	GLint previousTexture = 0;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
 	//Bind texture only
 	bind();
@@ -229,7 +293,7 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 
-	glBindTexture(GL_TEXTURE_2D, lastTex);
+	glBindTexture(GL_TEXTURE_2D, previousTexture);
 
 }
 

@@ -45,7 +45,7 @@ BaseTexture::BaseTexture() {
 }
 
 BaseTexture::~BaseTexture() {
-
+	//Default D-Tor for virtual causes
 }
 
 void BaseTexture::bind(const unsigned int& unit) const {
@@ -56,7 +56,7 @@ void BaseTexture::bind(const unsigned int& unit) const {
 	}
 
 	glActiveTexture(GL_TEXTURE0 + unit);
-	Sampler::bind(_sampler, unit);
+	_sampler.bind(unit);
 	onBind(unit);
 
 }
