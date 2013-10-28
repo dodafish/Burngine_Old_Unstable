@@ -134,7 +134,7 @@ void ShadowMap::clear() const {
 
 		//Clear texture
 		glBindTexture(GL_TEXTURE_2D, _texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _resolution, _resolution, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, _resolution, _resolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 
 		//Clear buffers
 		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);

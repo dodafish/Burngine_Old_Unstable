@@ -15,14 +15,22 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Light.h>
 
+#include <Burngine/System/Reporter.h>
+
 namespace burn {
 
 Scene::Scene(const Window& parentWindow) :
 _window(parentWindow),
 _camera(_defaultCamera) {
 
-	_diffuseLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()));
-	_specularLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()));
+	if(!_diffuseLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+		Reporter::report("Scene could not be created. Unable to create RenderTexture!", Reporter::ERROR);
+		exit(10);
+	}
+	if(!_specularLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+		Reporter::report("Scene could not be created. Unable to create RenderTexture!", Reporter::ERROR);
+		exit(11);
+	}
 
 }
 

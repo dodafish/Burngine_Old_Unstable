@@ -55,7 +55,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	}
 
 	//Fill texture with data
-	_texture.loadFromData(data, glyphDimensions, 16, GL_DEPTH_COMPONENT);
+	_texture.loadFromData(data, textureDimensions, 16, GL_DEPTH_COMPONENT);
 
 	//Modify settings of the texture
 	_texture.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);

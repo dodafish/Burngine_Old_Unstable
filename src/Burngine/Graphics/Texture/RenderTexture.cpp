@@ -20,7 +20,7 @@ RenderTexture::RenderTexture() :
 _framebuffer(0),
 _depthbuffer(0),
 _texture(0),
-_isCreated(false){
+_isCreated(false) {
 }
 
 RenderTexture::~RenderTexture() {
@@ -93,7 +93,9 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	//Texture:
 	glGenTextures(1, &_texture);
-	clear(); //Make it black
+	//Clear texture
+	glBindTexture(GL_TEXTURE_2D, _texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
 	//Depthbuffer:
 	glGenRenderbuffers(1, &_depthbuffer);
