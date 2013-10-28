@@ -30,6 +30,9 @@ _referenceCount(other._referenceCount) {
 
 VertexBufferObject& VertexBufferObject::operator=(const VertexBufferObject& other) {
 
+	if(this == &other)
+		return *this;
+
 	if(*_referenceCount < 2){
 		cleanup();
 		delete _referenceCount;

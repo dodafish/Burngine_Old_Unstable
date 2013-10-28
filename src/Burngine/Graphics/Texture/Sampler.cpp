@@ -11,7 +11,7 @@
 
 namespace burn {
 
-void unbind(const unsigned int& unit) {
+void Sampler::unbind(const unsigned int& unit) {
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to unbind sampler. No valid context created!", Reporter::ERROR);
 		return;

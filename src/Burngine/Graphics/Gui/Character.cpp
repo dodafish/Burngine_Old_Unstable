@@ -37,7 +37,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	Vector2ui glyphDimensions(bitmap->width, bitmap->rows);
 
 	//Create a texture so we know its final dimensions
-	const Vector2ui& textureDimensions = BaseTexture::calculateDimensions(glyphDimensions);
+	const Vector2ui& textureDimensions = BaseTexture::calculatePow2Dimensions(glyphDimensions);
 
 	//Create an array to store glyph data
 	GLubyte* data = new GLubyte[textureDimensions.x * textureDimensions.y];
@@ -58,7 +58,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 	_texture.loadFromData(data, glyphDimensions, 16, GL_DEPTH_COMPONENT);
 
 	//Modify settings of the texture
-	_texture.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
+	_texture.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
 	_texture.setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	_texture.setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	_texture.setSamplerParameter(GL_DEPTH_TEXTURE_MODE, GL_LUMINANCE);
@@ -107,9 +107,6 @@ const Vector2i& Character::getBearing() const {
 }
 
 void Character::draw(const Vector2f& position, const Vector4f& color) const {
-
-	if(!_texture.isCreated())
-		return;
 
 	//Setup OpenGL for textrendering
 	OpenGlControl::Settings ogl;

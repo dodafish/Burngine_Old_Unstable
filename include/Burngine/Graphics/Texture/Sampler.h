@@ -55,7 +55,7 @@ private:
 	MinificationFiltering _minificationFiltering; ///< Used minification filtering method
 	GLfloat _anisotropicLevel;
 
-	bool _needsFilteringUpdate;
+	mutable bool _needsFilteringUpdate;
 };
 
 } /* namespace burn */
