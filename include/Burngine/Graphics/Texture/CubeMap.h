@@ -27,6 +27,8 @@ public:
 	const std::string& filePositiveY, const std::string& fileNegativeY, const std::string& filePositiveZ,
 	const std::string& fileNegativeZ);
 
+	bool isCreated() const;
+
 private:
 	virtual void onBind(const unsigned int& unit) const;
 	virtual void onUnbind(const unsigned int& unit) const;

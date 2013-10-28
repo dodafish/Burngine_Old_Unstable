@@ -52,6 +52,10 @@ CubeMap::~CubeMap() {
 	}
 }
 
+bool CubeMap::isCreated() const {
+	return (_cubemap != 0);
+}
+
 bool CubeMap::loadFromFile(const std::string& filePositiveX, const std::string& fileNegativeX,
 const std::string& filePositiveY, const std::string& fileNegativeY, const std::string& filePositiveZ,
 const std::string& fileNegativeZ) {

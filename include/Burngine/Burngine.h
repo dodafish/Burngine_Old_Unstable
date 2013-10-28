@@ -10,6 +10,7 @@
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
+#include <Burngine/Graphics/Texture/CubeMap.h>
 
 #include <Burngine/Graphics/Scene/Scene.h>
 #include <Burngine/Graphics/Scene/SceneNode.h>
