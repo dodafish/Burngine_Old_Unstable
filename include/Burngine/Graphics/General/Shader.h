@@ -122,6 +122,7 @@ struct BURNGINE_API BurngineShaders {
 		SINGLECOLOR, ///< Draws with only one color (internal use for depthbufferwriting)
 		FONT,
 		DEPTH,
+		DEPTH_POINTLIGHT,
 		SKY_BOX
 	};
 
@@ -143,6 +144,7 @@ private:
 	static Shader _singleColorShader;
 	static Shader _fontShader;
 	static Shader _depthShader;
+	static Shader _depthPointlight;
 	static Shader _skyBoxShader;
 };
 

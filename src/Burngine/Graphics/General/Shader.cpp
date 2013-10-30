@@ -24,6 +24,7 @@ Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
 Shader BurngineShaders::_depthShader;
 Shader BurngineShaders::_skyBoxShader;
+Shader BurngineShaders::_depthPointlight;
 
 bool BurngineShaders::load(const std::string& d) {
 
@@ -54,6 +55,9 @@ bool BurngineShaders::load(const std::string& d) {
 		return false;
 	}
 	if(!_depthShader.loadFromFile(dir + "depth.vert", dir + "depth.frag")){
+		return false;
+	}
+	if(!_depthPointlight.loadFromFile(dir + "pointlightDepth.vert", dir + "pointlightDepth.frag")){
 		return false;
 	}
 	if(!_skyBoxShader.loadFromFile(dir + "skyBox.vert", dir + "skyBox.frag")){
@@ -89,6 +93,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case DEPTH:
 			return _depthShader;
+			break;
+		case DEPTH_POINTLIGHT:
+			return _depthPointlight;
 			break;
 		case SKY_BOX:
 			return _skyBoxShader;

@@ -210,8 +210,8 @@ const Vector3f& ambient) {
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
 				shader.setUniform("lightIntensity", lights[j]->getIntensity());
 				shader.setUniform(
-				"depthBiasMvp",
-				lights[j]->getBiasViewMatrix() * lights[j]->getBiasViewMatrix() * getModelMatrix());
+				"cubespaceMatrix",
+				lights[j]->getBiasProjectionMatrix() * lights[j]->findViewMatrix(5));
 
 				lights[j]->bindShadowCubeMap();
 

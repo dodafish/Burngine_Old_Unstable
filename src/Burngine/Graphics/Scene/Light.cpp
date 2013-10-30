@@ -121,7 +121,7 @@ void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 	_shadowCubeMap.clear();
 
 	//Select shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH_POINTLIGHT);
 
 	//Calculate matrix
 	Matrix4f projectionMatrix = glm::perspective<float>(90.f, 1.f, 0.1f, 100.f);
@@ -129,30 +129,32 @@ void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 	//Set uniforms
 	shader.setUniform("projectionMatrix", projectionMatrix);
 	_biasProjectionMatrix = projectionMatrix;
-	_biasViewMatrix = findViewMatrix(5);
 
-	//Scan through all nodes
-	for(size_t i = 0; i < nodes.size(); ++i){
+	for(int face = 0; face != 6; ++face){
 
-		if(!nodes[i]->isCastingShadows())
-			continue;
+		_shadowCubeMap.bindAsRendertarget(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face);
 
-		if(typeid(*(nodes[i])) == typeid(StaticMeshNode)){
-			StaticMeshNode* node = static_cast<StaticMeshNode*>(nodes[i]);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-			node->update();
+		shader.setUniform("viewMatrix", findViewMatrix(face));
 
-			//Skip if updating failed or is incomplete
-			if(!node->getModel().isUpdated())
+		//Scan through all nodes
+		for(size_t i = 0; i < nodes.size(); ++i){
+
+			if(!nodes[i]->isCastingShadows())
 				continue;
 
-			Matrix4f modelMatrix = node->getModelMatrix();
-			shader.setUniform("modelMatrix", modelMatrix);
+			if(typeid(*(nodes[i])) == typeid(StaticMeshNode)){
+				StaticMeshNode* node = static_cast<StaticMeshNode*>(nodes[i]);
 
-			for(int face = 0; face != 6; ++face){
+				node->update();
 
-				_shadowCubeMap.bindAsRendertarget(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face);
-				shader.setUniform("viewMatrix", findViewMatrix(face));
+				//Skip if updating failed or is incomplete
+				if(!node->getModel().isUpdated())
+					continue;
+
+				Matrix4f modelMatrix = node->getModelMatrix();
+				shader.setUniform("modelMatrix", modelMatrix);
 
 				for(size_t j = 0; j < node->getModel().getMeshCount(); ++j){
 
@@ -186,25 +188,29 @@ void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 Matrix4f Light::findViewMatrix(const int& face) const {
 
 	Vector3f direction(1.f, 0.f, 0.f);
-	Vector3f headUp(0.f, -1.f, 0.f);
+	Vector3f headUp(0.f, 1.f, 0.f);
 
 	if(face == 0){
 		direction = Vector3f(1.f, 0.f, 0.f);
 	}else if(face == 1){
 		direction = Vector3f(-1.f, 0.f, 0.f);
 	}else if(face == 2){
-		direction = Vector3f(0.f, 1.f, 0.f);
-		headUp = Vector3f(0.f, 0.f, 1.f);
-	}else if(face == 3){
 		direction = Vector3f(0.f, -1.f, 0.f);
 		headUp = Vector3f(0.f, 0.f, -1.f);
+	}else if(face == 3){
+		direction = Vector3f(0.f, 1.f, 0.f);
+		headUp = Vector3f(0.f, 0.f, 1.f);
 	}else if(face == 4){
-		direction = Vector3f(0.f, 0.f, 1.f);
-	}else{
 		direction = Vector3f(0.f, 0.f, -1.f);
+	}else{
+		direction = Vector3f(0.f, 0.f, 1.f);
 	}
 
 	return glm::lookAt(_position, _position + direction, headUp);
+}
+
+const ShadowCubeMap& Light::getShadowCubeMap() const {
+	return _shadowCubeMap;
 }
 
 } /* namespace burn */

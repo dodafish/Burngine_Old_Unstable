@@ -39,6 +39,10 @@ public:
 
 	void bindShadowCubeMap() const;
 
+	Matrix4f findViewMatrix(const int& face) const;
+
+	const ShadowCubeMap& getShadowCubeMap() const;
+
 protected:
 
 	Vector3f _color;
@@ -50,10 +54,6 @@ protected:
 	Matrix4f _biasViewMatrix, _biasProjectionMatrix;
 
 	ShadowCubeMap _shadowCubeMap;
-
-private:
-
-	Matrix4f findViewMatrix(const int& face) const;
 
 };
 
