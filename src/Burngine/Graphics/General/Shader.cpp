@@ -25,6 +25,7 @@ Shader BurngineShaders::_fontShader;
 Shader BurngineShaders::_depthShader;
 Shader BurngineShaders::_skyBoxShader;
 Shader BurngineShaders::_depthPointlight;
+Shader BurngineShaders::_gBufferShader;
 
 bool BurngineShaders::load(const std::string& d) {
 
@@ -63,6 +64,9 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_skyBoxShader.loadFromFile(dir + "skyBox.vert", dir + "skyBox.frag")){
 		return false;
 	}
+	if(!_gBufferShader.loadFromFile(dir + "gBuffer.vert", dir + "gBuffer.frag")){
+		return false;
+	}
 
 	return true;
 }
@@ -99,6 +103,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case SKY_BOX:
 			return _skyBoxShader;
+			break;
+		case G_BUFFER:
+			return _gBufferShader;
 			break;
 	}
 	//See case of SOLID_COLOR above

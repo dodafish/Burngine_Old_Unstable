@@ -46,17 +46,18 @@ public:
 	~Scene();
 
 	enum RenderModus{
-		ALL,
-		COLOR,
+		COMPOSITION,
 		DIFFUSE,
-		SPECULAR,
-		LIGHTING
+		NORMAL
 	};
 
 	/**
 	 * @brief Draws every SceneNode.
+	 *
+	 * @param modus Choose a gBuffer to dump to screen
+	 * or set to COMPOSITION to see final result
 	 */
-	void draw(const Camera& camera, const RenderModus& modus = ALL);
+	void draw(const Camera& camera, const RenderModus& modus = COMPOSITION);
 
 	void attachSceneNode(SceneNode& node);
 	void detachSceneNode(SceneNode& node);
@@ -72,9 +73,7 @@ public:
 	const Vector3f& getAmbientColor() const;
 
 private:
-	void drawNodes(const Camera& camera);
-	bool drawDiffusepart(const Camera& camera);
-	bool drawSpecularpart(const Camera& camera);
+	void drawGBuffers(const Camera& camera);
 
 	const Window& _window;
 	Vector3f _ambientColor;
@@ -84,7 +83,10 @@ private:
 
 	SkyBox _skyBox;
 
-	RenderTexture _diffuseLightTexture, _specularLightTexture;
+	/*
+	 * Following attributes are for Deferred Shading:
+	 */
+
 };
 
 } /* namespace burn */

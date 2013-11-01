@@ -123,7 +123,8 @@ struct BURNGINE_API BurngineShaders {
 		FONT,
 		DEPTH,
 		DEPTH_POINTLIGHT,
-		SKY_BOX
+		SKY_BOX,
+		G_BUFFER
 	};
 
 	/**
@@ -146,6 +147,7 @@ private:
 	static Shader _depthShader;
 	static Shader _depthPointlight;
 	static Shader _skyBoxShader;
+	static Shader _gBufferShader;
 };
 
 } /* namespace burn */
