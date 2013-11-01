@@ -76,6 +76,13 @@ public:
 	virtual void drawLighting(LightingType type, const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient);
 
 private:
+	//Hide methods, that are public in SceneNode.
+	//We have no need to have them public here, anymore.
+	using SceneNode::addParentScene;
+	using SceneNode::removeParentScene;
+	////////////////////////////////////////////////////
+
+	//Attributes:
 	Model _model;
 };
 
