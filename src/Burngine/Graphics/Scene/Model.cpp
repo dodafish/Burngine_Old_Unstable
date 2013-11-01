@@ -103,12 +103,6 @@ bool Model::loadFromFile(const std::string& file) {
 		mat.setIndex(mesh->mMaterialIndex);
 		_meshes.back()->setMaterial(mat);
 
-		{
-			std::stringstream ss;
-			ss << i << " - " << &_meshes.back();
-			//Reporter::report("----- Created mesh #" + ss.str());
-		}
-
 	}
 
 	//Material Settings:

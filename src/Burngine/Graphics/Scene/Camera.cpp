@@ -12,15 +12,12 @@ namespace burn {
 
 Camera::Camera() :
 _aspectRatio(16.f / 9.f),
-_fov(45.f),
-_parent(nullptr) {
+_fov(35.f){
 
 }
 
 Camera::~Camera() {
-	if(_parent != nullptr){
-		_parent->setDefaultCamera();
-	}
+
 }
 
 void Camera::setAspectRatio(const float& aspectRatio) {
@@ -40,10 +37,8 @@ const Vector3f& Camera::getLookAt() const {
 }
 
 void Camera::setFov(const float& fov) {
-	if(_fov > 90.f)
-		_fov = 90.f;
-	else if(_fov < 0.f)
-		_fov = 0.f;
+	if(_fov < 1.f)
+		_fov = 1.f;
 	else
 		_fov = fov;
 }

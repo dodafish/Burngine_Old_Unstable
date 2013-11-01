@@ -20,8 +20,7 @@
 namespace burn {
 
 Scene::Scene(const Window& parentWindow) :
-_window(parentWindow),
-_camera(_defaultCamera) {
+_window(parentWindow) {
 
 	if(!_diffuseLightTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
 		Reporter::report("Scene could not be created. Unable to create RenderTexture!", Reporter::ERROR);
@@ -36,15 +35,11 @@ _camera(_defaultCamera) {
 
 Scene::~Scene() {
 
-	if(&_camera != &_defaultCamera){
-		_camera._parent = nullptr;
-	}
-
 	detachAll();
 
 }
 
-void Scene::draw(const RenderModus& modus) {
+void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 	if(!Window::isContextCreated())
 		return;
@@ -56,9 +51,9 @@ void Scene::draw(const RenderModus& modus) {
 
 	switch (modus) {
 		case ALL:
-			drawNodes();
+			drawNodes(camera);
 
-			if(drawDiffusepart()){
+			if(drawDiffusepart(camera)){
 				//Add diffuse lighting to scene:
 				OpenGlControl::Settings oglSettings; //default
 				oglSettings.setBlendMode(OpenGlControl::MULTIPLY);
@@ -68,7 +63,7 @@ void Scene::draw(const RenderModus& modus) {
 				_window.bind();
 				_diffuseLightTexture.drawFullscreen(); //Diffuse lightings
 
-				if(drawSpecularpart()){
+				if(drawSpecularpart(camera)){
 					//Add specular lighting to scene:
 					oglSettings = OpenGlControl::Settings(); //default
 					oglSettings.setBlendMode(OpenGlControl::ADD);
@@ -82,10 +77,10 @@ void Scene::draw(const RenderModus& modus) {
 
 			break;
 		case COLOR:
-			drawNodes();
+			drawNodes(camera);
 			break;
 		case DIFFUSE:
-			if(drawDiffusepart()){
+			if(drawDiffusepart(camera)){
 				//Add diffuse lighting to scene:
 				OpenGlControl::Settings oglSettings; //default
 				OpenGlControl::useSettings(oglSettings);
@@ -94,7 +89,7 @@ void Scene::draw(const RenderModus& modus) {
 			}
 			break;
 		case SPECULAR:
-			if(drawSpecularpart()){
+			if(drawSpecularpart(camera)){
 				//Add diffuse lighting to scene:
 				OpenGlControl::Settings oglSettings; //default
 				OpenGlControl::useSettings(oglSettings);
@@ -103,7 +98,7 @@ void Scene::draw(const RenderModus& modus) {
 			}
 			break;
 		case LIGHTING:
-			if(drawDiffusepart()){
+			if(drawDiffusepart(camera)){
 				//Add diffuse lighting to scene:
 				OpenGlControl::Settings oglSettings; //default
 				oglSettings.setBlendMode(OpenGlControl::OVERWRITE);
@@ -113,7 +108,7 @@ void Scene::draw(const RenderModus& modus) {
 				_window.bind();
 				_diffuseLightTexture.drawFullscreen(); //Diffuse lightings
 
-				if(drawSpecularpart()){
+				if(drawSpecularpart(camera)){
 					//Add specular lighting to scene:
 					oglSettings = OpenGlControl::Settings(); //default
 					oglSettings.setBlendMode(OpenGlControl::ADD);
@@ -134,16 +129,16 @@ void Scene::draw(const RenderModus& modus) {
 
 }
 
-void Scene::drawNodes() {
+void Scene::drawNodes(const Camera& camera) {
 	//Render objects without lighting:
 	_window.bind();
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->draw(_camera);
+		_nodes[i]->draw(camera);
 	}
 }
 
-bool Scene::drawDiffusepart() {
+bool Scene::drawDiffusepart(const Camera& camera) {
 
 	if(!_diffuseLightTexture.isCreated())
 		return false;
@@ -158,7 +153,7 @@ bool Scene::drawDiffusepart() {
 	_diffuseLightTexture.bindAsRendertarget();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));
+		_nodes[i]->drawSingleColor(camera, Vector4f(0.f, 0.f, 0.f, 0.f));
 	}
 
 	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
@@ -166,13 +161,13 @@ bool Scene::drawDiffusepart() {
 	OpenGlControl::useSettings(oglSettings);
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawLighting(SceneNode::DIFFUSE, _camera, _lights, _ambientColor);
+		_nodes[i]->drawLighting(SceneNode::DIFFUSE, camera, _lights, _ambientColor);
 	}
 
 	return true;
 }
 
-bool Scene::drawSpecularpart() {
+bool Scene::drawSpecularpart(const Camera& camera) {
 	if(!_specularLightTexture.isCreated())
 		return false;
 
@@ -184,14 +179,14 @@ bool Scene::drawSpecularpart() {
 	_specularLightTexture.bindAsRendertarget();
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawSingleColor(_camera, Vector4f(0.f, 0.f, 0.f, 0.f));
+		_nodes[i]->drawSingleColor(camera, Vector4f(0.f, 0.f, 0.f, 0.f));
 	}
 
 	oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
 	oglSettings.setBlendMode(OpenGlControl::ADD);
 	OpenGlControl::useSettings(oglSettings);
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->drawLighting(SceneNode::SPECULAR, _camera, _lights, _ambientColor);
+		_nodes[i]->drawLighting(SceneNode::SPECULAR, camera, _lights, _ambientColor);
 	}
 
 	return true;
@@ -256,18 +251,6 @@ void Scene::detachLight(Light& light) {
 		}
 	}
 
-}
-
-void Scene::setCamera(Camera& camera) {
-	_camera = camera;
-}
-
-void Scene::setDefaultCamera() {
-	_camera = _defaultCamera;
-}
-
-const Camera& Scene::getDefaultCamera() {
-	return _defaultCamera;
 }
 
 void Scene::setAmbientColor(const Vector3f& color) {

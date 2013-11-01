@@ -14,8 +14,6 @@
 
 namespace burn {
 
-class Scene;
-
 class BURNGINE_API Camera : public Transformable {
 public:
 	/**
@@ -28,7 +26,6 @@ public:
 	 * @note In order to see results by changing values, ensure
 	 * that your camera is active.
 	 *
-	 * @see Scene::setCameraActive()
 	 */
 	Camera();
 
@@ -39,7 +36,6 @@ public:
 	 * Scene::removeCamera() when you
 	 * have created it with Scene::createCamera() !
 	 *
-	 * @see Scene::removeCamera()
 	 */
 	~Camera();
 
@@ -102,9 +98,6 @@ private:
 	float _aspectRatio;
 	Vector3f _lookAt;
 	float _fov;
-
-	friend Scene;
-	Scene* _parent;
 };
 
 } /* namespace burn */

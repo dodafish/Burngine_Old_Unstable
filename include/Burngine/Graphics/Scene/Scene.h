@@ -56,7 +56,7 @@ public:
 	/**
 	 * @brief Draws every SceneNode.
 	 */
-	void draw(const RenderModus& modus = ALL);
+	void draw(const Camera& camera, const RenderModus& modus = ALL);
 
 	void attachSceneNode(SceneNode& node);
 	void detachSceneNode(SceneNode& node);
@@ -68,37 +68,19 @@ public:
 
 	void setSkyBox(const SkyBox& skyBox);
 
-	/**
-	 * @brief Sets a camera as active one. This camera will influence
-	 * the rendering behaviour of the scene.
-	 *
-	 * @param camera The Camera that should be used.
-	 *
-	 * @see Camera
-	 *
-	 * @note You can use cameras from other scenes, but it is
-	 * recommended to use cameras from the same scene only.
-	 */
-	void setCamera(Camera& camera);
-	void setDefaultCamera();
-	const Camera& getDefaultCamera();
-
 	void setAmbientColor(const Vector3f& color);
 	const Vector3f& getAmbientColor() const;
 
 private:
-	void drawNodes();
-	bool drawDiffusepart();
-	bool drawSpecularpart();
+	void drawNodes(const Camera& camera);
+	bool drawDiffusepart(const Camera& camera);
+	bool drawSpecularpart(const Camera& camera);
 
 	const Window& _window;
 	Vector3f _ambientColor;
 
 	std::vector<SceneNode*> _nodes;
 	std::vector<Light*> _lights;
-
-	Camera _defaultCamera;
-	Camera& _camera;
 
 	SkyBox _skyBox;
 
