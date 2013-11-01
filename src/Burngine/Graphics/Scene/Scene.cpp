@@ -142,11 +142,7 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 								GL_LINEAR);
 			break;
 		case DEPTH:
-			_gBuffer.setSourceBuffer(GBuffer::DEPTH);
-			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
-								GL_COLOR_BUFFER_BIT,
-								GL_LINEAR);
+			dumpOutDepthGBuffer(); //Special, because no GL_COLOR_BUFFER
 			break;
 	}
 
@@ -232,6 +228,57 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 	 OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	 _skyBox.draw();*/
+
+}
+
+void Scene::dumpOutDepthGBuffer() {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	OpenGlControl::useSettings(ogl);
+
+	_window.bind();
+	_gBuffer.bindDepthBufferAsSourceTexture();
+
+	Vector3f posData[] = {
+	Vector3f(-1.f, -1.f, 0.f),
+	Vector3f(1.f, -1.f, 0.f),
+	Vector3f(-1.f, 1.f, 0.f),
+	Vector3f(1.f, 1.f, 0.f) };
+
+	Vector2f uvData[] = {
+	Vector2f(0.f, 0.f),
+	Vector2f(1.f, 0.f),
+	Vector2f(0.f, 1.f),
+	Vector2f(1.f, 1.f), };
+
+	VertexBufferObject vbo;
+	for(int i = 0; i != 4; ++i){
+		vbo.addData(&posData[i], sizeof(Vector3f));
+		vbo.addData(&uvData[i], sizeof(Vector2f));
+	}
+	vbo.uploadDataToGpu(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	vbo.bind();
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 }
 

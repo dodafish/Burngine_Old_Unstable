@@ -8,6 +8,7 @@
 #include <Burngine/Graphics/Scene/GBuffer.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/Texture/Sampler.h>
 #include <vector>
 
 namespace burn {
@@ -56,10 +57,6 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	for(unsigned int i = 0; i != COUNT; ++i){
 		glBindTexture(GL_TEXTURE_2D, _textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_FLOAT, 0);
-
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, _textures[i], 0);
 		drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + i);
 	}
@@ -69,6 +66,8 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _dimensions.x, _dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
 					0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //Set Filtering for dumping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthTexture, 0);
 
 	//Configure:
@@ -104,15 +103,21 @@ void GBuffer::clear() {
 
 	//Get previous binding
 	GLint lastFB = 0;
+	GLint previousTex = 0;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTex);
 
 	//Clear buffers
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glBindTexture(GL_TEXTURE_2D, _depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _dimensions.x, _dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+					0);
+
 	//Restore previous bindings
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
-
+	glBindTexture(GL_TEXTURE_2D, previousTex);
 }
 
 void GBuffer::bindAsTarget() const {
@@ -158,8 +163,8 @@ void GBuffer::setSourceBuffer(const GBufferType& buffer) {
 		return;
 	}
 
-	if(buffer == DEPTH){
-		glReadBuffer(GL_DEPTH_ATTACHMENT);
+	if(!_isCreated){
+		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
 		return;
 	}
 
@@ -169,6 +174,23 @@ void GBuffer::setSourceBuffer(const GBufferType& buffer) {
 
 const Vector2ui& GBuffer::getDimensions() const {
 	return _dimensions;
+}
+
+void GBuffer::bindDepthBufferAsSourceTexture() const {
+
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to bind depth gBuffer as source texture. No valid context.", Reporter::ERROR);
+		return;
+	}
+
+	if(!_isCreated){
+		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
+		return;
+	}
+
+	glActiveTexture(GL_TEXTURE0);
+	Sampler::unbind(0);
+	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 }
 
 } /* namespace burn */

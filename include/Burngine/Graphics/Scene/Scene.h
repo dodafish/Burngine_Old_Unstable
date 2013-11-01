@@ -77,6 +77,8 @@ public:
 private:
 	void drawGBuffers(const Camera& camera);
 
+	void dumpOutDepthGBuffer();
+
 	const Window& _window;
 	Vector3f _ambientColor;
 

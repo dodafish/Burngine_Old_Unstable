@@ -31,15 +31,13 @@ public:
 	void bindAsSource() const;
 
 	enum GBufferType {
-		DIFFUSE = 0,
-		NORMAL,
+		DIFFUSE = 0, NORMAL,
 
-		COUNT,
-
-		DEPTH
+		COUNT
 	};
 
 	void setSourceBuffer(const GBufferType& buffer);
+	void bindDepthBufferAsSourceTexture() const;
 
 	const Vector2ui& getDimensions() const;
 
