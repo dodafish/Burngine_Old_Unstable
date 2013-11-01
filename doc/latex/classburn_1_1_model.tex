@@ -13,50 +13,31 @@ A model can load 3d models from file.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classburn_1_1_model_a5d34c9330e9bbbe558f435345f020c95}{Model} ()
-\item 
-\hyperlink{classburn_1_1_model_adbcc65acd88e11d79b890b984864d938}{$\sim$\-Model} ()
-\item 
 bool \hyperlink{classburn_1_1_model_aa9220fbb6658d0ded238efd5f5e81097}{load\-From\-File} (const std\-::string \&file)
 \item 
 size\-\_\-t \hyperlink{classburn_1_1_model_a25e8e13b43f76cb7336a8dafbebcbc44}{get\-Mesh\-Count} () const 
 \item 
-\hyperlink{classburn_1_1_mesh}{Mesh} \& \hyperlink{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}{get\-Mesh} (const size\-\_\-t \&index) const 
+const \hyperlink{classburn_1_1_mesh}{Mesh} \& \hyperlink{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}{get\-Mesh} (const size\-\_\-t \&index) const 
 \item 
 void \hyperlink{classburn_1_1_model_ac685b9312e2fbc837142d66949c8056f}{set\-Flag} (const \hyperlink{classburn_1_1_material_a704108f8bb133e1911495b84bd0826b8}{Material\-::\-Flag} \&flag, const bool \&enabled=true)
-\begin{DoxyCompactList}\small\item\em Changes the flags of all meshes to the given parameter. It replaces the \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{Material\-::set\-Flag} function, just that this one sets the flag to every mesh. If you want to affect only a single mesh, you have to get the mesh via \hyperlink{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}{get\-Mesh()} \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Changes the flags of all meshes to the given parameter. It replaces the \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{Material\-::set\-Flag} function, just that this one sets the flag to every mesh. If you want to affect only a single mesh, you have to get the mesh via \hyperlink{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}{get\-Mesh()} \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_model_a9f9a12b843e91110ac500d23fd33a46c}{update} ()
+\item 
+bool \hyperlink{classburn_1_1_model_a005e0dfee9c82744f2ac7416eeb84905}{is\-Updated} () const 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 A model can load 3d models from file. 
 
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{classburn_1_1_model_a5d34c9330e9bbbe558f435345f020c95}{\index{burn\-::\-Model@{burn\-::\-Model}!Model@{Model}}
-\index{Model@{Model}!burn::Model@{burn\-::\-Model}}
-\subsubsection[{Model}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Model\-::\-Model (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_model_a5d34c9330e9bbbe558f435345f020c95}
-\hypertarget{classburn_1_1_model_adbcc65acd88e11d79b890b984864d938}{\index{burn\-::\-Model@{burn\-::\-Model}!$\sim$\-Model@{$\sim$\-Model}}
-\index{$\sim$\-Model@{$\sim$\-Model}!burn::Model@{burn\-::\-Model}}
-\subsubsection[{$\sim$\-Model}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Model\-::$\sim$\-Model (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_model_adbcc65acd88e11d79b890b984864d938}
-
-
 \subsection{Member Function Documentation}
-\hypertarget{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}{\index{burn\-::\-Model@{burn\-::\-Model}!get\-Mesh@{get\-Mesh}}
+\hypertarget{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}{\index{burn\-::\-Model@{burn\-::\-Model}!get\-Mesh@{get\-Mesh}}
 \index{get\-Mesh@{get\-Mesh}!burn::Model@{burn\-::\-Model}}
-\subsubsection[{get\-Mesh}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mesh}\& burn\-::\-Model\-::get\-Mesh (
+\subsubsection[{get\-Mesh}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Mesh}\& burn\-::\-Model\-::get\-Mesh (
 \begin{DoxyParamCaption}
 \item[{const size\-\_\-t \&}]{index}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}
+) const}}\label{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}
 \hypertarget{classburn_1_1_model_a25e8e13b43f76cb7336a8dafbebcbc44}{\index{burn\-::\-Model@{burn\-::\-Model}!get\-Mesh\-Count@{get\-Mesh\-Count}}
 \index{get\-Mesh\-Count@{get\-Mesh\-Count}!burn::Model@{burn\-::\-Model}}
 \subsubsection[{get\-Mesh\-Count}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t burn\-::\-Model\-::get\-Mesh\-Count (
@@ -64,6 +45,13 @@ A model can load 3d models from file.
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_model_a25e8e13b43f76cb7336a8dafbebcbc44}
+\hypertarget{classburn_1_1_model_a005e0dfee9c82744f2ac7416eeb84905}{\index{burn\-::\-Model@{burn\-::\-Model}!is\-Updated@{is\-Updated}}
+\index{is\-Updated@{is\-Updated}!burn::Model@{burn\-::\-Model}}
+\subsubsection[{is\-Updated}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Model\-::is\-Updated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_model_a005e0dfee9c82744f2ac7416eeb84905}
 \hypertarget{classburn_1_1_model_aa9220fbb6658d0ded238efd5f5e81097}{\index{burn\-::\-Model@{burn\-::\-Model}!load\-From\-File@{load\-From\-File}}
 \index{load\-From\-File@{load\-From\-File}!burn::Model@{burn\-::\-Model}}
 \subsubsection[{load\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Model\-::load\-From\-File (
@@ -81,7 +69,7 @@ A model can load 3d models from file.
 )}}\label{classburn_1_1_model_ac685b9312e2fbc837142d66949c8056f}
 
 
-Changes the flags of all meshes to the given parameter. It replaces the \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{Material\-::set\-Flag} function, just that this one sets the flag to every mesh. If you want to affect only a single mesh, you have to get the mesh via \hyperlink{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}{get\-Mesh()} 
+Changes the flags of all meshes to the given parameter. It replaces the \hyperlink{classburn_1_1_material_a833037afe81bc0aa52ceb4581b66087f}{Material\-::set\-Flag} function, just that this one sets the flag to every mesh. If you want to affect only a single mesh, you have to get the mesh via \hyperlink{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}{get\-Mesh()} 
 
 
 \begin{DoxyParams}{Parameters}
@@ -93,7 +81,7 @@ Changes the flags of all meshes to the given parameter. It replaces the \hyperli
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_material}{Material} 
 
-\hyperlink{classburn_1_1_model_a08880f1dc5bc4b7d9e286275979efc39}{get\-Mesh()} 
+\hyperlink{classburn_1_1_model_a137c8036e620ceb11cb6459edbe33178}{get\-Mesh()} 
 \end{DoxySeeAlso}
 \hypertarget{classburn_1_1_model_a9f9a12b843e91110ac500d23fd33a46c}{\index{burn\-::\-Model@{burn\-::\-Model}!update@{update}}
 \index{update@{update}!burn::Model@{burn\-::\-Model}}
@@ -106,4 +94,4 @@ Changes the flags of all meshes to the given parameter. It replaces the \hyperli
 
 The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Burngine/\-Graphics/\hyperlink{_model_8h}{Model.\-h}\end{DoxyCompactItemize}
+include/\-Burngine/\-Graphics/\-Scene/\hyperlink{_model_8h}{Model.\-h}\end{DoxyCompactItemize}

@@ -74,7 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,16 +90,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classburn_1_1_light-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">burn::Light Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Inherits from <a class="el" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a>. Obviously the scale will have no effect.  
- <a href="classburn_1_1_light.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_light_8h_source.html">Light.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -108,155 +106,182 @@ Inheritance diagram for burn::Light:</div>
  <div class="center">
   <img src="classburn_1_1_light.png" usemap="#burn::Light_map" alt=""/>
   <map id="burn::Light_map" name="burn::Light_map">
-<area href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. " alt="burn::Transformable" shape="rect" coords="0,0,125,24"/>
+<area href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. " alt="burn::Transformable" shape="rect" coords="0,0,132,24"/>
+<area href="classburn_1_1_directional_light.html" alt="burn::DirectionalLight" shape="rect" coords="0,112,132,136"/>
+<area href="classburn_1_1_spot_light.html" alt="burn::SpotLight" shape="rect" coords="0,168,132,192"/>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a8fa12cb3ae2a0eebbfbf5c59c2b4b599"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> { <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7">POINT</a>, 
-<a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6">SPOT</a>, 
-<a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032">DIRECTIONAL</a>
- }</td></tr>
-<tr class="separator:a8fa12cb3ae2a0eebbfbf5c59c2b4b599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a70a09e0609abe704f3e65d4790b6d6ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a70a09e0609abe704f3e65d4790b6d6ce">Light</a> (const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> &amp;type=<a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7">POINT</a>, const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;color=<a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>(1.0f, 1.0f, 1.0f), const float &amp;intensity=1.0f)</td></tr>
-<tr class="separator:a70a09e0609abe704f3e65d4790b6d6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0fe1fa2f8f4527e80bd4ca80b2f6c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af0fe1fa2f8f4527e80bd4ca80b2f6c4e">~Light</a> ()</td></tr>
-<tr class="separator:af0fe1fa2f8f4527e80bd4ca80b2f6c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6178f2826887a4aba596523b3e001604"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a6178f2826887a4aba596523b3e001604">setColor</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;color)</td></tr>
+<tr class="memitem:ae0ca792dd745afb8976640cfca5644d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#ae0ca792dd745afb8976640cfca5644d6">Light</a> ()</td></tr>
+<tr class="separator:ae0ca792dd745afb8976640cfca5644d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa47f7f4395a7ef12f78669a5694382"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#adaa47f7f4395a7ef12f78669a5694382">Light</a> (const <a class="el" href="classburn_1_1_light.html">Light</a> &amp;other)</td></tr>
+<tr class="separator:adaa47f7f4395a7ef12f78669a5694382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49541104082b6f6c0f93cc4ff4161b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_light.html">Light</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af49541104082b6f6c0f93cc4ff4161b5">operator=</a> (const <a class="el" href="classburn_1_1_light.html">Light</a> &amp;other)</td></tr>
+<tr class="separator:af49541104082b6f6c0f93cc4ff4161b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0622c23bba106043efff05e027d1e04"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af0622c23bba106043efff05e027d1e04">~Light</a> ()</td></tr>
+<tr class="separator:af0622c23bba106043efff05e027d1e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6178f2826887a4aba596523b3e001604"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a6178f2826887a4aba596523b3e001604">setColor</a> (const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;color)</td></tr>
 <tr class="separator:a6178f2826887a4aba596523b3e001604"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00de56025645f4c39d03b24e48f4eabf"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a00de56025645f4c39d03b24e48f4eabf">getColor</a> () const </td></tr>
-<tr class="separator:a00de56025645f4c39d03b24e48f4eabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b43e6f4a60eed5ed3ff2f7a01d350eb"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a0b43e6f4a60eed5ed3ff2f7a01d350eb">getColor</a> () const </td></tr>
+<tr class="separator:a0b43e6f4a60eed5ed3ff2f7a01d350eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a798ae7d682b85dcede11a89047f19508"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a798ae7d682b85dcede11a89047f19508">setIntensity</a> (const float &amp;intensity)</td></tr>
 <tr class="separator:a798ae7d682b85dcede11a89047f19508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e826b840750ededc98e73f814c2de4a"><td class="memItemLeft" align="right" valign="top">const float &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a0e826b840750ededc98e73f814c2de4a">getIntensity</a> () const </td></tr>
-<tr class="separator:a0e826b840750ededc98e73f814c2de4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b0285cf5b58bc337a8d3ab9b4077554"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a1b0285cf5b58bc337a8d3ab9b4077554">setType</a> (const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> &amp;type)</td></tr>
-<tr class="separator:a1b0285cf5b58bc337a8d3ab9b4077554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa96f8a2a736f033cd93f16467faad31b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#aa96f8a2a736f033cd93f16467faad31b">getType</a> () const </td></tr>
-<tr class="separator:aa96f8a2a736f033cd93f16467faad31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5083292da85b9514dfa52ec933a563c"><td class="memItemLeft" align="right" valign="top">const float &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#ac5083292da85b9514dfa52ec933a563c">getIntensity</a> () const </td></tr>
+<tr class="separator:ac5083292da85b9514dfa52ec933a563c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1c8b2a8ff0af362741b01fa5873c683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#ad1c8b2a8ff0af362741b01fa5873c683">addParentScene</a> (<a class="el" href="classburn_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="separator:ad1c8b2a8ff0af362741b01fa5873c683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a320f27149a8e49a1d2b563e423e9636c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a320f27149a8e49a1d2b563e423e9636c">removeParentScene</a> (<a class="el" href="classburn_1_1_scene.html">Scene</a> *scene)</td></tr>
+<tr class="separator:a320f27149a8e49a1d2b563e423e9636c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af14d6771a1b6ff04195467f5c1c6a312"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af14d6771a1b6ff04195467f5c1c6a312">updateShadowMap</a> (const std::vector&lt; <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> * &gt; &amp;nodes)</td></tr>
+<tr class="separator:af14d6771a1b6ff04195467f5c1c6a312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08ea0337d85542b856662d3fc78453b"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af08ea0337d85542b856662d3fc78453b">getBiasViewMatrix</a> () const </td></tr>
+<tr class="separator:af08ea0337d85542b856662d3fc78453b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e9ec371a39bb44d98892b4076cc4766"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a2e9ec371a39bb44d98892b4076cc4766">getBiasProjectionMatrix</a> () const </td></tr>
+<tr class="separator:a2e9ec371a39bb44d98892b4076cc4766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39e25024015dd3dc1668300d1807a189"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a39e25024015dd3dc1668300d1807a189">bindShadowCubeMap</a> () const </td></tr>
+<tr class="separator:a39e25024015dd3dc1668300d1807a189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a601abfc3e38f459fcad0f0ceb1e71df2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a601abfc3e38f459fcad0f0ceb1e71df2">findViewMatrix</a> (const int &amp;face) const </td></tr>
+<tr class="separator:a601abfc3e38f459fcad0f0ceb1e71df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01d43c41e03e7ec0f3ec37281a1cf920"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_shadow_cube_map.html">ShadowCubeMap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a01d43c41e03e7ec0f3ec37281a1cf920">getShadowCubeMap</a> () const </td></tr>
+<tr class="separator:a01d43c41e03e7ec0f3ec37281a1cf920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
 <tr class="memitem:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981">Transformable</a> ()</td></tr>
 <tr class="memdesc:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#ab5df8f6f319ebc8888465632a1567981">More...</a><br/></td></tr>
 <tr class="separator:ab5df8f6f319ebc8888465632a1567981 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a421e6dc05fe22e624f25c346380624b7 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a421e6dc05fe22e624f25c346380624b7">~Transformable</a> ()</td></tr>
-<tr class="memdesc:a421e6dc05fe22e624f25c346380624b7 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor, because this class should be derived only.  <a href="#a421e6dc05fe22e624f25c346380624b7">More...</a><br/></td></tr>
-<tr class="separator:a421e6dc05fe22e624f25c346380624b7 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a408d484d0ed48c1d7499391b3f2d4a66 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a408d484d0ed48c1d7499391b3f2d4a66">setPosition</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;position)</td></tr>
+<tr class="memitem:ac3b6e91f17a6b8f5db8027e72942f269 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ac3b6e91f17a6b8f5db8027e72942f269">~Transformable</a> ()</td></tr>
+<tr class="memdesc:ac3b6e91f17a6b8f5db8027e72942f269 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor, because this class should be derived only.  <a href="#ac3b6e91f17a6b8f5db8027e72942f269">More...</a><br/></td></tr>
+<tr class="separator:ac3b6e91f17a6b8f5db8027e72942f269 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a408d484d0ed48c1d7499391b3f2d4a66 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a408d484d0ed48c1d7499391b3f2d4a66">setPosition</a> (const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;position)</td></tr>
 <tr class="memdesc:a408d484d0ed48c1d7499391b3f2d4a66 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the position of the object.  <a href="#a408d484d0ed48c1d7499391b3f2d4a66">More...</a><br/></td></tr>
 <tr class="separator:a408d484d0ed48c1d7499391b3f2d4a66 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2946b97405311e3aff7f86fc6b0cd59 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ac2946b97405311e3aff7f86fc6b0cd59">getPosition</a> () const </td></tr>
-<tr class="memdesc:ac2946b97405311e3aff7f86fc6b0cd59 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current position of the object.  <a href="#ac2946b97405311e3aff7f86fc6b0cd59">More...</a><br/></td></tr>
-<tr class="separator:ac2946b97405311e3aff7f86fc6b0cd59 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adad877d654e3ac20ed0ff6edf002e040 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#adad877d654e3ac20ed0ff6edf002e040">setRotation</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;rotation)</td></tr>
+<tr class="memitem:aab2eb6fb8e64349a9f83bc6939477b74 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#aab2eb6fb8e64349a9f83bc6939477b74">getPosition</a> () const </td></tr>
+<tr class="memdesc:aab2eb6fb8e64349a9f83bc6939477b74 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current position of the object.  <a href="#aab2eb6fb8e64349a9f83bc6939477b74">More...</a><br/></td></tr>
+<tr class="separator:aab2eb6fb8e64349a9f83bc6939477b74 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adad877d654e3ac20ed0ff6edf002e040 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#adad877d654e3ac20ed0ff6edf002e040">setRotation</a> (const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;rotation)</td></tr>
 <tr class="memdesc:adad877d654e3ac20ed0ff6edf002e040 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rotation of the object.  <a href="#adad877d654e3ac20ed0ff6edf002e040">More...</a><br/></td></tr>
 <tr class="separator:adad877d654e3ac20ed0ff6edf002e040 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14977c0459a9bec1fd935a5967111311 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a14977c0459a9bec1fd935a5967111311">getRotation</a> () const </td></tr>
-<tr class="memdesc:a14977c0459a9bec1fd935a5967111311 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current rotation of the object.  <a href="#a14977c0459a9bec1fd935a5967111311">More...</a><br/></td></tr>
-<tr class="separator:a14977c0459a9bec1fd935a5967111311 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e73a5706524923d4fc6c13990b7f575 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a7e73a5706524923d4fc6c13990b7f575">setScale</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;scale)</td></tr>
+<tr class="memitem:af16b32fb2143e7a459b8446e898c4359 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#af16b32fb2143e7a459b8446e898c4359">getRotation</a> () const </td></tr>
+<tr class="memdesc:af16b32fb2143e7a459b8446e898c4359 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current rotation of the object.  <a href="#af16b32fb2143e7a459b8446e898c4359">More...</a><br/></td></tr>
+<tr class="separator:af16b32fb2143e7a459b8446e898c4359 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e73a5706524923d4fc6c13990b7f575 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a7e73a5706524923d4fc6c13990b7f575">setScale</a> (const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;scale)</td></tr>
 <tr class="memdesc:a7e73a5706524923d4fc6c13990b7f575 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scale of the object.  <a href="#a7e73a5706524923d4fc6c13990b7f575">More...</a><br/></td></tr>
 <tr class="separator:a7e73a5706524923d4fc6c13990b7f575 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e6d9642bcb49deb83b38a3831824b52 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a7e6d9642bcb49deb83b38a3831824b52">getScale</a> () const </td></tr>
-<tr class="memdesc:a7e6d9642bcb49deb83b38a3831824b52 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current scale of the object.  <a href="#a7e6d9642bcb49deb83b38a3831824b52">More...</a><br/></td></tr>
-<tr class="separator:a7e6d9642bcb49deb83b38a3831824b52 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8743b842184630917ee67e8e8039fc6f inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a8743b842184630917ee67e8e8039fc6f">getModelMatrix</a> ()</td></tr>
-<tr class="memdesc:a8743b842184630917ee67e8e8039fc6f inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current modelmatrix of the object.  <a href="#a8743b842184630917ee67e8e8039fc6f">More...</a><br/></td></tr>
-<tr class="separator:a8743b842184630917ee67e8e8039fc6f inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d533b4a7d03b3b2aa9c783cb7cb061 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a62d533b4a7d03b3b2aa9c783cb7cb061">getScale</a> () const </td></tr>
+<tr class="memdesc:a62d533b4a7d03b3b2aa9c783cb7cb061 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current scale of the object.  <a href="#a62d533b4a7d03b3b2aa9c783cb7cb061">More...</a><br/></td></tr>
+<tr class="separator:a62d533b4a7d03b3b2aa9c783cb7cb061 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac77cb89c24baf4eaf730b478b2f9b2b5 inherit pub_methods_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ac77cb89c24baf4eaf730b478b2f9b2b5">getModelMatrix</a> ()</td></tr>
+<tr class="memdesc:ac77cb89c24baf4eaf730b478b2f9b2b5 inherit pub_methods_classburn_1_1_transformable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current modelmatrix of the object.  <a href="#ac77cb89c24baf4eaf730b478b2f9b2b5">More...</a><br/></td></tr>
+<tr class="separator:ac77cb89c24baf4eaf730b478b2f9b2b5 inherit pub_methods_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a5fce7c28e34206c39645bb383b823f48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a5fce7c28e34206c39645bb383b823f48">removeAllParents</a> ()</td></tr>
+<tr class="separator:a5fce7c28e34206c39645bb383b823f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a6a49b033b4c1cb79e3d84e9ef74dbcda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a6a49b033b4c1cb79e3d84e9ef74dbcda">_color</a></td></tr>
+<tr class="separator:a6a49b033b4c1cb79e3d84e9ef74dbcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92fcb1a0d7bf3680d65108b59931658b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a92fcb1a0d7bf3680d65108b59931658b">_intensity</a></td></tr>
+<tr class="separator:a92fcb1a0d7bf3680d65108b59931658b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33188aef471ba7c742c004a787c5a8b4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classburn_1_1_scene.html">Scene</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a33188aef471ba7c742c004a787c5a8b4">_parents</a></td></tr>
+<tr class="separator:a33188aef471ba7c742c004a787c5a8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58333b9fd0fc2bf4e0cba73097b8e5c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a58333b9fd0fc2bf4e0cba73097b8e5c9">_biasViewMatrix</a></td></tr>
+<tr class="separator:a58333b9fd0fc2bf4e0cba73097b8e5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18f86434a088d060af651fc1a2394cdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#a18f86434a088d060af651fc1a2394cdf">_biasProjectionMatrix</a></td></tr>
+<tr class="separator:a18f86434a088d060af651fc1a2394cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06e39faf3bc51663bc2f0e0302bd0d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classburn_1_1_shadow_cube_map.html">ShadowCubeMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_light.html#af06e39faf3bc51663bc2f0e0302bd0d0">_shadowCubeMap</a></td></tr>
+<tr class="separator:af06e39faf3bc51663bc2f0e0302bd0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classburn_1_1_transformable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classburn_1_1_transformable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classburn_1_1_transformable.html">burn::Transformable</a></td></tr>
-<tr class="memitem:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a1cb1a52f8518c7c2f50e45d8cd902767">_position</a></td></tr>
+<tr class="memitem:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a1cb1a52f8518c7c2f50e45d8cd902767">_position</a></td></tr>
 <tr class="separator:a1cb1a52f8518c7c2f50e45d8cd902767 inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80e5ca4d02b2d58593b751b040e86492 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a></td></tr>
+<tr class="memitem:a80e5ca4d02b2d58593b751b040e86492 inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a></td></tr>
 <tr class="separator:a80e5ca4d02b2d58593b751b040e86492 inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad62e417f44d78cbeedfd30e62c1b896d inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ad62e417f44d78cbeedfd30e62c1b896d">_rotation</a></td></tr>
+<tr class="memitem:ad62e417f44d78cbeedfd30e62c1b896d inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#ad62e417f44d78cbeedfd30e62c1b896d">_rotation</a></td></tr>
 <tr class="separator:ad62e417f44d78cbeedfd30e62c1b896d inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a06bcec86a7f2e70eba6fe7e8bbe61c inherit pro_attribs_classburn_1_1_transformable"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a></td></tr>
 <tr class="separator:a6a06bcec86a7f2e70eba6fe7e8bbe61c inherit pro_attribs_classburn_1_1_transformable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Inherits from <a class="el" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a>. Obviously the scale will have no effect. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a class="anchor" id="a8fa12cb3ae2a0eebbfbf5c59c2b4b599"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">burn::Light::Type</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7"></a>POINT</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6"></a>SPOT</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032"></a>DIRECTIONAL</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a70a09e0609abe704f3e65d4790b6d6ce"></a>
+<a class="anchor" id="ae0ca792dd745afb8976640cfca5644d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">burn::Light::Light </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> &amp;&#160;</td>
-          <td class="paramname"><em>type</em> = <code><a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7">POINT</a></code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname">)</td><td></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td>
-          <td class="paramname"><em>color</em> = <code><a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>(1.0f,&#160;1.0f,&#160;1.0f)</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>intensity</em> = <code>1.0f</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0fe1fa2f8f4527e80bd4ca80b2f6c4e"></a>
+<a class="anchor" id="adaa47f7f4395a7ef12f78669a5694382"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">burn::Light::~Light </td>
+          <td class="memname">burn::Light::Light </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_light.html">Light</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af0622c23bba106043efff05e027d1e04"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual burn::Light::~Light </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a00de56025645f4c39d03b24e48f4eabf"></a>
+<a class="anchor" id="ad1c8b2a8ff0af362741b01fa5873c683"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp; burn::Light::getColor </td>
+          <td class="memname">void burn::Light::addParentScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_scene.html">Scene</a> *&#160;</td>
+          <td class="paramname"><em>scene</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a39e25024015dd3dc1668300d1807a189"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Light::bindShadowCubeMap </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td> const</td>
@@ -266,12 +291,74 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0e826b840750ededc98e73f814c2de4a"></a>
+<a class="anchor" id="a601abfc3e38f459fcad0f0ceb1e71df2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float &amp; burn::Light::getIntensity </td>
+          <td class="memname"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> burn::Light::findViewMatrix </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>face</em>)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2e9ec371a39bb44d98892b4076cc4766"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; burn::Light::getBiasProjectionMatrix </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af08ea0337d85542b856662d3fc78453b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; burn::Light::getBiasViewMatrix </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0b43e6f4a60eed5ed3ff2f7a01d350eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; burn::Light::getColor </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td> const</td>
@@ -281,15 +368,85 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa96f8a2a736f033cd93f16467faad31b"></a>
+<a class="anchor" id="ac5083292da85b9514dfa52ec933a563c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Light::Type</a> &amp; burn::Light::getType </td>
+          <td class="memname">const float&amp; burn::Light::getIntensity </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a01d43c41e03e7ec0f3ec37281a1cf920"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classburn_1_1_shadow_cube_map.html">ShadowCubeMap</a>&amp; burn::Light::getShadowCubeMap </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af49541104082b6f6c0f93cc4ff4161b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classburn_1_1_light.html">Light</a>&amp; burn::Light::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_light.html">Light</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5fce7c28e34206c39645bb383b823f48"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Light::removeAllParents </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a320f27149a8e49a1d2b563e423e9636c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Light::removeParentScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_scene.html">Scene</a> *&#160;</td>
+          <td class="paramname"><em>scene</em>)</td><td></td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -303,7 +460,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void burn::Light::setColor </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td>
           <td class="paramname"><em>color</em>)</td><td></td>
           <td></td>
         </tr>
@@ -328,30 +485,160 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b0285cf5b58bc337a8d3ab9b4077554"></a>
+<a class="anchor" id="af14d6771a1b6ff04195467f5c1c6a312"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Light::setType </td>
+          <td class="memname">virtual void burn::Light::updateShadowMap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classburn_1_1_light.html#a8fa12cb3ae2a0eebbfbf5c59c2b4b599">Type</a> &amp;&#160;</td>
-          <td class="paramname"><em>type</em>)</td><td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>nodes</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classburn_1_1_directional_light.html#a84eb0090ded76e9f73d351ff87a54795">burn::DirectionalLight</a>, and <a class="el" href="classburn_1_1_spot_light.html#ab16ad5f4da0fe8fc9cdd07b2931259ee">burn::SpotLight</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a18f86434a088d060af651fc1a2394cdf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> burn::Light::_biasProjectionMatrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>include/Burngine/Graphics/<a class="el" href="_light_8h_source.html">Light.h</a></li>
-<li>include/Burngine/Graphics/<a class="el" href="_light_8cpp.html">Light.cpp</a></li>
+<a class="anchor" id="a58333b9fd0fc2bf4e0cba73097b8e5c9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> burn::Light::_biasViewMatrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6a49b033b4c1cb79e3d84e9ef74dbcda"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> burn::Light::_color</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a92fcb1a0d7bf3680d65108b59931658b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float burn::Light::_intensity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a33188aef471ba7c742c004a787c5a8b4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classburn_1_1_scene.html">Scene</a>*&gt; burn::Light::_parents</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af06e39faf3bc51663bc2f0e0302bd0d0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classburn_1_1_shadow_cube_map.html">ShadowCubeMap</a> burn::Light::_shadowCubeMap</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/Burngine/Graphics/Scene/<a class="el" href="_light_8h_source.html">Light.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

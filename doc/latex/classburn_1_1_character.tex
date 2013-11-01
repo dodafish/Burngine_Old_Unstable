@@ -1,0 +1,105 @@
+\hypertarget{classburn_1_1_character}{\section{burn\-:\-:Character Class Reference}
+\label{classburn_1_1_character}\index{burn\-::\-Character@{burn\-::\-Character}}
+}
+
+
+{\ttfamily \#include $<$Character.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_character_a9972c2e356b95364c64db345e69b8d23}{Character} (const \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} \&code\-Point=0, const unsigned int \&size=0)
+\item 
+\hyperlink{classburn_1_1_character_af8b977dc4ed78f7b45b673e339dbf7f5}{$\sim$\-Character} ()
+\item 
+void \hyperlink{classburn_1_1_character_a1d87ddcf0eb04b4153b5903c46ce2486}{create\-From\-Ft\-Glyph} (void $\ast$glyph, void $\ast$bitmap)
+\item 
+void \hyperlink{classburn_1_1_character_a1b8e1666f241a5b9d36a6ecc4aa9c6e4}{draw} (const \hyperlink{namespaceburn_af5ed9eb70cbf0fb572098ff43e146a0a}{Vector2f} \&position, const \hyperlink{namespaceburn_a58a411b9d83c7970518a9250c1c78068}{Vector4f} \&color) const 
+\item 
+bool \hyperlink{classburn_1_1_character_ae2ed0524994d3bcf94d35a9fff1ae5de}{operator==} (const \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} \&code\-Point) const 
+\item 
+const \hyperlink{namespaceburn_afb9df6e019eb84491abb84140b4da64e}{Vector2i} \& \hyperlink{classburn_1_1_character_ae69a7fe121723228a12337a1f3cb843e}{get\-Dimensions} () const 
+\item 
+const \hyperlink{namespaceburn_afb9df6e019eb84491abb84140b4da64e}{Vector2i} \& \hyperlink{classburn_1_1_character_a7ca6a37f76970584f0f5f0679cc7f311}{get\-Advance} () const 
+\item 
+const \hyperlink{namespaceburn_afb9df6e019eb84491abb84140b4da64e}{Vector2i} \& \hyperlink{classburn_1_1_character_aa0bbf852aa8e2a496149303d46c5016a}{get\-Bearing} () const 
+\item 
+const unsigned int \& \hyperlink{classburn_1_1_character_a4f01f0bdfc24bda462b121c4763713fe}{get\-Size} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_character_a9972c2e356b95364c64db345e69b8d23}{\index{burn\-::\-Character@{burn\-::\-Character}!Character@{Character}}
+\index{Character@{Character}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{Character}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Character\-::\-Character (
+\begin{DoxyParamCaption}
+\item[{const {\bf Uint32} \&}]{code\-Point = {\ttfamily 0}, }
+\item[{const unsigned int \&}]{size = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_character_a9972c2e356b95364c64db345e69b8d23}
+\hypertarget{classburn_1_1_character_af8b977dc4ed78f7b45b673e339dbf7f5}{\index{burn\-::\-Character@{burn\-::\-Character}!$\sim$\-Character@{$\sim$\-Character}}
+\index{$\sim$\-Character@{$\sim$\-Character}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{$\sim$\-Character}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Character\-::$\sim$\-Character (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_character_af8b977dc4ed78f7b45b673e339dbf7f5}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_character_a1d87ddcf0eb04b4153b5903c46ce2486}{\index{burn\-::\-Character@{burn\-::\-Character}!create\-From\-Ft\-Glyph@{create\-From\-Ft\-Glyph}}
+\index{create\-From\-Ft\-Glyph@{create\-From\-Ft\-Glyph}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{create\-From\-Ft\-Glyph}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Character\-::create\-From\-Ft\-Glyph (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{glyph, }
+\item[{void $\ast$}]{bitmap}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_character_a1d87ddcf0eb04b4153b5903c46ce2486}
+\hypertarget{classburn_1_1_character_a1b8e1666f241a5b9d36a6ecc4aa9c6e4}{\index{burn\-::\-Character@{burn\-::\-Character}!draw@{draw}}
+\index{draw@{draw}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Character\-::draw (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector2f} \&}]{position, }
+\item[{const {\bf Vector4f} \&}]{color}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_a1b8e1666f241a5b9d36a6ecc4aa9c6e4}
+\hypertarget{classburn_1_1_character_a7ca6a37f76970584f0f5f0679cc7f311}{\index{burn\-::\-Character@{burn\-::\-Character}!get\-Advance@{get\-Advance}}
+\index{get\-Advance@{get\-Advance}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{get\-Advance}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector2i}\& burn\-::\-Character\-::get\-Advance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_a7ca6a37f76970584f0f5f0679cc7f311}
+\hypertarget{classburn_1_1_character_aa0bbf852aa8e2a496149303d46c5016a}{\index{burn\-::\-Character@{burn\-::\-Character}!get\-Bearing@{get\-Bearing}}
+\index{get\-Bearing@{get\-Bearing}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{get\-Bearing}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector2i}\& burn\-::\-Character\-::get\-Bearing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_aa0bbf852aa8e2a496149303d46c5016a}
+\hypertarget{classburn_1_1_character_ae69a7fe121723228a12337a1f3cb843e}{\index{burn\-::\-Character@{burn\-::\-Character}!get\-Dimensions@{get\-Dimensions}}
+\index{get\-Dimensions@{get\-Dimensions}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{get\-Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector2i}\& burn\-::\-Character\-::get\-Dimensions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_ae69a7fe121723228a12337a1f3cb843e}
+\hypertarget{classburn_1_1_character_a4f01f0bdfc24bda462b121c4763713fe}{\index{burn\-::\-Character@{burn\-::\-Character}!get\-Size@{get\-Size}}
+\index{get\-Size@{get\-Size}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned int\& burn\-::\-Character\-::get\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_a4f01f0bdfc24bda462b121c4763713fe}
+\hypertarget{classburn_1_1_character_ae2ed0524994d3bcf94d35a9fff1ae5de}{\index{burn\-::\-Character@{burn\-::\-Character}!operator==@{operator==}}
+\index{operator==@{operator==}!burn::Character@{burn\-::\-Character}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Character\-::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Uint32} \&}]{code\-Point}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_character_ae2ed0524994d3bcf94d35a9fff1ae5de}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\-Gui/\hyperlink{_character_8h}{Character.\-h}\end{DoxyCompactItemize}

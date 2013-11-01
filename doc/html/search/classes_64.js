@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['depthcubemap',['DepthCubeMap',['../classburn_1_1_depth_cube_map.html',1,'burn']]],
-  ['depthtexture',['DepthTexture',['../classburn_1_1_depth_texture.html',1,'burn']]]
+  ['directionallight',['DirectionalLight',['../classburn_1_1_directional_light.html',1,'burn']]]
 ];

@@ -1,0 +1,134 @@
+\hypertarget{classburn_1_1_vertex_buffer_object}{\section{burn\-:\-:Vertex\-Buffer\-Object Class Reference}
+\label{classburn_1_1_vertex_buffer_object}\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}}
+}
+
+
+{\ttfamily \#include $<$Vertex\-Buffer\-Object.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_vertex_buffer_object_af0a41c8a7971e0d1b3dae8627f62ff2d}{Vertex\-Buffer\-Object} ()
+\item 
+\hyperlink{classburn_1_1_vertex_buffer_object_a0928cc2ea2aadf3293b0a3bcd92357e3}{Vertex\-Buffer\-Object} (const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \&other)
+\item 
+\hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \& \hyperlink{classburn_1_1_vertex_buffer_object_a5eea02c5f9501b3f8701a1a74aef9de4}{operator=} (const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \&other)
+\item 
+\hyperlink{classburn_1_1_vertex_buffer_object_a6cf9484f38d9c22ecc4bed1c1ab2898f}{$\sim$\-Vertex\-Buffer\-Object} ()
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_aa419f6c9575373081db60a10f25ad8c3}{create} ()
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_a0345423ca4e50a58ecaf2521b5413a04}{cleanup} ()
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_a19f8dbad2ddb4bc1dcbbab1ddc717a4e}{reset} ()
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_a6e4741c78a4869248c51b616178efb1e}{bind} (const G\-Lint \&type=G\-L\-\_\-\-A\-R\-R\-A\-Y\-\_\-\-B\-U\-F\-F\-E\-R) const 
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_aedcb88f4ea35920ba42c035517dda014}{upload\-Data\-To\-Gpu} (const G\-Lint \&type=G\-L\-\_\-\-A\-R\-R\-A\-Y\-\_\-\-B\-U\-F\-F\-E\-R, const G\-Lint \&usage\-Hint=G\-L\-\_\-\-S\-T\-A\-T\-I\-C\-\_\-\-D\-R\-A\-W)
+\item 
+const G\-Luint \& \hyperlink{classburn_1_1_vertex_buffer_object_afa688bd32462da685a0d9363ebff96d6}{get\-Buffer} () const 
+\item 
+void \hyperlink{classburn_1_1_vertex_buffer_object_a675d7b4e12d35db7873d3f2c5400827a}{add\-Data} (const void $\ast$data, const unsigned int \&size)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static G\-Lint \hyperlink{classburn_1_1_vertex_buffer_object_ab3758883f34cc0c7f32e563873cfe77d}{get\-Last\-Buffer} (const G\-Lint \&type=G\-L\-\_\-\-A\-R\-R\-A\-Y\-\_\-\-B\-U\-F\-F\-E\-R)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_vertex_buffer_object_af0a41c8a7971e0d1b3dae8627f62ff2d}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!Vertex\-Buffer\-Object@{Vertex\-Buffer\-Object}}
+\index{Vertex\-Buffer\-Object@{Vertex\-Buffer\-Object}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{Vertex\-Buffer\-Object}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Vertex\-Buffer\-Object\-::\-Vertex\-Buffer\-Object (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_af0a41c8a7971e0d1b3dae8627f62ff2d}
+\hypertarget{classburn_1_1_vertex_buffer_object_a0928cc2ea2aadf3293b0a3bcd92357e3}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!Vertex\-Buffer\-Object@{Vertex\-Buffer\-Object}}
+\index{Vertex\-Buffer\-Object@{Vertex\-Buffer\-Object}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{Vertex\-Buffer\-Object}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Vertex\-Buffer\-Object\-::\-Vertex\-Buffer\-Object (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vertex\-Buffer\-Object} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a0928cc2ea2aadf3293b0a3bcd92357e3}
+\hypertarget{classburn_1_1_vertex_buffer_object_a6cf9484f38d9c22ecc4bed1c1ab2898f}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!$\sim$\-Vertex\-Buffer\-Object@{$\sim$\-Vertex\-Buffer\-Object}}
+\index{$\sim$\-Vertex\-Buffer\-Object@{$\sim$\-Vertex\-Buffer\-Object}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{$\sim$\-Vertex\-Buffer\-Object}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Vertex\-Buffer\-Object\-::$\sim$\-Vertex\-Buffer\-Object (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a6cf9484f38d9c22ecc4bed1c1ab2898f}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_vertex_buffer_object_a675d7b4e12d35db7873d3f2c5400827a}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!add\-Data@{add\-Data}}
+\index{add\-Data@{add\-Data}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{add\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::add\-Data (
+\begin{DoxyParamCaption}
+\item[{const void $\ast$}]{data, }
+\item[{const unsigned int \&}]{size}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a675d7b4e12d35db7873d3f2c5400827a}
+\hypertarget{classburn_1_1_vertex_buffer_object_a6e4741c78a4869248c51b616178efb1e}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!bind@{bind}}
+\index{bind@{bind}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{bind}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::bind (
+\begin{DoxyParamCaption}
+\item[{const G\-Lint \&}]{type = {\ttfamily GL\-\_\-ARRAY\-\_\-BUFFER}}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_vertex_buffer_object_a6e4741c78a4869248c51b616178efb1e}
+\hypertarget{classburn_1_1_vertex_buffer_object_a0345423ca4e50a58ecaf2521b5413a04}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!cleanup@{cleanup}}
+\index{cleanup@{cleanup}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{cleanup}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::cleanup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a0345423ca4e50a58ecaf2521b5413a04}
+\hypertarget{classburn_1_1_vertex_buffer_object_aa419f6c9575373081db60a10f25ad8c3}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!create@{create}}
+\index{create@{create}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{create}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_aa419f6c9575373081db60a10f25ad8c3}
+\hypertarget{classburn_1_1_vertex_buffer_object_afa688bd32462da685a0d9363ebff96d6}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!get\-Buffer@{get\-Buffer}}
+\index{get\-Buffer@{get\-Buffer}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{get\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint\& burn\-::\-Vertex\-Buffer\-Object\-::get\-Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_vertex_buffer_object_afa688bd32462da685a0d9363ebff96d6}
+\hypertarget{classburn_1_1_vertex_buffer_object_ab3758883f34cc0c7f32e563873cfe77d}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!get\-Last\-Buffer@{get\-Last\-Buffer}}
+\index{get\-Last\-Buffer@{get\-Last\-Buffer}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{get\-Last\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}static G\-Lint burn\-::\-Vertex\-Buffer\-Object\-::get\-Last\-Buffer (
+\begin{DoxyParamCaption}
+\item[{const G\-Lint \&}]{type = {\ttfamily GL\-\_\-ARRAY\-\_\-BUFFER}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_vertex_buffer_object_ab3758883f34cc0c7f32e563873cfe77d}
+\hypertarget{classburn_1_1_vertex_buffer_object_a5eea02c5f9501b3f8701a1a74aef9de4}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!operator=@{operator=}}
+\index{operator=@{operator=}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vertex\-Buffer\-Object}\& burn\-::\-Vertex\-Buffer\-Object\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vertex\-Buffer\-Object} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a5eea02c5f9501b3f8701a1a74aef9de4}
+\hypertarget{classburn_1_1_vertex_buffer_object_a19f8dbad2ddb4bc1dcbbab1ddc717a4e}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!reset@{reset}}
+\index{reset@{reset}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_a19f8dbad2ddb4bc1dcbbab1ddc717a4e}
+\hypertarget{classburn_1_1_vertex_buffer_object_aedcb88f4ea35920ba42c035517dda014}{\index{burn\-::\-Vertex\-Buffer\-Object@{burn\-::\-Vertex\-Buffer\-Object}!upload\-Data\-To\-Gpu@{upload\-Data\-To\-Gpu}}
+\index{upload\-Data\-To\-Gpu@{upload\-Data\-To\-Gpu}!burn::VertexBufferObject@{burn\-::\-Vertex\-Buffer\-Object}}
+\subsubsection[{upload\-Data\-To\-Gpu}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Vertex\-Buffer\-Object\-::upload\-Data\-To\-Gpu (
+\begin{DoxyParamCaption}
+\item[{const G\-Lint \&}]{type = {\ttfamily GL\-\_\-ARRAY\-\_\-BUFFER}, }
+\item[{const G\-Lint \&}]{usage\-Hint = {\ttfamily GL\-\_\-STATIC\-\_\-DRAW}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_vertex_buffer_object_aedcb88f4ea35920ba42c035517dda014}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\-General/\hyperlink{_vertex_buffer_object_8h}{Vertex\-Buffer\-Object.\-h}\end{DoxyCompactItemize}

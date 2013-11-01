@@ -1,9 +1,12 @@
-\hypertarget{_shader_8h}{\section{include/\-Burngine/\-Graphics/\-Shader.h File Reference}
-\label{_shader_8h}\index{include/\-Burngine/\-Graphics/\-Shader.\-h@{include/\-Burngine/\-Graphics/\-Shader.\-h}}
+\hypertarget{_shader_8h}{\section{include/\-Burngine/\-Graphics/\-General/\-Shader.h File Reference}
+\label{_shader_8h}\index{include/\-Burngine/\-Graphics/\-General/\-Shader.\-h@{include/\-Burngine/\-Graphics/\-General/\-Shader.\-h}}
 }
-{\ttfamily \#include \char`\"{}../\-Export.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}Open\-G\-L.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$Burngine/\-Export.\-h$>$}\\*
+{\ttfamily \#include $<$Burngine/\-Graphics/\-General/\-Open\-G\-L.\-h$>$}\\*
 {\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$Burngine/\-System/\-Math.\-h$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$utility$>$}\\*
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -15,36 +18,9 @@ struct \hyperlink{structburn_1_1_burngine_shaders}{burn\-::\-Burngine\-Shaders}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{namespaceburn}{burn}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em $<$-\/ G\-L\-F\-W \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Constant Groups}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{namespaceburn}{burn}
-\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-const std\-::string \hyperlink{namespaceburn_aef2bc91c4c84fa143da611ee2f284c8b}{burn\-::\-M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}M\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a7cb7c6572d4f7796ea3e5edae85e51f1}{burn\-::\-V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}V\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_ae5e90743826abef0fbc9d54704ae2a6f}{burn\-::\-P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}P\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a7c71b053f299e14c880f0f11ba916a44}{burn\-::\-M\-V\-P} = \char`\"{}(\char`\"{} + P\-R\-O\-J\-E\-C\-T\-I\-O\-N\-\_\-\-M\-A\-T\-R\-I\-X + \char`\"{}$\ast$\char`\"{} + V\-I\-E\-W\-\_\-\-M\-A\-T\-R\-I\-X + \char`\"{}$\ast$\char`\"{} + M\-O\-D\-E\-L\-\_\-\-M\-A\-T\-R\-I\-X + \char`\"{})\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a4daeaa4edb8bd22d9f48786640972b3a}{burn\-::\-N\-O\-R\-M\-A\-L\-\_\-\-M\-A\-T\-R\-I\-X} = \char`\"{}N\-O\-R\-M\-\_\-\-M\-A\-T\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_aea213969ba83f20b14023eac83ce7f04}{burn\-::\-C\-A\-M\-E\-R\-A\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N} = \char`\"{}C\-A\-M\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a2761e037b3be5b8f6f125f294a44b0bf}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D} = \char`\"{}L\-I\-G\-H\-T\-I\-G\-H\-T\-\_\-\-E\-N\-A\-B\-L\-E\-D\-\_\-\-H\-O\-O\-O\-O\-O\-D\-O\-O\-O\-O\-R\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a6512046548178a3d2212bfbca815c5b0}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-P\-O\-S\-I\-T\-I\-O\-N\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_ad5901e3871a98659781464fbbcd2e37c}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-C\-O\-L\-O\-R\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_aca7df8a95e5540d26da673ad43c639af}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-I\-N\-T\-E\-N\-S\-I\-T\-Y\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a1f547dd93c8820ec1276db0869c7e92c}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-A\-M\-B\-I\-E\-N\-T\-\_\-\char`\"{}
-\item 
-const std\-::string \hyperlink{namespaceburn_a4a1c8f51e081e667c4a08ab9251a8b61}{burn\-::\-L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R} = \char`\"{}L\-I\-G\-H\-T\-\_\-\-S\-P\-E\-C\-U\-L\-A\-R\-\_\-\char`\"{}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em $<$-\/ G\-L\-F\-W \end{DoxyCompactList}\end{DoxyCompactItemize}

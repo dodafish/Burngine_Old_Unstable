@@ -1,0 +1,184 @@
+\hypertarget{classburn_1_1_gui_node}{\section{burn\-:\-:Gui\-Node Class Reference}
+\label{classburn_1_1_gui_node}\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}}
+}
+
+
+{\ttfamily \#include $<$Gui\-Node.\-h$>$}
+
+Inheritance diagram for burn\-:\-:Gui\-Node\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classburn_1_1_gui_node}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_gui_node_ae908f29b71dda5ea724c742cfda3cd2a}{Gui\-Node} ()
+\item 
+virtual \hyperlink{classburn_1_1_gui_node_a5c047d11bef782a5261ce24d946612a8}{$\sim$\-Gui\-Node} ()
+\item 
+virtual void \hyperlink{classburn_1_1_gui_node_ac283552733ae59c4f1b7fa05c79cb517}{draw} ()=0
+\item 
+void \hyperlink{classburn_1_1_gui_node_a75f542965a10945fa2894a722def8337}{set\-Position} (const \hyperlink{namespaceburn_af5ed9eb70cbf0fb572098ff43e146a0a}{Vector2f} \&position)
+\item 
+const \hyperlink{namespaceburn_af5ed9eb70cbf0fb572098ff43e146a0a}{Vector2f} \& \hyperlink{classburn_1_1_gui_node_af3ddf018a01e587d110d44c16baa5ae8}{get\-Position} () const 
+\item 
+void \hyperlink{classburn_1_1_gui_node_aa02ac7225479a0a5652b6b759ba66dc7}{set\-Rotation} (const float \&rotation)
+\item 
+const float \& \hyperlink{classburn_1_1_gui_node_acc490b42584e6008b828a4251a88600a}{get\-Rotation} () const 
+\item 
+void \hyperlink{classburn_1_1_gui_node_a780a3f0e7fc21e5ab98f01e4bd5d87a3}{rotate} (const float \&angle)
+\item 
+void \hyperlink{classburn_1_1_gui_node_a4ad80df2dd7319d5ad7c036369ddf95b}{move} (const \hyperlink{namespaceburn_af5ed9eb70cbf0fb572098ff43e146a0a}{Vector2f} \&offset)
+\item 
+void \hyperlink{classburn_1_1_gui_node_a8e75af236c12312492e06242b8b58c13}{move} (const float \&offset\-X, const float \&offset\-Y)
+\item 
+void \hyperlink{classburn_1_1_gui_node_a12fdf6059b778dfbdc8737befcf09018}{set\-Z\-Index} (const \hyperlink{namespaceburn_a96c2e82d6da686c64a6f330628466b05}{Int32} \&z\-Index)
+\item 
+const \hyperlink{namespaceburn_a96c2e82d6da686c64a6f330628466b05}{Int32} \& \hyperlink{classburn_1_1_gui_node_a6d12929d442ae3e2a92704dfe9a26c12}{get\-Z\-Index} () const 
+\item 
+void \hyperlink{classburn_1_1_gui_node_a7636e6452ab00f08bfbc0841fb843788}{add\-Parent\-Gui} (\hyperlink{classburn_1_1_gui}{Gui} $\ast$parent)
+\item 
+void \hyperlink{classburn_1_1_gui_node_ad67e018354a2c81d64658aece6efb7c3}{remove\-Parent\-Gui} (\hyperlink{classburn_1_1_gui}{Gui} $\ast$parent)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceburn_af5ed9eb70cbf0fb572098ff43e146a0a}{Vector2f} \hyperlink{classburn_1_1_gui_node_a3047fb0cd29eb1cbc1a4ca5569b3d1bb}{\-\_\-position}
+\item 
+float \hyperlink{classburn_1_1_gui_node_aee62a004027766c6e7fd8947f150e759}{\-\_\-rotation}
+\item 
+\hyperlink{namespaceburn_a96c2e82d6da686c64a6f330628466b05}{Int32} \hyperlink{classburn_1_1_gui_node_a0ff802eeb35c2c27b9850cbd59449923}{\-\_\-z\-Index}
+\item 
+std\-::vector$<$ \hyperlink{classburn_1_1_gui}{Gui} $\ast$ $>$ \hyperlink{classburn_1_1_gui_node_af37b701f475d8046a3f864df6e39faf4}{\-\_\-parents}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_gui_node_ae908f29b71dda5ea724c742cfda3cd2a}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!Gui\-Node@{Gui\-Node}}
+\index{Gui\-Node@{Gui\-Node}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{Gui\-Node}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Gui\-Node\-::\-Gui\-Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_ae908f29b71dda5ea724c742cfda3cd2a}
+\hypertarget{classburn_1_1_gui_node_a5c047d11bef782a5261ce24d946612a8}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!$\sim$\-Gui\-Node@{$\sim$\-Gui\-Node}}
+\index{$\sim$\-Gui\-Node@{$\sim$\-Gui\-Node}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{$\sim$\-Gui\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual burn\-::\-Gui\-Node\-::$\sim$\-Gui\-Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_gui_node_a5c047d11bef782a5261ce24d946612a8}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_gui_node_a7636e6452ab00f08bfbc0841fb843788}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!add\-Parent\-Gui@{add\-Parent\-Gui}}
+\index{add\-Parent\-Gui@{add\-Parent\-Gui}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{add\-Parent\-Gui}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::add\-Parent\-Gui (
+\begin{DoxyParamCaption}
+\item[{{\bf Gui} $\ast$}]{parent}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a7636e6452ab00f08bfbc0841fb843788}
+\hypertarget{classburn_1_1_gui_node_ac283552733ae59c4f1b7fa05c79cb517}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!draw@{draw}}
+\index{draw@{draw}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Gui\-Node\-::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_gui_node_ac283552733ae59c4f1b7fa05c79cb517}
+
+
+Implemented in \hyperlink{classburn_1_1_text_aa451ad17d21dc9c12cef712aa41914bf}{burn\-::\-Text}, \hyperlink{classburn_1_1_rectangle_shape_a39c5c1e57ada4a6beb32a84a501baabf}{burn\-::\-Rectangle\-Shape}, and \hyperlink{classburn_1_1_label_a23eaa7ccb0a68e6691a89133cb4254d5}{burn\-::\-Label}.
+
+\hypertarget{classburn_1_1_gui_node_af3ddf018a01e587d110d44c16baa5ae8}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!get\-Position@{get\-Position}}
+\index{get\-Position@{get\-Position}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector2f}\& burn\-::\-Gui\-Node\-::get\-Position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_gui_node_af3ddf018a01e587d110d44c16baa5ae8}
+\hypertarget{classburn_1_1_gui_node_acc490b42584e6008b828a4251a88600a}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!get\-Rotation@{get\-Rotation}}
+\index{get\-Rotation@{get\-Rotation}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{get\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}const float\& burn\-::\-Gui\-Node\-::get\-Rotation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_gui_node_acc490b42584e6008b828a4251a88600a}
+\hypertarget{classburn_1_1_gui_node_a6d12929d442ae3e2a92704dfe9a26c12}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!get\-Z\-Index@{get\-Z\-Index}}
+\index{get\-Z\-Index@{get\-Z\-Index}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{get\-Z\-Index}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Int32}\& burn\-::\-Gui\-Node\-::get\-Z\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_gui_node_a6d12929d442ae3e2a92704dfe9a26c12}
+\hypertarget{classburn_1_1_gui_node_a4ad80df2dd7319d5ad7c036369ddf95b}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!move@{move}}
+\index{move@{move}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::move (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector2f} \&}]{offset}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a4ad80df2dd7319d5ad7c036369ddf95b}
+\hypertarget{classburn_1_1_gui_node_a8e75af236c12312492e06242b8b58c13}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!move@{move}}
+\index{move@{move}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::move (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{offset\-X, }
+\item[{const float \&}]{offset\-Y}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a8e75af236c12312492e06242b8b58c13}
+\hypertarget{classburn_1_1_gui_node_ad67e018354a2c81d64658aece6efb7c3}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!remove\-Parent\-Gui@{remove\-Parent\-Gui}}
+\index{remove\-Parent\-Gui@{remove\-Parent\-Gui}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{remove\-Parent\-Gui}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::remove\-Parent\-Gui (
+\begin{DoxyParamCaption}
+\item[{{\bf Gui} $\ast$}]{parent}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_ad67e018354a2c81d64658aece6efb7c3}
+\hypertarget{classburn_1_1_gui_node_a780a3f0e7fc21e5ab98f01e4bd5d87a3}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!rotate@{rotate}}
+\index{rotate@{rotate}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{rotate}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::rotate (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{angle}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a780a3f0e7fc21e5ab98f01e4bd5d87a3}
+\hypertarget{classburn_1_1_gui_node_a75f542965a10945fa2894a722def8337}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!set\-Position@{set\-Position}}
+\index{set\-Position@{set\-Position}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::set\-Position (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector2f} \&}]{position}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a75f542965a10945fa2894a722def8337}
+\hypertarget{classburn_1_1_gui_node_aa02ac7225479a0a5652b6b759ba66dc7}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!set\-Rotation@{set\-Rotation}}
+\index{set\-Rotation@{set\-Rotation}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{set\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::set\-Rotation (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{rotation}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_aa02ac7225479a0a5652b6b759ba66dc7}
+\hypertarget{classburn_1_1_gui_node_a12fdf6059b778dfbdc8737befcf09018}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!set\-Z\-Index@{set\-Z\-Index}}
+\index{set\-Z\-Index@{set\-Z\-Index}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{set\-Z\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Gui\-Node\-::set\-Z\-Index (
+\begin{DoxyParamCaption}
+\item[{const {\bf Int32} \&}]{z\-Index}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_gui_node_a12fdf6059b778dfbdc8737befcf09018}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classburn_1_1_gui_node_af37b701f475d8046a3f864df6e39faf4}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!\-\_\-parents@{\-\_\-parents}}
+\index{\-\_\-parents@{\-\_\-parents}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{\-\_\-parents}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf Gui}$\ast$$>$ burn\-::\-Gui\-Node\-::\-\_\-parents\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_gui_node_af37b701f475d8046a3f864df6e39faf4}
+\hypertarget{classburn_1_1_gui_node_a3047fb0cd29eb1cbc1a4ca5569b3d1bb}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!\-\_\-position@{\-\_\-position}}
+\index{\-\_\-position@{\-\_\-position}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2f} burn\-::\-Gui\-Node\-::\-\_\-position\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_gui_node_a3047fb0cd29eb1cbc1a4ca5569b3d1bb}
+\hypertarget{classburn_1_1_gui_node_aee62a004027766c6e7fd8947f150e759}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!\-\_\-rotation@{\-\_\-rotation}}
+\index{\-\_\-rotation@{\-\_\-rotation}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{\-\_\-rotation}]{\setlength{\rightskip}{0pt plus 5cm}float burn\-::\-Gui\-Node\-::\-\_\-rotation\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_gui_node_aee62a004027766c6e7fd8947f150e759}
+\hypertarget{classburn_1_1_gui_node_a0ff802eeb35c2c27b9850cbd59449923}{\index{burn\-::\-Gui\-Node@{burn\-::\-Gui\-Node}!\-\_\-z\-Index@{\-\_\-z\-Index}}
+\index{\-\_\-z\-Index@{\-\_\-z\-Index}!burn::GuiNode@{burn\-::\-Gui\-Node}}
+\subsubsection[{\-\_\-z\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Int32} burn\-::\-Gui\-Node\-::\-\_\-z\-Index\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_gui_node_a0ff802eeb35c2c27b9850cbd59449923}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\-Gui/\hyperlink{_gui_node_8h}{Gui\-Node.\-h}\end{DoxyCompactItemize}

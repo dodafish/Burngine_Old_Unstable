@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Shader.h Source File</title>
+<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/General/Shader.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1f9b33001d4e21e331991102b40181d5.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_3241e8ca7e5e2d62f12ce8939278d824.html">Graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c32644b0d1b8ad20b5f0423d1e0233c0.html">include</a></li><li class="navelem"><a class="el" href="dir_af7ff5a1fa0e3f2b0942fd1506974e51.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_b393f56d198c1545b6cbf84387e04ff1.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_4a6aaa47b487caaef98aeeb63e5a5900.html">General</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,80 +101,99 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef SHADER_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SHADER_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Export.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_open_g_l_8h.html">OpenGL.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_export_8h.html">Burngine/Export.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_open_g_l_8h.html">Burngine/Graphics/General/OpenGL.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>burn {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="namespaceburn.html#aef2bc91c4c84fa143da611ee2f284c8b">   17</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#aef2bc91c4c84fa143da611ee2f284c8b">MODEL_MATRIX</a> = <span class="stringliteral">&quot;M_&quot;</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="namespaceburn.html#a7cb7c6572d4f7796ea3e5edae85e51f1">   18</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a7cb7c6572d4f7796ea3e5edae85e51f1">VIEW_MATRIX</a> = <span class="stringliteral">&quot;V_&quot;</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="namespaceburn.html#ae5e90743826abef0fbc9d54704ae2a6f">   19</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#ae5e90743826abef0fbc9d54704ae2a6f">PROJECTION_MATRIX</a> = <span class="stringliteral">&quot;P_&quot;</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="namespaceburn.html#a7c71b053f299e14c880f0f11ba916a44">   20</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a7c71b053f299e14c880f0f11ba916a44">MVP</a> = <span class="stringliteral">&quot;(&quot;</span> + <a class="code" href="namespaceburn.html#ae5e90743826abef0fbc9d54704ae2a6f">PROJECTION_MATRIX</a> + <span class="stringliteral">&quot;*&quot;</span> + <a class="code" href="namespaceburn.html#a7cb7c6572d4f7796ea3e5edae85e51f1">VIEW_MATRIX</a> + <span class="stringliteral">&quot;*&quot;</span> + <a class="code" href="namespaceburn.html#aef2bc91c4c84fa143da611ee2f284c8b">MODEL_MATRIX</a> + <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="namespaceburn.html#a4daeaa4edb8bd22d9f48786640972b3a">   21</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a4daeaa4edb8bd22d9f48786640972b3a">NORMAL_MATRIX</a> = <span class="stringliteral">&quot;NORM_MAT_&quot;</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="namespaceburn.html#aea213969ba83f20b14023eac83ce7f04">   23</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#aea213969ba83f20b14023eac83ce7f04">CAMERA_POSITION</a> = <span class="stringliteral">&quot;CAM_&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="namespaceburn.html#a2761e037b3be5b8f6f125f294a44b0bf">   25</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a2761e037b3be5b8f6f125f294a44b0bf">LIGHT_ENABLED</a> = <span class="stringliteral">&quot;LIGHTIGHT_ENABLED_HOOOOODOOOOR_&quot;</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="namespaceburn.html#a6512046548178a3d2212bfbca815c5b0">   26</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a6512046548178a3d2212bfbca815c5b0">LIGHT_POSITION</a> = <span class="stringliteral">&quot;LIGHT_POSITION_&quot;</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="namespaceburn.html#ad5901e3871a98659781464fbbcd2e37c">   27</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#ad5901e3871a98659781464fbbcd2e37c">LIGHT_COLOR</a> = <span class="stringliteral">&quot;LIGHT_COLOR_&quot;</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="namespaceburn.html#aca7df8a95e5540d26da673ad43c639af">   28</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#aca7df8a95e5540d26da673ad43c639af">LIGHT_INTENSITY</a> = <span class="stringliteral">&quot;LIGHT_INTENSITY_&quot;</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="namespaceburn.html#a1f547dd93c8820ec1276db0869c7e92c">   29</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a1f547dd93c8820ec1276db0869c7e92c">LIGHT_AMBIENT</a> = <span class="stringliteral">&quot;LIGHT_AMBIENT_&quot;</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="namespaceburn.html#a4a1c8f51e081e667c4a08ab9251a8b61">   30</a></span>&#160;<span class="keyword">const</span> std::string <a class="code" href="namespaceburn.html#a4a1c8f51e081e667c4a08ab9251a8b61">LIGHT_SPECULAR</a> = <span class="stringliteral">&quot;LIGHT_SPECULAR_&quot;</span>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_math_8h.html">Burngine/System/Math.h</a>&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//Vectors that store set uniforms</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, burn::Matrix4f&gt; &gt;;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, burn::Vector4f&gt; &gt;;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, burn::Vector3f&gt; &gt;;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, burn::Vector2f&gt; &gt;;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, int&gt; &gt;;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::pair&lt;std::string, float&gt; &gt;;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span>burn {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//----------------------------------------------------------------</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">// see BurngineShaderCode.h</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">//----------------------------------------------------------------</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// see BurngineShaderCode.h</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//----------------------------------------------------------------</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classburn_1_1_shader.html">   36</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_shader.html">Shader</a> {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classburn_1_1_shader.html">Shader</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ~<a class="code" href="classburn_1_1_shader.html">Shader</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> loadFromString(<span class="keyword">const</span> std::string&amp; vertexShader, <span class="keyword">const</span> std::string&amp; fragmentShader);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> activate() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    GLuint getUniformLocation(<span class="keyword">const</span> std::string&amp; uniformName) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    GLuint _id;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html">   91</a></span>&#160;<span class="keyword">struct </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="structburn_1_1_burngine_shaders.html">BurngineShaders</a> {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="structburn_1_1_burngine_shaders.html">BurngineShaders</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">  103</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41" title="Enum for several predefined shaders. ">Type</a> {</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1">  104</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1" title="Solid Color Shader. ">SOLID_COLOR</a>, </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a">  105</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a" title="Simple 1-Texture Shader. ">TEXTURED</a>, </div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7">  106</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7" title="This renders a texture without matrices. (Internal use) ">RAW_TEXTURE</a>, </div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f">  107</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f" title="Renders the model&#39;s lighting. ">LIGHTING</a>, </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb">  108</a></span>&#160;        COLORLESS </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    };</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> loadShader(<span class="keyword">const</span> Type&amp; type);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> loadAllShaders();</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> useShader(<span class="keyword">const</span> Type&amp; type);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">static</span> GLuint getShaderUniformLocation(<span class="keyword">const</span> Type&amp; type, <span class="keyword">const</span> std::string&amp; uniformName);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _solidColorShader;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _texturedShader;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _rawTextureShader;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _lightingShader;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _colorlessShader;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;};</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;} <span class="comment">/* namespace burn */</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SHADER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classburn_1_1_shader.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_shader.html">Shader</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classburn_1_1_shader.html">Shader</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    ~<a class="code" href="classburn_1_1_shader.html">Shader</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">bool</span> loadFromString(<span class="keyword">const</span> std::string&amp; vertexShader, <span class="keyword">const</span> std::string&amp; fragmentShader);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">bool</span> loadFromFile(<span class="keyword">const</span> std::string&amp; vertexShaderFile, <span class="keyword">const</span> std::string&amp; fragmentShaderFile);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> activate() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    GLuint getUniformLocation(<span class="keyword">const</span> std::string&amp; uniformName) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a58a411b9d83c7970518a9250c1c78068">Vector4f</a>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="namespaceburn.html#af5ed9eb70cbf0fb572098ff43e146a0a">Vector2f</a>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> setUniform(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> uploadUniforms() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    GLuint _id;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, Matrix4f&gt; &gt; _matrix4fUniforms;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, Vector4f&gt; &gt; _vector4fUniforms;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, Vector3f&gt; &gt; _vector3fUniforms;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, Vector2f&gt; &gt; _vector2fUniforms;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, int&gt; &gt; _intUniforms;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;std::pair&lt;std::string, float&gt; &gt; _floatUniforms;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html">  104</a></span>&#160;<span class="keyword">struct </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="structburn_1_1_burngine_shaders.html">BurngineShaders</a> {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="structburn_1_1_burngine_shaders.html">BurngineShaders</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">  116</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41" title="Enum for several predefined shaders. ">Type</a> {</div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c">  117</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c" title="Color Shader. Material colors eg. ">COLOR</a>, </div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2">  118</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2" title="Simple 1-Texture Shader. ">TEXTURE</a>, </div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191">  119</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191" title="Renders a pointlight. ">POINTLIGHT</a>, </div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d">  120</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d">SPOTLIGHT</a>,</div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a">  121</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a">DIRECTIONAL_LIGHT</a>,</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f">  122</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f" title="Draws with only one color (internal use for depthbufferwriting) ">SINGLECOLOR</a>, </div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7">  123</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7">FONT</a>,</div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e">  124</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e">DEPTH</a>,</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755">  125</a></span>&#160;        <a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755">DEPTH_POINTLIGHT</a>,</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="code" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005">  126</a></span>&#160;        SKY_BOX</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    };</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> load(<span class="keyword">const</span> std::string&amp; directory = <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classburn_1_1_shader.html">Shader</a>&amp; getShader(<span class="keyword">const</span> Type&amp; type);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _colorShader;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _textureShader;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _pointlightShader;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _spotlightShader;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _dirlightShader;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _singleColorShader;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _fontShader;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _depthShader;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _depthPointlight;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">static</span> <a class="code" href="classburn_1_1_shader.html">Shader</a> _skyBoxShader;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;};</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;} <span class="comment">/* namespace burn */</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SHADER_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

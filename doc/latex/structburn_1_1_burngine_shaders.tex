@@ -9,12 +9,18 @@
 \begin{DoxyCompactItemize}
 \item 
 enum \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} \{ \\*
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1}{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}, 
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a}{T\-E\-X\-T\-U\-R\-E\-D}, 
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7}{R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E}, 
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f}{L\-I\-G\-H\-T\-I\-N\-G}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c}{C\-O\-L\-O\-R}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2}{T\-E\-X\-T\-U\-R\-E}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191}{P\-O\-I\-N\-T\-L\-I\-G\-H\-T}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d}{S\-P\-O\-T\-L\-I\-G\-H\-T}, 
 \\*
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb}{C\-O\-L\-O\-R\-L\-E\-S\-S}
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f}{S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7}{F\-O\-N\-T}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e}{D\-E\-P\-T\-H}, 
+\\*
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755}{D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T}, 
+\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005}{S\-K\-Y\-\_\-\-B\-O\-X}
  \}
 \begin{DoxyCompactList}\small\item\em Enum for several predefined shaders. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -25,14 +31,10 @@ enum \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef4
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static bool \hyperlink{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}{load\-Shader} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} \&type)
-\begin{DoxyCompactList}\small\item\em Loads and creates a predefined shader. \end{DoxyCompactList}\item 
-static bool \hyperlink{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{load\-All\-Shaders} ()
+static bool \hyperlink{structburn_1_1_burngine_shaders_a32ed194f26e6c68beaf34ac6355b1418}{load} (const std\-::string \&directory=\char`\"{}/\char`\"{})
 \begin{DoxyCompactList}\small\item\em Loads and creates all predefined shaders. \end{DoxyCompactList}\item 
-static void \hyperlink{structburn_1_1_burngine_shaders_a73204821ded279b767394accf6f7ee75}{use\-Shader} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} \&type)
-\begin{DoxyCompactList}\small\item\em Activates a predefined shader. \end{DoxyCompactList}\item 
-static G\-Luint \hyperlink{structburn_1_1_burngine_shaders_adcd311730ecd21d2729199952a5bdf11}{get\-Shader\-Uniform\-Location} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} \&type, const std\-::string \&uniform\-Name)
-\begin{DoxyCompactList}\small\item\em Does the same like \hyperlink{classburn_1_1_shader_ae96b86c6da489d759bec9be7664040dc}{Shader\-::get\-Uniform\-Location()} but on the predefined ones. \end{DoxyCompactList}\end{DoxyCompactItemize}
+static const \hyperlink{classburn_1_1_shader}{Shader} \& \hyperlink{structburn_1_1_burngine_shaders_aafd762f4d852c3a579e158213930089d}{get\-Shader} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} \&type)
+\end{DoxyCompactItemize}
 
 
 \subsection{Member Enumeration Documentation}
@@ -44,24 +46,34 @@ static G\-Luint \hyperlink{structburn_1_1_burngine_shaders_adcd311730ecd21d27291
 Enum for several predefined shaders. 
 
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}{load\-Shader()} 
+load\-Shader() 
 
-\hyperlink{structburn_1_1_burngine_shaders_a73204821ded279b767394accf6f7ee75}{use\-Shader()} 
+use\-Shader() 
 \end{DoxySeeAlso}
 \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
-\index{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R@{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R@{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}}\item[{\em 
-\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1}{S\-O\-L\-I\-D\-\_\-\-C\-O\-L\-O\-R}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1}
-}]Solid Color \hyperlink{classburn_1_1_shader}{Shader}. \index{T\-E\-X\-T\-U\-R\-E\-D@{T\-E\-X\-T\-U\-R\-E\-D}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!T\-E\-X\-T\-U\-R\-E\-D@{T\-E\-X\-T\-U\-R\-E\-D}}\item[{\em 
-\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a}{T\-E\-X\-T\-U\-R\-E\-D}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a}
-}]Simple 1-\/\-Texture \hyperlink{classburn_1_1_shader}{Shader}. \index{R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E@{R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E@{R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E}}\item[{\em 
-\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7}{R\-A\-W\-\_\-\-T\-E\-X\-T\-U\-R\-E}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7}
-}]This renders a texture without matrices. (Internal use) \index{L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}}\item[{\em 
-\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f}{L\-I\-G\-H\-T\-I\-N\-G}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f}
-}]Renders the model's lighting. \index{C\-O\-L\-O\-R\-L\-E\-S\-S@{C\-O\-L\-O\-R\-L\-E\-S\-S}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!C\-O\-L\-O\-R\-L\-E\-S\-S@{C\-O\-L\-O\-R\-L\-E\-S\-S}}\item[{\em 
-\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb}{C\-O\-L\-O\-R\-L\-E\-S\-S}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb}
-}]Draws only black color (internal use for depthbufferwriting) \end{description}
+\index{C\-O\-L\-O\-R@{C\-O\-L\-O\-R}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!C\-O\-L\-O\-R@{C\-O\-L\-O\-R}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c}{C\-O\-L\-O\-R}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c}
+}]Color \hyperlink{classburn_1_1_shader}{Shader}. \hyperlink{classburn_1_1_material}{Material} colors eg. \index{T\-E\-X\-T\-U\-R\-E@{T\-E\-X\-T\-U\-R\-E}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!T\-E\-X\-T\-U\-R\-E@{T\-E\-X\-T\-U\-R\-E}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2}{T\-E\-X\-T\-U\-R\-E}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2}
+}]Simple 1-\/\-Texture \hyperlink{classburn_1_1_shader}{Shader}. \index{P\-O\-I\-N\-T\-L\-I\-G\-H\-T@{P\-O\-I\-N\-T\-L\-I\-G\-H\-T}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!P\-O\-I\-N\-T\-L\-I\-G\-H\-T@{P\-O\-I\-N\-T\-L\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191}{P\-O\-I\-N\-T\-L\-I\-G\-H\-T}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191}
+}]Renders a pointlight. \index{S\-P\-O\-T\-L\-I\-G\-H\-T@{S\-P\-O\-T\-L\-I\-G\-H\-T}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!S\-P\-O\-T\-L\-I\-G\-H\-T@{S\-P\-O\-T\-L\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d}{S\-P\-O\-T\-L\-I\-G\-H\-T}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d}
+}]\index{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L\-\_\-\-L\-I\-G\-H\-T}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a}
+}]\index{S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R@{S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R@{S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f}{S\-I\-N\-G\-L\-E\-C\-O\-L\-O\-R}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f}
+}]Draws with only one color (internal use for depthbufferwriting) \index{F\-O\-N\-T@{F\-O\-N\-T}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!F\-O\-N\-T@{F\-O\-N\-T}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7}{F\-O\-N\-T}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7}
+}]\index{D\-E\-P\-T\-H@{D\-E\-P\-T\-H}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!D\-E\-P\-T\-H@{D\-E\-P\-T\-H}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e}{D\-E\-P\-T\-H}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e}
+}]\index{D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T@{D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T@{D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755}{D\-E\-P\-T\-H\-\_\-\-P\-O\-I\-N\-T\-L\-I\-G\-H\-T}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755}
+}]\index{S\-K\-Y\-\_\-\-B\-O\-X@{S\-K\-Y\-\_\-\-B\-O\-X}!burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}}\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!S\-K\-Y\-\_\-\-B\-O\-X@{S\-K\-Y\-\_\-\-B\-O\-X}}\item[{\em 
+\hypertarget{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005}{S\-K\-Y\-\_\-\-B\-O\-X}\label{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005}
+}]\end{description}
 \end{Desc}
 
 
@@ -80,98 +92,29 @@ Constructor is deleted, because this is a static struct.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{structburn_1_1_burngine_shaders_adcd311730ecd21d2729199952a5bdf11}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!get\-Shader\-Uniform\-Location@{get\-Shader\-Uniform\-Location}}
-\index{get\-Shader\-Uniform\-Location@{get\-Shader\-Uniform\-Location}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
-\subsubsection[{get\-Shader\-Uniform\-Location}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint burn\-::\-Burngine\-Shaders\-::get\-Shader\-Uniform\-Location (
+\hypertarget{structburn_1_1_burngine_shaders_aafd762f4d852c3a579e158213930089d}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!get\-Shader@{get\-Shader}}
+\index{get\-Shader@{get\-Shader}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
+\subsubsection[{get\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}static const {\bf Shader}\& burn\-::\-Burngine\-Shaders\-::get\-Shader (
 \begin{DoxyParamCaption}
-\item[{const {\bf Type} \&}]{type, }
-\item[{const std\-::string \&}]{uniform\-Name}
+\item[{const {\bf Type} \&}]{type}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_adcd311730ecd21d2729199952a5bdf11}
-
-
-Does the same like \hyperlink{classburn_1_1_shader_ae96b86c6da489d759bec9be7664040dc}{Shader\-::get\-Uniform\-Location()} but on the predefined ones. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em type} & The shader in which the uniform will be searched \\
-\hline
-{\em uniform\-Name} & The uniform name in the shaderprogram\\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Returns the position of the uniform or -\/1 when failed
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_shader_ae96b86c6da489d759bec9be7664040dc}{Shader\-::get\-Uniform\-Location()} 
-\end{DoxySeeAlso}
-\hypertarget{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!load\-All\-Shaders@{load\-All\-Shaders}}
-\index{load\-All\-Shaders@{load\-All\-Shaders}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
-\subsubsection[{load\-All\-Shaders}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Burngine\-Shaders\-::load\-All\-Shaders (
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_aafd762f4d852c3a579e158213930089d}
+\hypertarget{structburn_1_1_burngine_shaders_a32ed194f26e6c68beaf34ac6355b1418}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!load@{load}}
+\index{load@{load}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}static bool burn\-::\-Burngine\-Shaders\-::load (
 \begin{DoxyParamCaption}
-{}
+\item[{const std\-::string \&}]{directory = {\ttfamily \char`\"{}/\char`\"{}}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_a32ed194f26e6c68beaf34ac6355b1418}
 
 
 Loads and creates all predefined shaders. 
 
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}{load\-Shader()} 
-\end{DoxySeeAlso}
-\hypertarget{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!load\-Shader@{load\-Shader}}
-\index{load\-Shader@{load\-Shader}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
-\subsubsection[{load\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Burngine\-Shaders\-::load\-Shader (
-\begin{DoxyParamCaption}
-\item[{const {\bf Type} \&}]{type}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}
-
-
-Loads and creates a predefined shader. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em type} & The shader to load/create.\\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Returns true on success.
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{load\-All\-Shaders()} 
-
-\hyperlink{structburn_1_1_burngine_shaders_a73204821ded279b767394accf6f7ee75}{use\-Shader()} 
-
-\hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Type} 
-\end{DoxySeeAlso}
-\hypertarget{structburn_1_1_burngine_shaders_a73204821ded279b767394accf6f7ee75}{\index{burn\-::\-Burngine\-Shaders@{burn\-::\-Burngine\-Shaders}!use\-Shader@{use\-Shader}}
-\index{use\-Shader@{use\-Shader}!burn::BurngineShaders@{burn\-::\-Burngine\-Shaders}}
-\subsubsection[{use\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Burngine\-Shaders\-::use\-Shader (
-\begin{DoxyParamCaption}
-\item[{const {\bf Type} \&}]{type}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}}\label{structburn_1_1_burngine_shaders_a73204821ded279b767394accf6f7ee75}
-
-
-Activates a predefined shader. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em type} & The shader to activate.\\
-\hline
-\end{DoxyParams}
-\begin{DoxyNote}{Note}
-Ensure that the predefined shader has been loaded!
-\end{DoxyNote}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{structburn_1_1_burngine_shaders_ab9ebed7c4668a72e7cbbd0630226d7ab}{load\-Shader()} 
-
-\hyperlink{structburn_1_1_burngine_shaders_a33e19e46e7bc1b6d18f05d2ee233dc50}{load\-All\-Shaders()} 
+load\-Shader() 
 \end{DoxySeeAlso}
 
 
-The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Burngine/\-Graphics/\hyperlink{_shader_8h}{Shader.\-h}\item 
-include/\-Burngine/\-Graphics/\hyperlink{_shader_8cpp}{Shader.\-cpp}\end{DoxyCompactItemize}
+include/\-Burngine/\-Graphics/\-General/\hyperlink{_shader_8h}{Shader.\-h}\end{DoxyCompactItemize}

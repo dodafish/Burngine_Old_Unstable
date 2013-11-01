@@ -10,33 +10,33 @@
 \item 
 \hyperlink{classburn_1_1_mesh_a35d4706a490d0f2bb190b6b785621e07}{Mesh} ()
 \begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
-\hyperlink{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}{$\sim$\-Mesh} ()
-\begin{DoxyCompactList}\small\item\em The default destructor. \end{DoxyCompactList}\item 
 bool \hyperlink{classburn_1_1_mesh_a3179d5730bfcf0e781b1c0daebfc7439}{load\-From\-File} (const std\-::string \&file)
 \begin{DoxyCompactList}\small\item\em Loads a 3\-D-\/model into the \hyperlink{classburn_1_1_mesh}{Mesh} object. It uses the assimp importer, so it supports the files that assimp does. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{set\-Vertices} (const std\-::vector$<$ \hyperlink{classburn_1_1_vertex}{Vertex} $>$ \&vertices)
+void \hyperlink{classburn_1_1_mesh_a5a1a3f1c48bd2d26872458d2ae8f81d1}{set\-Vertices} (const std\-::vector$<$ \hyperlink{classburn_1_1_vertex}{Vertex} $>$ \&vertices, bool update\-Immediatly=true)
 \begin{DoxyCompactList}\small\item\em Sets the vertices of the mesh, so that they can be used for rendering later on. \end{DoxyCompactList}\item 
 size\-\_\-t \hyperlink{classburn_1_1_mesh_a076016c8452ff794880480626394e44c}{get\-Vertex\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Returns the count of the vertices which the mesh is holding. \end{DoxyCompactList}\item 
-const G\-Luint \& \hyperlink{classburn_1_1_mesh_a617b88d25c58c342f02751d67cb5e29b}{get\-Position\-Buffer} () const 
+const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \& \hyperlink{classburn_1_1_mesh_af50ea58af85e6bcf838e7b0f37ce3d6a}{get\-Position\-Vbo} () const 
 \begin{DoxyCompactList}\small\item\em Returns the id of the position-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\item 
-const G\-Luint \& \hyperlink{classburn_1_1_mesh_ad571f57e9a162b86585c0b3f288bbfc6}{get\-Normal\-Buffer} () const 
+const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \& \hyperlink{classburn_1_1_mesh_a208108027bac8d8a5ac93e6644b8800f}{get\-Normal\-Vbo} () const 
 \begin{DoxyCompactList}\small\item\em Returns the id of the normal-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\item 
-const G\-Luint \& \hyperlink{classburn_1_1_mesh_ae8757bde80c135f9d8e8e0291e00ffe5}{get\-Color\-Buffer} () const 
+const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \& \hyperlink{classburn_1_1_mesh_acf65c412665d30c1370437a41ef47018}{get\-Color\-Vbo} () const 
 \begin{DoxyCompactList}\small\item\em Returns the id of the color-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\item 
-const G\-Luint \& \hyperlink{classburn_1_1_mesh_a5bcc126c9f06b9f04549b02328f2fc72}{get\-Uv\-Buffer} () const 
+const \hyperlink{classburn_1_1_vertex_buffer_object}{Vertex\-Buffer\-Object} \& \hyperlink{classburn_1_1_mesh_aba7ebd7aeefe581cfb49b6c32d3df091}{get\-Uv\-Vbo} () const 
 \begin{DoxyCompactList}\small\item\em Returns the id of the U\-V-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_mesh_a2457c00cd236e5933e725bb1d55db0d9}{set\-Texture} (const \hyperlink{classburn_1_1_texture}{Texture} \&texture)
 \begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classburn_1_1_texture}{Texture} of the mesh. \end{DoxyCompactList}\item 
-const \hyperlink{classburn_1_1_texture}{Texture} \& \hyperlink{classburn_1_1_mesh_acbea44f2a2683c44728bb17e4691d406}{get\-Texture} () const 
+const \hyperlink{classburn_1_1_texture}{Texture} \& \hyperlink{classburn_1_1_mesh_aa811fbbefd60cb97afac8af9ecc7d53a}{get\-Texture} () const 
 \begin{DoxyCompactList}\small\item\em Returns the current \hyperlink{classburn_1_1_texture}{Texture} of the mesh. \end{DoxyCompactList}\item 
-\hyperlink{classburn_1_1_material}{Material} \& \hyperlink{classburn_1_1_mesh_a7e3f6168e3bb37e5c30323c5e19b85cc}{get\-Material} ()
+const \hyperlink{classburn_1_1_material}{Material} \& \hyperlink{classburn_1_1_mesh_a3af7154023cb706a6f1fd55183832bab}{get\-Material} () const 
 \begin{DoxyCompactList}\small\item\em Returns the material that the node is using. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_mesh_a2ff24f1eb82cb417062e8d1ec179d8bd}{set\-Material} (\hyperlink{classburn_1_1_material}{Material} \&material)
 \begin{DoxyCompactList}\small\item\em Sets the material of the node. Influences the rendering behaviour. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_mesh_a4880e1e9d0580cd08064290fe4c3d3a0}{update} ()
+bool \hyperlink{classburn_1_1_mesh_a535115942c75d77cf1286ee4bc1cfdb1}{update} ()
 \item 
 void \hyperlink{classburn_1_1_mesh_ad9d9b1c1d6a9486e65e384f28aa009d5}{force\-Update} ()
+\item 
+bool \hyperlink{classburn_1_1_mesh_af6d06125410091b433807b3b2f2a88df}{is\-Updated} () const 
 \end{DoxyCompactItemize}
 
 
@@ -52,17 +52,6 @@ void \hyperlink{classburn_1_1_mesh_ad9d9b1c1d6a9486e65e384f28aa009d5}{force\-Upd
 
 The default constructor. 
 
-\hypertarget{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!$\sim$\-Mesh@{$\sim$\-Mesh}}
-\index{$\sim$\-Mesh@{$\sim$\-Mesh}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{$\sim$\-Mesh}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Mesh\-::$\sim$\-Mesh (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_mesh_ad8b2e6283ea14b3943a8945ab7f2d27d}
-
-
-The default destructor. 
-
 
 
 \subsection{Member Function Documentation}
@@ -73,13 +62,13 @@ The default destructor.
 {}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_mesh_ad9d9b1c1d6a9486e65e384f28aa009d5}
-\hypertarget{classburn_1_1_mesh_ae8757bde80c135f9d8e8e0291e00ffe5}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Color\-Buffer@{get\-Color\-Buffer}}
-\index{get\-Color\-Buffer@{get\-Color\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Color\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Color\-Buffer (
+\hypertarget{classburn_1_1_mesh_acf65c412665d30c1370437a41ef47018}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Color\-Vbo@{get\-Color\-Vbo}}
+\index{get\-Color\-Vbo@{get\-Color\-Vbo}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Color\-Vbo}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vertex\-Buffer\-Object}\& burn\-::\-Mesh\-::get\-Color\-Vbo (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_mesh_ae8757bde80c135f9d8e8e0291e00ffe5}
+) const}}\label{classburn_1_1_mesh_acf65c412665d30c1370437a41ef47018}
 
 
 Returns the id of the color-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
@@ -87,13 +76,13 @@ Returns the id of the color-\/buffer. This is used mostly internally. But you ca
 \begin{DoxyReturn}{Returns}
 Returns the id of the color-\/buffer or 0 if no color-\/buffer exists 
 \end{DoxyReturn}
-\hypertarget{classburn_1_1_mesh_a7e3f6168e3bb37e5c30323c5e19b85cc}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Material@{get\-Material}}
+\hypertarget{classburn_1_1_mesh_a3af7154023cb706a6f1fd55183832bab}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Material@{get\-Material}}
 \index{get\-Material@{get\-Material}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Material}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Material} \& burn\-::\-Mesh\-::get\-Material (
+\subsubsection[{get\-Material}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Material}\& burn\-::\-Mesh\-::get\-Material (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_mesh_a7e3f6168e3bb37e5c30323c5e19b85cc}
+) const}}\label{classburn_1_1_mesh_a3af7154023cb706a6f1fd55183832bab}
 
 
 Returns the material that the node is using. 
@@ -104,13 +93,13 @@ The \hyperlink{classburn_1_1_material}{Material} of the node.
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_mesh_a2ff24f1eb82cb417062e8d1ec179d8bd}{set\-Material()} 
 \end{DoxySeeAlso}
-\hypertarget{classburn_1_1_mesh_ad571f57e9a162b86585c0b3f288bbfc6}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Normal\-Buffer@{get\-Normal\-Buffer}}
-\index{get\-Normal\-Buffer@{get\-Normal\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Normal\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Normal\-Buffer (
+\hypertarget{classburn_1_1_mesh_a208108027bac8d8a5ac93e6644b8800f}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Normal\-Vbo@{get\-Normal\-Vbo}}
+\index{get\-Normal\-Vbo@{get\-Normal\-Vbo}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Normal\-Vbo}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vertex\-Buffer\-Object}\& burn\-::\-Mesh\-::get\-Normal\-Vbo (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_mesh_ad571f57e9a162b86585c0b3f288bbfc6}
+) const}}\label{classburn_1_1_mesh_a208108027bac8d8a5ac93e6644b8800f}
 
 
 Returns the id of the normal-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
@@ -118,13 +107,13 @@ Returns the id of the normal-\/buffer. This is used mostly internally. But you c
 \begin{DoxyReturn}{Returns}
 Returns the id of the normal-\/buffer or 0 if no normal-\/buffer exists 
 \end{DoxyReturn}
-\hypertarget{classburn_1_1_mesh_a617b88d25c58c342f02751d67cb5e29b}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Position\-Buffer@{get\-Position\-Buffer}}
-\index{get\-Position\-Buffer@{get\-Position\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Position\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Position\-Buffer (
+\hypertarget{classburn_1_1_mesh_af50ea58af85e6bcf838e7b0f37ce3d6a}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Position\-Vbo@{get\-Position\-Vbo}}
+\index{get\-Position\-Vbo@{get\-Position\-Vbo}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Position\-Vbo}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vertex\-Buffer\-Object}\& burn\-::\-Mesh\-::get\-Position\-Vbo (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_mesh_a617b88d25c58c342f02751d67cb5e29b}
+) const}}\label{classburn_1_1_mesh_af50ea58af85e6bcf838e7b0f37ce3d6a}
 
 
 Returns the id of the position-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
@@ -132,13 +121,13 @@ Returns the id of the position-\/buffer. This is used mostly internally. But you
 \begin{DoxyReturn}{Returns}
 Returns the id of the position-\/buffer or 0 if no position-\/buffer exists 
 \end{DoxyReturn}
-\hypertarget{classburn_1_1_mesh_acbea44f2a2683c44728bb17e4691d406}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Texture@{get\-Texture}}
+\hypertarget{classburn_1_1_mesh_aa811fbbefd60cb97afac8af9ecc7d53a}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Texture@{get\-Texture}}
 \index{get\-Texture@{get\-Texture}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Texture} \& burn\-::\-Mesh\-::get\-Texture (
+\subsubsection[{get\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Texture}\& burn\-::\-Mesh\-::get\-Texture (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_mesh_acbea44f2a2683c44728bb17e4691d406}
+) const}}\label{classburn_1_1_mesh_aa811fbbefd60cb97afac8af9ecc7d53a}
 
 
 Returns the current \hyperlink{classburn_1_1_texture}{Texture} of the mesh. 
@@ -149,13 +138,13 @@ The current \hyperlink{classburn_1_1_texture}{Texture}
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_mesh_a2457c00cd236e5933e725bb1d55db0d9}{set\-Texture()} 
 \end{DoxySeeAlso}
-\hypertarget{classburn_1_1_mesh_a5bcc126c9f06b9f04549b02328f2fc72}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Uv\-Buffer@{get\-Uv\-Buffer}}
-\index{get\-Uv\-Buffer@{get\-Uv\-Buffer}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{get\-Uv\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Luint \& burn\-::\-Mesh\-::get\-Uv\-Buffer (
+\hypertarget{classburn_1_1_mesh_aba7ebd7aeefe581cfb49b6c32d3df091}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!get\-Uv\-Vbo@{get\-Uv\-Vbo}}
+\index{get\-Uv\-Vbo@{get\-Uv\-Vbo}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{get\-Uv\-Vbo}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vertex\-Buffer\-Object}\& burn\-::\-Mesh\-::get\-Uv\-Vbo (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_mesh_a5bcc126c9f06b9f04549b02328f2fc72}
+) const}}\label{classburn_1_1_mesh_aba7ebd7aeefe581cfb49b6c32d3df091}
 
 
 Returns the id of the U\-V-\/buffer. This is used mostly internally. But you can check the buffer by comparing the returned value with 0. 
@@ -178,8 +167,15 @@ Returns the count of the vertices which the mesh is holding.
 The count of vertices
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{set\-Vertices()} 
+\hyperlink{classburn_1_1_mesh_a5a1a3f1c48bd2d26872458d2ae8f81d1}{set\-Vertices()} 
 \end{DoxySeeAlso}
+\hypertarget{classburn_1_1_mesh_af6d06125410091b433807b3b2f2a88df}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!is\-Updated@{is\-Updated}}
+\index{is\-Updated@{is\-Updated}!burn::Mesh@{burn\-::\-Mesh}}
+\subsubsection[{is\-Updated}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Mesh\-::is\-Updated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_mesh_af6d06125410091b433807b3b2f2a88df}
 \hypertarget{classburn_1_1_mesh_a3179d5730bfcf0e781b1c0daebfc7439}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!load\-From\-File@{load\-From\-File}}
 \index{load\-From\-File@{load\-From\-File}!burn::Mesh@{burn\-::\-Mesh}}
 \subsubsection[{load\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Mesh\-::load\-From\-File (
@@ -216,7 +212,7 @@ Sets the material of the node. Influences the rendering behaviour.
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_mesh_a7e3f6168e3bb37e5c30323c5e19b85cc}{get\-Material()} 
+\hyperlink{classburn_1_1_mesh_a3af7154023cb706a6f1fd55183832bab}{get\-Material()} 
 \end{DoxySeeAlso}
 \hypertarget{classburn_1_1_mesh_a2457c00cd236e5933e725bb1d55db0d9}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!set\-Texture@{set\-Texture}}
 \index{set\-Texture@{set\-Texture}!burn::Mesh@{burn\-::\-Mesh}}
@@ -235,15 +231,16 @@ Sets the \hyperlink{classburn_1_1_texture}{Texture} of the mesh.
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_mesh_acbea44f2a2683c44728bb17e4691d406}{get\-Texture()} 
+\hyperlink{classburn_1_1_mesh_aa811fbbefd60cb97afac8af9ecc7d53a}{get\-Texture()} 
 \end{DoxySeeAlso}
-\hypertarget{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!set\-Vertices@{set\-Vertices}}
+\hypertarget{classburn_1_1_mesh_a5a1a3f1c48bd2d26872458d2ae8f81d1}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!set\-Vertices@{set\-Vertices}}
 \index{set\-Vertices@{set\-Vertices}!burn::Mesh@{burn\-::\-Mesh}}
 \subsubsection[{set\-Vertices}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Mesh\-::set\-Vertices (
 \begin{DoxyParamCaption}
-\item[{const std\-::vector$<$ {\bf Vertex} $>$ \&}]{vertices}
+\item[{const std\-::vector$<$ {\bf Vertex} $>$ \&}]{vertices, }
+\item[{bool}]{update\-Immediatly = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_mesh_ae0996bd5d561cdf7b26e27c713facea7}
+)}}\label{classburn_1_1_mesh_a5a1a3f1c48bd2d26872458d2ae8f81d1}
 
 
 Sets the vertices of the mesh, so that they can be used for rendering later on. 
@@ -256,16 +253,15 @@ Sets the vertices of the mesh, so that they can be used for rendering later on.
 \begin{DoxySeeAlso}{See Also}
 \hyperlink{classburn_1_1_vertex}{Vertex} 
 \end{DoxySeeAlso}
-\hypertarget{classburn_1_1_mesh_a4880e1e9d0580cd08064290fe4c3d3a0}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!update@{update}}
+\hypertarget{classburn_1_1_mesh_a535115942c75d77cf1286ee4bc1cfdb1}{\index{burn\-::\-Mesh@{burn\-::\-Mesh}!update@{update}}
 \index{update@{update}!burn::Mesh@{burn\-::\-Mesh}}
-\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Mesh\-::update (
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Mesh\-::update (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_mesh_a4880e1e9d0580cd08064290fe4c3d3a0}
+)}}\label{classburn_1_1_mesh_a535115942c75d77cf1286ee4bc1cfdb1}
 
 
-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Burngine/\-Graphics/\hyperlink{_mesh_8h}{Mesh.\-h}\item 
-include/\-Burngine/\-Graphics/\hyperlink{_mesh_8cpp}{Mesh.\-cpp}\end{DoxyCompactItemize}
+include/\-Burngine/\-Graphics/\-Scene/\hyperlink{_mesh_8h}{Mesh.\-h}\end{DoxyCompactItemize}

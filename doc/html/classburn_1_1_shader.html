@@ -74,7 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -110,12 +110,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ae2975b4b68d38d8aa3d045df082e7c2a">loadFromString</a> (const std::string &amp;vertexShader, const std::string &amp;fragmentShader)</td></tr>
 <tr class="memdesc:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and creates shaderprograms by passing in a vertex- and fragmentshader.  <a href="#ae2975b4b68d38d8aa3d045df082e7c2a">More...</a><br/></td></tr>
 <tr class="separator:ae2975b4b68d38d8aa3d045df082e7c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6020d22bc81a2abd3e3c60b8b36bce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a0c6020d22bc81a2abd3e3c60b8b36bce">loadFromFile</a> (const std::string &amp;vertexShaderFile, const std::string &amp;fragmentShaderFile)</td></tr>
+<tr class="separator:a0c6020d22bc81a2abd3e3c60b8b36bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f476e17b38b96d84ea57c31d7aab78d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a8f476e17b38b96d84ea57c31d7aab78d">activate</a> () const </td></tr>
 <tr class="memdesc:a8f476e17b38b96d84ea57c31d7aab78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the shader. It will be used for rendering until no other <a class="el" href="classburn_1_1_shader.html">Shader</a> had been called or this one had been destroyed.  <a href="#a8f476e17b38b96d84ea57c31d7aab78d">More...</a><br/></td></tr>
 <tr class="separator:a8f476e17b38b96d84ea57c31d7aab78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae96b86c6da489d759bec9be7664040dc"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ae96b86c6da489d759bec9be7664040dc">getUniformLocation</a> (const std::string &amp;uniformName) const </td></tr>
 <tr class="memdesc:ae96b86c6da489d759bec9be7664040dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for example. Internal usage mostly.  <a href="#ae96b86c6da489d759bec9be7664040dc">More...</a><br/></td></tr>
 <tr class="separator:ae96b86c6da489d759bec9be7664040dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18d939a5eaa8607c6448383cbdfeb4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a18d939a5eaa8607c6448383cbdfeb4ad">setUniform</a> (const std::string &amp;name, const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;value) const </td></tr>
+<tr class="separator:a18d939a5eaa8607c6448383cbdfeb4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6e2919ca562b29d9c97677831b07d6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ab6e2919ca562b29d9c97677831b07d6a">setUniform</a> (const std::string &amp;name, const <a class="el" href="namespaceburn.html#a58a411b9d83c7970518a9250c1c78068">Vector4f</a> &amp;value) const </td></tr>
+<tr class="separator:ab6e2919ca562b29d9c97677831b07d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3d5b88c2e7acaed1fab6c1e2469334"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a9d3d5b88c2e7acaed1fab6c1e2469334">setUniform</a> (const std::string &amp;name, const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;value) const </td></tr>
+<tr class="separator:a9d3d5b88c2e7acaed1fab6c1e2469334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb773ce6fbe49092fc46fbe8cffeaf9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#aeb773ce6fbe49092fc46fbe8cffeaf9d">setUniform</a> (const std::string &amp;name, const <a class="el" href="namespaceburn.html#af5ed9eb70cbf0fb572098ff43e146a0a">Vector2f</a> &amp;value) const </td></tr>
+<tr class="separator:aeb773ce6fbe49092fc46fbe8cffeaf9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6447f23a82e994db071491392f754753"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#a6447f23a82e994db071491392f754753">setUniform</a> (const std::string &amp;name, const int &amp;value) const </td></tr>
+<tr class="separator:a6447f23a82e994db071491392f754753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade119dfaaae37308ab12a83da47a1381"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_shader.html#ade119dfaaae37308ab12a83da47a1381">setUniform</a> (const std::string &amp;name, const float &amp;value) const </td></tr>
+<tr class="separator:ade119dfaaae37308ab12a83da47a1381"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9795869452f44ff05a2a4b1f278bc990"></a>
@@ -200,6 +214,32 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0c6020d22bc81a2abd3e3c60b8b36bce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool burn::Shader::loadFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>vertexShaderFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fragmentShaderFile</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ae2975b4b68d38d8aa3d045df082e7c2a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -237,14 +277,169 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>include/Burngine/Graphics/<a class="el" href="_shader_8h_source.html">Shader.h</a></li>
-<li>include/Burngine/Graphics/<a class="el" href="_shader_8cpp.html">Shader.cpp</a></li>
+<a class="anchor" id="a18d939a5eaa8607c6448383cbdfeb4ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab6e2919ca562b29d9c97677831b07d6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#a58a411b9d83c7970518a9250c1c78068">Vector4f</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9d3d5b88c2e7acaed1fab6c1e2469334"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aeb773ce6fbe49092fc46fbe8cffeaf9d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#af5ed9eb70cbf0fb572098ff43e146a0a">Vector2f</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6447f23a82e994db071491392f754753"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ade119dfaaae37308ab12a83da47a1381"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Shader::setUniform </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/Burngine/Graphics/General/<a class="el" href="_shader_8h_source.html">Shader.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

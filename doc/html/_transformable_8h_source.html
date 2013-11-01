@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Transformable.h Source File</title>
+<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Scene/Transformable.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1f9b33001d4e21e331991102b40181d5.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_3241e8ca7e5e2d62f12ce8939278d824.html">Graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c32644b0d1b8ad20b5f0423d1e0233c0.html">include</a></li><li class="navelem"><a class="el" href="dir_af7ff5a1fa0e3f2b0942fd1506974e51.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_b393f56d198c1545b6cbf84387e04ff1.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_ced3169a23162306462d2f9e05c8ca4a.html">Scene</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,8 +101,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef TRANSFORMABLE_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TRANSFORMABLE_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Export.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../System/Math.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_export_8h.html">Burngine/Export.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_math_8h.html">Burngine/System/Math.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>burn {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
@@ -112,23 +112,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classburn_1_1_transformable.html" title="Provides methods to move an object in 3D-space. ">Transformable</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> setPosition(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; position);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> setPosition(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; position);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getPosition() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; getPosition() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> setRotation(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; rotation);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> setRotation(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; rotation);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getRotation() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; getRotation() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> setScale(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; scale);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> setScale(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; scale);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getScale() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; getScale() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>&amp; getModelMatrix();</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">   95</a></span>&#160;    <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> _position, <a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a>, _rotation;</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">   95</a></span>&#160;    <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> _position, <a class="code" href="classburn_1_1_transformable.html#a80e5ca4d02b2d58593b751b040e86492">_scale</a>, _rotation;</div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">   96</a></span>&#160;    <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a> <a class="code" href="classburn_1_1_transformable.html#a6a06bcec86a7f2e70eba6fe7e8bbe61c">_modelMatrix</a>;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
@@ -138,7 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

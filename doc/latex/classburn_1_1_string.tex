@@ -1,0 +1,878 @@
+\hypertarget{classburn_1_1_string}{\section{burn\-:\-:String Class Reference}
+\label{classburn_1_1_string}\index{burn\-::\-String@{burn\-::\-String}}
+}
+
+
+Utility string class that automatically handles conversions between types and encodings.  
+
+
+
+
+{\ttfamily \#include $<$String.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\-::basic\-\_\-string\\*
+$<$ \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} $>$\-::iterator \hyperlink{classburn_1_1_string_a84bf349f5c87cfcca666afade353be83}{Iterator}
+\begin{DoxyCompactList}\small\item\em Iterator type. \end{DoxyCompactList}\item 
+typedef std\-::basic\-\_\-string\\*
+$<$ \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} $>$\-::const\-\_\-iterator \hyperlink{classburn_1_1_string_a323849432c1bf90a416b1afceb37e1ff}{Const\-Iterator}
+\begin{DoxyCompactList}\small\item\em Constant iterator type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_string_a6c2a9c183185a6517d3939ac4ae356bb}{String} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_af51a79a81210029650e8ba192b4aa997}{String} (char ansi\-Char, const std\-::locale \&locale=std\-::locale())
+\begin{DoxyCompactList}\small\item\em Construct from a single A\-N\-S\-I character and a locale. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a008cbc555418be30aaf5a69c0a5c6fb9}{String} (wchar\-\_\-t wide\-Char)
+\begin{DoxyCompactList}\small\item\em Construct from single wide character. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a7bcbce96cf6e89552855dae02561db27}{String} (\hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} utf32\-Char)
+\begin{DoxyCompactList}\small\item\em Construct from single U\-T\-F-\/32 character. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_aca30936fde5294c14d5ce855823e03e0}{String} (const char $\ast$ansi\-String, const std\-::locale \&locale=std\-::locale())
+\begin{DoxyCompactList}\small\item\em Construct from a null-\/terminated C-\/style A\-N\-S\-I string and a locale. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a5e45efc34aa57def453fbd6f995dbac4}{String} (const std\-::string \&ansi\-String, const std\-::locale \&locale=std\-::locale())
+\begin{DoxyCompactList}\small\item\em Construct from an A\-N\-S\-I string and a locale. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_af4715424b8beb05efa209a332e2ffd77}{String} (const wchar\-\_\-t $\ast$wide\-String)
+\begin{DoxyCompactList}\small\item\em Construct from null-\/terminated C-\/style wide string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a40658c80f170163c4b7294d36c4e458c}{String} (const std\-::wstring \&wide\-String)
+\begin{DoxyCompactList}\small\item\em Construct from a wide string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_aed7c164cd06ccd741917dcfb717dfdd3}{String} (const \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} $\ast$utf32\-String)
+\begin{DoxyCompactList}\small\item\em Construct from a null-\/terminated C-\/style U\-T\-F-\/32 string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a6352b76b09fb99657b2a56f557941596}{String} (const std\-::basic\-\_\-string$<$ \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} $>$ \&utf32\-String)
+\begin{DoxyCompactList}\small\item\em Construct from an U\-T\-F-\/32 string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a77d71a82e074ec6a48087026aadfa36d}{String} (const \hyperlink{classburn_1_1_string}{String} \&copy)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a1b2475781bec48ff43e28e986cb2eed8}{operator std\-::string} () const 
+\begin{DoxyCompactList}\small\item\em Implicit cast operator to std\-::string (A\-N\-S\-I string) \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_aaf1ce104de7a958b6ed9575fb10e5c9f}{operator std\-::wstring} () const 
+\begin{DoxyCompactList}\small\item\em Implicit cast operator to std\-::wstring (wide string) \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}{to\-Ansi\-String} (const std\-::locale \&locale=std\-::locale()) const 
+\begin{DoxyCompactList}\small\item\em Convert the unicode string to an A\-N\-S\-I string. \end{DoxyCompactList}\item 
+std\-::wstring \hyperlink{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}{to\-Wide\-String} () const 
+\begin{DoxyCompactList}\small\item\em Convert the unicode string to a wide string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string}{String} \& \hyperlink{classburn_1_1_string_abbd178f658f0c6951054381013443f05}{operator=} (const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of assignment operator. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string}{String} \& \hyperlink{classburn_1_1_string_a6410f053b7bab08458e4d0789de3b5f7}{operator+=} (const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of += operator to append an U\-T\-F-\/32 string. \end{DoxyCompactList}\item 
+\hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} \hyperlink{classburn_1_1_string_ae103536549b576275ea04978e80f7372}{operator\mbox{[}$\,$\mbox{]}} (std\-::size\-\_\-t index) const 
+\begin{DoxyCompactList}\small\item\em Overload of \mbox{[}\mbox{]} operator to access a character by its position. \end{DoxyCompactList}\item 
+\hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} \& \hyperlink{classburn_1_1_string_acc1f80f7268b5465d7a3a49cf7927272}{operator\mbox{[}$\,$\mbox{]}} (std\-::size\-\_\-t index)
+\begin{DoxyCompactList}\small\item\em Overload of \mbox{[}\mbox{]} operator to access a character by its position. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_string_a17785eac89172fb6a86a6ff2018317d1}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear the string. \end{DoxyCompactList}\item 
+std\-::size\-\_\-t \hyperlink{classburn_1_1_string_a2551be01727cdd3c82671c49923e7ba0}{get\-Size} () const 
+\begin{DoxyCompactList}\small\item\em Get the size of the string. \end{DoxyCompactList}\item 
+bool \hyperlink{classburn_1_1_string_a5723443c8aa152bb6451252dabec7640}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em Check whether the string is empty or not. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_string_aa82d8a0adc6f39448835cca4ae81c5ef}{erase} (std\-::size\-\_\-t position, std\-::size\-\_\-t count=1)
+\begin{DoxyCompactList}\small\item\em Erase one or more characters from the string. \end{DoxyCompactList}\item 
+void \hyperlink{classburn_1_1_string_a106dfd5ead837b8908142289dfaf531c}{insert} (std\-::size\-\_\-t position, const \hyperlink{classburn_1_1_string}{String} \&str)
+\begin{DoxyCompactList}\small\item\em Insert one or more characters into the string. \end{DoxyCompactList}\item 
+std\-::size\-\_\-t \hyperlink{classburn_1_1_string_add934aa6197f730de79445a18942a5fc}{find} (const \hyperlink{classburn_1_1_string}{String} \&str, std\-::size\-\_\-t start=0) const 
+\begin{DoxyCompactList}\small\item\em Find a sequence of one or more characters in the string. \end{DoxyCompactList}\item 
+const \hyperlink{namespaceburn_ab40b09022209bd449d317c1f0e95356b}{Uint32} $\ast$ \hyperlink{classburn_1_1_string_ac640bcb974455719360ccd4ff8989acf}{get\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get a pointer to the C-\/style array of characters. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a84bf349f5c87cfcca666afade353be83}{Iterator} \hyperlink{classburn_1_1_string_ab0226b4c722bb95fc14e4b3fe693962e}{begin} ()
+\begin{DoxyCompactList}\small\item\em Return an iterator to the beginning of the string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a323849432c1bf90a416b1afceb37e1ff}{Const\-Iterator} \hyperlink{classburn_1_1_string_a7d4e74862db2d1c981a38b647b1ffba3}{begin} () const 
+\begin{DoxyCompactList}\small\item\em Return an iterator to the beginning of the string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a84bf349f5c87cfcca666afade353be83}{Iterator} \hyperlink{classburn_1_1_string_a263b6da9d3dcaed30ae4e6874c2b681e}{end} ()
+\begin{DoxyCompactList}\small\item\em Return an iterator to the beginning of the string. \end{DoxyCompactList}\item 
+\hyperlink{classburn_1_1_string_a323849432c1bf90a416b1afceb37e1ff}{Const\-Iterator} \hyperlink{classburn_1_1_string_a5e3b0982ddcdf5812783caf9726c3830}{end} () const 
+\begin{DoxyCompactList}\small\item\em Return an iterator to the beginning of the string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std\-::size\-\_\-t \hyperlink{classburn_1_1_string_adcc78caaf445a41121006dfbd91f1cdc}{Invalid\-Pos}
+\begin{DoxyCompactList}\small\item\em Represents an invalid position in the string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}{operator==} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}{operator$<$} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\end{DoxyCompactItemize}
+\subsection*{Related Functions}
+(Note that these are not member functions.) \begin{DoxyCompactItemize}
+\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}{operator==} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of == operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_aa699fb80a7e683001cc381a904adf7c7}{operator!=} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of != operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}{operator$<$} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of $<$ operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_a11d2287c52543833b39574735b4a0a52}{operator$>$} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of $>$ operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_a316ac376afd496075145d92318e04ab8}{operator$<$=} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of $<$= operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool \hyperlink{classburn_1_1_string_adf45e6d139d925c476c5dcabfa676bba}{operator$>$=} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of $>$= operator to compare two U\-T\-F-\/32 strings. \end{DoxyCompactList}\item 
+\hyperlink{_export_8h_a5040e4252a67428f940a23fa9dbfec7b}{B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} \hyperlink{classburn_1_1_string}{String} \hyperlink{classburn_1_1_string_aeea4a77b7b5306c4632804a6e80a9f28}{operator+} (const \hyperlink{classburn_1_1_string}{String} \&left, const \hyperlink{classburn_1_1_string}{String} \&right)
+\begin{DoxyCompactList}\small\item\em Overload of binary + operator to concatenate two strings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Utility string class that automatically handles conversions between types and encodings. 
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classburn_1_1_string_a323849432c1bf90a416b1afceb37e1ff}{\index{burn\-::\-String@{burn\-::\-String}!Const\-Iterator@{Const\-Iterator}}
+\index{Const\-Iterator@{Const\-Iterator}!burn::String@{burn\-::\-String}}
+\subsubsection[{Const\-Iterator}]{\setlength{\rightskip}{0pt plus 5cm}typedef std\-::basic\-\_\-string$<${\bf Uint32}$>$\-::const\-\_\-iterator {\bf burn\-::\-String\-::\-Const\-Iterator}}}\label{classburn_1_1_string_a323849432c1bf90a416b1afceb37e1ff}
+
+
+Constant iterator type. 
+
+\hypertarget{classburn_1_1_string_a84bf349f5c87cfcca666afade353be83}{\index{burn\-::\-String@{burn\-::\-String}!Iterator@{Iterator}}
+\index{Iterator@{Iterator}!burn::String@{burn\-::\-String}}
+\subsubsection[{Iterator}]{\setlength{\rightskip}{0pt plus 5cm}typedef std\-::basic\-\_\-string$<${\bf Uint32}$>$\-::iterator {\bf burn\-::\-String\-::\-Iterator}}}\label{classburn_1_1_string_a84bf349f5c87cfcca666afade353be83}
+
+
+Iterator type. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_string_a6c2a9c183185a6517d3939ac4ae356bb}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a6c2a9c183185a6517d3939ac4ae356bb}
+
+
+Default constructor. 
+
+This constructor creates an empty string. \hypertarget{classburn_1_1_string_af51a79a81210029650e8ba192b4aa997}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{char}]{ansi\-Char, }
+\item[{const std\-::locale \&}]{locale = {\ttfamily std\-:\-:locale()}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_af51a79a81210029650e8ba192b4aa997}
+
+
+Construct from a single A\-N\-S\-I character and a locale. 
+
+The source character is converted to U\-T\-F-\/32 according to the given locale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ansi\-Char} & A\-N\-S\-I character to convert \\
+\hline
+{\em locale} & Locale to use for conversion \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a008cbc555418be30aaf5a69c0a5c6fb9}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{wchar\-\_\-t}]{wide\-Char}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a008cbc555418be30aaf5a69c0a5c6fb9}
+
+
+Construct from single wide character. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wide\-Char} & Wide character to convert \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a7bcbce96cf6e89552855dae02561db27}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint32}}]{utf32\-Char}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a7bcbce96cf6e89552855dae02561db27}
+
+
+Construct from single U\-T\-F-\/32 character. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em utf32\-Char} & U\-T\-F-\/32 character to convert \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_aca30936fde5294c14d5ce855823e03e0}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ansi\-String, }
+\item[{const std\-::locale \&}]{locale = {\ttfamily std\-:\-:locale()}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_aca30936fde5294c14d5ce855823e03e0}
+
+
+Construct from a null-\/terminated C-\/style A\-N\-S\-I string and a locale. 
+
+The source string is converted to U\-T\-F-\/32 according to the given locale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ansi\-String} & A\-N\-S\-I string to convert \\
+\hline
+{\em locale} & Locale to use for conversion \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a5e45efc34aa57def453fbd6f995dbac4}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{ansi\-String, }
+\item[{const std\-::locale \&}]{locale = {\ttfamily std\-:\-:locale()}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a5e45efc34aa57def453fbd6f995dbac4}
+
+
+Construct from an A\-N\-S\-I string and a locale. 
+
+The source string is converted to U\-T\-F-\/32 according to the given locale.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ansi\-String} & A\-N\-S\-I string to convert \\
+\hline
+{\em locale} & Locale to use for conversion \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_af4715424b8beb05efa209a332e2ffd77}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const wchar\-\_\-t $\ast$}]{wide\-String}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_af4715424b8beb05efa209a332e2ffd77}
+
+
+Construct from null-\/terminated C-\/style wide string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wide\-String} & Wide string to convert \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a40658c80f170163c4b7294d36c4e458c}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const std\-::wstring \&}]{wide\-String}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a40658c80f170163c4b7294d36c4e458c}
+
+
+Construct from a wide string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wide\-String} & Wide string to convert \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_aed7c164cd06ccd741917dcfb717dfdd3}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const {\bf Uint32} $\ast$}]{utf32\-String}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_aed7c164cd06ccd741917dcfb717dfdd3}
+
+
+Construct from a null-\/terminated C-\/style U\-T\-F-\/32 string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em utf32\-String} & U\-T\-F-\/32 string to assign \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a6352b76b09fb99657b2a56f557941596}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const std\-::basic\-\_\-string$<$ {\bf Uint32} $>$ \&}]{utf32\-String}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a6352b76b09fb99657b2a56f557941596}
+
+
+Construct from an U\-T\-F-\/32 string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em utf32\-String} & U\-T\-F-\/32 string to assign \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a77d71a82e074ec6a48087026aadfa36d}{\index{burn\-::\-String@{burn\-::\-String}!String@{String}}
+\index{String@{String}!burn::String@{burn\-::\-String}}
+\subsubsection[{String}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::\-String (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{copy}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a77d71a82e074ec6a48087026aadfa36d}
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em copy} & Instance to copy \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_string_ab0226b4c722bb95fc14e4b3fe693962e}{\index{burn\-::\-String@{burn\-::\-String}!begin@{begin}}
+\index{begin@{begin}!burn::String@{burn\-::\-String}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Iterator} burn\-::\-String\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_ab0226b4c722bb95fc14e4b3fe693962e}
+
+
+Return an iterator to the beginning of the string. 
+
+\begin{DoxyReturn}{Returns}
+Read-\/write iterator to the beginning of the string characters
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a263b6da9d3dcaed30ae4e6874c2b681e}{end} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a7d4e74862db2d1c981a38b647b1ffba3}{\index{burn\-::\-String@{burn\-::\-String}!begin@{begin}}
+\index{begin@{begin}!burn::String@{burn\-::\-String}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Const\-Iterator} burn\-::\-String\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a7d4e74862db2d1c981a38b647b1ffba3}
+
+
+Return an iterator to the beginning of the string. 
+
+\begin{DoxyReturn}{Returns}
+Read-\/only iterator to the beginning of the string characters
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a263b6da9d3dcaed30ae4e6874c2b681e}{end} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a17785eac89172fb6a86a6ff2018317d1}{\index{burn\-::\-String@{burn\-::\-String}!clear@{clear}}
+\index{clear@{clear}!burn::String@{burn\-::\-String}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-String\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a17785eac89172fb6a86a6ff2018317d1}
+
+
+Clear the string. 
+
+This function removes all the characters from the string.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a5723443c8aa152bb6451252dabec7640}{is\-Empty}, \hyperlink{classburn_1_1_string_aa82d8a0adc6f39448835cca4ae81c5ef}{erase} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a263b6da9d3dcaed30ae4e6874c2b681e}{\index{burn\-::\-String@{burn\-::\-String}!end@{end}}
+\index{end@{end}!burn::String@{burn\-::\-String}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Iterator} burn\-::\-String\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a263b6da9d3dcaed30ae4e6874c2b681e}
+
+
+Return an iterator to the beginning of the string. 
+
+The end iterator refers to 1 position past the last character; thus it represents an invalid character and should never be accessed.
+
+\begin{DoxyReturn}{Returns}
+Read-\/write iterator to the end of the string characters
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_ab0226b4c722bb95fc14e4b3fe693962e}{begin} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a5e3b0982ddcdf5812783caf9726c3830}{\index{burn\-::\-String@{burn\-::\-String}!end@{end}}
+\index{end@{end}!burn::String@{burn\-::\-String}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Const\-Iterator} burn\-::\-String\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a5e3b0982ddcdf5812783caf9726c3830}
+
+
+Return an iterator to the beginning of the string. 
+
+The end iterator refers to 1 position past the last character; thus it represents an invalid character and should never be accessed.
+
+\begin{DoxyReturn}{Returns}
+Read-\/only iterator to the end of the string characters
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_ab0226b4c722bb95fc14e4b3fe693962e}{begin} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_aa82d8a0adc6f39448835cca4ae81c5ef}{\index{burn\-::\-String@{burn\-::\-String}!erase@{erase}}
+\index{erase@{erase}!burn::String@{burn\-::\-String}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-String\-::erase (
+\begin{DoxyParamCaption}
+\item[{std\-::size\-\_\-t}]{position, }
+\item[{std\-::size\-\_\-t}]{count = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_aa82d8a0adc6f39448835cca4ae81c5ef}
+
+
+Erase one or more characters from the string. 
+
+This function removes a sequence of {\itshape count} characters starting from {\itshape position}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & Position of the first character to erase \\
+\hline
+{\em count} & Number of characters to erase \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_add934aa6197f730de79445a18942a5fc}{\index{burn\-::\-String@{burn\-::\-String}!find@{find}}
+\index{find@{find}!burn::String@{burn\-::\-String}}
+\subsubsection[{find}]{\setlength{\rightskip}{0pt plus 5cm}std\-::size\-\_\-t burn\-::\-String\-::find (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{str, }
+\item[{std\-::size\-\_\-t}]{start = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_add934aa6197f730de79445a18942a5fc}
+
+
+Find a sequence of one or more characters in the string. 
+
+This function searches for the characters of {\itshape str} into the string, starting from {\itshape start}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & Characters to find \\
+\hline
+{\em start} & Where to begin searching\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Position of {\itshape str} in the string, or \hyperlink{classburn_1_1_string_adcc78caaf445a41121006dfbd91f1cdc}{String\-::\-Invalid\-Pos} if not found 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_ac640bcb974455719360ccd4ff8989acf}{\index{burn\-::\-String@{burn\-::\-String}!get\-Data@{get\-Data}}
+\index{get\-Data@{get\-Data}!burn::String@{burn\-::\-String}}
+\subsubsection[{get\-Data}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Uint32}$\ast$ burn\-::\-String\-::get\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_ac640bcb974455719360ccd4ff8989acf}
+
+
+Get a pointer to the C-\/style array of characters. 
+
+This functions provides a read-\/only access to a null-\/terminated C-\/style representation of the string. The returned pointer is temporary and is meant only for immediate use, thus it is not recommended to store it.
+
+\begin{DoxyReturn}{Returns}
+Read-\/only pointer to the array of characters 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_a2551be01727cdd3c82671c49923e7ba0}{\index{burn\-::\-String@{burn\-::\-String}!get\-Size@{get\-Size}}
+\index{get\-Size@{get\-Size}!burn::String@{burn\-::\-String}}
+\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}std\-::size\-\_\-t burn\-::\-String\-::get\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a2551be01727cdd3c82671c49923e7ba0}
+
+
+Get the size of the string. 
+
+\begin{DoxyReturn}{Returns}
+Number of characters in the string
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a5723443c8aa152bb6451252dabec7640}{is\-Empty} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a106dfd5ead837b8908142289dfaf531c}{\index{burn\-::\-String@{burn\-::\-String}!insert@{insert}}
+\index{insert@{insert}!burn::String@{burn\-::\-String}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-String\-::insert (
+\begin{DoxyParamCaption}
+\item[{std\-::size\-\_\-t}]{position, }
+\item[{const {\bf String} \&}]{str}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a106dfd5ead837b8908142289dfaf531c}
+
+
+Insert one or more characters into the string. 
+
+This function inserts the characters of {\itshape str} into the string, starting from {\itshape position}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & Position of insertion \\
+\hline
+{\em str} & Characters to insert \\
+\hline
+\end{DoxyParams}
+\hypertarget{classburn_1_1_string_a5723443c8aa152bb6451252dabec7640}{\index{burn\-::\-String@{burn\-::\-String}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!burn::String@{burn\-::\-String}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-String\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a5723443c8aa152bb6451252dabec7640}
+
+
+Check whether the string is empty or not. 
+
+\begin{DoxyReturn}{Returns}
+True if the string is empty (i.\-e. contains no character)
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a17785eac89172fb6a86a6ff2018317d1}{clear}, \hyperlink{classburn_1_1_string_a2551be01727cdd3c82671c49923e7ba0}{get\-Size} 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a1b2475781bec48ff43e28e986cb2eed8}{\index{burn\-::\-String@{burn\-::\-String}!operator std\-::string@{operator std\-::string}}
+\index{operator std\-::string@{operator std\-::string}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator std\-::string}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::operator std\-::string (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a1b2475781bec48ff43e28e986cb2eed8}
+
+
+Implicit cast operator to std\-::string (A\-N\-S\-I string) 
+
+The current global locale is used for conversion. If you want to explicitely specify a locale, see to\-Ansi\-String. Characters that do not fit in the target encoding are discarded from the returned string. This operator is defined for convenience, and is equivalent to calling \hyperlink{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}{to\-Ansi\-String()}.
+
+\begin{DoxyReturn}{Returns}
+Converted A\-N\-S\-I string
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}{to\-Ansi\-String}, operator std\-::wstring 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_aaf1ce104de7a958b6ed9575fb10e5c9f}{\index{burn\-::\-String@{burn\-::\-String}!operator std\-::wstring@{operator std\-::wstring}}
+\index{operator std\-::wstring@{operator std\-::wstring}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator std\-::wstring}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-String\-::operator std\-::wstring (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_aaf1ce104de7a958b6ed9575fb10e5c9f}
+
+
+Implicit cast operator to std\-::wstring (wide string) 
+
+Characters that do not fit in the target encoding are discarded from the returned string. This operator is defined for convenience, and is equivalent to calling \hyperlink{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}{to\-Wide\-String()}.
+
+\begin{DoxyReturn}{Returns}
+Converted wide string
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}{to\-Wide\-String}, operator std\-::string 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_a6410f053b7bab08458e4d0789de3b5f7}{\index{burn\-::\-String@{burn\-::\-String}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator+=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf String}\& burn\-::\-String\-::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_a6410f053b7bab08458e4d0789de3b5f7}
+
+
+Overload of += operator to append an U\-T\-F-\/32 string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em right} & \hyperlink{classburn_1_1_string}{String} to append\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to self 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_abbd178f658f0c6951054381013443f05}{\index{burn\-::\-String@{burn\-::\-String}!operator=@{operator=}}
+\index{operator=@{operator=}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf String}\& burn\-::\-String\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_abbd178f658f0c6951054381013443f05}
+
+
+Overload of assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em right} & Instance to assign\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to self 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_ae103536549b576275ea04978e80f7372}{\index{burn\-::\-String@{burn\-::\-String}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator[]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Uint32} burn\-::\-String\-::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\-::size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_ae103536549b576275ea04978e80f7372}
+
+
+Overload of \mbox{[}\mbox{]} operator to access a character by its position. 
+
+This function provides read-\/only access to characters. Note\-: this function doesn't throw if {\itshape index} is out of range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Index of the character to get\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{classburn_1_1_character}{Character} at position {\itshape index} 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_acc1f80f7268b5465d7a3a49cf7927272}{\index{burn\-::\-String@{burn\-::\-String}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator[]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Uint32}\& burn\-::\-String\-::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\-::size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_string_acc1f80f7268b5465d7a3a49cf7927272}
+
+
+Overload of \mbox{[}\mbox{]} operator to access a character by its position. 
+
+This function provides read and write access to characters. Note\-: this function doesn't throw if {\itshape index} is out of range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Index of the character to get\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the character at position {\itshape index} 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}{\index{burn\-::\-String@{burn\-::\-String}!to\-Ansi\-String@{to\-Ansi\-String}}
+\index{to\-Ansi\-String@{to\-Ansi\-String}!burn::String@{burn\-::\-String}}
+\subsubsection[{to\-Ansi\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string burn\-::\-String\-::to\-Ansi\-String (
+\begin{DoxyParamCaption}
+\item[{const std\-::locale \&}]{locale = {\ttfamily std\-:\-:locale()}}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}
+
+
+Convert the unicode string to an A\-N\-S\-I string. 
+
+The U\-T\-F-\/32 string is converted to an A\-N\-S\-I string in the encoding defined by {\itshape locale}. Characters that do not fit in the target encoding are discarded from the returned string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em locale} & Locale to use for conversion\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted A\-N\-S\-I string
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}{to\-Wide\-String}, operator std\-::string 
+\end{DoxySeeAlso}
+\hypertarget{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}{\index{burn\-::\-String@{burn\-::\-String}!to\-Wide\-String@{to\-Wide\-String}}
+\index{to\-Wide\-String@{to\-Wide\-String}!burn::String@{burn\-::\-String}}
+\subsubsection[{to\-Wide\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::wstring burn\-::\-String\-::to\-Wide\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_string_abcaa6ebd5743cc885c15577ca08a62f2}
+
+
+Convert the unicode string to a wide string. 
+
+Characters that do not fit in the target encoding are discarded from the returned string.
+
+\begin{DoxyReturn}{Returns}
+Converted wide string
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classburn_1_1_string_a1a11e9382f744cadaea480a3b70dc1ef}{to\-Ansi\-String}, operator std\-::wstring 
+\end{DoxySeeAlso}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classburn_1_1_string_aa699fb80a7e683001cc381a904adf7c7}{\index{burn\-::\-String@{burn\-::\-String}!operator!=@{operator!=}}
+\index{operator!=@{operator!=}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator!=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_aa699fb80a7e683001cc381a904adf7c7}
+
+
+Overload of != operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if both strings are different 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_aeea4a77b7b5306c4632804a6e80a9f28}{\index{burn\-::\-String@{burn\-::\-String}!operator+@{operator+}}
+\index{operator+@{operator+}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} {\bf String} operator+ (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_aeea4a77b7b5306c4632804a6e80a9f28}
+
+
+Overload of binary + operator to concatenate two strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Concatenated string 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}{\index{burn\-::\-String@{burn\-::\-String}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}
+\hypertarget{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}{\index{burn\-::\-String@{burn\-::\-String}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_a4a8fbb4493570c7025b3ddf4d6577295}
+
+
+Overload of $<$ operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if {\itshape left} is alphabetically lesser than {\itshape right} 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_a316ac376afd496075145d92318e04ab8}{\index{burn\-::\-String@{burn\-::\-String}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator$<$=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_a316ac376afd496075145d92318e04ab8}
+
+
+Overload of $<$= operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if {\itshape left} is alphabetically lesser or equal than {\itshape right} 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}{\index{burn\-::\-String@{burn\-::\-String}!operator==@{operator==}}
+\index{operator==@{operator==}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}
+\hypertarget{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}{\index{burn\-::\-String@{burn\-::\-String}!operator==@{operator==}}
+\index{operator==@{operator==}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_acd3ff7c79fe5f694755cde868e0b953a}
+
+
+Overload of == operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if both strings are equal 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_a11d2287c52543833b39574735b4a0a52}{\index{burn\-::\-String@{burn\-::\-String}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_a11d2287c52543833b39574735b4a0a52}
+
+
+Overload of $>$ operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if {\itshape left} is alphabetically greater than {\itshape right} 
+\end{DoxyReturn}
+\hypertarget{classburn_1_1_string_adf45e6d139d925c476c5dcabfa676bba}{\index{burn\-::\-String@{burn\-::\-String}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!burn::String@{burn\-::\-String}}
+\subsubsection[{operator$>$=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-U\-R\-N\-G\-I\-N\-E\-\_\-\-A\-P\-I} bool operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf String} \&}]{left, }
+\item[{const {\bf String} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [related]}}}\label{classburn_1_1_string_adf45e6d139d925c476c5dcabfa676bba}
+
+
+Overload of $>$= operator to compare two U\-T\-F-\/32 strings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & Left operand (a string) \\
+\hline
+{\em right} & Right operand (a string)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if {\itshape left} is alphabetically greater or equal than {\itshape right} 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classburn_1_1_string_adcc78caaf445a41121006dfbd91f1cdc}{\index{burn\-::\-String@{burn\-::\-String}!Invalid\-Pos@{Invalid\-Pos}}
+\index{Invalid\-Pos@{Invalid\-Pos}!burn::String@{burn\-::\-String}}
+\subsubsection[{Invalid\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::size\-\_\-t burn\-::\-String\-::\-Invalid\-Pos\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_string_adcc78caaf445a41121006dfbd91f1cdc}
+
+
+Represents an invalid position in the string. 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-System/\hyperlink{_string_8h}{String.\-h}\end{DoxyCompactItemize}

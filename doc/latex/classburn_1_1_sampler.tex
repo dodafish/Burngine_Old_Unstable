@@ -1,0 +1,192 @@
+\hypertarget{classburn_1_1_sampler}{\section{burn\-:\-:Sampler Class Reference}
+\label{classburn_1_1_sampler}\index{burn\-::\-Sampler@{burn\-::\-Sampler}}
+}
+
+
+{\ttfamily \#include $<$Sampler.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afec}{Magnification\-Filtering} \{ \hyperlink{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afeca686313d0b445f86b99fc81ca846d106f}{M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T}, 
+\hyperlink{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afecad578e8d60f86e9d2189a318edc5c39aa}{M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}
+ \}
+\item 
+enum \hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10}{Minification\-Filtering} \{ \\*
+\hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a61c7cb4ef3f10c21b6b085d1872f38f6}{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T}, 
+\hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a47e352b7d042db353d893235313d966f}{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}, 
+\hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a117a2dc8277823c30ae52ea0b6382009}{M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R}, 
+\hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ad73bad33e321c29883fb10d992d96b7b}{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P}, 
+\\*
+\hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ab216362260b08920589fc442fa021e32}{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_sampler_a480b4acfd17dd57a0c121bb5ebe3d656}{Sampler} ()
+\item 
+\hyperlink{classburn_1_1_sampler_a738307fd709142b1a44e0c6a035ddafa}{Sampler} (const \hyperlink{classburn_1_1_sampler}{Sampler} \&other)
+\item 
+\hyperlink{classburn_1_1_sampler}{Sampler} \& \hyperlink{classburn_1_1_sampler_a701aaca7ccac75a4dba5b495c9ed8858}{operator=} (const \hyperlink{classburn_1_1_sampler}{Sampler} \&other)
+\item 
+\hyperlink{classburn_1_1_sampler_ab5f62848d71b5b270430d746c7d8331c}{$\sim$\-Sampler} ()
+\item 
+bool \hyperlink{classburn_1_1_sampler_ac71624331b97e00c64a0ef51dd16e06f}{create} ()
+\item 
+void \hyperlink{classburn_1_1_sampler_adad5b4e01539c026b9dca3cb69b5d85e}{destroy} ()
+\item 
+bool \hyperlink{classburn_1_1_sampler_a74e374b64020a7d2f682b2a7c5e6c698}{is\-Created} () const 
+\item 
+void \hyperlink{classburn_1_1_sampler_a0afeda41b62a6cb24194036f6476682f}{bind} (const unsigned int \&unit=0) const 
+\item 
+bool \hyperlink{classburn_1_1_sampler_a514d577016bec1680d0bbfb4cb60c89e}{set\-Filtering} (const \hyperlink{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afec}{Magnification\-Filtering} \&mag, const \hyperlink{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10}{Minification\-Filtering} \&min)
+\item 
+bool \hyperlink{classburn_1_1_sampler_a6b4d9dc71c000456eb17409338248fed}{set\-Sampler\-Parameter} (G\-Lenum parameter, G\-Lenum value)
+\item 
+bool \hyperlink{classburn_1_1_sampler_ae78e2a3cdad25f52ce5683659b7215b1}{set\-Anisotropic\-Level} (const G\-Lfloat \&level)
+\item 
+const G\-Lfloat \& \hyperlink{classburn_1_1_sampler_ac89ac6da7f36d70d2adeb055a995e51b}{get\-Anisotropic\-Level} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classburn_1_1_sampler_a4f188f32a1a99deb15784b76a5e90121}{unbind} (const unsigned int \&unit=0)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afec}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!Magnification\-Filtering@{Magnification\-Filtering}}
+\index{Magnification\-Filtering@{Magnification\-Filtering}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{Magnification\-Filtering}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Sampler\-::\-Magnification\-Filtering}}}\label{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afec}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T@{M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T@{M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afeca686313d0b445f86b99fc81ca846d106f}{M\-A\-G\-\_\-\-N\-E\-A\-R\-E\-S\-T}\label{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afeca686313d0b445f86b99fc81ca846d106f}
+}]\index{M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R@{M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R@{M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afecad578e8d60f86e9d2189a318edc5c39aa}{M\-A\-G\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}\label{classburn_1_1_sampler_a09433eae16f8623591d415a3f8c6afecad578e8d60f86e9d2189a318edc5c39aa}
+}]\end{description}
+\end{Desc}
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!Minification\-Filtering@{Minification\-Filtering}}
+\index{Minification\-Filtering@{Minification\-Filtering}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{Minification\-Filtering}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Sampler\-::\-Minification\-Filtering}}}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T@{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T@{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a61c7cb4ef3f10c21b6b085d1872f38f6}{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a61c7cb4ef3f10c21b6b085d1872f38f6}
+}]\index{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R@{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R@{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a47e352b7d042db353d893235313d966f}{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a47e352b7d042db353d893235313d966f}
+}]\index{M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R@{M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R@{M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a117a2dc8277823c30ae52ea0b6382009}{M\-I\-N\-\_\-\-T\-R\-I\-L\-I\-N\-E\-A\-R}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10a117a2dc8277823c30ae52ea0b6382009}
+}]\index{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P@{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P@{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ad73bad33e321c29883fb10d992d96b7b}{M\-I\-N\-\_\-\-N\-E\-A\-R\-E\-S\-T\-\_\-\-M\-I\-P\-M\-A\-P}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ad73bad33e321c29883fb10d992d96b7b}
+}]\index{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P@{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P}!burn\-::\-Sampler@{burn\-::\-Sampler}}\index{burn\-::\-Sampler@{burn\-::\-Sampler}!M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P@{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P}}\item[{\em 
+\hypertarget{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ab216362260b08920589fc442fa021e32}{M\-I\-N\-\_\-\-B\-I\-L\-I\-N\-E\-A\-R\-\_\-\-M\-I\-P\-M\-A\-P}\label{classburn_1_1_sampler_a09d6e36f45577a56ce230549aeaaab10ab216362260b08920589fc442fa021e32}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_sampler_a480b4acfd17dd57a0c121bb5ebe3d656}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!Sampler@{Sampler}}
+\index{Sampler@{Sampler}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{Sampler}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Sampler\-::\-Sampler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_a480b4acfd17dd57a0c121bb5ebe3d656}
+\hypertarget{classburn_1_1_sampler_a738307fd709142b1a44e0c6a035ddafa}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!Sampler@{Sampler}}
+\index{Sampler@{Sampler}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{Sampler}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Sampler\-::\-Sampler (
+\begin{DoxyParamCaption}
+\item[{const {\bf Sampler} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_a738307fd709142b1a44e0c6a035ddafa}
+\hypertarget{classburn_1_1_sampler_ab5f62848d71b5b270430d746c7d8331c}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!$\sim$\-Sampler@{$\sim$\-Sampler}}
+\index{$\sim$\-Sampler@{$\sim$\-Sampler}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{$\sim$\-Sampler}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Sampler\-::$\sim$\-Sampler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_ab5f62848d71b5b270430d746c7d8331c}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_sampler_a0afeda41b62a6cb24194036f6476682f}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!bind@{bind}}
+\index{bind@{bind}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{bind}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Sampler\-::bind (
+\begin{DoxyParamCaption}
+\item[{const unsigned int \&}]{unit = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_sampler_a0afeda41b62a6cb24194036f6476682f}
+\hypertarget{classburn_1_1_sampler_ac71624331b97e00c64a0ef51dd16e06f}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!create@{create}}
+\index{create@{create}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{create}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Sampler\-::create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_ac71624331b97e00c64a0ef51dd16e06f}
+\hypertarget{classburn_1_1_sampler_adad5b4e01539c026b9dca3cb69b5d85e}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!destroy@{destroy}}
+\index{destroy@{destroy}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Sampler\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_adad5b4e01539c026b9dca3cb69b5d85e}
+\hypertarget{classburn_1_1_sampler_ac89ac6da7f36d70d2adeb055a995e51b}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!get\-Anisotropic\-Level@{get\-Anisotropic\-Level}}
+\index{get\-Anisotropic\-Level@{get\-Anisotropic\-Level}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{get\-Anisotropic\-Level}]{\setlength{\rightskip}{0pt plus 5cm}const G\-Lfloat\& burn\-::\-Sampler\-::get\-Anisotropic\-Level (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_sampler_ac89ac6da7f36d70d2adeb055a995e51b}
+\hypertarget{classburn_1_1_sampler_a74e374b64020a7d2f682b2a7c5e6c698}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!is\-Created@{is\-Created}}
+\index{is\-Created@{is\-Created}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{is\-Created}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Sampler\-::is\-Created (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_sampler_a74e374b64020a7d2f682b2a7c5e6c698}
+\hypertarget{classburn_1_1_sampler_a701aaca7ccac75a4dba5b495c9ed8858}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!operator=@{operator=}}
+\index{operator=@{operator=}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sampler}\& burn\-::\-Sampler\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Sampler} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_a701aaca7ccac75a4dba5b495c9ed8858}
+\hypertarget{classburn_1_1_sampler_ae78e2a3cdad25f52ce5683659b7215b1}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!set\-Anisotropic\-Level@{set\-Anisotropic\-Level}}
+\index{set\-Anisotropic\-Level@{set\-Anisotropic\-Level}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{set\-Anisotropic\-Level}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Sampler\-::set\-Anisotropic\-Level (
+\begin{DoxyParamCaption}
+\item[{const G\-Lfloat \&}]{level}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_ae78e2a3cdad25f52ce5683659b7215b1}
+\hypertarget{classburn_1_1_sampler_a514d577016bec1680d0bbfb4cb60c89e}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!set\-Filtering@{set\-Filtering}}
+\index{set\-Filtering@{set\-Filtering}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{set\-Filtering}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Sampler\-::set\-Filtering (
+\begin{DoxyParamCaption}
+\item[{const {\bf Magnification\-Filtering} \&}]{mag, }
+\item[{const {\bf Minification\-Filtering} \&}]{min}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_a514d577016bec1680d0bbfb4cb60c89e}
+\hypertarget{classburn_1_1_sampler_a6b4d9dc71c000456eb17409338248fed}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!set\-Sampler\-Parameter@{set\-Sampler\-Parameter}}
+\index{set\-Sampler\-Parameter@{set\-Sampler\-Parameter}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{set\-Sampler\-Parameter}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Sampler\-::set\-Sampler\-Parameter (
+\begin{DoxyParamCaption}
+\item[{G\-Lenum}]{parameter, }
+\item[{G\-Lenum}]{value}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_sampler_a6b4d9dc71c000456eb17409338248fed}
+\hypertarget{classburn_1_1_sampler_a4f188f32a1a99deb15784b76a5e90121}{\index{burn\-::\-Sampler@{burn\-::\-Sampler}!unbind@{unbind}}
+\index{unbind@{unbind}!burn::Sampler@{burn\-::\-Sampler}}
+\subsubsection[{unbind}]{\setlength{\rightskip}{0pt plus 5cm}static void burn\-::\-Sampler\-::unbind (
+\begin{DoxyParamCaption}
+\item[{const unsigned int \&}]{unit = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_sampler_a4f188f32a1a99deb15784b76a5e90121}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-Graphics/\-Texture/\hyperlink{_sampler_8h}{Sampler.\-h}\end{DoxyCompactItemize}

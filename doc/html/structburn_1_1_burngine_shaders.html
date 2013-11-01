@@ -74,7 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -104,12 +104,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a2c339d4b838b7efe94ba8ef7f480ef41"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> { <br/>
-&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1">SOLID_COLOR</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a">TEXTURED</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7">RAW_TEXTURE</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f">LIGHTING</a>, 
+&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c">COLOR</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2">TEXTURE</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191">POINTLIGHT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d">SPOTLIGHT</a>, 
 <br/>
-&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb">COLORLESS</a>
+&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a">DIRECTIONAL_LIGHT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f">SINGLECOLOR</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7">FONT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e">DEPTH</a>, 
+<br/>
+&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755">DEPTH_POINTLIGHT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005">SKY_BOX</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:a2c339d4b838b7efe94ba8ef7f480ef41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for several predefined shaders.  <a href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">More...</a><br/></td></tr>
@@ -123,18 +129,11 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab9ebed7c4668a72e7cbbd0630226d7ab"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#ab9ebed7c4668a72e7cbbd0630226d7ab">loadShader</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;type)</td></tr>
-<tr class="memdesc:ab9ebed7c4668a72e7cbbd0630226d7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and creates a predefined shader.  <a href="#ab9ebed7c4668a72e7cbbd0630226d7ab">More...</a><br/></td></tr>
-<tr class="separator:ab9ebed7c4668a72e7cbbd0630226d7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33e19e46e7bc1b6d18f05d2ee233dc50"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#a33e19e46e7bc1b6d18f05d2ee233dc50">loadAllShaders</a> ()</td></tr>
-<tr class="memdesc:a33e19e46e7bc1b6d18f05d2ee233dc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and creates all predefined shaders.  <a href="#a33e19e46e7bc1b6d18f05d2ee233dc50">More...</a><br/></td></tr>
-<tr class="separator:a33e19e46e7bc1b6d18f05d2ee233dc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73204821ded279b767394accf6f7ee75"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#a73204821ded279b767394accf6f7ee75">useShader</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;type)</td></tr>
-<tr class="memdesc:a73204821ded279b767394accf6f7ee75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates a predefined shader.  <a href="#a73204821ded279b767394accf6f7ee75">More...</a><br/></td></tr>
-<tr class="separator:a73204821ded279b767394accf6f7ee75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcd311730ecd21d2729199952a5bdf11"><td class="memItemLeft" align="right" valign="top">static GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#adcd311730ecd21d2729199952a5bdf11">getShaderUniformLocation</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;type, const std::string &amp;uniformName)</td></tr>
-<tr class="memdesc:adcd311730ecd21d2729199952a5bdf11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does the same like <a class="el" href="classburn_1_1_shader.html#ae96b86c6da489d759bec9be7664040dc" title="Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for examp...">Shader::getUniformLocation()</a> but on the predefined ones.  <a href="#adcd311730ecd21d2729199952a5bdf11">More...</a><br/></td></tr>
-<tr class="separator:adcd311730ecd21d2729199952a5bdf11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32ed194f26e6c68beaf34ac6355b1418"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#a32ed194f26e6c68beaf34ac6355b1418">load</a> (const std::string &amp;directory=&quot;/&quot;)</td></tr>
+<tr class="memdesc:a32ed194f26e6c68beaf34ac6355b1418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and creates all predefined shaders.  <a href="#a32ed194f26e6c68beaf34ac6355b1418">More...</a><br/></td></tr>
+<tr class="separator:a32ed194f26e6c68beaf34ac6355b1418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd762f4d852c3a579e158213930089d"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classburn_1_1_shader.html">Shader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#aafd762f4d852c3a579e158213930089d">getShader</a> (const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;type)</td></tr>
+<tr class="separator:aafd762f4d852c3a579e158213930089d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41"></a>
@@ -148,24 +147,33 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enum for several predefined shaders. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="structburn_1_1_burngine_shaders.html#ab9ebed7c4668a72e7cbbd0630226d7ab" title="Loads and creates a predefined shader. ">loadShader()</a> </dd>
+<dl class="section see"><dt>See Also</dt><dd>loadShader() </dd>
 <dd>
-<a class="el" href="structburn_1_1_burngine_shaders.html#a73204821ded279b767394accf6f7ee75" title="Activates a predefined shader. ">useShader()</a> </dd></dl>
+useShader() </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a88513d98f02053992a4d753db14104e1"></a>SOLID_COLOR</em>&nbsp;</td><td class="fielddoc">
-<p>Solid Color <a class="el" href="classburn_1_1_shader.html">Shader</a>. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c"></a>COLOR</em>&nbsp;</td><td class="fielddoc">
+<p>Color <a class="el" href="classburn_1_1_shader.html">Shader</a>. <a class="el" href="classburn_1_1_material.html">Material</a> colors eg. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a9bd651b914b48fcb7a4a64c3f6e4111a"></a>TEXTURED</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2"></a>TEXTURE</em>&nbsp;</td><td class="fielddoc">
 <p>Simple 1-Texture <a class="el" href="classburn_1_1_shader.html">Shader</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a53274ea9313d7d56a0c613f2f384d2c7"></a>RAW_TEXTURE</em>&nbsp;</td><td class="fielddoc">
-<p>This renders a texture without matrices. (Internal use) </p>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191"></a>POINTLIGHT</em>&nbsp;</td><td class="fielddoc">
+<p>Renders a pointlight. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ac7bc9acc35a1eb3a3839b8fe6ead3c9f"></a>LIGHTING</em>&nbsp;</td><td class="fielddoc">
-<p>Renders the model's lighting. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d"></a>SPOTLIGHT</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a2b9f8e6b326d31ef61c68231aa0a37eb"></a>COLORLESS</em>&nbsp;</td><td class="fielddoc">
-<p>Draws only black color (internal use for depthbufferwriting) </p>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a"></a>DIRECTIONAL_LIGHT</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f"></a>SINGLECOLOR</em>&nbsp;</td><td class="fielddoc">
+<p>Draws with only one color (internal use for depthbufferwriting) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7"></a>FONT</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e"></a>DEPTH</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755"></a>DEPTH_POINTLIGHT</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005"></a>SKY_BOX</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -198,7 +206,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="adcd311730ecd21d2729199952a5bdf11"></a>
+<a class="anchor" id="aafd762f4d852c3a579e158213930089d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -206,21 +214,11 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint burn::BurngineShaders::getShaderUniformLocation </td>
+          <td class="memname">static const <a class="el" href="classburn_1_1_shader.html">Shader</a>&amp; burn::BurngineShaders::getShader </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>type</em>)</td><td></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>uniformName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -230,20 +228,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Does the same like <a class="el" href="classburn_1_1_shader.html#ae96b86c6da489d759bec9be7664040dc" title="Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for examp...">Shader::getUniformLocation()</a> but on the predefined ones. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>The shader in which the uniform will be searched </td></tr>
-    <tr><td class="paramname">uniformName</td><td>The uniform name in the shaderprogram</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the position of the uniform or -1 when failed</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classburn_1_1_shader.html#ae96b86c6da489d759bec9be7664040dc" title="Returns the position of a uniform inside the shaderprogram. This is useful to pass matrices for examp...">Shader::getUniformLocation()</a> </dd></dl>
-
 </div>
 </div>
-<a class="anchor" id="a33e19e46e7bc1b6d18f05d2ee233dc50"></a>
+<a class="anchor" id="a32ed194f26e6c68beaf34ac6355b1418"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -251,9 +238,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool burn::BurngineShaders::loadAllShaders </td>
+          <td class="memname">static bool burn::BurngineShaders::load </td>
           <td>(</td>
-          <td class="paramname">)</td><td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>directory</em> = <code>&quot;/&quot;</code>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -265,92 +253,17 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads and creates all predefined shaders. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="structburn_1_1_burngine_shaders.html#ab9ebed7c4668a72e7cbbd0630226d7ab" title="Loads and creates a predefined shader. ">loadShader()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>loadShader() </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ab9ebed7c4668a72e7cbbd0630226d7ab"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool burn::BurngineShaders::loadShader </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;&#160;</td>
-          <td class="paramname"><em>type</em>)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads and creates a predefined shader. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>The shader to load/create.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns true on success.</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="structburn_1_1_burngine_shaders.html#a33e19e46e7bc1b6d18f05d2ee233dc50" title="Loads and creates all predefined shaders. ">loadAllShaders()</a> </dd>
-<dd>
-<a class="el" href="structburn_1_1_burngine_shaders.html#a73204821ded279b767394accf6f7ee75" title="Activates a predefined shader. ">useShader()</a> </dd>
-<dd>
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41" title="Enum for several predefined shaders. ">Type</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a73204821ded279b767394accf6f7ee75"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::BurngineShaders::useShader </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> &amp;&#160;</td>
-          <td class="paramname"><em>type</em>)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Activates a predefined shader. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>The shader to activate.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Ensure that the predefined shader has been loaded!</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="structburn_1_1_burngine_shaders.html#ab9ebed7c4668a72e7cbbd0630226d7ab" title="Loads and creates a predefined shader. ">loadShader()</a> </dd>
-<dd>
-<a class="el" href="structburn_1_1_burngine_shaders.html#a33e19e46e7bc1b6d18f05d2ee233dc50" title="Loads and creates all predefined shaders. ">loadAllShaders()</a> </dd></dl>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
-<li>include/Burngine/Graphics/<a class="el" href="_shader_8h_source.html">Shader.h</a></li>
-<li>include/Burngine/Graphics/<a class="el" href="_shader_8cpp.html">Shader.cpp</a></li>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/Burngine/Graphics/General/<a class="el" href="_shader_8h_source.html">Shader.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

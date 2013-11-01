@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Scene.h Source File</title>
+<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Scene/Scene.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1f9b33001d4e21e331991102b40181d5.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_3241e8ca7e5e2d62f12ce8939278d824.html">Graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c32644b0d1b8ad20b5f0423d1e0233c0.html">include</a></li><li class="navelem"><a class="el" href="dir_af7ff5a1fa0e3f2b0942fd1506974e51.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_b393f56d198c1545b6cbf84387e04ff1.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_ced3169a23162306462d2f9e05c8ca4a.html">Scene</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,74 +101,87 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef SCENE_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SCENE_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Export.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../System/Math.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_export_8h.html">Burngine/Export.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_math_8h.html">Burngine/System/Math.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>burn {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">class </span>Camera;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">class </span>Light;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span>StaticMeshNode;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">class </span>SceneNode;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::shared_ptr&lt;burn::SceneNode&gt;&gt;;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::shared_ptr&lt;burn::Camera&gt;&gt;;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;std::shared_ptr&lt;burn::Light&gt;&gt;;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span>burn {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_camera_8h.html">Burngine/Graphics/Scene/Camera.h</a>&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_render_texture_8h.html">Burngine/Graphics/Texture/RenderTexture.h</a>&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_sky_box_8h.html">Burngine/Graphics/Scene/SkyBox.h</a>&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>burn {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">class </span>Light;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">class </span>SceneNode;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;burn::SceneNode*&gt;;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> std::vector&lt;burn::Light*&gt;;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>Window;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span>burn {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_scene.html">Scene</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classburn_1_1_scene.html">Scene</a>(<a class="code" href="classburn_1_1_window.html" title="The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical...">Window</a>&amp; window);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    ~<a class="code" href="classburn_1_1_scene.html">Scene</a>();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> drawAll();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    std::shared_ptr&lt;StaticMeshNode&gt; createStaticMeshNode();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    std::shared_ptr&lt;Camera&gt; createCamera(<span class="keywordtype">bool</span> active = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    std::shared_ptr&lt;Light&gt; createLight();</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> removeLight(std::shared_ptr&lt;Light&gt; light);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> removeAllLights();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> removeNode(std::shared_ptr&lt;SceneNode&gt; node);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> removeAllNodes();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>Window;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="_export_8h.html#a5040e4252a67428f940a23fa9dbfec7b">BURNGINE_API</a> <a class="code" href="classburn_1_1_scene.html">Scene</a> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classburn_1_1_scene.html">Scene</a>(<span class="keyword">const</span> <a class="code" href="classburn_1_1_window.html" title="The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical...">Window</a>&amp; parentWindow);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    ~<a class="code" href="classburn_1_1_scene.html">Scene</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">   48</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">RenderModus</a>{</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828">   49</a></span>&#160;        <a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828">ALL</a>,</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6">   50</a></span>&#160;        <a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6">COLOR</a>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230">   51</a></span>&#160;        <a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230">DIFFUSE</a>,</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95">   52</a></span>&#160;        <a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95">SPECULAR</a>,</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4">   53</a></span>&#160;        LIGHTING</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> draw(<span class="keyword">const</span> RenderModus&amp; modus = ALL);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> attachSceneNode(<a class="code" href="classburn_1_1_scene_node.html">SceneNode</a>&amp; node);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> detachSceneNode(<a class="code" href="classburn_1_1_scene_node.html">SceneNode</a>&amp; node);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> attachLight(<a class="code" href="classburn_1_1_light.html">Light</a>&amp; light);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> detachLight(<a class="code" href="classburn_1_1_light.html">Light</a>&amp; light);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> detachAll();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> setSkyBox(<span class="keyword">const</span> <a class="code" href="classburn_1_1_sky_box.html">SkyBox</a>&amp; skyBox);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> setCamera(<a class="code" href="classburn_1_1_camera.html">Camera</a>&amp; camera);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> setDefaultCamera();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">const</span> <a class="code" href="classburn_1_1_camera.html">Camera</a>&amp; getDefaultCamera();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> setAmbientColor(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; color);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; getAmbientColor() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> removeCamera(std::shared_ptr&lt;Camera&gt; camera);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> drawNodes();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">bool</span> drawDiffusepart();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">bool</span> drawSpecularpart();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">const</span> <a class="code" href="classburn_1_1_window.html" title="The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical...">Window</a>&amp; _window;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> _ambientColor;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> removeAllCameras();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">void</span> setActiveCamera(std::shared_ptr&lt;Camera&gt; camera);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> setAmbientColor(<span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; color);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">const</span> <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>&amp; getAmbientColor() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="classburn_1_1_window.html" title="The most important class of Burngine. It defines the OpenGL-Context which is needed for all graphical...">Window</a>&amp; _window;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> _ambientColor;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    std::vector&lt;std::shared_ptr&lt;SceneNode&gt;&gt; _nodes;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    std::vector&lt;std::shared_ptr&lt;Camera&gt;&gt; _cameras;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    std::vector&lt;std::shared_ptr&lt;Light&gt;&gt; _lights;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    std::shared_ptr&lt;Camera&gt; _activeCamera;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;};</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;} <span class="comment">/* namespace burn */</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SCENE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    std::vector&lt;SceneNode*&gt; _nodes;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    std::vector&lt;Light*&gt; _lights;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <a class="code" href="classburn_1_1_camera.html">Camera</a> _defaultCamera;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="classburn_1_1_camera.html">Camera</a>&amp; _camera;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="classburn_1_1_sky_box.html">SkyBox</a> _skyBox;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="classburn_1_1_render_texture.html">RenderTexture</a> _diffuseLightTexture, _specularLightTexture;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;};</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;} <span class="comment">/* namespace burn */</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SCENE_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

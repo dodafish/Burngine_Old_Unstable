@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1f9b33001d4e21e331991102b40181d5.html">Burngine</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c32644b0d1b8ad20b5f0423d1e0233c0.html">include</a></li><li class="navelem"><a class="el" href="dir_af7ff5a1fa0e3f2b0942fd1506974e51.html">Burngine</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -110,16 +110,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BURNGINE_API __declspec(dllimport)</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BURNGINE_API</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* EXPORT_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BURNGINE_API</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="namespaceburn.html">   24</a></span>&#160;<span class="keyword">namespace </span>burn {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// All &quot;common&quot; platforms use the same size for char, short and int</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// (basically there are 3 types for 3 sizes, so no other match is possible),</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// we can use them without doing any kind of check</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">// 8 bits integer types</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="namespaceburn.html#afbbb36f91c077b8633b194b8ec441fa4">   30</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">char</span> <a class="code" href="namespaceburn.html#afbbb36f91c077b8633b194b8ec441fa4">Int8</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="namespaceburn.html#a184b59a040b9ef0ce2833c36dcea7656">   31</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="namespaceburn.html#a184b59a040b9ef0ce2833c36dcea7656">Uint8</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// 16 bits integer types</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="namespaceburn.html#acf6023d96a6c61f3baa1f26a5d13a7c5">   34</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">short</span> <a class="code" href="namespaceburn.html#acf6023d96a6c61f3baa1f26a5d13a7c5">Int16</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="namespaceburn.html#ae0d8cb20051239cfa3dc71407cdef5e4">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <a class="code" href="namespaceburn.html#ae0d8cb20051239cfa3dc71407cdef5e4">Uint16</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// 32 bits integer types</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="namespaceburn.html#a96c2e82d6da686c64a6f330628466b05">   38</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">int</span> <a class="code" href="namespaceburn.html#a96c2e82d6da686c64a6f330628466b05">Int32</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="namespaceburn.html#ab40b09022209bd449d317c1f0e95356b">   39</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespaceburn.html#ab40b09022209bd449d317c1f0e95356b">Uint32</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// 64 bits integer types</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#if defined(_MSC_VER)</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span><span class="keyword">typedef</span> <span class="keywordtype">signed</span> __int64 <a class="code" href="namespaceburn.html#a924776a36487e4c21d67322ac918f021">Int64</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> __int64 <a class="code" href="namespaceburn.html#a03c9a89b4bb9a4e0962f74ea7afdc557">Uint64</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="namespaceburn.html#a924776a36487e4c21d67322ac918f021">   46</a></span>&#160;<span class="preprocessor"></span><span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="namespaceburn.html#a924776a36487e4c21d67322ac918f021">Int64</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="namespaceburn.html#a03c9a89b4bb9a4e0962f74ea7afdc557">   47</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="namespaceburn.html#a03c9a89b4bb9a4e0962f74ea7afdc557">Uint64</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* EXPORT_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

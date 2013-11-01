@@ -1,0 +1,132 @@
+\hypertarget{classburn_1_1_time}{\section{burn\-:\-:Time Class Reference}
+\label{classburn_1_1_time}\index{burn\-::\-Time@{burn\-::\-Time}}
+}
+
+
+{\ttfamily \#include $<$Time.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classburn_1_1_time_a1d23a0a88aa2eeb342a2d8acb4b86cf3}{Time} ()
+\item 
+\hyperlink{classburn_1_1_time_ac56700cc46aa55773938f1f3fe1bdc4e}{Time} (const \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \&point)
+\item 
+void \hyperlink{classburn_1_1_time_a360877b3779ec6fd3e4993f1fc4a48c3}{set\-Time} (const \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \&point)
+\item 
+long double \hyperlink{classburn_1_1_time_a5fcb537fbce65dc08b54e6494de42fce}{as\-Seconds} () const 
+\item 
+unsigned long long \hyperlink{classburn_1_1_time_ad55a56bdd08f72d0649bcd54c658bb82}{as\-Milliseconds} () const 
+\item 
+unsigned long long \hyperlink{classburn_1_1_time_a0fb0aaabbbf1f186f91231b3d987203e}{as\-Microseconds} () const 
+\item 
+unsigned long long \hyperlink{classburn_1_1_time_a104120a69544ee338f93c32a6663c35a}{as\-Nanoseconds} () const 
+\item 
+\hyperlink{classburn_1_1_time}{Time} \hyperlink{classburn_1_1_time_a28ec8ef74d89d1ef200a41a6aa5a9ccd}{operator-\/} (const \hyperlink{classburn_1_1_time}{Time} \&other) const 
+\item 
+const \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \& \hyperlink{classburn_1_1_time_a67c20bcaf4e0c38264e88e78b8e641ad}{get\-Time\-Point} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \hyperlink{classburn_1_1_time_a8dea3176bee9f79b8a910ab8584fecc1}{seconds} (const double \&seconds)
+\item 
+static \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \hyperlink{classburn_1_1_time_aca78c2d40cc49cf3fac16db1caf6740e}{milliseconds} (const int \&milliseconds)
+\item 
+static \hyperlink{namespaceburn_a431c4128e194f6d8909971ef6253bca9}{Time\-Point} \hyperlink{classburn_1_1_time_a7a07a638e213f62fff0de476ac3cb085}{now} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classburn_1_1_time_a1d23a0a88aa2eeb342a2d8acb4b86cf3}{\index{burn\-::\-Time@{burn\-::\-Time}!Time@{Time}}
+\index{Time@{Time}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{Time}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Time\-::\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_time_a1d23a0a88aa2eeb342a2d8acb4b86cf3}
+\hypertarget{classburn_1_1_time_ac56700cc46aa55773938f1f3fe1bdc4e}{\index{burn\-::\-Time@{burn\-::\-Time}!Time@{Time}}
+\index{Time@{Time}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{Time}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Time\-::\-Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf Time\-Point} \&}]{point}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_time_ac56700cc46aa55773938f1f3fe1bdc4e}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classburn_1_1_time_a0fb0aaabbbf1f186f91231b3d987203e}{\index{burn\-::\-Time@{burn\-::\-Time}!as\-Microseconds@{as\-Microseconds}}
+\index{as\-Microseconds@{as\-Microseconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{as\-Microseconds}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long long burn\-::\-Time\-::as\-Microseconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_a0fb0aaabbbf1f186f91231b3d987203e}
+\hypertarget{classburn_1_1_time_ad55a56bdd08f72d0649bcd54c658bb82}{\index{burn\-::\-Time@{burn\-::\-Time}!as\-Milliseconds@{as\-Milliseconds}}
+\index{as\-Milliseconds@{as\-Milliseconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{as\-Milliseconds}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long long burn\-::\-Time\-::as\-Milliseconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_ad55a56bdd08f72d0649bcd54c658bb82}
+\hypertarget{classburn_1_1_time_a104120a69544ee338f93c32a6663c35a}{\index{burn\-::\-Time@{burn\-::\-Time}!as\-Nanoseconds@{as\-Nanoseconds}}
+\index{as\-Nanoseconds@{as\-Nanoseconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{as\-Nanoseconds}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long long burn\-::\-Time\-::as\-Nanoseconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_a104120a69544ee338f93c32a6663c35a}
+\hypertarget{classburn_1_1_time_a5fcb537fbce65dc08b54e6494de42fce}{\index{burn\-::\-Time@{burn\-::\-Time}!as\-Seconds@{as\-Seconds}}
+\index{as\-Seconds@{as\-Seconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{as\-Seconds}]{\setlength{\rightskip}{0pt plus 5cm}long double burn\-::\-Time\-::as\-Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_a5fcb537fbce65dc08b54e6494de42fce}
+\hypertarget{classburn_1_1_time_a67c20bcaf4e0c38264e88e78b8e641ad}{\index{burn\-::\-Time@{burn\-::\-Time}!get\-Time\-Point@{get\-Time\-Point}}
+\index{get\-Time\-Point@{get\-Time\-Point}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{get\-Time\-Point}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Time\-Point}\& burn\-::\-Time\-::get\-Time\-Point (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_a67c20bcaf4e0c38264e88e78b8e641ad}
+\hypertarget{classburn_1_1_time_aca78c2d40cc49cf3fac16db1caf6740e}{\index{burn\-::\-Time@{burn\-::\-Time}!milliseconds@{milliseconds}}
+\index{milliseconds@{milliseconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{milliseconds}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Time\-Point} burn\-::\-Time\-::milliseconds (
+\begin{DoxyParamCaption}
+\item[{const int \&}]{milliseconds}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_time_aca78c2d40cc49cf3fac16db1caf6740e}
+\hypertarget{classburn_1_1_time_a7a07a638e213f62fff0de476ac3cb085}{\index{burn\-::\-Time@{burn\-::\-Time}!now@{now}}
+\index{now@{now}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{now}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Time\-Point} burn\-::\-Time\-::now (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_time_a7a07a638e213f62fff0de476ac3cb085}
+\hypertarget{classburn_1_1_time_a28ec8ef74d89d1ef200a41a6aa5a9ccd}{\index{burn\-::\-Time@{burn\-::\-Time}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Time} burn\-::\-Time\-::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Time} \&}]{other}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_time_a28ec8ef74d89d1ef200a41a6aa5a9ccd}
+\hypertarget{classburn_1_1_time_a8dea3176bee9f79b8a910ab8584fecc1}{\index{burn\-::\-Time@{burn\-::\-Time}!seconds@{seconds}}
+\index{seconds@{seconds}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{seconds}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Time\-Point} burn\-::\-Time\-::seconds (
+\begin{DoxyParamCaption}
+\item[{const double \&}]{seconds}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classburn_1_1_time_a8dea3176bee9f79b8a910ab8584fecc1}
+\hypertarget{classburn_1_1_time_a360877b3779ec6fd3e4993f1fc4a48c3}{\index{burn\-::\-Time@{burn\-::\-Time}!set\-Time@{set\-Time}}
+\index{set\-Time@{set\-Time}!burn::Time@{burn\-::\-Time}}
+\subsubsection[{set\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Time\-::set\-Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf Time\-Point} \&}]{point}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_time_a360877b3779ec6fd3e4993f1fc4a48c3}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Burngine/\-System/\hyperlink{_time_8h}{Time.\-h}\end{DoxyCompactItemize}

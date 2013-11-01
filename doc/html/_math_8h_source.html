@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1f9b33001d4e21e331991102b40181d5.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_82506c2b1cb259cc9233328be7c30861.html">System</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c32644b0d1b8ad20b5f0423d1e0233c0.html">include</a></li><li class="navelem"><a class="el" href="dir_af7ff5a1fa0e3f2b0942fd1506974e51.html">Burngine</a></li><li class="navelem"><a class="el" href="dir_8ae3f5c6f485a2c9b74d48f63d6bf706.html">System</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,26 +101,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef MATH_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MATH_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Export.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../extern/glm/glm.hpp&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;../extern/glm/gtc/matrix_transform.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;../extern/glm/gtx/transform.hpp&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_export_8h.html">Burngine/Export.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;Burngine/extern/glm/glm.hpp&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;Burngine/extern/glm/gtc/matrix_transform.hpp&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;Burngine/extern/glm/gtx/transform.hpp&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>burn{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>burn {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="namespaceburn.html#a2907b7b4adbde67cc68c401d9a30bdfe">   18</a></span>&#160;    <span class="keyword">typedef</span> glm::vec4 <a class="code" href="namespaceburn.html#a2907b7b4adbde67cc68c401d9a30bdfe">Vector4f</a>; <span class="comment">//x,y,z,w / r,g,b,a</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">   19</a></span>&#160;    <span class="keyword">typedef</span> glm::vec3 <a class="code" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a>; <span class="comment">//x,y,z / r,g,b</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="namespaceburn.html#a2af71ec5609a2f2d501827804e86a9b8">   20</a></span>&#160;    <span class="keyword">typedef</span> glm::vec2 <a class="code" href="namespaceburn.html#a2af71ec5609a2f2d501827804e86a9b8">Vector2f</a>; <span class="comment">//x,y / u,v</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">   22</a></span>&#160;    <span class="keyword">typedef</span> glm::mat4 <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MATH_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//Floating</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="namespaceburn.html#a58a411b9d83c7970518a9250c1c78068">   19</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec4&lt;float&gt; <a class="code" href="namespaceburn.html#a58a411b9d83c7970518a9250c1c78068">Vector4f</a>; <span class="comment">//x,y,z,w / r,g,b,a</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">   20</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec3&lt;float&gt; <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>; <span class="comment">//x,y,z / r,g,b</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="namespaceburn.html#af5ed9eb70cbf0fb572098ff43e146a0a">   21</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec2&lt;float&gt; <a class="code" href="namespaceburn.html#af5ed9eb70cbf0fb572098ff43e146a0a">Vector2f</a>; <span class="comment">//x,y / u,v</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//Double</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="namespaceburn.html#a7ef12007621667d3630580a881b8b924">   24</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec4&lt;double&gt; <a class="code" href="namespaceburn.html#a7ef12007621667d3630580a881b8b924">Vector4d</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="namespaceburn.html#a8832d94f1b12cd81bb8473a27a843930">   25</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec3&lt;double&gt; <a class="code" href="namespaceburn.html#a8832d94f1b12cd81bb8473a27a843930">Vector3d</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="namespaceburn.html#a8ae93c5e897bdb83b7df8536308fb0e0">   26</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec2&lt;double&gt; <a class="code" href="namespaceburn.html#a8ae93c5e897bdb83b7df8536308fb0e0">Vector2d</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//Int</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="namespaceburn.html#ab917ea93d648ebd548923c709dba8b9b">   29</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec4&lt;Int32&gt; <a class="code" href="namespaceburn.html#ab917ea93d648ebd548923c709dba8b9b">Vector4i</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="namespaceburn.html#ae3588b23ec9999532c43728cae59bde5">   30</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec3&lt;Int32&gt; <a class="code" href="namespaceburn.html#ae3588b23ec9999532c43728cae59bde5">Vector3i</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="namespaceburn.html#afb9df6e019eb84491abb84140b4da64e">   31</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec2&lt;Int32&gt; <a class="code" href="namespaceburn.html#afb9df6e019eb84491abb84140b4da64e">Vector2i</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//Unsigned Int</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="namespaceburn.html#a93214dd433466ae567a7bb09a8b28b79">   34</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec4&lt;Uint32&gt; <a class="code" href="namespaceburn.html#a93214dd433466ae567a7bb09a8b28b79">Vector4ui</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="namespaceburn.html#aa4ef7f734ba1ec7e71c01692910cc5f8">   35</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec3&lt;Uint32&gt; <a class="code" href="namespaceburn.html#aa4ef7f734ba1ec7e71c01692910cc5f8">Vector3ui</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="namespaceburn.html#a6805fa33c49c4c3db88a7bebba2c408f">   36</a></span>&#160;<span class="keyword">typedef</span> glm::detail::tvec2&lt;Uint32&gt; <a class="code" href="namespaceburn.html#a6805fa33c49c4c3db88a7bebba2c408f">Vector2ui</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">   38</a></span>&#160;<span class="keyword">typedef</span> glm::mat4 <a class="code" href="namespaceburn.html#a643e9d2ffceb4304e3755a100268a7a3">Matrix4f</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MATH_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:22 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

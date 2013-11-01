@@ -11,25 +11,59 @@ Inheritance diagram for burn\-:\-:Scene\-Node\-:\begin{figure}[H]
 \includegraphics[height=3.000000cm]{classburn_1_1_scene_node}
 \end{center}
 \end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cc}{Lighting\-Type} \{ \hyperlink{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cca5032b08cd92c6c86c32c088c81922632}{D\-I\-F\-F\-U\-S\-E}, 
+\hyperlink{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85ccaeec51fea1afff7847dd2acfe45121506}{S\-P\-E\-C\-U\-L\-A\-R}
+ \}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classburn_1_1_scene_node_a107d42062677132d1104391fd2bf2530}{Scene\-Node} ()
 \begin{DoxyCompactList}\small\item\em Default Constructor. \end{DoxyCompactList}\item 
-virtual \hyperlink{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}{$\sim$\-Scene\-Node} ()
+virtual \hyperlink{classburn_1_1_scene_node_a16dc2ff687b1ed4182ca70be08be76a0}{$\sim$\-Scene\-Node} ()
 \begin{DoxyCompactList}\small\item\em Default Destructor. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}{draw} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)=0
-\begin{DoxyCompactList}\small\item\em Virtual method for rendering. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}{draw\-Depth\-Colorless} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera)=0
+\hyperlink{classburn_1_1_scene_node_a8b3208662e333b416a50ead58fb85a40}{Scene\-Node} (const \hyperlink{classburn_1_1_scene_node}{Scene\-Node} \&other)
 \item 
-virtual void \hyperlink{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}{draw\-Lighting} (std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ camera, const std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_light}{Light} $>$$>$ \&lights, const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&ambient)=0
+\hyperlink{classburn_1_1_scene_node}{Scene\-Node} \& \hyperlink{classburn_1_1_scene_node_ac46213fd3b6bc544a20ed2ff24352e07}{operator=} (const \hyperlink{classburn_1_1_scene_node}{Scene\-Node} \&other)
+\item 
+virtual void \hyperlink{classburn_1_1_scene_node_a0fbae6cf806a85819a746169b4e0456f}{draw} (const \hyperlink{classburn_1_1_camera}{Camera} \&camera)=0
+\begin{DoxyCompactList}\small\item\em Virtual method for rendering. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classburn_1_1_scene_node_a6b8ae5a829ee166354af7b1c6259a7f9}{draw\-Single\-Color} (const \hyperlink{classburn_1_1_camera}{Camera} \&camera, const \hyperlink{namespaceburn_a58a411b9d83c7970518a9250c1c78068}{Vector4f} \&color)=0
+\item 
+virtual void \hyperlink{classburn_1_1_scene_node_a762372e61d345645c7cdb7a0dd2b22ca}{draw\-Lighting} (\hyperlink{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cc}{Lighting\-Type} type, const \hyperlink{classburn_1_1_camera}{Camera} \&camera, const std\-::vector$<$ \hyperlink{classburn_1_1_light}{Light} $\ast$ $>$ \&lights, const \hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \&ambient)=0
+\item 
+void \hyperlink{classburn_1_1_scene_node_aad77c29ef8deb702c06d3a056857ad6b}{add\-Parent\-Scene} (\hyperlink{classburn_1_1_scene}{Scene} $\ast$scene)
+\item 
+void \hyperlink{classburn_1_1_scene_node_a8809622b5e55abaab4b4f8c8cd3dc3e8}{remove\-Parent\-Scene} (\hyperlink{classburn_1_1_scene}{Scene} $\ast$scene)
+\item 
+bool \hyperlink{classburn_1_1_scene_node_a6f082b4329e80c5723e022f52d6ab491}{is\-Casting\-Shadows} () const 
+\item 
+void \hyperlink{classburn_1_1_scene_node_a64ff21e311418d8539c28e734d70cc92}{set\-Casting\-Shadows} (bool enabled)
 \end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}{set\-M\-V\-P\-Uniforms} (const \hyperlink{structburn_1_1_burngine_shaders_a2c339d4b838b7efe94ba8ef7f480ef41}{Burngine\-Shaders\-::\-Type} \&type, std\-::shared\-\_\-ptr$<$ \hyperlink{classburn_1_1_camera}{Camera} $>$ cam)
+void \hyperlink{classburn_1_1_scene_node_a2bb492a0906a3e71e5f81c06127e8224}{set\-M\-V\-P\-Uniforms} (const \hyperlink{classburn_1_1_shader}{Shader} \&shader, const \hyperlink{classburn_1_1_camera}{Camera} \&cam)
 \end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cc}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!Lighting\-Type@{Lighting\-Type}}
+\index{Lighting\-Type@{Lighting\-Type}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{Lighting\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Scene\-Node\-::\-Lighting\-Type}}}\label{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{D\-I\-F\-F\-U\-S\-E@{D\-I\-F\-F\-U\-S\-E}!burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}}\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!D\-I\-F\-F\-U\-S\-E@{D\-I\-F\-F\-U\-S\-E}}\item[{\em 
+\hypertarget{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cca5032b08cd92c6c86c32c088c81922632}{D\-I\-F\-F\-U\-S\-E}\label{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85cca5032b08cd92c6c86c32c088c81922632}
+}]\index{S\-P\-E\-C\-U\-L\-A\-R@{S\-P\-E\-C\-U\-L\-A\-R}!burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}}\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!S\-P\-E\-C\-U\-L\-A\-R@{S\-P\-E\-C\-U\-L\-A\-R}}\item[{\em 
+\hypertarget{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85ccaeec51fea1afff7847dd2acfe45121506}{S\-P\-E\-C\-U\-L\-A\-R}\label{classburn_1_1_scene_node_ac71667bb8707fdadf6b2245d6e6c85ccaeec51fea1afff7847dd2acfe45121506}
+}]\end{description}
+\end{Desc}
 
 
 \subsection{Constructor \& Destructor Documentation}
@@ -44,27 +78,41 @@ void \hyperlink{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}{set\
 
 Default Constructor. 
 
-\hypertarget{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!$\sim$\-Scene\-Node@{$\sim$\-Scene\-Node}}
+\hypertarget{classburn_1_1_scene_node_a16dc2ff687b1ed4182ca70be08be76a0}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!$\sim$\-Scene\-Node@{$\sim$\-Scene\-Node}}
 \index{$\sim$\-Scene\-Node@{$\sim$\-Scene\-Node}!burn::SceneNode@{burn\-::\-Scene\-Node}}
-\subsubsection[{$\sim$\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Scene\-Node\-::$\sim$\-Scene\-Node (
+\subsubsection[{$\sim$\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual burn\-::\-Scene\-Node\-::$\sim$\-Scene\-Node (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_scene_node_aa651409167ec065930115c8b31057e35}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_scene_node_a16dc2ff687b1ed4182ca70be08be76a0}
 
 
 Default Destructor. 
 
+\hypertarget{classburn_1_1_scene_node_a8b3208662e333b416a50ead58fb85a40}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!Scene\-Node@{Scene\-Node}}
+\index{Scene\-Node@{Scene\-Node}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Scene\-Node\-::\-Scene\-Node (
+\begin{DoxyParamCaption}
+\item[{const {\bf Scene\-Node} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_node_a8b3208662e333b416a50ead58fb85a40}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw@{draw}}
+\hypertarget{classburn_1_1_scene_node_aad77c29ef8deb702c06d3a056857ad6b}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!add\-Parent\-Scene@{add\-Parent\-Scene}}
+\index{add\-Parent\-Scene@{add\-Parent\-Scene}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{add\-Parent\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::add\-Parent\-Scene (
+\begin{DoxyParamCaption}
+\item[{{\bf Scene} $\ast$}]{scene}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_node_aad77c29ef8deb702c06d3a056857ad6b}
+\hypertarget{classburn_1_1_scene_node_a0fbae6cf806a85819a746169b4e0456f}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw@{draw}}
 \index{draw@{draw}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw (
 \begin{DoxyParamCaption}
-\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
+\item[{const {\bf Camera} \&}]{camera}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a11a0695c2c0381824d6bf3e4518371bd}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a0fbae6cf806a85819a746169b4e0456f}
 
 
 Virtual method for rendering. 
@@ -76,43 +124,72 @@ Virtual method for rendering.
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classburn_1_1_static_mesh_node_a549592ca6fa617368511c8f68e3ca6d4}{burn\-::\-Static\-Mesh\-Node}.
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_af8e0f846bf6c835fd8a9e7a334c076d6}{burn\-::\-Static\-Mesh\-Node}.
 
-\hypertarget{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Depth\-Colorless@{draw\-Depth\-Colorless}}
-\index{draw\-Depth\-Colorless@{draw\-Depth\-Colorless}!burn::SceneNode@{burn\-::\-Scene\-Node}}
-\subsubsection[{draw\-Depth\-Colorless}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw\-Depth\-Colorless (
-\begin{DoxyParamCaption}
-\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_aba5cd67bf31709472a4a7d85804fd8bb}
-
-
-Implemented in \hyperlink{classburn_1_1_static_mesh_node_ac33ab5c73d01867df4708783e01a87af}{burn\-::\-Static\-Mesh\-Node}.
-
-\hypertarget{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Lighting@{draw\-Lighting}}
+\hypertarget{classburn_1_1_scene_node_a762372e61d345645c7cdb7a0dd2b22ca}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Lighting@{draw\-Lighting}}
 \index{draw\-Lighting@{draw\-Lighting}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{draw\-Lighting}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw\-Lighting (
 \begin{DoxyParamCaption}
-\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{camera, }
-\item[{const std\-::vector$<$ std\-::shared\-\_\-ptr$<$ {\bf Light} $>$$>$ \&}]{lights, }
+\item[{{\bf Lighting\-Type}}]{type, }
+\item[{const {\bf Camera} \&}]{camera, }
+\item[{const std\-::vector$<$ {\bf Light} $\ast$ $>$ \&}]{lights, }
 \item[{const {\bf Vector3f} \&}]{ambient}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a39a9e949313f6e1131825e43ce1d22a5}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a762372e61d345645c7cdb7a0dd2b22ca}
 
 
-Implemented in \hyperlink{classburn_1_1_static_mesh_node_a3bc717d99643f34a82443f89b24eae40}{burn\-::\-Static\-Mesh\-Node}.
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_ab8b33e600d0dd33952bc52018e815cf7}{burn\-::\-Static\-Mesh\-Node}.
 
-\hypertarget{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-M\-V\-P\-Uniforms@{set\-M\-V\-P\-Uniforms}}
+\hypertarget{classburn_1_1_scene_node_a6b8ae5a829ee166354af7b1c6259a7f9}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!draw\-Single\-Color@{draw\-Single\-Color}}
+\index{draw\-Single\-Color@{draw\-Single\-Color}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{draw\-Single\-Color}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Scene\-Node\-::draw\-Single\-Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Camera} \&}]{camera, }
+\item[{const {\bf Vector4f} \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classburn_1_1_scene_node_a6b8ae5a829ee166354af7b1c6259a7f9}
+
+
+Implemented in \hyperlink{classburn_1_1_static_mesh_node_a920453be99e8580076811a6e51023a1d}{burn\-::\-Static\-Mesh\-Node}.
+
+\hypertarget{classburn_1_1_scene_node_a6f082b4329e80c5723e022f52d6ab491}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!is\-Casting\-Shadows@{is\-Casting\-Shadows}}
+\index{is\-Casting\-Shadows@{is\-Casting\-Shadows}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{is\-Casting\-Shadows}]{\setlength{\rightskip}{0pt plus 5cm}bool burn\-::\-Scene\-Node\-::is\-Casting\-Shadows (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_scene_node_a6f082b4329e80c5723e022f52d6ab491}
+\hypertarget{classburn_1_1_scene_node_ac46213fd3b6bc544a20ed2ff24352e07}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!operator=@{operator=}}
+\index{operator=@{operator=}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scene\-Node}\& burn\-::\-Scene\-Node\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Scene\-Node} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_node_ac46213fd3b6bc544a20ed2ff24352e07}
+\hypertarget{classburn_1_1_scene_node_a8809622b5e55abaab4b4f8c8cd3dc3e8}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!remove\-Parent\-Scene@{remove\-Parent\-Scene}}
+\index{remove\-Parent\-Scene@{remove\-Parent\-Scene}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{remove\-Parent\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::remove\-Parent\-Scene (
+\begin{DoxyParamCaption}
+\item[{{\bf Scene} $\ast$}]{scene}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_node_a8809622b5e55abaab4b4f8c8cd3dc3e8}
+\hypertarget{classburn_1_1_scene_node_a64ff21e311418d8539c28e734d70cc92}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-Casting\-Shadows@{set\-Casting\-Shadows}}
+\index{set\-Casting\-Shadows@{set\-Casting\-Shadows}!burn::SceneNode@{burn\-::\-Scene\-Node}}
+\subsubsection[{set\-Casting\-Shadows}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::set\-Casting\-Shadows (
+\begin{DoxyParamCaption}
+\item[{bool}]{enabled}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_scene_node_a64ff21e311418d8539c28e734d70cc92}
+\hypertarget{classburn_1_1_scene_node_a2bb492a0906a3e71e5f81c06127e8224}{\index{burn\-::\-Scene\-Node@{burn\-::\-Scene\-Node}!set\-M\-V\-P\-Uniforms@{set\-M\-V\-P\-Uniforms}}
 \index{set\-M\-V\-P\-Uniforms@{set\-M\-V\-P\-Uniforms}!burn::SceneNode@{burn\-::\-Scene\-Node}}
 \subsubsection[{set\-M\-V\-P\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-Node\-::set\-M\-V\-P\-Uniforms (
 \begin{DoxyParamCaption}
-\item[{const {\bf Burngine\-Shaders\-::\-Type} \&}]{type, }
-\item[{std\-::shared\-\_\-ptr$<$ {\bf Camera} $>$}]{cam}
+\item[{const {\bf Shader} \&}]{shader, }
+\item[{const {\bf Camera} \&}]{cam}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_scene_node_a3d6c0c517581a1458c4fd8c02f12cfa5}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_scene_node_a2bb492a0906a3e71e5f81c06127e8224}
 
 
-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Burngine/\-Graphics/\hyperlink{_scene_node_8h}{Scene\-Node.\-h}\item 
-include/\-Burngine/\-Graphics/\hyperlink{_scene_node_8cpp}{Scene\-Node.\-cpp}\end{DoxyCompactItemize}
+include/\-Burngine/\-Graphics/\-Scene/\hyperlink{_scene_node_8h}{Scene\-Node.\-h}\end{DoxyCompactItemize}

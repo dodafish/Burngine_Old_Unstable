@@ -3,110 +3,173 @@
 }
 
 
-Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously the scale will have no effect.  
-
-
-
-
 {\ttfamily \#include $<$Light.\-h$>$}
 
 Inheritance diagram for burn\-:\-:Light\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{classburn_1_1_light}
+\includegraphics[height=4.000000cm]{classburn_1_1_light}
 \end{center}
 \end{figure}
-\subsection*{Public Types}
-\begin{DoxyCompactItemize}
-\item 
-enum \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \{ \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}, 
-\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}{S\-P\-O\-T}, 
-\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}
- \}
-\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}{Light} (const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \&type=\hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}, const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color=\hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f}(1.\-0f, 1.\-0f, 1.\-0f), const float \&intensity=1.\-0f)
+\hyperlink{classburn_1_1_light_ae0ca792dd745afb8976640cfca5644d6}{Light} ()
 \item 
-\hyperlink{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}{$\sim$\-Light} ()
+\hyperlink{classburn_1_1_light_adaa47f7f4395a7ef12f78669a5694382}{Light} (const \hyperlink{classburn_1_1_light}{Light} \&other)
 \item 
-void \hyperlink{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}{set\-Color} (const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \&color)
+\hyperlink{classburn_1_1_light}{Light} \& \hyperlink{classburn_1_1_light_af49541104082b6f6c0f93cc4ff4161b5}{operator=} (const \hyperlink{classburn_1_1_light}{Light} \&other)
 \item 
-const \hyperlink{namespaceburn_a9d6d349c94bc4dc9699427216128a0ef}{Vector3f} \& \hyperlink{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}{get\-Color} () const 
+virtual \hyperlink{classburn_1_1_light_af0622c23bba106043efff05e027d1e04}{$\sim$\-Light} ()
+\item 
+void \hyperlink{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}{set\-Color} (const \hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \&color)
+\item 
+const \hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \& \hyperlink{classburn_1_1_light_a0b43e6f4a60eed5ed3ff2f7a01d350eb}{get\-Color} () const 
 \item 
 void \hyperlink{classburn_1_1_light_a798ae7d682b85dcede11a89047f19508}{set\-Intensity} (const float \&intensity)
 \item 
-const float \& \hyperlink{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}{get\-Intensity} () const 
+const float \& \hyperlink{classburn_1_1_light_ac5083292da85b9514dfa52ec933a563c}{get\-Intensity} () const 
 \item 
-void \hyperlink{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}{set\-Type} (const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \&type)
+void \hyperlink{classburn_1_1_light_ad1c8b2a8ff0af362741b01fa5873c683}{add\-Parent\-Scene} (\hyperlink{classburn_1_1_scene}{Scene} $\ast$scene)
 \item 
-const \hyperlink{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{Type} \& \hyperlink{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}{get\-Type} () const 
+void \hyperlink{classburn_1_1_light_a320f27149a8e49a1d2b563e423e9636c}{remove\-Parent\-Scene} (\hyperlink{classburn_1_1_scene}{Scene} $\ast$scene)
+\item 
+virtual void \hyperlink{classburn_1_1_light_af14d6771a1b6ff04195467f5c1c6a312}{update\-Shadow\-Map} (const std\-::vector$<$ \hyperlink{classburn_1_1_scene_node}{Scene\-Node} $\ast$ $>$ \&nodes)
+\item 
+virtual const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \hyperlink{classburn_1_1_light_af08ea0337d85542b856662d3fc78453b}{get\-Bias\-View\-Matrix} () const 
+\item 
+virtual const \hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \& \hyperlink{classburn_1_1_light_a2e9ec371a39bb44d98892b4076cc4766}{get\-Bias\-Projection\-Matrix} () const 
+\item 
+void \hyperlink{classburn_1_1_light_a39e25024015dd3dc1668300d1807a189}{bind\-Shadow\-Cube\-Map} () const 
+\item 
+\hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \hyperlink{classburn_1_1_light_a601abfc3e38f459fcad0f0ceb1e71df2}{find\-View\-Matrix} (const int \&face) const 
+\item 
+const \hyperlink{classburn_1_1_shadow_cube_map}{Shadow\-Cube\-Map} \& \hyperlink{classburn_1_1_light_a01d43c41e03e7ec0f3ec37281a1cf920}{get\-Shadow\-Cube\-Map} () const 
 \end{DoxyCompactItemize}
-\subsection*{Additional Inherited Members}
-
-
-\subsection{Detailed Description}
-Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously the scale will have no effect. 
-
-\subsection{Member Enumeration Documentation}
-\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}{\index{burn\-::\-Light@{burn\-::\-Light}!Type@{Type}}
-\index{Type@{Type}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf burn\-::\-Light\-::\-Type}}}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599}
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{P\-O\-I\-N\-T@{P\-O\-I\-N\-T}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!P\-O\-I\-N\-T@{P\-O\-I\-N\-T}}\item[{\em 
-\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}{P\-O\-I\-N\-T}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a9e95c3ab6dc0c16260ba514a02151ce7}
-}]\index{S\-P\-O\-T@{S\-P\-O\-T}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!S\-P\-O\-T@{S\-P\-O\-T}}\item[{\em 
-\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}{S\-P\-O\-T}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a69cd23e3f1a59a02503370432fe42fd6}
-}]\index{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}!burn\-::\-Light@{burn\-::\-Light}}\index{burn\-::\-Light@{burn\-::\-Light}!D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L@{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}}\item[{\em 
-\hypertarget{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}{D\-I\-R\-E\-C\-T\-I\-O\-N\-A\-L}\label{classburn_1_1_light_a8fa12cb3ae2a0eebbfbf5c59c2b4b599a25edb9fd19c152a1fbae29ec6a95b032}
-}]\end{description}
-\end{Desc}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classburn_1_1_light_a5fce7c28e34206c39645bb383b823f48}{remove\-All\-Parents} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \hyperlink{classburn_1_1_light_a6a49b033b4c1cb79e3d84e9ef74dbcda}{\-\_\-color}
+\item 
+float \hyperlink{classburn_1_1_light_a92fcb1a0d7bf3680d65108b59931658b}{\-\_\-intensity}
+\item 
+std\-::vector$<$ \hyperlink{classburn_1_1_scene}{Scene} $\ast$ $>$ \hyperlink{classburn_1_1_light_a33188aef471ba7c742c004a787c5a8b4}{\-\_\-parents}
+\item 
+\hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \hyperlink{classburn_1_1_light_a58333b9fd0fc2bf4e0cba73097b8e5c9}{\-\_\-bias\-View\-Matrix}
+\item 
+\hyperlink{namespaceburn_a643e9d2ffceb4304e3755a100268a7a3}{Matrix4f} \hyperlink{classburn_1_1_light_a18f86434a088d060af651fc1a2394cdf}{\-\_\-bias\-Projection\-Matrix}
+\item 
+\hyperlink{classburn_1_1_shadow_cube_map}{Shadow\-Cube\-Map} \hyperlink{classburn_1_1_light_af06e39faf3bc51663bc2f0e0302bd0d0}{\-\_\-shadow\-Cube\-Map}
+\end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}{\index{burn\-::\-Light@{burn\-::\-Light}!Light@{Light}}
+\hypertarget{classburn_1_1_light_ae0ca792dd745afb8976640cfca5644d6}{\index{burn\-::\-Light@{burn\-::\-Light}!Light@{Light}}
 \index{Light@{Light}!burn::Light@{burn\-::\-Light}}
 \subsubsection[{Light}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Light\-::\-Light (
 \begin{DoxyParamCaption}
-\item[{const {\bf Type} \&}]{type = {\ttfamily {\bf P\-O\-I\-N\-T}}, }
-\item[{const {\bf Vector3f} \&}]{color = {\ttfamily {\bf Vector3f}(1.0f,~1.0f,~1.0f)}, }
-\item[{const float \&}]{intensity = {\ttfamily 1.0f}}
+{}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_light_a70a09e0609abe704f3e65d4790b6d6ce}
-\hypertarget{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}{\index{burn\-::\-Light@{burn\-::\-Light}!$\sim$\-Light@{$\sim$\-Light}}
+)}}\label{classburn_1_1_light_ae0ca792dd745afb8976640cfca5644d6}
+\hypertarget{classburn_1_1_light_adaa47f7f4395a7ef12f78669a5694382}{\index{burn\-::\-Light@{burn\-::\-Light}!Light@{Light}}
+\index{Light@{Light}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{Light}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Light\-::\-Light (
+\begin{DoxyParamCaption}
+\item[{const {\bf Light} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_adaa47f7f4395a7ef12f78669a5694382}
+\hypertarget{classburn_1_1_light_af0622c23bba106043efff05e027d1e04}{\index{burn\-::\-Light@{burn\-::\-Light}!$\sim$\-Light@{$\sim$\-Light}}
 \index{$\sim$\-Light@{$\sim$\-Light}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{$\sim$\-Light}]{\setlength{\rightskip}{0pt plus 5cm}burn\-::\-Light\-::$\sim$\-Light (
+\subsubsection[{$\sim$\-Light}]{\setlength{\rightskip}{0pt plus 5cm}virtual burn\-::\-Light\-::$\sim$\-Light (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_light_af0fe1fa2f8f4527e80bd4ca80b2f6c4e}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_light_af0622c23bba106043efff05e027d1e04}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Color@{get\-Color}}
+\hypertarget{classburn_1_1_light_ad1c8b2a8ff0af362741b01fa5873c683}{\index{burn\-::\-Light@{burn\-::\-Light}!add\-Parent\-Scene@{add\-Parent\-Scene}}
+\index{add\-Parent\-Scene@{add\-Parent\-Scene}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{add\-Parent\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::add\-Parent\-Scene (
+\begin{DoxyParamCaption}
+\item[{{\bf Scene} $\ast$}]{scene}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_ad1c8b2a8ff0af362741b01fa5873c683}
+\hypertarget{classburn_1_1_light_a39e25024015dd3dc1668300d1807a189}{\index{burn\-::\-Light@{burn\-::\-Light}!bind\-Shadow\-Cube\-Map@{bind\-Shadow\-Cube\-Map}}
+\index{bind\-Shadow\-Cube\-Map@{bind\-Shadow\-Cube\-Map}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{bind\-Shadow\-Cube\-Map}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::bind\-Shadow\-Cube\-Map (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_light_a39e25024015dd3dc1668300d1807a189}
+\hypertarget{classburn_1_1_light_a601abfc3e38f459fcad0f0ceb1e71df2}{\index{burn\-::\-Light@{burn\-::\-Light}!find\-View\-Matrix@{find\-View\-Matrix}}
+\index{find\-View\-Matrix@{find\-View\-Matrix}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{find\-View\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix4f} burn\-::\-Light\-::find\-View\-Matrix (
+\begin{DoxyParamCaption}
+\item[{const int \&}]{face}
+\end{DoxyParamCaption}
+) const}}\label{classburn_1_1_light_a601abfc3e38f459fcad0f0ceb1e71df2}
+\hypertarget{classburn_1_1_light_a2e9ec371a39bb44d98892b4076cc4766}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Bias\-Projection\-Matrix@{get\-Bias\-Projection\-Matrix}}
+\index{get\-Bias\-Projection\-Matrix@{get\-Bias\-Projection\-Matrix}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Bias\-Projection\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}virtual const {\bf Matrix4f}\& burn\-::\-Light\-::get\-Bias\-Projection\-Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_light_a2e9ec371a39bb44d98892b4076cc4766}
+\hypertarget{classburn_1_1_light_af08ea0337d85542b856662d3fc78453b}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Bias\-View\-Matrix@{get\-Bias\-View\-Matrix}}
+\index{get\-Bias\-View\-Matrix@{get\-Bias\-View\-Matrix}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Bias\-View\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}virtual const {\bf Matrix4f}\& burn\-::\-Light\-::get\-Bias\-View\-Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_light_af08ea0337d85542b856662d3fc78453b}
+\hypertarget{classburn_1_1_light_a0b43e6f4a60eed5ed3ff2f7a01d350eb}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Color@{get\-Color}}
 \index{get\-Color@{get\-Color}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{get\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f} \& burn\-::\-Light\-::get\-Color (
+\subsubsection[{get\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f}\& burn\-::\-Light\-::get\-Color (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_light_a00de56025645f4c39d03b24e48f4eabf}
-\hypertarget{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Intensity@{get\-Intensity}}
+) const}}\label{classburn_1_1_light_a0b43e6f4a60eed5ed3ff2f7a01d350eb}
+\hypertarget{classburn_1_1_light_ac5083292da85b9514dfa52ec933a563c}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Intensity@{get\-Intensity}}
 \index{get\-Intensity@{get\-Intensity}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{get\-Intensity}]{\setlength{\rightskip}{0pt plus 5cm}const float \& burn\-::\-Light\-::get\-Intensity (
+\subsubsection[{get\-Intensity}]{\setlength{\rightskip}{0pt plus 5cm}const float\& burn\-::\-Light\-::get\-Intensity (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_light_a0e826b840750ededc98e73f814c2de4a}
-\hypertarget{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Type@{get\-Type}}
-\index{get\-Type@{get\-Type}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Light\-::\-Type} \& burn\-::\-Light\-::get\-Type (
+) const}}\label{classburn_1_1_light_ac5083292da85b9514dfa52ec933a563c}
+\hypertarget{classburn_1_1_light_a01d43c41e03e7ec0f3ec37281a1cf920}{\index{burn\-::\-Light@{burn\-::\-Light}!get\-Shadow\-Cube\-Map@{get\-Shadow\-Cube\-Map}}
+\index{get\-Shadow\-Cube\-Map@{get\-Shadow\-Cube\-Map}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{get\-Shadow\-Cube\-Map}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Shadow\-Cube\-Map}\& burn\-::\-Light\-::get\-Shadow\-Cube\-Map (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classburn_1_1_light_aa96f8a2a736f033cd93f16467faad31b}
+) const}}\label{classburn_1_1_light_a01d43c41e03e7ec0f3ec37281a1cf920}
+\hypertarget{classburn_1_1_light_af49541104082b6f6c0f93cc4ff4161b5}{\index{burn\-::\-Light@{burn\-::\-Light}!operator=@{operator=}}
+\index{operator=@{operator=}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Light}\& burn\-::\-Light\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Light} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_af49541104082b6f6c0f93cc4ff4161b5}
+\hypertarget{classburn_1_1_light_a5fce7c28e34206c39645bb383b823f48}{\index{burn\-::\-Light@{burn\-::\-Light}!remove\-All\-Parents@{remove\-All\-Parents}}
+\index{remove\-All\-Parents@{remove\-All\-Parents}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{remove\-All\-Parents}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::remove\-All\-Parents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a5fce7c28e34206c39645bb383b823f48}
+\hypertarget{classburn_1_1_light_a320f27149a8e49a1d2b563e423e9636c}{\index{burn\-::\-Light@{burn\-::\-Light}!remove\-Parent\-Scene@{remove\-Parent\-Scene}}
+\index{remove\-Parent\-Scene@{remove\-Parent\-Scene}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{remove\-Parent\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::remove\-Parent\-Scene (
+\begin{DoxyParamCaption}
+\item[{{\bf Scene} $\ast$}]{scene}
+\end{DoxyParamCaption}
+)}}\label{classburn_1_1_light_a320f27149a8e49a1d2b563e423e9636c}
 \hypertarget{classburn_1_1_light_a6178f2826887a4aba596523b3e001604}{\index{burn\-::\-Light@{burn\-::\-Light}!set\-Color@{set\-Color}}
 \index{set\-Color@{set\-Color}!burn::Light@{burn\-::\-Light}}
 \subsubsection[{set\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::set\-Color (
@@ -121,16 +184,40 @@ Inherits from \hyperlink{classburn_1_1_transformable}{Transformable}. Obviously 
 \item[{const float \&}]{intensity}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_light_a798ae7d682b85dcede11a89047f19508}
-\hypertarget{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}{\index{burn\-::\-Light@{burn\-::\-Light}!set\-Type@{set\-Type}}
-\index{set\-Type@{set\-Type}!burn::Light@{burn\-::\-Light}}
-\subsubsection[{set\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Light\-::set\-Type (
+\hypertarget{classburn_1_1_light_af14d6771a1b6ff04195467f5c1c6a312}{\index{burn\-::\-Light@{burn\-::\-Light}!update\-Shadow\-Map@{update\-Shadow\-Map}}
+\index{update\-Shadow\-Map@{update\-Shadow\-Map}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{update\-Shadow\-Map}]{\setlength{\rightskip}{0pt plus 5cm}virtual void burn\-::\-Light\-::update\-Shadow\-Map (
 \begin{DoxyParamCaption}
-\item[{const {\bf Type} \&}]{type}
+\item[{const std\-::vector$<$ {\bf Scene\-Node} $\ast$ $>$ \&}]{nodes}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_light_a1b0285cf5b58bc337a8d3ab9b4077554}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classburn_1_1_light_af14d6771a1b6ff04195467f5c1c6a312}
 
 
-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+Reimplemented in \hyperlink{classburn_1_1_directional_light_a84eb0090ded76e9f73d351ff87a54795}{burn\-::\-Directional\-Light}, and \hyperlink{classburn_1_1_spot_light_ab16ad5f4da0fe8fc9cdd07b2931259ee}{burn\-::\-Spot\-Light}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classburn_1_1_light_a18f86434a088d060af651fc1a2394cdf}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-bias\-Projection\-Matrix@{\-\_\-bias\-Projection\-Matrix}}
+\index{\-\_\-bias\-Projection\-Matrix@{\-\_\-bias\-Projection\-Matrix}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-bias\-Projection\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix4f} burn\-::\-Light\-::\-\_\-bias\-Projection\-Matrix\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a18f86434a088d060af651fc1a2394cdf}
+\hypertarget{classburn_1_1_light_a58333b9fd0fc2bf4e0cba73097b8e5c9}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-bias\-View\-Matrix@{\-\_\-bias\-View\-Matrix}}
+\index{\-\_\-bias\-View\-Matrix@{\-\_\-bias\-View\-Matrix}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-bias\-View\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix4f} burn\-::\-Light\-::\-\_\-bias\-View\-Matrix\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a58333b9fd0fc2bf4e0cba73097b8e5c9}
+\hypertarget{classburn_1_1_light_a6a49b033b4c1cb79e3d84e9ef74dbcda}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-color@{\-\_\-color}}
+\index{\-\_\-color@{\-\_\-color}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-color}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector3f} burn\-::\-Light\-::\-\_\-color\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a6a49b033b4c1cb79e3d84e9ef74dbcda}
+\hypertarget{classburn_1_1_light_a92fcb1a0d7bf3680d65108b59931658b}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-intensity@{\-\_\-intensity}}
+\index{\-\_\-intensity@{\-\_\-intensity}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-intensity}]{\setlength{\rightskip}{0pt plus 5cm}float burn\-::\-Light\-::\-\_\-intensity\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a92fcb1a0d7bf3680d65108b59931658b}
+\hypertarget{classburn_1_1_light_a33188aef471ba7c742c004a787c5a8b4}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-parents@{\-\_\-parents}}
+\index{\-\_\-parents@{\-\_\-parents}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-parents}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf Scene}$\ast$$>$ burn\-::\-Light\-::\-\_\-parents\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_a33188aef471ba7c742c004a787c5a8b4}
+\hypertarget{classburn_1_1_light_af06e39faf3bc51663bc2f0e0302bd0d0}{\index{burn\-::\-Light@{burn\-::\-Light}!\-\_\-shadow\-Cube\-Map@{\-\_\-shadow\-Cube\-Map}}
+\index{\-\_\-shadow\-Cube\-Map@{\-\_\-shadow\-Cube\-Map}!burn::Light@{burn\-::\-Light}}
+\subsubsection[{\-\_\-shadow\-Cube\-Map}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shadow\-Cube\-Map} burn\-::\-Light\-::\-\_\-shadow\-Cube\-Map\hspace{0.3cm}{\ttfamily [protected]}}}\label{classburn_1_1_light_af06e39faf3bc51663bc2f0e0302bd0d0}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Burngine/\-Graphics/\hyperlink{_light_8h}{Light.\-h}\item 
-include/\-Burngine/\-Graphics/\hyperlink{_light_8cpp}{Light.\-cpp}\end{DoxyCompactItemize}
+include/\-Burngine/\-Graphics/\-Scene/\hyperlink{_light_8h}{Light.\-h}\end{DoxyCompactItemize}

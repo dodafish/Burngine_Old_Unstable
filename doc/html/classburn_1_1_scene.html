@@ -74,7 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classburn_1_1_scene-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -99,59 +100,89 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_scene_8h_source.html">Scene.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a992349a23199d694dca7b8cbd4957299"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">RenderModus</a> { <br/>
+&#160;&#160;<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828">ALL</a>, 
+<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6">COLOR</a>, 
+<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230">DIFFUSE</a>, 
+<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95">SPECULAR</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4">LIGHTING</a>
+<br/>
+ }</td></tr>
+<tr class="separator:a992349a23199d694dca7b8cbd4957299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9c6d2804f8f0ce73a3eddea66c235ff8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a9c6d2804f8f0ce73a3eddea66c235ff8">Scene</a> (<a class="el" href="classburn_1_1_window.html">Window</a> &amp;window)</td></tr>
-<tr class="memdesc:a9c6d2804f8f0ce73a3eddea66c235ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#a9c6d2804f8f0ce73a3eddea66c235ff8">More...</a><br/></td></tr>
-<tr class="separator:a9c6d2804f8f0ce73a3eddea66c235ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14bb493f34a5c489f2460b94698c8f72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a14bb493f34a5c489f2460b94698c8f72">Scene</a> (const <a class="el" href="classburn_1_1_window.html">Window</a> &amp;parentWindow)</td></tr>
+<tr class="memdesc:a14bb493f34a5c489f2460b94698c8f72"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor.  <a href="#a14bb493f34a5c489f2460b94698c8f72">More...</a><br/></td></tr>
+<tr class="separator:a14bb493f34a5c489f2460b94698c8f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7722cda0111bd22ca193174326e66924"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a7722cda0111bd22ca193174326e66924">~Scene</a> ()</td></tr>
 <tr class="memdesc:a7722cda0111bd22ca193174326e66924"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default destructor. When called by e.g. deleting the scene it cleans up its data. In other words it deletes all nodes/cameras/etc. it is holding.  <a href="#a7722cda0111bd22ca193174326e66924">More...</a><br/></td></tr>
 <tr class="separator:a7722cda0111bd22ca193174326e66924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ec4aad558ab7f3299fef632d86da8d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a5ec4aad558ab7f3299fef632d86da8d3">drawAll</a> ()</td></tr>
-<tr class="memdesc:a5ec4aad558ab7f3299fef632d86da8d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws every <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a>.  <a href="#a5ec4aad558ab7f3299fef632d86da8d3">More...</a><br/></td></tr>
-<tr class="separator:a5ec4aad558ab7f3299fef632d86da8d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8440772f49bfc6ce5e77a021446ecad"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classburn_1_1_static_mesh_node.html">StaticMeshNode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#af8440772f49bfc6ce5e77a021446ecad">createStaticMeshNode</a> ()</td></tr>
-<tr class="memdesc:af8440772f49bfc6ce5e77a021446ecad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="classburn_1_1_static_mesh_node.html" title="A static mesh. No animations are possible. ">StaticMeshNode</a> to the scene.  <a href="#af8440772f49bfc6ce5e77a021446ecad">More...</a><br/></td></tr>
-<tr class="separator:af8440772f49bfc6ce5e77a021446ecad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cfa518da5d3225c899e26540d7bbba5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a0cfa518da5d3225c899e26540d7bbba5">createCamera</a> (bool active=true)</td></tr>
-<tr class="memdesc:a0cfa518da5d3225c899e26540d7bbba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="classburn_1_1_camera.html">Camera</a> to the scene.  <a href="#a0cfa518da5d3225c899e26540d7bbba5">More...</a><br/></td></tr>
-<tr class="separator:a0cfa518da5d3225c899e26540d7bbba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72924fb917b9f55cd7268b65ac81b59d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a72924fb917b9f55cd7268b65ac81b59d">createLight</a> ()</td></tr>
-<tr class="separator:a72924fb917b9f55cd7268b65ac81b59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60272f8aad568d7475449c649587b9fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a60272f8aad568d7475449c649587b9fa">removeLight</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt; light)</td></tr>
-<tr class="separator:a60272f8aad568d7475449c649587b9fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb92e9aea3bbff01d8039ef3b9143f56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#aeb92e9aea3bbff01d8039ef3b9143f56">removeAllLights</a> ()</td></tr>
-<tr class="separator:aeb92e9aea3bbff01d8039ef3b9143f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bbc514d911206f374ba54a2efd97c40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a3bbc514d911206f374ba54a2efd97c40">removeNode</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &gt; node)</td></tr>
-<tr class="memdesc:a3bbc514d911206f374ba54a2efd97c40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes any <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> (except <a class="el" href="classburn_1_1_camera.html">Camera</a>) from the scene. The pointer will become a nullptr.  <a href="#a3bbc514d911206f374ba54a2efd97c40">More...</a><br/></td></tr>
-<tr class="separator:a3bbc514d911206f374ba54a2efd97c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fed244c443937c2656cdc0f65780960"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a2fed244c443937c2656cdc0f65780960">removeAllNodes</a> ()</td></tr>
-<tr class="memdesc:a2fed244c443937c2656cdc0f65780960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all nodes from the scene.  <a href="#a2fed244c443937c2656cdc0f65780960">More...</a><br/></td></tr>
-<tr class="separator:a2fed244c443937c2656cdc0f65780960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2023bc9e2e228c51070d41976bc71a33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a2023bc9e2e228c51070d41976bc71a33">removeCamera</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera)</td></tr>
-<tr class="memdesc:a2023bc9e2e228c51070d41976bc71a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a <a class="el" href="classburn_1_1_camera.html">Camera</a> from the scene. The pointer will become a nullptr.  <a href="#a2023bc9e2e228c51070d41976bc71a33">More...</a><br/></td></tr>
-<tr class="separator:a2023bc9e2e228c51070d41976bc71a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d3f254361eef7ee71052ecdc1576bad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a9d3f254361eef7ee71052ecdc1576bad">removeAllCameras</a> ()</td></tr>
-<tr class="memdesc:a9d3f254361eef7ee71052ecdc1576bad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all cameras from the scene.  <a href="#a9d3f254361eef7ee71052ecdc1576bad">More...</a><br/></td></tr>
-<tr class="separator:a9d3f254361eef7ee71052ecdc1576bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84ce9f46db92a7be5d137991c4df651c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a84ce9f46db92a7be5d137991c4df651c">setActiveCamera</a> (std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; camera)</td></tr>
-<tr class="memdesc:a84ce9f46db92a7be5d137991c4df651c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a camera as active one. This camera will influence the rendering behaviour of the scene.  <a href="#a84ce9f46db92a7be5d137991c4df651c">More...</a><br/></td></tr>
-<tr class="separator:a84ce9f46db92a7be5d137991c4df651c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bfd8a10ac26bd647b2391ff6c3b4b66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a8bfd8a10ac26bd647b2391ff6c3b4b66">setAmbientColor</a> (const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;color)</td></tr>
+<tr class="memitem:aa659a25dafadad6a8ab8e4304cf394a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#aa659a25dafadad6a8ab8e4304cf394a5">draw</a> (const <a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">RenderModus</a> &amp;modus=<a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828">ALL</a>)</td></tr>
+<tr class="memdesc:aa659a25dafadad6a8ab8e4304cf394a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws every <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a>.  <a href="#aa659a25dafadad6a8ab8e4304cf394a5">More...</a><br/></td></tr>
+<tr class="separator:aa659a25dafadad6a8ab8e4304cf394a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa013e68565bda374fa704f816d8e6847"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#aa013e68565bda374fa704f816d8e6847">attachSceneNode</a> (<a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &amp;node)</td></tr>
+<tr class="separator:aa013e68565bda374fa704f816d8e6847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999ba40b417a1074b58c73e837170e51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a999ba40b417a1074b58c73e837170e51">detachSceneNode</a> (<a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &amp;node)</td></tr>
+<tr class="separator:a999ba40b417a1074b58c73e837170e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32378fec20f95d1ed972869e0a4a5b20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a32378fec20f95d1ed972869e0a4a5b20">attachLight</a> (<a class="el" href="classburn_1_1_light.html">Light</a> &amp;light)</td></tr>
+<tr class="separator:a32378fec20f95d1ed972869e0a4a5b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e8c366da48a859641a08d82ac4b293d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a6e8c366da48a859641a08d82ac4b293d">detachLight</a> (<a class="el" href="classburn_1_1_light.html">Light</a> &amp;light)</td></tr>
+<tr class="separator:a6e8c366da48a859641a08d82ac4b293d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d4c2bc5288fed85613b59f68e05e96c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a8d4c2bc5288fed85613b59f68e05e96c">detachAll</a> ()</td></tr>
+<tr class="separator:a8d4c2bc5288fed85613b59f68e05e96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae569a4b21af331b5403ca444d83e4884"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#ae569a4b21af331b5403ca444d83e4884">setSkyBox</a> (const <a class="el" href="classburn_1_1_sky_box.html">SkyBox</a> &amp;skyBox)</td></tr>
+<tr class="separator:ae569a4b21af331b5403ca444d83e4884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adce745987dba9c9f85aa01cf46e2c0b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#adce745987dba9c9f85aa01cf46e2c0b4">setCamera</a> (<a class="el" href="classburn_1_1_camera.html">Camera</a> &amp;camera)</td></tr>
+<tr class="memdesc:adce745987dba9c9f85aa01cf46e2c0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a camera as active one. This camera will influence the rendering behaviour of the scene.  <a href="#adce745987dba9c9f85aa01cf46e2c0b4">More...</a><br/></td></tr>
+<tr class="separator:adce745987dba9c9f85aa01cf46e2c0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac24973829efa8b630a72ca402f8aaa9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#ac24973829efa8b630a72ca402f8aaa9e">setDefaultCamera</a> ()</td></tr>
+<tr class="separator:ac24973829efa8b630a72ca402f8aaa9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b61929a473ee62467d040116a18e2d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classburn_1_1_camera.html">Camera</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#ad0b61929a473ee62467d040116a18e2d">getDefaultCamera</a> ()</td></tr>
+<tr class="separator:ad0b61929a473ee62467d040116a18e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bfd8a10ac26bd647b2391ff6c3b4b66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a8bfd8a10ac26bd647b2391ff6c3b4b66">setAmbientColor</a> (const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;color)</td></tr>
 <tr class="separator:a8bfd8a10ac26bd647b2391ff6c3b4b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69fca29865bba8474c4b05e7af5fc21"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#ab69fca29865bba8474c4b05e7af5fc21">getAmbientColor</a> () const </td></tr>
-<tr class="separator:ab69fca29865bba8474c4b05e7af5fc21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8abbd3b6bb1737c80366d059bbdc1ea5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classburn_1_1_scene.html#a8abbd3b6bb1737c80366d059bbdc1ea5">getAmbientColor</a> () const </td></tr>
+<tr class="separator:a8abbd3b6bb1737c80366d059bbdc1ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a992349a23199d694dca7b8cbd4957299"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">burn::Scene::RenderModus</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828"></a>ALL</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6"></a>COLOR</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230"></a>DIFFUSE</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95"></a>SPECULAR</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4"></a>LIGHTING</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9c6d2804f8f0ce73a3eddea66c235ff8"></a>
+<a class="anchor" id="a14bb493f34a5c489f2460b94698c8f72"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">burn::Scene::Scene </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classburn_1_1_window.html">Window</a> &amp;&#160;</td>
-          <td class="paramname"><em>window</em>)</td><td></td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_window.html">Window</a> &amp;&#160;</td>
+          <td class="paramname"><em>parentWindow</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -179,38 +210,44 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0cfa518da5d3225c899e26540d7bbba5"></a>
+<a class="anchor" id="a32378fec20f95d1ed972869e0a4a5b20"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt; burn::Scene::createCamera </td>
+          <td class="memname">void burn::Scene::attachLight </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>active</em> = <code>true</code>)</td><td></td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_light.html">Light</a> &amp;&#160;</td>
+          <td class="paramname"><em>light</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds a <a class="el" href="classburn_1_1_camera.html">Camera</a> to the scene. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">active</td><td>Set this to false if you don't want to be the created <a class="el" href="classburn_1_1_camera.html">Camera</a> as active.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the <a class="el" href="classburn_1_1_camera.html">Camera</a>.</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd>setCameraActive() </dd></dl>
-
 </div>
 </div>
-<a class="anchor" id="a72924fb917b9f55cd7268b65ac81b59d"></a>
+<a class="anchor" id="aa013e68565bda374fa704f816d8e6847"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt; burn::Scene::createLight </td>
+          <td class="memname">void burn::Scene::attachSceneNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8d4c2bc5288fed85613b59f68e05e96c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Scene::detachAll </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
@@ -220,32 +257,47 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af8440772f49bfc6ce5e77a021446ecad"></a>
+<a class="anchor" id="a6e8c366da48a859641a08d82ac4b293d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classburn_1_1_static_mesh_node.html">StaticMeshNode</a> &gt; burn::Scene::createStaticMeshNode </td>
+          <td class="memname">void burn::Scene::detachLight </td>
           <td>(</td>
-          <td class="paramname">)</td><td></td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_light.html">Light</a> &amp;&#160;</td>
+          <td class="paramname"><em>light</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds a <a class="el" href="classburn_1_1_static_mesh_node.html" title="A static mesh. No animations are possible. ">StaticMeshNode</a> to the scene. </p>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the <a class="el" href="classburn_1_1_static_mesh_node.html" title="A static mesh. No animations are possible. ">StaticMeshNode</a>. </dd></dl>
-
 </div>
 </div>
-<a class="anchor" id="a5ec4aad558ab7f3299fef632d86da8d3"></a>
+<a class="anchor" id="a999ba40b417a1074b58c73e837170e51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Scene::drawAll </td>
+          <td class="memname">void burn::Scene::detachSceneNode </td>
           <td>(</td>
-          <td class="paramname">)</td><td></td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa659a25dafadad6a8ab8e4304cf394a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Scene::draw </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299">RenderModus</a> &amp;&#160;</td>
+          <td class="paramname"><em>modus</em> = <code><a class="el" href="classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828">ALL</a></code>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -255,12 +307,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab69fca29865bba8474c4b05e7af5fc21"></a>
+<a class="anchor" id="a8abbd3b6bb1737c80366d059bbdc1ea5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp; burn::Scene::getAmbientColor </td>
+          <td class="memname">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; burn::Scene::getAmbientColor </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td> const</td>
@@ -270,29 +322,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9d3f254361eef7ee71052ecdc1576bad"></a>
+<a class="anchor" id="ad0b61929a473ee62467d040116a18e2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Scene::removeAllCameras </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes all cameras from the scene. </p>
-
-</div>
-</div>
-<a class="anchor" id="aeb92e9aea3bbff01d8039ef3b9143f56"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::Scene::removeAllLights </td>
+          <td class="memname">const <a class="el" href="classburn_1_1_camera.html">Camera</a>&amp; burn::Scene::getDefaultCamera </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
@@ -302,56 +337,15 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2fed244c443937c2656cdc0f65780960"></a>
+<a class="anchor" id="a8bfd8a10ac26bd647b2391ff6c3b4b66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Scene::removeAllNodes </td>
+          <td class="memname">void burn::Scene::setAmbientColor </td>
           <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes all nodes from the scene. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2023bc9e2e228c51070d41976bc71a33"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::Scene::removeCamera </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
-          <td class="paramname"><em>camera</em>)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes a <a class="el" href="classburn_1_1_camera.html">Camera</a> from the scene. The pointer will become a nullptr. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">camera</td><td>The <a class="el" href="classburn_1_1_camera.html">Camera</a> to delete/remove. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a60272f8aad568d7475449c649587b9fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::Scene::removeLight </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_light.html">Light</a> &gt;&#160;</td>
-          <td class="paramname"><em>light</em>)</td><td></td>
+          <td class="paramtype">const <a class="el" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a> &amp;&#160;</td>
+          <td class="paramname"><em>color</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -359,38 +353,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3bbc514d911206f374ba54a2efd97c40"></a>
+<a class="anchor" id="adce745987dba9c9f85aa01cf46e2c0b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Scene::removeNode </td>
+          <td class="memname">void burn::Scene::setCamera </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> &gt;&#160;</td>
-          <td class="paramname"><em>node</em>)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes any <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> (except <a class="el" href="classburn_1_1_camera.html">Camera</a>) from the scene. The pointer will become a nullptr. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">node</td><td>The <a class="el" href="classburn_1_1_scene_node.html">SceneNode</a> to delete/remove. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a84ce9f46db92a7be5d137991c4df651c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void burn::Scene::setActiveCamera </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classburn_1_1_camera.html">Camera</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classburn_1_1_camera.html">Camera</a> &amp;&#160;</td>
           <td class="paramname"><em>camera</em>)</td><td></td>
           <td></td>
         </tr>
@@ -409,15 +379,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8bfd8a10ac26bd647b2391ff6c3b4b66"></a>
+<a class="anchor" id="ac24973829efa8b630a72ca402f8aaa9e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void burn::Scene::setAmbientColor </td>
+          <td class="memname">void burn::Scene::setDefaultCamera </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespaceburn.html#a9d6d349c94bc4dc9699427216128a0ef">Vector3f</a> &amp;&#160;</td>
-          <td class="paramname"><em>color</em>)</td><td></td>
+          <td class="paramname">)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -425,14 +394,29 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>include/Burngine/Graphics/<a class="el" href="_scene_8h_source.html">Scene.h</a></li>
-<li>include/Burngine/Graphics/<a class="el" href="_scene_8cpp.html">Scene.cpp</a></li>
+<a class="anchor" id="ae569a4b21af331b5403ca444d83e4884"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void burn::Scene::setSkyBox </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classburn_1_1_sky_box.html">SkyBox</a> &amp;&#160;</td>
+          <td class="paramname"><em>skyBox</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/Burngine/Graphics/Scene/<a class="el" href="_scene_8h_source.html">Scene.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 27 2013 16:50:23 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
