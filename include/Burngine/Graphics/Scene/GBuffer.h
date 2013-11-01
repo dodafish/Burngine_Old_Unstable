@@ -9,6 +9,8 @@
 #define GBUFFER_H_
 
 #include <Burngine/Export.h>
+#include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/System/Math.h>
 
 namespace burn {
 

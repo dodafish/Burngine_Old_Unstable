@@ -14,6 +14,7 @@
 #include <Burngine/Graphics/Scene/StaticMeshNode.h>
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Light.h>
+#include <Burngine/Graphics/Scene/Mesh.h>
 
 #include <Burngine/System/Reporter.h>
 
@@ -62,8 +63,6 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
 
-		shader.setUniform("diffuseType", 0); //Type = TEXTURED
-
 		//_nodes[i] is a StaticMeshNode
 		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
 
@@ -86,6 +85,7 @@ void Scene::drawGBuffers(const Camera& camera) {
 					shader.setUniform("diffuseType", 1);
 					shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
 				}else{
+					shader.setUniform("diffuseType", 0); //Type = TEXTURED
 					mesh.getTexture().bind();
 				}
 
