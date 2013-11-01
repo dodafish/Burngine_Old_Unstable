@@ -25,6 +25,10 @@ ShadowCubeMap::~ShadowCubeMap() {
 	cleanup();
 }
 
+const ShadowCubeMap::Resolution& ShadowCubeMap::getResolution() const{
+	return _resolution;
+}
+
 bool ShadowCubeMap::create(const Resolution& resolution) {
 
 	//Cleanup first

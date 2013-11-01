@@ -40,6 +40,8 @@ public:
 
 	bool isCreated() const;
 
+	const Resolution& getResolution() const;
+
 private:
 	virtual void onBind(const unsigned int& unit) const;
 	virtual void onUnbind(const unsigned int& unit) const;

@@ -29,11 +29,11 @@ void Light::removeAllParents() {
 	_parents.clear();
 }
 
-Light::Light() :
+Light::Light(const ShadowCubeMap::Resolution& shadowMapResolution) :
 _color(Vector3f(1.f)),
 _intensity(10.f) {
 
-	if(!_shadowCubeMap.create())
+	if(!_shadowCubeMap.create(shadowMapResolution))
 		exit(20);
 
 }
@@ -41,6 +41,10 @@ _intensity(10.f) {
 Light::Light(const Light& other) :
 _color(other._color),
 _intensity(other._intensity) {
+
+	if(!_shadowCubeMap.create(other._shadowCubeMap.getResolution()))
+		exit(20);
+
 	_parents = other._parents;
 	for(size_t i = 0; i < _parents.size(); ++i){
 		_parents[i]->attachLight(*this);
@@ -48,6 +52,9 @@ _intensity(other._intensity) {
 }
 
 Light& Light::operator=(const Light& other) {
+
+	if(!_shadowCubeMap.create(other._shadowCubeMap.getResolution()))
+		exit(20);
 
 	_color = other._color;
 	_intensity = other._intensity;
