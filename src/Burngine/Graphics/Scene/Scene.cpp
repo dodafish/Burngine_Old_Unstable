@@ -31,6 +31,11 @@ _window(parentWindow) {
 	 exit(11);
 	 }*/
 
+	if(!_gBuffer.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
+		exit(11);
+	}
+
 }
 
 Scene::~Scene() {
@@ -39,24 +44,67 @@ Scene::~Scene() {
 
 }
 
-void Scene::drawGBuffers(const Camera& camera){
+void Scene::drawGBuffers(const Camera& camera) {
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
+	_gBuffer.clear();
+	_gBuffer.bindAsTarget();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::G_BUFFER);
 
+	//Calculate matrices
+	glm::mat4 projectionMatrix = glm::perspective(camera.getFov(), camera.getAspectRatio(), 0.1f, 10000.0f);
+	glm::mat4 viewMatrix = glm::lookAt(camera.getPosition(), camera.getLookAt(), glm::vec3(0, 1, 0));
+
+	shader.setUniform("viewMatrix", viewMatrix);
+	shader.setUniform("projectionMatrix", projectionMatrix);
+
 	for(size_t i = 0; i < _nodes.size(); ++i){
+
+		shader.setUniform("diffuseType", 0); //Type = TEXTURED
 
 		//_nodes[i] is a StaticMeshNode
 		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
 
 			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
+
 			node->update();
 			const Model& model = node->getModel();
+			if(!model.isUpdated())
+				continue; //Next node
+
+			Matrix4f normalMatrix = glm::transpose(glm::inverse(viewMatrix * node->getModelMatrix()));
+			shader.setUniform("modelMatrix", node->getModelMatrix());
+			shader.setUniform("normalMatrix", normalMatrix);
 
 			for(size_t j = 0; j < model.getMeshCount(); ++j){
 
 				const Mesh& mesh = model.getMesh(j);
 
+				if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
+					shader.setUniform("diffuseType", 1);
+					shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
+				}else{
+					mesh.getTexture().bind();
+				}
 
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+				glEnableVertexAttribArray(2);
+
+				mesh.getPositionVbo().bind();
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				mesh.getNormalVbo().bind();
+				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				mesh.getUvVbo().bind();
+				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+
+				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+				glDisableVertexAttribArray(2);
 
 			}
 
@@ -73,10 +121,39 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 	drawGBuffers(camera);
 
-	//Update all lights' shadowMaps
-	//for(size_t i = 0; i < _lights.size(); ++i){
-	//	_lights[i]->updateShadowMap(_nodes);
-	//}
+	_window.bind(); // As Target
+	_gBuffer.bindAsSource();
+	switch (modus) {
+		case COMPOSITION:
+			//COMING LATER. NO LIGHTPASS YET
+			break;
+		case DIFFUSE:
+			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
+			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
+								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+								GL_COLOR_BUFFER_BIT,
+								GL_LINEAR);
+			break;
+		case NORMAL:
+			_gBuffer.setSourceBuffer(GBuffer::NORMAL);
+			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
+								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+								GL_COLOR_BUFFER_BIT,
+								GL_LINEAR);
+			break;
+		case DEPTH:
+			_gBuffer.setSourceBuffer(GBuffer::DEPTH);
+			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
+								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+								GL_COLOR_BUFFER_BIT,
+								GL_LINEAR);
+			break;
+	}
+
+//Update all lights' shadowMaps
+//for(size_t i = 0; i < _lights.size(); ++i){
+//	_lights[i]->updateShadowMap(_nodes);
+//}
 
 	/*switch (modus) {
 	 case ALL:
@@ -222,13 +299,13 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
  }*/
 
 void Scene::detachAll() {
-	//All SceneNodes:
+//All SceneNodes:
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		_nodes[i]->removeParentScene(this);
 	}
 	_nodes.clear();
 
-	//All Lights:
+//All Lights:
 	for(size_t i = 0; i < _lights.size(); ++i){
 		_lights[i]->removeParentScene(this);
 	}
@@ -249,7 +326,7 @@ void Scene::detachSceneNode(SceneNode& node) {
 
 	node.removeParentScene(this);
 
-	//Remove from attachement-list
+//Remove from attachement-list
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
@@ -272,7 +349,7 @@ void Scene::detachLight(Light& light) {
 
 	light.removeParentScene(this);
 
-	//Remove from attachement-list
+//Remove from attachement-list
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light){
 			_lights.erase(_lights.begin() + i);

@@ -16,6 +16,7 @@
 
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
+#include <Burngine/Graphics/Scene/GBuffer.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>
 
@@ -48,7 +49,8 @@ public:
 	enum RenderModus{
 		COMPOSITION,
 		DIFFUSE,
-		NORMAL
+		NORMAL,
+		DEPTH
 	};
 
 	/**
@@ -83,10 +85,7 @@ private:
 
 	SkyBox _skyBox;
 
-	/*
-	 * Following attributes are for Deferred Shading:
-	 */
-
+	GBuffer _gBuffer;
 };
 
 } /* namespace burn */
