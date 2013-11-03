@@ -57,6 +57,8 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	for(unsigned int i = 0; i != COUNT; ++i){
 		glBindTexture(GL_TEXTURE_2D, _textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_FLOAT, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, _textures[i], 0);
 		drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + i);
 	}
@@ -66,7 +68,7 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _dimensions.x, _dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
 					0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //Set Filtering for dumping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthTexture, 0);
 
@@ -148,6 +150,15 @@ void GBuffer::bindAsSource() const {
 	}
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebuffer);
+
+	//Bind all buffers to texture units
+	for(unsigned int i = 0; i != COUNT; ++i){
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, _textures[i]);
+	}
+	//And the depth one
+	glActiveTexture(GL_TEXTURE0 + COUNT);
+	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 
 }
 

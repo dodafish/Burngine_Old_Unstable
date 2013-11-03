@@ -231,16 +231,11 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 }
 
-void Scene::dumpOutDepthGBuffer() {
+void Scene::ambientPass() {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthtest(false);
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableCulling(false);
-	OpenGlControl::useSettings(ogl);
+}
 
-	_window.bind();
-	_gBuffer.bindDepthBufferAsSourceTexture();
+void Scene::drawFullscreenQuad(const Shader& shader) const {
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -261,11 +256,6 @@ void Scene::dumpOutDepthGBuffer() {
 	}
 	vbo.uploadDataToGpu(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
@@ -277,6 +267,26 @@ void Scene::dumpOutDepthGBuffer() {
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+}
+
+void Scene::dumpOutDepthGBuffer() {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	OpenGlControl::useSettings(ogl);
+
+	_window.bind();
+	_gBuffer.bindDepthBufferAsSourceTexture();
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+
+	drawFullscreenQuad(shader);
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 

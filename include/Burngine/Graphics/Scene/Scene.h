@@ -46,11 +46,8 @@ public:
 	 */
 	~Scene();
 
-	enum RenderModus{
-		COMPOSITION,
-		DIFFUSE,
-		NORMAL,
-		DEPTH
+	enum RenderModus {
+		COMPOSITION, DIFFUSE, NORMAL, DEPTH
 	};
 
 	/**
@@ -88,6 +85,12 @@ private:
 	SkyBox _skyBox;
 
 	GBuffer _gBuffer;
+
+	//Passes:
+	void ambientPass();
+	//Pass-Helpers:
+	void drawFullscreenQuad(const Shader& shader) const;
+
 };
 
 } /* namespace burn */
