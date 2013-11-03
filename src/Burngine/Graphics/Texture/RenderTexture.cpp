@@ -125,7 +125,7 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	return true;
 }
 
-void RenderTexture::bindAsRendertarget() const {
+void RenderTexture::bindAsTarget() const {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated()){

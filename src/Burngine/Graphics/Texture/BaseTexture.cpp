@@ -60,7 +60,7 @@ bool BaseTexture::setAnisotropicLevel(const GLfloat& level){
 	return _sampler.setAnisotropicLevel(level);
 }
 
-void BaseTexture::bind(const unsigned int& unit) const {
+void BaseTexture::bindAsSource(const unsigned int& unit) const {
 
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to bind. No valid context created!", Reporter::ERROR);
@@ -73,7 +73,7 @@ void BaseTexture::bind(const unsigned int& unit) const {
 
 }
 
-void BaseTexture::unbind(const unsigned int& unit) const {
+void BaseTexture::unbindAsSource(const unsigned int& unit) const {
 
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to unbind. No valid context created!", Reporter::ERROR);

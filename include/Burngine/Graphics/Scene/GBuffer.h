@@ -28,7 +28,7 @@ public:
 	void clear();
 
 	void bindAsTarget() const;
-	void bindAsSource() const;
+	void bindAsSource(const unsigned int& offset = 0) const;
 
 	enum GBufferType {
 		DIFFUSE = 0, NORMAL,

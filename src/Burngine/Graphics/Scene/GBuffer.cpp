@@ -137,7 +137,7 @@ void GBuffer::bindAsTarget() const {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
 }
 
-void GBuffer::bindAsSource() const {
+void GBuffer::bindAsSource(const unsigned int& offset) const {
 
 	if(!Window::isContextCreated()){
 		Reporter::report("Unable to bind gBuffer. No valid context.", Reporter::ERROR);
@@ -153,12 +153,12 @@ void GBuffer::bindAsSource() const {
 
 	//Bind all buffers to texture units
 	for(unsigned int i = 0; i != COUNT; ++i){
-		glActiveTexture(GL_TEXTURE0 + i);
+		glActiveTexture(GL_TEXTURE0 + i + offset);
 		glBindTexture(GL_TEXTURE_2D, _textures[i]);
 		Sampler::unbind(i);
 	}
 	//And the depth one
-	glActiveTexture(GL_TEXTURE0 + COUNT);
+	glActiveTexture(GL_TEXTURE0 + COUNT + offset);
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 	Sampler::unbind(COUNT);
 

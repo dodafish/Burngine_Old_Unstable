@@ -37,6 +37,11 @@ _window(parentWindow) {
 		exit(11);
 	}
 
+	if(!_renderTexture.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		exit(12);
+	}
+
 }
 
 Scene::~Scene() {
@@ -86,7 +91,7 @@ void Scene::drawGBuffers(const Camera& camera) {
 					shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
 				}else{
 					shader.setUniform("diffuseType", 0); //Type = TEXTURED
-					mesh.getTexture().bind();
+					mesh.getTexture().bindAsSource();
 				}
 
 				glEnableVertexAttribArray(0);
@@ -127,6 +132,7 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 		case COMPOSITION:
 
 			ambientPass();
+			directionalLightPass();
 
 			break;
 		case DIFFUSE:
@@ -148,89 +154,6 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 			break;
 	}
 
-//Update all lights' shadowMaps
-//for(size_t i = 0; i < _lights.size(); ++i){
-//	_lights[i]->updateShadowMap(_nodes);
-//}
-
-	/*switch (modus) {
-	 case ALL:
-	 drawNodes(camera);
-
-	 if(drawDiffusepart(camera)){
-	 //Add diffuse lighting to scene:
-	 OpenGlControl::Settings oglSettings; //default
-	 oglSettings.setBlendMode(OpenGlControl::MULTIPLY);
-	 oglSettings.enableDepthtest(false);
-	 oglSettings.enableDepthbufferWriting(false);
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _diffuseLightTexture.drawFullscreen(); //Diffuse lightings
-
-	 if(drawSpecularpart(camera)){
-	 //Add specular lighting to scene:
-	 oglSettings = OpenGlControl::Settings(); //default
-	 oglSettings.setBlendMode(OpenGlControl::ADD);
-	 oglSettings.enableDepthtest(false);
-	 oglSettings.enableDepthbufferWriting(false);
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _specularLightTexture.drawFullscreen(); //Specular lightings
-	 }
-	 }
-
-	 break;
-	 case COLOR:
-	 drawNodes(camera);
-	 break;
-	 case DIFFUSE:
-	 if(drawDiffusepart(camera)){
-	 //Add diffuse lighting to scene:
-	 OpenGlControl::Settings oglSettings; //default
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _diffuseLightTexture.drawFullscreen(); //Diffuse lightings
-	 }
-	 break;
-	 case SPECULAR:
-	 if(drawSpecularpart(camera)){
-	 //Add diffuse lighting to scene:
-	 OpenGlControl::Settings oglSettings; //default
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _specularLightTexture.drawFullscreen(); //Diffuse lightings
-	 }
-	 break;
-	 case LIGHTING:
-	 if(drawDiffusepart(camera)){
-	 //Add diffuse lighting to scene:
-	 OpenGlControl::Settings oglSettings; //default
-	 oglSettings.setBlendMode(OpenGlControl::OVERWRITE);
-	 oglSettings.enableDepthtest(false);
-	 oglSettings.enableDepthbufferWriting(false);
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _diffuseLightTexture.drawFullscreen(); //Diffuse lightings
-
-	 if(drawSpecularpart(camera)){
-	 //Add specular lighting to scene:
-	 oglSettings = OpenGlControl::Settings(); //default
-	 oglSettings.setBlendMode(OpenGlControl::ADD);
-	 oglSettings.enableDepthtest(false);
-	 oglSettings.enableDepthbufferWriting(false);
-	 OpenGlControl::useSettings(oglSettings);
-	 _window.bind();
-	 _specularLightTexture.drawFullscreen(); //Specular lightings
-	 }
-	 }
-	 break;
-	 }
-
-	 //Restore default OpenGL settings
-	 OpenGlControl::useSettings(OpenGlControl::Settings());
-
-	 _skyBox.draw();*/
-
 }
 
 void Scene::ambientPass() {
@@ -249,6 +172,60 @@ void Scene::ambientPass() {
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 	shader.setUniform("mixColor", _ambientColor);
+	shader.setUniform("gSampler", GBuffer::DIFFUSE);
+
+	drawFullscreenQuad(shader);
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
+}
+
+void Scene::directionalLightPass() {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	ogl.enableBlending(true);
+	ogl.setBlendMode(OpenGlControl::ADD);
+	OpenGlControl::useSettings(ogl);
+
+	_renderTexture.clear();
+	_renderTexture.bindAsTarget();
+	_gBuffer.bindAsSource(0);
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	shader.setUniform("gSamplerNormals", GBuffer::NORMAL);
+
+	for(size_t i = 0; i < _lights.size(); ++i){
+
+		if(typeid(*(_lights[i])) == typeid(DirectionalLight)){
+
+			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
+
+			shader.setUniform("gLightDirection", light->getDirection());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
+
+			drawFullscreenQuad(shader);
+
+		}
+
+	}
+
+	shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	_renderTexture.bindAsSource(0);
+	shader.setUniform("gSampler", 0);
+	shader.setUniform("mixColor", Vector3f(1.f));
+
+	ogl.setBlendMode(OpenGlControl::MULTIPLY);
+	OpenGlControl::useSettings(ogl);
 
 	drawFullscreenQuad(shader);
 

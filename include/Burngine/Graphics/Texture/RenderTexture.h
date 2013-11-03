@@ -26,7 +26,7 @@ public:
 
 	bool create(const Vector2ui& dimensions);
 
-	void bindAsRendertarget() const;
+	void bindAsTarget() const;
 
 	void clear() const;
 

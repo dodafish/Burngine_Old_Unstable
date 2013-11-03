@@ -89,8 +89,10 @@ private:
 
 	//Passes:
 	void ambientPass();
+	void directionalLightPass();
 	//Pass-Helpers:
 	void drawFullscreenQuad(const Shader& shader) const;
+	RenderTexture _renderTexture;
 
 };
 

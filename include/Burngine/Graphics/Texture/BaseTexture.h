@@ -22,8 +22,8 @@ public:
 	BaseTexture();
 	virtual ~BaseTexture();
 
-	void bind(const unsigned int& unit = 0) const;
-	void unbind(const unsigned int& unit = 0) const;
+	void bindAsSource(const unsigned int& unit = 0) const;
+	void unbindAsSource(const unsigned int& unit = 0) const;
 
 	bool setFiltering(const Sampler::MagnificationFiltering& mag, const Sampler::MinificationFiltering& min);
 	bool setSamplerParameter(GLenum parameter, GLenum value);
