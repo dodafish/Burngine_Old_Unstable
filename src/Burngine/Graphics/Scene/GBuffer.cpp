@@ -155,10 +155,14 @@ void GBuffer::bindAsSource() const {
 	for(unsigned int i = 0; i != COUNT; ++i){
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, _textures[i]);
+		Sampler::unbind(i);
 	}
 	//And the depth one
 	glActiveTexture(GL_TEXTURE0 + COUNT);
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
+	Sampler::unbind(COUNT);
+
+
 
 }
 

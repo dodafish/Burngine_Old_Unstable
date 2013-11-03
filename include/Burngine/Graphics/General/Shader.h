@@ -116,6 +116,7 @@ struct BURNGINE_API BurngineShaders {
 	enum Type {
 		COLOR, ///< Color Shader. Material colors eg.
 		TEXTURE, ///< Simple 1-Texture Shader
+		TEXTURE_ONE_COMPONENT,
 		POINTLIGHT, ///< Renders a pointlight
 		SPOTLIGHT,
 		DIRECTIONAL_LIGHT,
@@ -139,6 +140,7 @@ struct BURNGINE_API BurngineShaders {
 private:
 	static Shader _colorShader;
 	static Shader _textureShader;
+	static Shader _textureOneComponentShader;
 	static Shader _pointlightShader;
 	static Shader _spotlightShader;
 	static Shader _dirlightShader;

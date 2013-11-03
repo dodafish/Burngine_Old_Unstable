@@ -31,6 +31,7 @@ template class BURNGINE_API std::vector<burn::Light*>;
 namespace burn {
 
 class Window;
+class Shader;
 
 class BURNGINE_API Scene {
 public:

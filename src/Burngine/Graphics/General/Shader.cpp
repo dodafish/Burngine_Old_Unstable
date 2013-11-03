@@ -17,6 +17,7 @@ namespace burn {
 
 Shader BurngineShaders::_colorShader;
 Shader BurngineShaders::_textureShader;
+Shader BurngineShaders::_textureOneComponentShader;
 Shader BurngineShaders::_pointlightShader;
 Shader BurngineShaders::_spotlightShader;
 Shader BurngineShaders::_dirlightShader;
@@ -38,6 +39,9 @@ bool BurngineShaders::load(const std::string& d) {
 		return false;
 	}
 	if(!_textureShader.loadFromFile(dir + "texture.vert", dir + "texture.frag")){
+		return false;
+	}
+	if(!_textureOneComponentShader.loadFromFile(dir + "texture.vert", dir + "textureOneComponent.frag")){
 		return false;
 	}
 	if(!_pointlightShader.loadFromFile(dir + "pointlight.vert", dir + "pointlight.frag")){
@@ -79,6 +83,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case TEXTURE:
 			return _textureShader;
+			break;
+		case TEXTURE_ONE_COMPONENT:
+			return _textureOneComponentShader;
 			break;
 		case POINTLIGHT:
 			return _pointlightShader;

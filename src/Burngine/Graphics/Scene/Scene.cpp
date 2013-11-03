@@ -125,7 +125,9 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 	_gBuffer.bindAsSource();
 	switch (modus) {
 		case COMPOSITION:
-			//COMING LATER. NO LIGHTPASS YET
+
+			ambientPass();
+
 			break;
 		case DIFFUSE:
 			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
@@ -233,6 +235,47 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 void Scene::ambientPass() {
 
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	OpenGlControl::useSettings(ogl);
+
+	_window.bind();
+	_gBuffer.bindAsSource();
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	shader.setUniform("mixColor", _ambientColor);
+
+	drawFullscreenQuad(shader);
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
+}
+
+void Scene::dumpOutDepthGBuffer() {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	OpenGlControl::useSettings(ogl);
+
+	_window.bind();
+	_gBuffer.bindDepthBufferAsSourceTexture();
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE_ONE_COMPONENT);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+
+	drawFullscreenQuad(shader);
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
 }
 
 void Scene::drawFullscreenQuad(const Shader& shader) const {
@@ -267,28 +310,6 @@ void Scene::drawFullscreenQuad(const Shader& shader) const {
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
-
-}
-
-void Scene::dumpOutDepthGBuffer() {
-
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthtest(false);
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableCulling(false);
-	OpenGlControl::useSettings(ogl);
-
-	_window.bind();
-	_gBuffer.bindDepthBufferAsSourceTexture();
-
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-
-	drawFullscreenQuad(shader);
-
-	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 }
 
