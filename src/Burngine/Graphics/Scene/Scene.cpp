@@ -189,6 +189,7 @@ void Scene::directionalLightPass(const Camera& camera) {
 	ogl.setBlendMode(OpenGlControl::ADD);
 	OpenGlControl::useSettings(ogl);
 
+	bool dirLightsExist = false;
 	{ //Render all dirlights together into rendertexture
 		_renderTexture.clear();
 		_renderTexture.bindAsTarget();
@@ -212,11 +213,12 @@ void Scene::directionalLightPass(const Camera& camera) {
 
 				drawFullscreenQuad(shader);
 
+				dirLightsExist = true;
 			}
 
 		}
 	}
-	{ //Multiply result with the scene
+	if(dirLightsExist){ //Multiply result with the scene
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 		shader.setUniform("modelMatrix", Matrix4f(1.f));
 		shader.setUniform("viewMatrix", Matrix4f(1.f));
