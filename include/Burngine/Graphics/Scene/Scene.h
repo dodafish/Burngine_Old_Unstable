@@ -48,7 +48,7 @@ public:
 	~Scene();
 
 	enum RenderModus {
-		COMPOSITION, DIFFUSE, NORMAL, DEPTH
+		COMPOSITION, DIFFUSE, NORMAL_WS, DEPTH, POSITION_WS
 	};
 
 	/**
@@ -89,7 +89,7 @@ private:
 
 	//Passes:
 	void ambientPass();
-	void directionalLightPass();
+	void directionalLightPass(const Camera& camera);
 	//Pass-Helpers:
 	void drawFullscreenQuad(const Shader& shader) const;
 	RenderTexture _renderTexture;

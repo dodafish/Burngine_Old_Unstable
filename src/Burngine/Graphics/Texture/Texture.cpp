@@ -105,7 +105,7 @@ bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int
 	generate();
 
 	//Bind the texture
-	bind();
+	bindAsSource();
 
 	//Fill with data
 	if(format == GL_RGB || format == GL_BGR)

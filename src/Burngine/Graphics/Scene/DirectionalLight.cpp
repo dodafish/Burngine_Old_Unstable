@@ -27,7 +27,7 @@ Vector4f DirectionalLight::getDirection() const {
 }
 
 void DirectionalLight::bindShadowMap() const {
-	_shadowMap.bind();
+	_shadowMap.bindAsSource();
 }
 
 void DirectionalLight::updateShadowMap(const std::vector<SceneNode*>& nodes) {

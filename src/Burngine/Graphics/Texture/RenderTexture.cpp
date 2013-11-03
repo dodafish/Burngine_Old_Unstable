@@ -203,7 +203,7 @@ void RenderTexture::drawFullscreen() {
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
 	//Bind texture only
-	bind();
+	bindAsSource();
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);
@@ -266,7 +266,7 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
 	//Bind texture only
-	bind();
+	bindAsSource();
 
 	//0 = Positions
 	glEnableVertexAttribArray(0);

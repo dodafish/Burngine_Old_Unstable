@@ -116,7 +116,7 @@ const Matrix4f& Light::getBiasProjectionMatrix() const {
 }
 
 void Light::bindShadowCubeMap() const {
-	_shadowCubeMap.bind();
+	_shadowCubeMap.bindAsSource();
 }
 
 void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {

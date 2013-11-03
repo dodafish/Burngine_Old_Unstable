@@ -97,7 +97,7 @@ void StaticMeshNode::draw(const Camera& cam) {
 				//Set uniforms
 				setMVPUniforms(shader, cam);
 
-				_model.getMesh(i).getTexture().bind();
+				_model.getMesh(i).getTexture().bindAsSource();
 
 				//0 = Positions
 				glEnableVertexAttribArray(0);

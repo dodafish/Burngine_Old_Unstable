@@ -31,7 +31,7 @@ public:
 	void bindAsSource(const unsigned int& offset = 0) const;
 
 	enum GBufferType {
-		DIFFUSE = 0, NORMAL,
+		DIFFUSE = 0, NORMAL_WS, POSITION_WS,
 
 		COUNT
 	};

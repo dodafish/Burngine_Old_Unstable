@@ -90,7 +90,7 @@ void Character::createFromFtGlyph(void* g, void* b) {
 
 	_vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 
-	_texture.unbind();
+	_texture.unbindAsSource();
 
 	//Free allocated memory
 	delete[] data;
@@ -130,7 +130,7 @@ void Character::draw(const Vector2f& position, const Vector4f& color) const {
 	shader.setUniform("fontColor", color);
 
 	//Bind and draw
-	_texture.bind();
+	_texture.bindAsSource();
 	_vbo.bind();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

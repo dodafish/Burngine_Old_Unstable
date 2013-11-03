@@ -100,7 +100,7 @@ void SkyBox::draw() {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SKY_BOX);
 
-	_cubeMap.bind();
+	_cubeMap.bindAsSource();
 
 	glEnableVertexAttribArray(0);
 	_boxVbo.bind();
