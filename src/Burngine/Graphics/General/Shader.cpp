@@ -8,12 +8,15 @@
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <hash_set>
 
 #include <iostream>
 #include <vector>
 #include <fstream>
 
 namespace burn {
+
+const std::hash<std::string> strToHash;
 
 Shader BurngineShaders::_colorShader;
 Shader BurngineShaders::_textureShader;
@@ -136,74 +139,80 @@ Shader::~Shader() {
 
 void Shader::setUniform(const std::string& name, const Matrix4f& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
-		if(_matrix4fUniforms[i].first == name){
+		if(_matrix4fUniforms[i].first.first == hash){
 			_matrix4fUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_matrix4fUniforms.push_back(std::pair<std::string, Matrix4f>(name, value));
+	_matrix4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Matrix4f>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::setUniform(const std::string& name, const Vector4f& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
-		if(_vector4fUniforms[i].first == name){
+		if(_vector4fUniforms[i].first.first == hash){
 			_vector4fUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_vector4fUniforms.push_back(std::pair<std::string, Vector4f>(name, value));
+	_vector4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector4f>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::setUniform(const std::string& name, const Vector3f& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
-		if(_vector3fUniforms[i].first == name){
+		if(_vector3fUniforms[i].first.first == hash){
 			_vector3fUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_vector3fUniforms.push_back(std::pair<std::string, Vector3f>(name, value));
+	_vector3fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector3f>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::setUniform(const std::string& name, const Vector2f& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
-		if(_vector2fUniforms[i].first == name){
+		if(_vector2fUniforms[i].first.first == hash){
 			_vector2fUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_vector2fUniforms.push_back(std::pair<std::string, Vector2f>(name, value));
+	_vector2fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector2f>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::setUniform(const std::string& name, const int& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _intUniforms.size(); ++i){
-		if(_intUniforms[i].first == name){
+		if(_intUniforms[i].first.first == hash){
 			_intUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_intUniforms.push_back(std::pair<std::string, int>(name, value));
+	_intUniforms.push_back(std::pair<std::pair<size_t, std::string>, int>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::setUniform(const std::string& name, const float& value) const {
 	//Scan and set when found
+	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _floatUniforms.size(); ++i){
-		if(_floatUniforms[i].first == name){
+		if(_floatUniforms[i].first.first == hash){
 			_floatUniforms[i].second = value;
 			return;
 		}
 	}
 	//Not found. Create a pair
-	_floatUniforms.push_back(std::pair<std::string, float>(name, value));
+	_floatUniforms.push_back(std::pair<std::pair<size_t, std::string>, float>(std::pair<size_t, std::string>(hash, name), value));
 }
 
 void Shader::activate() const {
@@ -216,30 +225,30 @@ void Shader::activate() const {
 
 void Shader::uploadUniforms() const {
 	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
-		glUniformMatrix4fv(glGetUniformLocation(_id, _matrix4fUniforms[i].first.c_str()), 1,
+		glUniformMatrix4fv(glGetUniformLocation(_id, _matrix4fUniforms[i].first.second.c_str()), 1,
 		GL_FALSE,
 							&(_matrix4fUniforms[i].second[0][0]));
 	}
 	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
-		glUniform4fv(glGetUniformLocation(_id, _vector4fUniforms[i].first.c_str()), 1,
+		glUniform4fv(glGetUniformLocation(_id, _vector4fUniforms[i].first.second.c_str()), 1,
 
 		&(_vector4fUniforms[i].second[0]));
 	}
 	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
-		glUniform3fv(glGetUniformLocation(_id, _vector3fUniforms[i].first.c_str()), 1,
+		glUniform3fv(glGetUniformLocation(_id, _vector3fUniforms[i].first.second.c_str()), 1,
 
 		&(_vector3fUniforms[i].second[0]));
 	}
 	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
-		glUniform2fv(glGetUniformLocation(_id, _vector2fUniforms[i].first.c_str()), 1,
+		glUniform2fv(glGetUniformLocation(_id, _vector2fUniforms[i].first.second.c_str()), 1,
 
 		&(_vector2fUniforms[i].second[0]));
 	}
 	for(size_t i = 0; i < _intUniforms.size(); ++i){
-		glUniform1i(glGetUniformLocation(_id, _intUniforms[i].first.c_str()), (_intUniforms[i].second));
+		glUniform1i(glGetUniformLocation(_id, _intUniforms[i].first.second.c_str()), (_intUniforms[i].second));
 	}
 	for(size_t i = 0; i < _floatUniforms.size(); ++i){
-		glUniform1f(glGetUniformLocation(_id, _floatUniforms[i].first.c_str()), (_floatUniforms[i].second));
+		glUniform1f(glGetUniformLocation(_id, _floatUniforms[i].first.second.c_str()), (_floatUniforms[i].second));
 	}
 
 	//Testcode: delete after pass

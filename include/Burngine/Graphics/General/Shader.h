@@ -16,12 +16,12 @@
 #include <utility>
 
 //Vectors that store set uniforms
-template class BURNGINE_API std::vector<std::pair<std::string, burn::Matrix4f> >;
-template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector4f> >;
-template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector3f> >;
-template class BURNGINE_API std::vector<std::pair<std::string, burn::Vector2f> >;
-template class BURNGINE_API std::vector<std::pair<std::string, int> >;
-template class BURNGINE_API std::vector<std::pair<std::string, float> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Matrix4f> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector4f> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector3f> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector2f> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, int> >;
+template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, float> >;
 
 namespace burn {
 
@@ -93,12 +93,12 @@ private:
 	void uploadUniforms() const;
 	GLuint _id;
 
-	mutable std::vector<std::pair<std::string, Matrix4f> > _matrix4fUniforms;
-	mutable std::vector<std::pair<std::string, Vector4f> > _vector4fUniforms;
-	mutable std::vector<std::pair<std::string, Vector3f> > _vector3fUniforms;
-	mutable std::vector<std::pair<std::string, Vector2f> > _vector2fUniforms;
-	mutable std::vector<std::pair<std::string, int> > _intUniforms;
-	mutable std::vector<std::pair<std::string, float> > _floatUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, Matrix4f> > _matrix4fUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector4f> > _vector4fUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector3f> > _vector3fUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector2f> > _vector2fUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, int> > _intUniforms;
+	mutable std::vector<std::pair<std::pair<size_t, std::string>, float> > _floatUniforms;
 };
 
 struct BURNGINE_API BurngineShaders {

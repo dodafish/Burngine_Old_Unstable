@@ -53,6 +53,9 @@ _intensity(other._intensity) {
 
 Light& Light::operator=(const Light& other) {
 
+	if(this == &other)
+		return *this;
+
 	if(!_shadowCubeMap.create(other._shadowCubeMap.getResolution()))
 		exit(20);
 

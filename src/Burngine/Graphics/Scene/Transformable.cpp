@@ -16,6 +16,25 @@ _rotation(Vector3f(0.f, 0.f, 0.f)) {
 
 }
 
+Transformable::Transformable(const Transformable& other):
+_position(other._position),
+_scale(other._scale),
+_rotation(other._rotation){
+}
+
+Transformable& Transformable::operator=(const Transformable& other) {
+
+	if(this == &other)
+		return *this;
+
+	_position = other._position;
+	_scale = other._scale;
+	_rotation = other._rotation;
+
+	return *this;
+
+}
+
 Transformable::~Transformable() {
 }
 

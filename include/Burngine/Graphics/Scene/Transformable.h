@@ -23,6 +23,10 @@ public:
 	 */
 	Transformable();
 
+	Transformable(const Transformable& other);
+
+	Transformable& operator=(const Transformable& other);
+
 	/**
 	 * @brief Virtual destructor, because this class should
 	 * be derived only.

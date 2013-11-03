@@ -63,7 +63,11 @@ Scene::~Scene() {
 
 void Scene::drawGBuffers(const Camera& camera) {
 
-	OpenGlControl::useSettings(OpenGlControl::Settings());
+	OpenGlControl::Settings ogl;
+	ogl.enableCulling(true);
+	ogl.setCulledSide(OpenGlControl::INSIDE);
+	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+	OpenGlControl::useSettings(ogl);
 
 	_gBuffer.clear();
 	_gBuffer.bindAsTarget();
