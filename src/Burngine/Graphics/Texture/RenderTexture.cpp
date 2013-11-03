@@ -138,7 +138,7 @@ void RenderTexture::bindAsTarget() const {
 		return;
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
 	glViewport(0, 0, _dimensions.x, _dimensions.y);
 
 }

@@ -34,6 +34,25 @@ _window(parentWindow) {
 		exit(12);
 	}
 
+	Vector3f posData[] = {
+	Vector3f(-1.f, -1.f, 0.f),
+	Vector3f(1.f, -1.f, 0.f),
+	Vector3f(-1.f, 1.f, 0.f),
+	Vector3f(1.f, 1.f, 0.f) };
+
+	Vector2f uvData[] = {
+	Vector2f(0.f, 0.f),
+	Vector2f(1.f, 0.f),
+	Vector2f(0.f, 1.f),
+	Vector2f(1.f, 1.f), };
+
+	_fullscreenVbo.create();
+	for(int i = 0; i != 4; ++i){
+		_fullscreenVbo.addData(&posData[i], sizeof(Vector3f));
+		_fullscreenVbo.addData(&uvData[i], sizeof(Vector2f));
+	}
+	_fullscreenVbo.uploadDataToGpu(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+
 }
 
 Scene::~Scene() {
@@ -123,8 +142,14 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 	switch (modus) {
 		case COMPOSITION:
 
-			ambientPass();
-			directionalLightPass(camera);
+			//Copy diffuse gBuffer to windowframebuffer:
+			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
+			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
+								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+								GL_COLOR_BUFFER_BIT,
+								GL_LINEAR);
+
+			diffusePass(camera);
 
 			break;
 		case DIFFUSE:
@@ -148,6 +173,13 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 			break;
+			/*case SSAO:
+			 _gBuffer.setSourceBuffer(GBuffer::SSAO);
+			 glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
+			 _window.getSettings().getWidth(), _window.getSettings().getHeight(),
+			 GL_COLOR_BUFFER_BIT,
+			 GL_LINEAR);
+			 break;*/
 		case DEPTH:
 			dumpOutDepthGBuffer(); //Special, because no GL_COLOR_BUFFER
 			break;
@@ -155,31 +187,26 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 }
 
-void Scene::ambientPass() {
+void Scene::diffusePass(const Camera& camera) {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthtest(false);
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableCulling(false);
-	OpenGlControl::useSettings(ogl);
-
-	_window.bind();
-	_gBuffer.bindAsSource();
-
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	shader.setUniform("mixColor", _ambientColor);
-	shader.setUniform("gSampler", GBuffer::DIFFUSE);
-
-	drawFullscreenQuad(shader);
-
-	OpenGlControl::useSettings(OpenGlControl::Settings());
-
-}
-
-void Scene::directionalLightPass(const Camera& camera) {
+	//Pre-Adjust Shaders:
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
+		shader.setUniform("modelMatrix", Matrix4f(1.f));
+		shader.setUniform("viewMatrix", Matrix4f(1.f));
+		shader.setUniform("projectionMatrix", Matrix4f(1.f));
+		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+	}
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+		shader.setUniform("modelMatrix", Matrix4f(1.f));
+		shader.setUniform("viewMatrix", Matrix4f(1.f));
+		shader.setUniform("projectionMatrix", Matrix4f(1.f));
+		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+	}
+	/////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////
 
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthtest(false);
@@ -189,51 +216,69 @@ void Scene::directionalLightPass(const Camera& camera) {
 	ogl.setBlendMode(OpenGlControl::ADD);
 	OpenGlControl::useSettings(ogl);
 
-	bool dirLightsExist = false;
-	{ //Render all dirlights together into rendertexture
-		_renderTexture.clear();
-		_renderTexture.bindAsTarget();
-		_gBuffer.bindAsSource();
+	//Render all dirlights together into rendertexture
+	_renderTexture.clear();
+	_renderTexture.bindAsTarget();
 
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-		shader.setUniform("modelMatrix", Matrix4f(1.f));
-		shader.setUniform("viewMatrix", Matrix4f(1.f));
-		shader.setUniform("projectionMatrix", Matrix4f(1.f));
-		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+	ambientPart();
 
-		for(size_t i = 0; i < _lights.size(); ++i){
+	for(size_t i = 0; i < _lights.size(); ++i){
 
-			if(typeid(*(_lights[i])) == typeid(DirectionalLight)){
+		if(typeid(*(_lights[i])) == typeid(DirectionalLight)){
 
-				DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
+			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
-				shader.setUniform("gLightDirection", Vector3f(light->getRotation()));
-				shader.setUniform("gLightColor", light->getColor());
-				shader.setUniform("gLightIntensity", light->getIntensity());
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
+			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
 
-				drawFullscreenQuad(shader);
+			drawFullscreenQuad(shader);
 
-				dirLightsExist = true;
-			}
+		}else if(typeid(*(_lights[i])) == typeid(Light)){
 
+			Light* light = static_cast<Light*>(_lights[i]);
+
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+			shader.setUniform("gLightPosition", light->getPosition());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
+
+			drawFullscreenQuad(shader);
 		}
-	}
-	if(dirLightsExist){ //Multiply result with the scene
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-		shader.setUniform("modelMatrix", Matrix4f(1.f));
-		shader.setUniform("viewMatrix", Matrix4f(1.f));
-		shader.setUniform("projectionMatrix", Matrix4f(1.f));
-		_renderTexture.bindAsSource(0);
-		_window.bind();
-		shader.setUniform("gSampler", 0);
-		shader.setUniform("mixColor", Vector3f(1.f));
 
-		ogl.setBlendMode(OpenGlControl::MULTIPLY);
-		OpenGlControl::useSettings(ogl);
-
-		drawFullscreenQuad(shader);
 	}
+
+	///////////////////////////////////////////////////////////////
+	//Multiply result with the scene
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	_renderTexture.bindAsSource(0);
+	_window.bind();
+	shader.setUniform("gSampler", 0);
+	shader.setUniform("mixColor", Vector3f(1.f));
+
+	ogl.setBlendMode(OpenGlControl::MULTIPLY);
+	OpenGlControl::useSettings(ogl);
+
+	drawFullscreenQuad(shader);
+
 	OpenGlControl::useSettings(OpenGlControl::Settings());
+}
+
+void Scene::ambientPart() {
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
+	shader.setUniform("gColor", _ambientColor);
+
+	glEnableVertexAttribArray(0);
+	_fullscreenVbo.bind();
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+	glDisableVertexAttribArray(0);
 
 }
 
@@ -261,29 +306,10 @@ void Scene::dumpOutDepthGBuffer() {
 
 void Scene::drawFullscreenQuad(const Shader& shader) const {
 
-	Vector3f posData[] = {
-	Vector3f(-1.f, -1.f, 0.f),
-	Vector3f(1.f, -1.f, 0.f),
-	Vector3f(-1.f, 1.f, 0.f),
-	Vector3f(1.f, 1.f, 0.f) };
-
-	Vector2f uvData[] = {
-	Vector2f(0.f, 0.f),
-	Vector2f(1.f, 0.f),
-	Vector2f(0.f, 1.f),
-	Vector2f(1.f, 1.f), };
-
-	VertexBufferObject vbo;
-	for(int i = 0; i != 4; ++i){
-		vbo.addData(&posData[i], sizeof(Vector3f));
-		vbo.addData(&uvData[i], sizeof(Vector2f));
-	}
-	vbo.uploadDataToGpu(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
-
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	vbo.bind();
+	_fullscreenVbo.bind();
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
 

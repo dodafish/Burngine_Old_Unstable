@@ -19,6 +19,7 @@
 #include <Burngine/Graphics/Scene/GBuffer.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>
+#include <Burngine/Graphics/General/VertexBufferObject.h>
 
 namespace burn {
 class Light;
@@ -88,11 +89,12 @@ private:
 	GBuffer _gBuffer;
 
 	//Passes:
-	void ambientPass();
-	void directionalLightPass(const Camera& camera);
+	void diffusePass(const Camera& camera);
 	//Pass-Helpers:
+	void ambientPart();
 	void drawFullscreenQuad(const Shader& shader) const;
 	RenderTexture _renderTexture;
+	VertexBufferObject _fullscreenVbo;
 
 };
 
