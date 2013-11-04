@@ -89,7 +89,7 @@ private:
 	GBuffer _gBuffer;
 
 	//Passes:
-	void diffusePass(const Camera& camera);
+	void lightPass(const Camera& camera);
 	//Pass-Helpers:
 	void ambientPart();
 	void drawFullscreenQuad(const Shader& shader) const;

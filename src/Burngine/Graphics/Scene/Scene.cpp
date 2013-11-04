@@ -153,7 +153,7 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 
-			diffusePass(camera);
+			lightPass(camera);
 
 			break;
 		case DIFFUSE:
@@ -191,7 +191,7 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 }
 
-void Scene::diffusePass(const Camera& camera) {
+void Scene::lightPass(const Camera& camera) {
 
 	//Pre-Adjust Shaders:
 	{
