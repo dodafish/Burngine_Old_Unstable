@@ -43,7 +43,13 @@ void RenderTexture::onBind(const unsigned int& unit) const {
 		return;
 	}
 
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _texture);
+
+	for(size_t i = 0; i < _additionalTextures.size(); ++i){
+		glActiveTexture(GL_TEXTURE0 + (_attachments[i] - GL_COLOR_ATTACHMENT0));
+		glBindTexture(GL_TEXTURE_2D, _additionalTextures[i]);
+	}
 }
 
 void RenderTexture::onUnbind(const unsigned int& unit) const {
@@ -61,6 +67,11 @@ void RenderTexture::cleanup() {
 		Reporter::report("Unable to cleanup rendertexture! No valid context.", Reporter::ERROR);
 		return;
 	}
+
+	for(size_t i = 0; i < _additionalTextures.size(); ++i){
+		glDeleteTextures(1, &_additionalTextures[i]);
+	}
+	_additionalTextures.clear();
 
 	glDeleteTextures(1, &_texture);
 	glDeleteFramebuffers(1, &_framebuffer);
@@ -124,6 +135,53 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	return true;
 }
 
+bool RenderTexture::addColorAttachment(const GLenum& attachment) {
+
+	//Valid OpenGL-Context is needed
+	if(!Window::isContextCreated()){
+		Reporter::report("Unable to add color attachment. No valid context!", Reporter::ERROR);
+		return false;
+	}
+	if(!isCreated()){
+		Reporter::report("Unable to add color attachment. Rendertexture does not exist!", Reporter::ERROR);
+		return false;
+	}
+	if(attachment == GL_COLOR_ATTACHMENT0){
+		Reporter::report("Unable to add color attachment to slot 0. Slot already taken!", Reporter::ERROR);
+		return false;
+	}
+	for(size_t i = 0; i < _attachments.size(); ++i){
+		if(_attachments[i] == attachment){
+			Reporter::report("Unable to add color attachment. Slot already taken!", Reporter::ERROR);
+			return false;
+		}
+	}
+
+	GLint lastFB = 0;
+	GLint lastTex = 0;
+	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &lastFB);
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
+
+	GLuint id = 0;
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GL_TEXTURE_2D, id, 0);
+
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
+
+	_attachments.push_back(attachment);
+	_additionalTextures.push_back(id);
+	glDrawBuffers(_attachments.size(), &_attachments[0]);
+
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lastFB);
+	glBindTexture(GL_TEXTURE_2D, lastTex);
+
+	return true;
+}
+
 void RenderTexture::bindAsTarget() const {
 
 	//Valid OpenGL-Context is needed
@@ -163,6 +221,11 @@ void RenderTexture::clear() const {
 	//Clear texture
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	for(size_t i = 0; i < _additionalTextures.size(); ++i){
+		glBindTexture(GL_TEXTURE_2D, _additionalTextures[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	}
 
 	//Clear buffers
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);

@@ -34,6 +34,11 @@ _window(parentWindow) {
 		exit(12);
 	}
 
+	/*if(!_renderTexture.addColorAttachment(GL_COLOR_ATTACHMENT1)){
+		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		exit(13);
+	}*/
+
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
 	Vector3f(1.f, -1.f, 0.f),

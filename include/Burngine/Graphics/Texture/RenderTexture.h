@@ -36,6 +36,8 @@ public:
 
 	bool isCreated() const;
 
+	bool addColorAttachment(const GLenum& attachment);
+
 private:
 	virtual void onBind(const unsigned int& unit) const;
 	virtual void onUnbind(const unsigned int& unit) const;
@@ -46,6 +48,7 @@ private:
 	bool _isCreated;
 	Vector2ui _dimensions;
 	std::vector<GLenum> _attachments;
+	std::vector<GLuint> _additionalTextures;
 };
 
 } /* namespace burn */
