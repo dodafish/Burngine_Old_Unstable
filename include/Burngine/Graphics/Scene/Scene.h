@@ -93,7 +93,7 @@ private:
 	//Pass-Helpers:
 	void ambientPart();
 	void drawFullscreenQuad(const Shader& shader) const;
-	RenderTexture _renderTexture, _renderTexture2;
+	RenderTexture _renderTexture;
 	VertexBufferObject _fullscreenVbo;
 
 };

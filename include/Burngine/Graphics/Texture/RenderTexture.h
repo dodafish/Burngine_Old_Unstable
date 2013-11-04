@@ -12,6 +12,7 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/System/Math.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
+#include <vector>
 
 namespace burn {
 
@@ -24,7 +25,7 @@ public:
 	RenderTexture(const RenderTexture& other) = delete;
 	RenderTexture& operator=(const RenderTexture& other) = delete;
 
-	bool create(const Vector2ui& dimensions, const unsigned int& attachmentId = 0);
+	bool create(const Vector2ui& dimensions);
 
 	void bindAsTarget() const;
 
@@ -44,6 +45,7 @@ private:
 	GLuint _framebuffer, _depthbuffer, _texture;
 	bool _isCreated;
 	Vector2ui _dimensions;
+	std::vector<GLenum> _attachments;
 };
 
 } /* namespace burn */

@@ -71,15 +71,10 @@ void RenderTexture::cleanup() {
 
 }
 
-bool RenderTexture::create(const Vector2ui& dimensions, const unsigned int& attachmentId) {
+bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	if(!Window::isContextCreated())
 		return false;
-
-	if(attachmentId > GL_MAX_COLOR_ATTACHMENTS - 1){
-		Reporter::report("Unable to create RenderTexture. ColorAttachment-ID out of range!", Reporter::ERROR);
-		return false;
-	}
 
 	cleanup();
 
@@ -88,13 +83,13 @@ bool RenderTexture::create(const Vector2ui& dimensions, const unsigned int& atta
 	GLint lastFB = 0;
 	GLint lastRB = 0;
 	GLint lastTex = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &lastFB);
 	glGetIntegerv(GL_RENDERBUFFER_BINDING, &lastRB);
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
 
 	//Framebuffer:
 	glGenFramebuffers(1, &_framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
 
 	//Texture:
 	glGenTextures(1, &_texture);
@@ -106,22 +101,21 @@ bool RenderTexture::create(const Vector2ui& dimensions, const unsigned int& atta
 	glGenRenderbuffers(1, &_depthbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, _depthbuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
 	//Configure:
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachmentId, _texture, 0);
-	GLenum DrawBuffers[1] = {
-	GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers);
+	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _texture, 0);
+	_attachments.push_back(GL_COLOR_ATTACHMENT0);
+	glDrawBuffers(_attachments.size(), &_attachments[0]);
 
 	//Check:
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
 		Reporter::report("RenderTexture: Failed to create framebuffer!\n", Reporter::ERROR);
 		return false;
 	}
 
 	//Restore previous bindings
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
 	glBindRenderbuffer(GL_RENDERBUFFER, lastRB);
 

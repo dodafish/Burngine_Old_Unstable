@@ -33,10 +33,6 @@ _window(parentWindow) {
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(12);
 	}
-	if(!_renderTexture2.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
-		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
-		exit(12);
-	}
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -204,6 +200,9 @@ void Scene::lightPass(const Camera& camera) {
 		shader.setUniform("viewMatrix", Matrix4f(1.f));
 		shader.setUniform("projectionMatrix", Matrix4f(1.f));
 		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
@@ -222,11 +221,12 @@ void Scene::lightPass(const Camera& camera) {
 	ogl.enableCulling(false);
 	ogl.enableBlending(true);
 	ogl.setBlendMode(OpenGlControl::ADD);
+	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
 	//Render all dirlights together into rendertexture
 	_renderTexture.clear();
-	_renderTexture.bindAsTarget(); // <- Diffuse light
+	_renderTexture.bindAsTarget(); // <- Diffuse light; Color Attachment 0
 
 	ambientPart();
 
@@ -270,7 +270,6 @@ void Scene::lightPass(const Camera& camera) {
 
 	ogl.setBlendMode(OpenGlControl::MULTIPLY);
 	OpenGlControl::useSettings(ogl);
-
 	drawFullscreenQuad(shader);
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
