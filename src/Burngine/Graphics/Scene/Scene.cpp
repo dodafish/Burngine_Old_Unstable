@@ -33,6 +33,10 @@ _window(parentWindow) {
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(12);
 	}
+	if(!_renderTexture2.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
+		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		exit(12);
+	}
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -222,7 +226,7 @@ void Scene::lightPass(const Camera& camera) {
 
 	//Render all dirlights together into rendertexture
 	_renderTexture.clear();
-	_renderTexture.bindAsTarget();
+	_renderTexture.bindAsTarget(); // <- Diffuse light
 
 	ambientPart();
 

@@ -24,7 +24,7 @@ public:
 	RenderTexture(const RenderTexture& other) = delete;
 	RenderTexture& operator=(const RenderTexture& other) = delete;
 
-	bool create(const Vector2ui& dimensions);
+	bool create(const Vector2ui& dimensions, const unsigned int& attachmentId = 0);
 
 	void bindAsTarget() const;
 
