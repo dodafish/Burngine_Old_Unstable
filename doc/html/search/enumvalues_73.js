@@ -8,6 +8,6 @@ var searchData=
   ['slash',['SLASH',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533a73377067789c87b31067602f561a1570',1,'burn::Keyboard']]],
   ['solid_5fcolor',['SOLID_COLOR',['../classburn_1_1_material.html#a2d219315cf05e59bbffe8e3831cc6c43ae346efa71a38eb8fcbcba453a89c6aa4',1,'burn::Material']]],
   ['space',['SPACE',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533a8d33cf0affdd9030dd31a40b7db9c9fa',1,'burn::Keyboard']]],
-  ['specular',['SPECULAR',['../classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95',1,'burn::Scene::SPECULAR()'],['../classburn_1_1_scene_node.html#ac71667bb8707fdadf6b2245d6e6c85ccaeec51fea1afff7847dd2acfe45121506',1,'burn::SceneNode::SPECULAR()']]],
+  ['specular',['SPECULAR',['../classburn_1_1_scene_node.html#ac71667bb8707fdadf6b2245d6e6c85ccaeec51fea1afff7847dd2acfe45121506',1,'burn::SceneNode']]],
   ['spotlight',['SPOTLIGHT',['../structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d',1,'burn::BurngineShaders']]]
 ];

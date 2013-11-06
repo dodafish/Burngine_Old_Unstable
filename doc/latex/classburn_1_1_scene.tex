@@ -9,12 +9,12 @@
 \begin{DoxyCompactItemize}
 \item 
 enum \hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299}{Render\-Modus} \{ \\*
-\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828}{A\-L\-L}, 
-\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6}{C\-O\-L\-O\-R}, 
+\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9de887ba3d66505de29d661ec0cb0c63}{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N}, 
 \hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230}{D\-I\-F\-F\-U\-S\-E}, 
-\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95}{S\-P\-E\-C\-U\-L\-A\-R}, 
+\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ab2f9ede76e57d852bf0e82b5e3f1bb76}{N\-O\-R\-M\-A\-L\-\_\-\-W\-S}, 
+\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a8795288c1c09c990d1e3230b2b16261b}{D\-E\-P\-T\-H}, 
 \\*
-\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4}{L\-I\-G\-H\-T\-I\-N\-G}
+\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299abf537b9d28f1932ce09a6879e834ec8d}{P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S}
  \}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -24,7 +24,7 @@ enum \hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299}{Render\-M
 \begin{DoxyCompactList}\small\item\em The default constructor. \end{DoxyCompactList}\item 
 \hyperlink{classburn_1_1_scene_a7722cda0111bd22ca193174326e66924}{$\sim$\-Scene} ()
 \begin{DoxyCompactList}\small\item\em The default destructor. When called by e.\-g. deleting the scene it cleans up its data. In other words it deletes all nodes/cameras/etc. it is holding. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_aa659a25dafadad6a8ab8e4304cf394a5}{draw} (const \hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299}{Render\-Modus} \&modus=\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828}{A\-L\-L})
+void \hyperlink{classburn_1_1_scene_aca5f35cf0478da8ac4bc79975610ed65}{draw} (const \hyperlink{classburn_1_1_camera}{Camera} \&camera, const \hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299}{Render\-Modus} \&modus=\hyperlink{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9de887ba3d66505de29d661ec0cb0c63}{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N})
 \begin{DoxyCompactList}\small\item\em Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}. \end{DoxyCompactList}\item 
 void \hyperlink{classburn_1_1_scene_aa013e68565bda374fa704f816d8e6847}{attach\-Scene\-Node} (\hyperlink{classburn_1_1_scene_node}{Scene\-Node} \&node)
 \item 
@@ -37,12 +37,6 @@ void \hyperlink{classburn_1_1_scene_a6e8c366da48a859641a08d82ac4b293d}{detach\-L
 void \hyperlink{classburn_1_1_scene_a8d4c2bc5288fed85613b59f68e05e96c}{detach\-All} ()
 \item 
 void \hyperlink{classburn_1_1_scene_ae569a4b21af331b5403ca444d83e4884}{set\-Sky\-Box} (const \hyperlink{classburn_1_1_sky_box}{Sky\-Box} \&sky\-Box)
-\item 
-void \hyperlink{classburn_1_1_scene_adce745987dba9c9f85aa01cf46e2c0b4}{set\-Camera} (\hyperlink{classburn_1_1_camera}{Camera} \&camera)
-\begin{DoxyCompactList}\small\item\em Sets a camera as active one. This camera will influence the rendering behaviour of the scene. \end{DoxyCompactList}\item 
-void \hyperlink{classburn_1_1_scene_ac24973829efa8b630a72ca402f8aaa9e}{set\-Default\-Camera} ()
-\item 
-const \hyperlink{classburn_1_1_camera}{Camera} \& \hyperlink{classburn_1_1_scene_ad0b61929a473ee62467d040116a18e2d}{get\-Default\-Camera} ()
 \item 
 void \hyperlink{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}{set\-Ambient\-Color} (const \hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \&color)
 \item 
@@ -57,16 +51,16 @@ const \hyperlink{namespaceburn_afdd7cfb352b9612432faf6947b6fff74}{Vector3f} \& \
 \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
-\index{A\-L\-L@{A\-L\-L}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!A\-L\-L@{A\-L\-L}}\item[{\em 
-\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828}{A\-L\-L}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ae9ec19b90411b53dc2f739816b55a828}
-}]\index{C\-O\-L\-O\-R@{C\-O\-L\-O\-R}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!C\-O\-L\-O\-R@{C\-O\-L\-O\-R}}\item[{\em 
-\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6}{C\-O\-L\-O\-R}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299adc90a5eb364cefa561a349bba4afc0d6}
+\index{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N@{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N@{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9de887ba3d66505de29d661ec0cb0c63}{C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9de887ba3d66505de29d661ec0cb0c63}
 }]\index{D\-I\-F\-F\-U\-S\-E@{D\-I\-F\-F\-U\-S\-E}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!D\-I\-F\-F\-U\-S\-E@{D\-I\-F\-F\-U\-S\-E}}\item[{\em 
 \hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230}{D\-I\-F\-F\-U\-S\-E}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ac85a19cebcbd9de06a84f792bec68230}
-}]\index{S\-P\-E\-C\-U\-L\-A\-R@{S\-P\-E\-C\-U\-L\-A\-R}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!S\-P\-E\-C\-U\-L\-A\-R@{S\-P\-E\-C\-U\-L\-A\-R}}\item[{\em 
-\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95}{S\-P\-E\-C\-U\-L\-A\-R}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a5d0d45e2fe08c563948f5be503002b95}
-}]\index{L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!L\-I\-G\-H\-T\-I\-N\-G@{L\-I\-G\-H\-T\-I\-N\-G}}\item[{\em 
-\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4}{L\-I\-G\-H\-T\-I\-N\-G}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4}
+}]\index{N\-O\-R\-M\-A\-L\-\_\-\-W\-S@{N\-O\-R\-M\-A\-L\-\_\-\-W\-S}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!N\-O\-R\-M\-A\-L\-\_\-\-W\-S@{N\-O\-R\-M\-A\-L\-\_\-\-W\-S}}\item[{\em 
+\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ab2f9ede76e57d852bf0e82b5e3f1bb76}{N\-O\-R\-M\-A\-L\-\_\-\-W\-S}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299ab2f9ede76e57d852bf0e82b5e3f1bb76}
+}]\index{D\-E\-P\-T\-H@{D\-E\-P\-T\-H}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!D\-E\-P\-T\-H@{D\-E\-P\-T\-H}}\item[{\em 
+\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a8795288c1c09c990d1e3230b2b16261b}{D\-E\-P\-T\-H}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299a8795288c1c09c990d1e3230b2b16261b}
+}]\index{P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S@{P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S}!burn\-::\-Scene@{burn\-::\-Scene}}\index{burn\-::\-Scene@{burn\-::\-Scene}!P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S@{P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S}}\item[{\em 
+\hypertarget{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299abf537b9d28f1932ce09a6879e834ec8d}{P\-O\-S\-I\-T\-I\-O\-N\-\_\-\-W\-S}\label{classburn_1_1_scene_a992349a23199d694dca7b8cbd4957299abf537b9d28f1932ce09a6879e834ec8d}
 }]\end{description}
 \end{Desc}
 
@@ -132,17 +126,23 @@ The default destructor. When called by e.\-g. deleting the scene it cleans up it
 \item[{{\bf Scene\-Node} \&}]{node}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_scene_a999ba40b417a1074b58c73e837170e51}
-\hypertarget{classburn_1_1_scene_aa659a25dafadad6a8ab8e4304cf394a5}{\index{burn\-::\-Scene@{burn\-::\-Scene}!draw@{draw}}
+\hypertarget{classburn_1_1_scene_aca5f35cf0478da8ac4bc79975610ed65}{\index{burn\-::\-Scene@{burn\-::\-Scene}!draw@{draw}}
 \index{draw@{draw}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::draw (
 \begin{DoxyParamCaption}
-\item[{const {\bf Render\-Modus} \&}]{modus = {\ttfamily {\bf A\-L\-L}}}
+\item[{const {\bf Camera} \&}]{camera, }
+\item[{const {\bf Render\-Modus} \&}]{modus = {\ttfamily {\bf C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N}}}
 \end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_aa659a25dafadad6a8ab8e4304cf394a5}
+)}}\label{classburn_1_1_scene_aca5f35cf0478da8ac4bc79975610ed65}
 
 
 Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em modus} & Choose a g\-Buffer to dump to screen or set to C\-O\-M\-P\-O\-S\-I\-T\-I\-O\-N to see final result \\
+\hline
+\end{DoxyParams}
 \hypertarget{classburn_1_1_scene_a8abbd3b6bb1737c80366d059bbdc1ea5}{\index{burn\-::\-Scene@{burn\-::\-Scene}!get\-Ambient\-Color@{get\-Ambient\-Color}}
 \index{get\-Ambient\-Color@{get\-Ambient\-Color}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{get\-Ambient\-Color}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector3f}\& burn\-::\-Scene\-::get\-Ambient\-Color (
@@ -150,13 +150,6 @@ Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}.
 {}
 \end{DoxyParamCaption}
 ) const}}\label{classburn_1_1_scene_a8abbd3b6bb1737c80366d059bbdc1ea5}
-\hypertarget{classburn_1_1_scene_ad0b61929a473ee62467d040116a18e2d}{\index{burn\-::\-Scene@{burn\-::\-Scene}!get\-Default\-Camera@{get\-Default\-Camera}}
-\index{get\-Default\-Camera@{get\-Default\-Camera}!burn::Scene@{burn\-::\-Scene}}
-\subsubsection[{get\-Default\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Camera}\& burn\-::\-Scene\-::get\-Default\-Camera (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_ad0b61929a473ee62467d040116a18e2d}
 \hypertarget{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Ambient\-Color@{set\-Ambient\-Color}}
 \index{set\-Ambient\-Color@{set\-Ambient\-Color}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{set\-Ambient\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Ambient\-Color (
@@ -164,35 +157,6 @@ Draws every \hyperlink{classburn_1_1_scene_node}{Scene\-Node}.
 \item[{const {\bf Vector3f} \&}]{color}
 \end{DoxyParamCaption}
 )}}\label{classburn_1_1_scene_a8bfd8a10ac26bd647b2391ff6c3b4b66}
-\hypertarget{classburn_1_1_scene_adce745987dba9c9f85aa01cf46e2c0b4}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Camera@{set\-Camera}}
-\index{set\-Camera@{set\-Camera}!burn::Scene@{burn\-::\-Scene}}
-\subsubsection[{set\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Camera (
-\begin{DoxyParamCaption}
-\item[{{\bf Camera} \&}]{camera}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_adce745987dba9c9f85aa01cf46e2c0b4}
-
-
-Sets a camera as active one. This camera will influence the rendering behaviour of the scene. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em camera} & The \hyperlink{classburn_1_1_camera}{Camera} that should be used.\\
-\hline
-\end{DoxyParams}
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{classburn_1_1_camera}{Camera}
-\end{DoxySeeAlso}
-\begin{DoxyNote}{Note}
-You can use cameras from other scenes, but it is recommended to use cameras from the same scene only. 
-\end{DoxyNote}
-\hypertarget{classburn_1_1_scene_ac24973829efa8b630a72ca402f8aaa9e}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Default\-Camera@{set\-Default\-Camera}}
-\index{set\-Default\-Camera@{set\-Default\-Camera}!burn::Scene@{burn\-::\-Scene}}
-\subsubsection[{set\-Default\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Default\-Camera (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classburn_1_1_scene_ac24973829efa8b630a72ca402f8aaa9e}
 \hypertarget{classburn_1_1_scene_ae569a4b21af331b5403ca444d83e4884}{\index{burn\-::\-Scene@{burn\-::\-Scene}!set\-Sky\-Box@{set\-Sky\-Box}}
 \index{set\-Sky\-Box@{set\-Sky\-Box}!burn::Scene@{burn\-::\-Scene}}
 \subsubsection[{set\-Sky\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void burn\-::\-Scene\-::set\-Sky\-Box (

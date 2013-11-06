@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Burngine 3D OpenGL-Engine: include/Burngine/Graphics/Scene/StaticMeshNode.h Source File</title>
+<title>Burngine: include/Burngine/Graphics/Scene/StaticMeshNode.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,10 +23,10 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="BurngineLogoSmall.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Burngine 3D OpenGL-Engine
+   <div id="projectname">Burngine
    &#160;<span id="projectnumber">Development</span>
    </div>
-   <div id="projectbrief">OpenGL 3.3+ Engine</div>
+   <div id="projectbrief">OpenSource 3D-Engine based on OpenGL 3.3+</div>
   </td>
  </tr>
  </tbody>
@@ -130,15 +130,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> drawLighting(<a class="code" href="classburn_1_1_scene_node.html#ac71667bb8707fdadf6b2245d6e6c85cc">LightingType</a> type, <span class="keyword">const</span> <a class="code" href="classburn_1_1_camera.html">Camera</a>&amp; camera, <span class="keyword">const</span> std::vector&lt;Light*&gt;&amp; lights, <span class="keyword">const</span> <a class="code" href="namespaceburn.html#afdd7cfb352b9612432faf6947b6fff74">Vector3f</a>&amp; ambient);</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> _model;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <span class="comment">/* namespace burn */</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* STATICMESHNODE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">//Hide methods, that are public in SceneNode.</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">//We have no need to have them public here, anymore.</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">using</span> <a class="code" href="classburn_1_1_scene_node.html#aad77c29ef8deb702c06d3a056857ad6b">SceneNode::addParentScene</a>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">using</span> <a class="code" href="classburn_1_1_scene_node.html#a8809622b5e55abaab4b4f8c8cd3dc3e8">SceneNode::removeParentScene</a>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">//Attributes:</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classburn_1_1_model.html" title="A model can load 3d models from file. ">Model</a> _model;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} <span class="comment">/* namespace burn */</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* STATICMESHNODE_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 5 2013 22:11:25 for Burngine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

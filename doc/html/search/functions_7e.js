@@ -5,6 +5,7 @@ var searchData=
   ['_7echaracter',['~Character',['../classburn_1_1_character.html#af8b977dc4ed78f7b45b673e339dbf7f5',1,'burn::Character']]],
   ['_7ecubemap',['~CubeMap',['../classburn_1_1_cube_map.html#a2e4355a56bbfd2ce2e3ee7b8dbff3dee',1,'burn::CubeMap']]],
   ['_7efont',['~Font',['../classburn_1_1_font.html#adbdef3544e8d1925de8b1305e1e990d3',1,'burn::Font']]],
+  ['_7egbuffer',['~GBuffer',['../classburn_1_1_g_buffer.html#ad41470d5488bd67dc1433b3bd79bf733',1,'burn::GBuffer']]],
   ['_7egui',['~Gui',['../classburn_1_1_gui.html#a57f216f38585ce367c5821bec2a57f1b',1,'burn::Gui']]],
   ['_7eguinode',['~GuiNode',['../classburn_1_1_gui_node.html#a5c047d11bef782a5261ce24d946612a8',1,'burn::GuiNode']]],
   ['_7elabel',['~Label',['../classburn_1_1_label.html#a506c36c2a01f59620390597efb3014f8',1,'burn::Label']]],

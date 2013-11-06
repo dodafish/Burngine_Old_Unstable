@@ -11,5 +11,5 @@ var searchData=
   ['toutf8',['toUtf8',['../classburn_1_1_utf_3_018_01_4.html#a71308e07c65f7a60a5da08a9100637f3',1,'burn::Utf&lt; 8 &gt;::toUtf8()'],['../classburn_1_1_utf_3_0116_01_4.html#adae74e3a4964ba5684e91cfa6a861bb9',1,'burn::Utf&lt; 16 &gt;::toUtf8()'],['../classburn_1_1_utf_3_0132_01_4.html#a7f78010591449b38cd1547111c1a22a2',1,'burn::Utf&lt; 32 &gt;::toUtf8()']]],
   ['towide',['toWide',['../classburn_1_1_utf_3_018_01_4.html#aa7754a362e01c11da578cad0c10fffad',1,'burn::Utf&lt; 8 &gt;::toWide()'],['../classburn_1_1_utf_3_0116_01_4.html#a65f2422271c710bbcc92c936d581356f',1,'burn::Utf&lt; 16 &gt;::toWide()'],['../classburn_1_1_utf_3_0132_01_4.html#afe5846f22f840bdb54794784b8901638',1,'burn::Utf&lt; 32 &gt;::toWide()']]],
   ['towidestring',['toWideString',['../classburn_1_1_string.html#abcaa6ebd5743cc885c15577ca08a62f2',1,'burn::String']]],
-  ['transformable',['Transformable',['../classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981',1,'burn::Transformable']]]
+  ['transformable',['Transformable',['../classburn_1_1_transformable.html#ab5df8f6f319ebc8888465632a1567981',1,'burn::Transformable::Transformable()'],['../classburn_1_1_transformable.html#a96fb19be22efcefb4723781146de28fe',1,'burn::Transformable::Transformable(const Transformable &amp;other)']]]
 ];

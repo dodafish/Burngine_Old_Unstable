@@ -1,6 +1,7 @@
 var searchData=
 [
   ['n',['N',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533ac4bffb6c98c7e1a1aa0ce59a92802b1f',1,'burn::Keyboard']]],
+  ['normal_5fws',['NORMAL_WS',['../classburn_1_1_g_buffer.html#a27671ebfd5462ecc1fdf0dd46ca8054ea93a903818f09910e7712af28a3a050ff',1,'burn::GBuffer::NORMAL_WS()'],['../classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ab2f9ede76e57d852bf0e82b5e3f1bb76',1,'burn::Scene::NORMAL_WS()']]],
   ['notification',['NOTIFICATION',['../classburn_1_1_reporter.html#a854e2c1c171ee6de2235efb5d7e8a3c7ab81a578256e642de89288137305fc594',1,'burn::Reporter']]],
   ['num_5flock',['NUM_LOCK',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533ac8bfb9256ef3fd55060ddde9737c866e',1,'burn::Keyboard']]],
   ['numpad_5f0',['NUMPAD_0',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533a9fae527be6042744635c2283a2727544',1,'burn::Keyboard']]],

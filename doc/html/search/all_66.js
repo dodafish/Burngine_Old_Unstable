@@ -31,7 +31,7 @@ var searchData=
   ['flag',['Flag',['../classburn_1_1_material.html#a704108f8bb133e1911495b84bd0826b8',1,'burn::Material']]],
   ['floatrect',['FloatRect',['../namespaceburn.html#a00aa73ce1ec2ed4393740a528395103f',1,'burn']]],
   ['font',['Font',['../classburn_1_1_font.html',1,'burn']]],
-  ['font',['Font',['../classburn_1_1_font.html#a5e89a49100bd01b72b95ad26c869a4c8',1,'burn::Font::Font()'],['../structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7',1,'burn::BurngineShaders::FONT()']]],
+  ['font',['FONT',['../structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7',1,'burn::BurngineShaders::FONT()'],['../classburn_1_1_font.html#a5e89a49100bd01b72b95ad26c869a4c8',1,'burn::Font::Font()']]],
   ['font_2eh',['Font.h',['../_font_8h.html',1,'']]],
   ['forceupdate',['forceUpdate',['../classburn_1_1_mesh.html#ad9d9b1c1d6a9486e65e384f28aa009d5',1,'burn::Mesh']]],
   ['fromansi',['fromAnsi',['../classburn_1_1_utf_3_018_01_4.html#a50fee25a02e61be1a1067acbb41f00dc',1,'burn::Utf&lt; 8 &gt;::fromAnsi()'],['../classburn_1_1_utf_3_0116_01_4.html#af33edb529c7a3a5955e3b367dede544d',1,'burn::Utf&lt; 16 &gt;::fromAnsi()'],['../classburn_1_1_utf_3_0132_01_4.html#a9f691dc136e944975036addcb07fbbbd',1,'burn::Utf&lt; 32 &gt;::fromAnsi()']]],

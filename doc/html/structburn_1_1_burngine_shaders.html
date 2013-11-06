@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Burngine 3D OpenGL-Engine: burn::BurngineShaders Struct Reference</title>
+<title>Burngine: burn::BurngineShaders Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,10 +23,10 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="BurngineLogoSmall.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Burngine 3D OpenGL-Engine
+   <div id="projectname">Burngine
    &#160;<span id="projectnumber">Development</span>
    </div>
-   <div id="projectbrief">OpenGL 3.3+ Engine</div>
+   <div id="projectbrief">OpenSource 3D-Engine based on OpenGL 3.3+</div>
   </td>
  </tr>
  </tbody>
@@ -106,16 +106,18 @@ Public Types</h2></td></tr>
 <tr class="memitem:a2c339d4b838b7efe94ba8ef7f480ef41"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">Type</a> { <br/>
 &#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a446d1261300dfabf6e08f66e60f8ed5c">COLOR</a>, 
 <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2">TEXTURE</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a922d3a6c0c8866d89903aec559196fad">TEXTURE_ONE_COMPONENT</a>, 
 <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191">POINTLIGHT</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d">SPOTLIGHT</a>, 
 <br/>
-&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a">DIRECTIONAL_LIGHT</a>, 
+&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a5172978e4e2117de6a05416367a1860d">SPOTLIGHT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a0386e42429e97f12aa62b0f2541d283a">DIRECTIONAL_LIGHT</a>, 
 <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aeb97d831b98acc3f5156874f45971e9f">SINGLECOLOR</a>, 
 <a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41aad14732ddfa6f0cde189b342ceaa66d7">FONT</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e">DEPTH</a>, 
 <br/>
-&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755">DEPTH_POINTLIGHT</a>, 
-<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005">SKY_BOX</a>
+&#160;&#160;<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad85ec8bf4f61842aebd3f8023ea14f6e">DEPTH</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755">DEPTH_POINTLIGHT</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005">SKY_BOX</a>, 
+<a class="el" href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ac9d1b1a94a02f93de369c72e798ce318">G_BUFFER</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:a2c339d4b838b7efe94ba8ef7f480ef41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for several predefined shaders.  <a href="structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41">More...</a><br/></td></tr>
@@ -157,6 +159,8 @@ useShader() </dd></dl>
 <tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a3862d81a77979610dad2455f8d7613a2"></a>TEXTURE</em>&nbsp;</td><td class="fielddoc">
 <p>Simple 1-Texture <a class="el" href="classburn_1_1_shader.html">Shader</a>. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a922d3a6c0c8866d89903aec559196fad"></a>TEXTURE_ONE_COMPONENT</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191"></a>POINTLIGHT</em>&nbsp;</td><td class="fielddoc">
 <p>Renders a pointlight. </p>
 </td></tr>
@@ -174,6 +178,8 @@ useShader() </dd></dl>
 <tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41a72bda762a6e5151c4a63cd8d70a68755"></a>DEPTH_POINTLIGHT</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ab12073258bb6013b7af990d46b197005"></a>SKY_BOX</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a2c339d4b838b7efe94ba8ef7f480ef41ac9d1b1a94a02f93de369c72e798ce318"></a>G_BUFFER</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -263,7 +269,7 @@ useShader() </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 1 2013 11:30:03 for Burngine 3D OpenGL-Engine by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 5 2013 22:11:26 for Burngine by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

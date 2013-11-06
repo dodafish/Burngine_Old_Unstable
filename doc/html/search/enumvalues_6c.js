@@ -9,6 +9,6 @@ var searchData=
   ['left_5fsuper',['LEFT_SUPER',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533afcd2f5fa5f2fb10d212b0a3162a00b0d',1,'burn::Keyboard']]],
   ['lequal',['LEQUAL',['../classburn_1_1_open_gl_control.html#a6435b1cdb4d2c72085a19bb77be9d845aabba8b9c77a37812f828c65fb9728f3d',1,'burn::OpenGlControl']]],
   ['less',['LESS',['../classburn_1_1_open_gl_control.html#a6435b1cdb4d2c72085a19bb77be9d845a4755df5af722a2e650145662ecd8cedd',1,'burn::OpenGlControl']]],
-  ['lighting',['LIGHTING',['../classburn_1_1_material.html#a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823',1,'burn::Material::LIGHTING()'],['../classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299a9afb07fe8e20b8189d66ac620ce427b4',1,'burn::Scene::LIGHTING()']]],
+  ['lighting',['LIGHTING',['../classburn_1_1_material.html#a704108f8bb133e1911495b84bd0826b8a20ce785514749ab3909bc895127e2823',1,'burn::Material']]],
   ['low',['LOW',['../classburn_1_1_shadow_cube_map.html#a199f4c817b2cadb4f3b93c270c4f209ea04beb22bfc324a3458294be49d313c9c',1,'burn::ShadowCubeMap::LOW()'],['../classburn_1_1_shadow_map.html#a5bc770d75b5d4d1c8f755546d20266d1a018be58e430ad0d7a919b349f2940727',1,'burn::ShadowMap::LOW()']]]
 ];

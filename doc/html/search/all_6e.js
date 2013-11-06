@@ -2,6 +2,7 @@ var searchData=
 [
   ['n',['N',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533ac4bffb6c98c7e1a1aa0ce59a92802b1f',1,'burn::Keyboard']]],
   ['next',['next',['../classburn_1_1_utf_3_018_01_4.html#ae0a0875668d26949550f88760b29623c',1,'burn::Utf&lt; 8 &gt;::next()'],['../classburn_1_1_utf_3_0116_01_4.html#a22710fb3808c048b866a2157d81b3a26',1,'burn::Utf&lt; 16 &gt;::next()'],['../classburn_1_1_utf_3_0132_01_4.html#a89678514c5856b08d8871f9b12711d7e',1,'burn::Utf&lt; 32 &gt;::next()']]],
+  ['normal_5fws',['NORMAL_WS',['../classburn_1_1_g_buffer.html#a27671ebfd5462ecc1fdf0dd46ca8054ea93a903818f09910e7712af28a3a050ff',1,'burn::GBuffer::NORMAL_WS()'],['../classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299ab2f9ede76e57d852bf0e82b5e3f1bb76',1,'burn::Scene::NORMAL_WS()']]],
   ['notification',['NOTIFICATION',['../classburn_1_1_reporter.html#a854e2c1c171ee6de2235efb5d7e8a3c7ab81a578256e642de89288137305fc594',1,'burn::Reporter']]],
   ['now',['now',['../classburn_1_1_time.html#a7a07a638e213f62fff0de476ac3cb085',1,'burn::Time']]],
   ['num_5flock',['NUM_LOCK',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533ac8bfb9256ef3fd55060ddde9737c866e',1,'burn::Keyboard']]],

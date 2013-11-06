@@ -6,5 +6,6 @@ var searchData=
   ['pause',['PAUSE',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533a7376626eb38c8eeb6c94e63c20ff8464',1,'burn::Keyboard']]],
   ['period',['PERIOD',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533abdc28a31bcbbbe80adb098f68d991859',1,'burn::Keyboard']]],
   ['pointlight',['POINTLIGHT',['../structburn_1_1_burngine_shaders.html#a2c339d4b838b7efe94ba8ef7f480ef41ad7d22e0ffe363d94429c03e2c10fb191',1,'burn::BurngineShaders']]],
+  ['position_5fws',['POSITION_WS',['../classburn_1_1_g_buffer.html#a27671ebfd5462ecc1fdf0dd46ca8054ea1b48458614d5863b0fdd95aa1a81e1dc',1,'burn::GBuffer::POSITION_WS()'],['../classburn_1_1_scene.html#a992349a23199d694dca7b8cbd4957299abf537b9d28f1932ce09a6879e834ec8d',1,'burn::Scene::POSITION_WS()']]],
   ['print',['PRINT',['../classburn_1_1_keyboard.html#a2aabfebd78080f013e704415293a4533a01c1ffbe2754bea9a9bcf7f76fd4dc23',1,'burn::Keyboard']]]
 ];
