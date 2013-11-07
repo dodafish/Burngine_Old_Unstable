@@ -35,16 +35,8 @@ namespace burn {
 class BURNGINE_API DirectionalLight : public Light {
 public:
 
-	DirectionalLight();
-
 	Vector4f getDirection() const;
 
-	void bindShadowMap() const;
-
-	virtual void updateShadowMap(const std::vector<SceneNode*>& nodes);
-
-protected:
-	ShadowMap _shadowMap;
 };
 
 } /* namespace burn */

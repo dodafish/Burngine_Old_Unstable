@@ -298,7 +298,7 @@ const Vector3f& ambient) {
 				"depthBiasMvp",
 				MVP_TO_BIAS * light->getBiasProjectionMatrix() * light->getBiasViewMatrix() * getModelMatrix());
 
-				light->bindShadowMap();
+				//light->bindShadowMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);
@@ -362,7 +362,7 @@ const Vector3f& ambient) {
 				"depthBiasMvp",
 				MVP_TO_BIAS * light->getBiasProjectionMatrix() * light->getBiasViewMatrix() * getModelMatrix());
 
-				light->bindShadowMap();
+				//light->bindShadowMap();
 
 				if(type == DIFFUSE){
 					shader.setUniform("lightingType", 1);

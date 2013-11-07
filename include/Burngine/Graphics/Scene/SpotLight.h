@@ -36,10 +36,7 @@ public:
 	void setConeAngle(const float& angle);
 	const float& getConeAngle() const;
 
-	virtual void updateShadowMap(const std::vector<SceneNode*>& nodes);
-
 private:
-
 	float _coneAngle;
 
 };

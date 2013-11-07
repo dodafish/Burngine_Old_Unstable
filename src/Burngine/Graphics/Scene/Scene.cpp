@@ -38,6 +38,8 @@
 
 namespace burn {
 
+const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
+
 Scene::Scene(const Window& parentWindow) :
 _window(parentWindow) {
 
@@ -54,6 +56,11 @@ _window(parentWindow) {
 	if(!_renderTexture.addColorAttachment(1)){
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(13);
+	}
+
+	if(!_shadowMap.create(ShadowMap::HIGH)){
+		Reporter::report("Unable to create shadowmap!", Reporter::ERROR);
+		exit(14);
 	}
 
 	Vector3f posData[] = {
@@ -215,6 +222,15 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 void Scene::lightPass(const Camera& camera) {
 
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	ogl.enableBlending(true);
+	ogl.setBlendMode(OpenGlControl::ADD);
+	ogl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(ogl);
+
 	//Pre-Adjust Shaders:
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
@@ -244,19 +260,11 @@ void Scene::lightPass(const Camera& camera) {
 		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
 		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gSamplerShadowmap", 8);
 		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
-
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthtest(false);
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableCulling(false);
-	ogl.enableBlending(true);
-	ogl.setBlendMode(OpenGlControl::ADD);
-	ogl.setClearColor(Vector4f(0.f));
-	OpenGlControl::useSettings(ogl);
 
 	//Render all dirlights together into rendertexture
 	_renderTexture.clear();
@@ -264,33 +272,61 @@ void Scene::lightPass(const Camera& camera) {
 
 	ambientPart();
 
+	const Shader& shadowmapShader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 	for(size_t i = 0; i < _lights.size(); ++i){
+
+		//Clear shadowmap
+		_shadowMap.clear();
 
 		if(typeid(*(_lights[i])) == typeid(DirectionalLight)){
 
 			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
+			//Render shadowmap:
+
+			//Render light
+			_renderTexture.bindAsTarget();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
 
-			drawFullscreenQuad(shader);
+			drawFullscreenQuad(shader, ogl);
 
 		}else if(typeid(*(_lights[i])) == typeid(Light)){
 
 			Light* light = static_cast<Light*>(_lights[i]);
 
+			//Render shadowmap:
+
+			//Render light
+			_renderTexture.bindAsTarget();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 			shader.setUniform("gLightPosition", light->getPosition());
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
 
-			drawFullscreenQuad(shader);
+			drawFullscreenQuad(shader, ogl);
 		}else{ //Spotlight
 
 			SpotLight* light = static_cast<SpotLight*>(_lights[i]);
 
+			//Render shadowmap:
+			_shadowMap.clear();
+			_shadowMap.bindAsRendertarget();
+			Matrix4f projection = glm::perspective<float>(45.f, 1.f, 0.1f, 200.f);
+			Matrix4f view = glm::lookAt(light->getPosition(), light->getPosition() + Vector3f(light->getDirection()),
+										Vector3f(0.f, 1.f, 0.f));
+			shadowmapShader.setUniform("projectionMatrix", projection);
+			shadowmapShader.setUniform("viewMatrix", view);
+
+			drawShadowmap(shadowmapShader);
+
+			Matrix4f shadowMatrix = MVP_TO_SHADOWCOORD * projection * view;
+
+			//Render light
+			_renderTexture.bindAsTarget();
+			_shadowMap.bindAsSource(8);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
@@ -299,14 +335,16 @@ void Scene::lightPass(const Camera& camera) {
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
 			shader.setUniform("gLightConeCosine", lightConeCosine);
+			shader.setUniform("shadowMatrix", shadowMatrix);
 
-			drawFullscreenQuad(shader);
+			drawFullscreenQuad(shader, ogl);
 
 		}
 
 	}
 
 	///////////////////////////////////////////////////////////////
+
 	//Multiply result with the scene
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
@@ -319,17 +357,54 @@ void Scene::lightPass(const Camera& camera) {
 	_renderTexture.bindAsSource();
 	shader.setUniform("gSampler", 0); //sample from diffuse
 	ogl.setBlendMode(OpenGlControl::MULTIPLY);
-	OpenGlControl::useSettings(ogl);
-	drawFullscreenQuad(shader);
+	drawFullscreenQuad(shader, ogl);
 
 	//Compose with specular part:
 	_renderTexture.bindAsSource();
 	shader.setUniform("gSampler", 1); //sample from diffuse
 	ogl.setBlendMode(OpenGlControl::ADD);
-	OpenGlControl::useSettings(ogl);
-	drawFullscreenQuad(shader);
+	drawFullscreenQuad(shader, ogl);
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
+}
+
+void Scene::drawShadowmap(const Shader& shadowmapShader) {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableCulling(true);
+	ogl.setCulledSide(OpenGlControl::INSIDE);
+	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+	OpenGlControl::useSettings(ogl);
+
+	_shadowMap.clear();
+	_shadowMap.bindAsRendertarget();
+
+	for(size_t i = 0; i < _nodes.size(); ++i){
+
+		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
+
+			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
+
+			const Model& model = node->getModel();
+
+			shadowmapShader.setUniform("modelMatrix", node->getModelMatrix());
+
+			for(size_t j = 0; j < model.getMeshCount(); ++j){
+
+				const Mesh& mesh = model.getMesh(j);
+
+				glEnableVertexAttribArray(0);
+				mesh.getPositionVbo().bind();
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shadowmapShader);
+				glDisableVertexAttribArray(0);
+
+			}
+
+		}
+
+	}
+
 }
 
 void Scene::ambientPart() {
@@ -352,23 +427,25 @@ void Scene::dumpOutDepthGBuffer() {
 	ogl.enableDepthtest(false);
 	ogl.enableDepthbufferWriting(false);
 	ogl.enableCulling(false);
-	OpenGlControl::useSettings(ogl);
 
 	_window.bind();
-	_gBuffer.bindDepthBufferAsSourceTexture();
+	//_gBuffer.bindDepthBufferAsSourceTexture();
+	_shadowMap.bindAsSource();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE_ONE_COMPONENT);
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	drawFullscreenQuad(shader);
+	drawFullscreenQuad(shader, ogl);
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 }
 
-void Scene::drawFullscreenQuad(const Shader& shader) const {
+void Scene::drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settings& rendersettings) const {
+
+	OpenGlControl::useSettings(rendersettings);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

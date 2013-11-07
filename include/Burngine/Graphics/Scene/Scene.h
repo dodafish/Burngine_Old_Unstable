@@ -33,9 +33,11 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
+#include <Burngine/Graphics/Texture/ShadowMap.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 namespace burn {
 class Light;
@@ -108,9 +110,13 @@ private:
 	void lightPass(const Camera& camera);
 	//Pass-Helpers:
 	void ambientPart();
-	void drawFullscreenQuad(const Shader& shader) const;
+	void drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settings& rendersettings) const;
 	RenderTexture _renderTexture;
 	VertexBufferObject _fullscreenVbo;
+
+	//Shadow:
+	void drawShadowmap(const Shader& shadowmapShader);
+	ShadowMap _shadowMap;
 
 };
 
