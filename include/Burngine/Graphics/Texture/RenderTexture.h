@@ -52,7 +52,7 @@ public:
 
 	bool isCreated() const;
 
-	bool addColorAttachment(const GLenum& attachment);
+	bool addColorAttachment(const unsigned int& attachment);
 
 private:
 	virtual void onBind(const unsigned int& unit) const;
@@ -63,8 +63,13 @@ private:
 	GLuint _framebuffer, _depthbuffer, _texture;
 	bool _isCreated;
 	Vector2ui _dimensions;
-	std::vector<GLenum> _attachments;
-	std::vector<GLuint> _additionalTextures;
+
+	struct AdditionalAttachment{
+		unsigned int attachment; ///< Range ]0; GL_MAX_COLOR_ATTACHMENTS[
+		GLuint texture; ///< Texture ID
+	};
+
+	std::vector<AdditionalAttachment> _additionalAttachments;
 };
 
 } /* namespace burn */

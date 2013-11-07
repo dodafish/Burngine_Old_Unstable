@@ -41,6 +41,10 @@ _isCreated(false) {
 
 RenderTexture::~RenderTexture() {
 
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+		glDeleteTextures(1, &_additionalAttachments[i].texture);
+	}
+
 	if(Window::isContextCreated()){
 		glDeleteFramebuffers(1, &_framebuffer);
 		glDeleteRenderbuffers(1, &_depthbuffer);
@@ -62,9 +66,13 @@ void RenderTexture::onBind(const unsigned int& unit) const {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _texture);
 
-	for(size_t i = 0; i < _additionalTextures.size(); ++i){
-		glActiveTexture(GL_TEXTURE0 + (_attachments[i] - GL_COLOR_ATTACHMENT0));
-		glBindTexture(GL_TEXTURE_2D, _additionalTextures[i]);
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+
+		//Texture has filterung without sampler.
+		Sampler::unbind(_additionalAttachments[i].attachment);
+
+		glActiveTexture(GL_TEXTURE0 + _additionalAttachments[i].attachment);
+		glBindTexture(GL_TEXTURE_2D, _additionalAttachments[i].texture);
 	}
 }
 
@@ -84,10 +92,10 @@ void RenderTexture::cleanup() {
 		return;
 	}
 
-	for(size_t i = 0; i < _additionalTextures.size(); ++i){
-		glDeleteTextures(1, &_additionalTextures[i]);
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+		glDeleteTextures(1, &_additionalAttachments[i].texture);
 	}
-	_additionalTextures.clear();
+	_additionalAttachments.clear();
 
 	glDeleteTextures(1, &_texture);
 	glDeleteFramebuffers(1, &_framebuffer);
@@ -132,8 +140,9 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	//Configure:
 	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _texture, 0);
-	_attachments.push_back(GL_COLOR_ATTACHMENT0);
-	glDrawBuffers(_attachments.size(), &_attachments[0]);
+	GLenum drawBuffers[1] = {
+	GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, drawBuffers);
 
 	//Check:
 	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
@@ -151,7 +160,7 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	return true;
 }
 
-bool RenderTexture::addColorAttachment(const GLenum& attachment) {
+bool RenderTexture::addColorAttachment(const unsigned int& attachment) {
 
 	//Valid OpenGL-Context is needed
 	if(!Window::isContextCreated()){
@@ -162,36 +171,63 @@ bool RenderTexture::addColorAttachment(const GLenum& attachment) {
 		Reporter::report("Unable to add color attachment. Rendertexture does not exist!", Reporter::ERROR);
 		return false;
 	}
-	if(attachment == GL_COLOR_ATTACHMENT0){
+	if(attachment == 0){
 		Reporter::report("Unable to add color attachment to slot 0. Slot already taken!", Reporter::ERROR);
 		return false;
 	}
-	for(size_t i = 0; i < _attachments.size(); ++i){
-		if(_attachments[i] == attachment){
+	if(attachment >= GL_MAX_COLOR_ATTACHMENTS){
+		Reporter::report("Unable to add color attachment. Attachment ID out of range!", Reporter::ERROR);
+		return false;
+	}
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+		if(_additionalAttachments[i].attachment == attachment){
 			Reporter::report("Unable to add color attachment. Slot already taken!", Reporter::ERROR);
 			return false;
 		}
 	}
 
+	//Ok, we can create the new attachment:
+	///////////////////////////////////////
+
+	//For restoring
 	GLint lastFB = 0;
 	GLint lastTex = 0;
 	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &lastFB);
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
 
-	GLuint id = 0;
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
+	AdditionalAttachment aa;
+	aa.attachment = attachment;
+
+	//Create:
+	glGenTextures(1, &aa.texture);
+	glBindTexture(GL_TEXTURE_2D, aa.texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	//Samplerless filtering!
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GL_TEXTURE_2D, id, 0);
 
+	//Reconfigure framebuffer:
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
+	//Connect texture to framebuffer
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + aa.attachment, GL_TEXTURE_2D, aa.texture, 0);
 
-	_attachments.push_back(attachment);
-	_additionalTextures.push_back(id);
-	glDrawBuffers(_attachments.size(), &_attachments[0]);
+	_additionalAttachments.push_back(aa);
 
+	//Tell the framebuffer the new drawbufferset
+	std::vector<GLenum> drawBuffers;
+	drawBuffers.push_back(GL_COLOR_ATTACHMENT0); //The default one that is no additional attachment
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+		drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + _additionalAttachments[i].attachment);
+	}
+	glDrawBuffers(drawBuffers.size(), &drawBuffers[0]);
+
+	//Check:
+	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+		Reporter::report("RenderTexture: Failed to add color attachment!\n", Reporter::ERROR);
+		return false;
+	}
+
+	//Restore
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lastFB);
 	glBindTexture(GL_TEXTURE_2D, lastTex);
 
@@ -238,8 +274,9 @@ void RenderTexture::clear() const {
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
-	for(size_t i = 0; i < _additionalTextures.size(); ++i){
-		glBindTexture(GL_TEXTURE_2D, _additionalTextures[i]);
+	//Clear additional textures
+	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
+		glBindTexture(GL_TEXTURE_2D, _additionalAttachments[i].texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	}
 

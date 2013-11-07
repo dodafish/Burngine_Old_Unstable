@@ -50,10 +50,10 @@ _window(parentWindow) {
 		exit(12);
 	}
 
-	/*if(!_renderTexture.addColorAttachment(GL_COLOR_ATTACHMENT1)){
+	if(!_renderTexture.addColorAttachment(1)){
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(13);
-	}*/
+	}
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -247,7 +247,7 @@ void Scene::lightPass(const Camera& camera) {
 
 	//Render all dirlights together into rendertexture
 	_renderTexture.clear();
-	_renderTexture.bindAsTarget(); // <- Diffuse light; Color Attachment 0
+	_renderTexture.bindAsTarget(); // <- Diffuse light (attachment 0); specular (1)
 
 	ambientPart();
 
@@ -284,12 +284,20 @@ void Scene::lightPass(const Camera& camera) {
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	_renderTexture.bindAsSource(0);
-	_window.bind();
-	shader.setUniform("gSampler", 0);
 	shader.setUniform("mixColor", Vector3f(1.f));
+	_window.bind();
 
+	//Compose with diffuse part:
+	_renderTexture.bindAsSource();
+	shader.setUniform("gSampler", 0); //sample from diffuse
 	ogl.setBlendMode(OpenGlControl::MULTIPLY);
+	OpenGlControl::useSettings(ogl);
+	drawFullscreenQuad(shader);
+
+	//Compose with specular part:
+	_renderTexture.bindAsSource();
+	shader.setUniform("gSampler", 1); //sample from diffuse
+	ogl.setBlendMode(OpenGlControl::ADD);
 	OpenGlControl::useSettings(ogl);
 	drawFullscreenQuad(shader);
 
