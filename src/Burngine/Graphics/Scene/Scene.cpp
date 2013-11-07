@@ -31,6 +31,7 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Scene/Light.h>
 #include <Burngine/Graphics/Scene/DirectionalLight.h>
+#include <Burngine/Graphics/Scene/SpotLight.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 
 #include <Burngine/System/Reporter.h>
@@ -232,6 +233,18 @@ void Scene::lightPass(const Camera& camera) {
 		shader.setUniform("projectionMatrix", Matrix4f(1.f));
 		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gEyePosition", camera.getPosition());
+	}
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
+		shader.setUniform("modelMatrix", Matrix4f(1.f));
+		shader.setUniform("viewMatrix", Matrix4f(1.f));
+		shader.setUniform("projectionMatrix", Matrix4f(1.f));
+		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
@@ -274,6 +287,21 @@ void Scene::lightPass(const Camera& camera) {
 			shader.setUniform("gLightIntensity", light->getIntensity());
 
 			drawFullscreenQuad(shader);
+		}else{ //Spotlight
+
+			SpotLight* light = static_cast<SpotLight*>(_lights[i]);
+
+			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
+
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
+			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
+			shader.setUniform("gLightPosition", light->getPosition());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
+			shader.setUniform("gLightConeCosine", lightConeCosine);
+
+			drawFullscreenQuad(shader);
+
 		}
 
 	}
