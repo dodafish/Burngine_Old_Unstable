@@ -38,9 +38,9 @@ _coneAngle(30.f) {
 void SpotLight::setConeAngle(const float& angle) {
 	_coneAngle = angle;
 
-	if(_coneAngle <= 1.f)
+	if(_coneAngle < 1.f)
 		_coneAngle = 1.f;
-	else if(_coneAngle >= 90.f)
+	else if(_coneAngle > 89.f)
 		_coneAngle = 89.f;
 
 }

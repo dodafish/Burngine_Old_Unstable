@@ -240,6 +240,7 @@ void Scene::lightPass(const Camera& camera) {
 		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
 		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gSamplerShadowmap", 8);
 		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	{
@@ -283,13 +284,22 @@ void Scene::lightPass(const Camera& camera) {
 			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
 			//Render shadowmap:
+			Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
+			Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(light->getDirection()), Vector3f(1.f));
+			shadowmapShader.setUniform("projectionMatrix", projection);
+			shadowmapShader.setUniform("viewMatrix", view);
+
+			drawShadowmap(shadowmapShader);
+			Matrix4f shadowMatrix = MVP_TO_SHADOWCOORD * projection * view;
 
 			//Render light
 			_renderTexture.bindAsTarget();
+			_shadowMap.bindAsSource(8);
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
+			shader.setUniform("shadowMatrix", shadowMatrix);
 
 			drawFullscreenQuad(shader, ogl);
 
@@ -312,16 +322,13 @@ void Scene::lightPass(const Camera& camera) {
 			SpotLight* light = static_cast<SpotLight*>(_lights[i]);
 
 			//Render shadowmap:
-			_shadowMap.clear();
-			_shadowMap.bindAsRendertarget();
-			Matrix4f projection = glm::perspective<float>(45.f, 1.f, 0.1f, 200.f);
+			Matrix4f projection = glm::perspective<float>(light->getConeAngle()*2.f, 1.f, 0.01f, 2000.f);
 			Matrix4f view = glm::lookAt(light->getPosition(), light->getPosition() + Vector3f(light->getDirection()),
 										Vector3f(0.f, 1.f, 0.f));
 			shadowmapShader.setUniform("projectionMatrix", projection);
 			shadowmapShader.setUniform("viewMatrix", view);
 
 			drawShadowmap(shadowmapShader);
-
 			Matrix4f shadowMatrix = MVP_TO_SHADOWCOORD * projection * view;
 
 			//Render light
