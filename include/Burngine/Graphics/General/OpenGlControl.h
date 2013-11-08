@@ -38,19 +38,26 @@ public:
 	OpenGlControl() = delete;
 
 	enum BlendMode {
-		OVERWRITE, ADD, MULTIPLY, MIX
+		OVERWRITE, ///< Ignores source's data
+		ADD, ///< Adds to source's data
+		MULTIPLY, ///< Multiplies with source's data
+		MIX ///< Mixes according to alpha values
 	};
 
 	enum DepthtestTechnique {
-		LESS = GL_LESS, EQUAL = GL_EQUAL, LEQUAL = GL_LEQUAL
+		LESS = GL_LESS, ///< Closer vertices win depthtest
+		EQUAL = GL_EQUAL, ///< Only equal vertices win depthtest
+		LEQUAL = GL_LEQUAL ///< Closer and equal vertices win depthtest
 	};
 
 	enum CullSide {
-		OUTSIDE = GL_FRONT, INSIDE = GL_BACK
+		OUTSIDE = GL_FRONT, ///< Outside faces will be ignored
+		INSIDE = GL_BACK ///< Inside faces will be ignored
 	};
 
 	enum VertexOrder {
-		COUNTER_CLOCKWISE = GL_CCW, CLOCKWISE = GL_CW
+		COUNTER_CLOCKWISE = GL_CCW, ///< Frontfaces have counter-clockwise vertexorder
+		CLOCKWISE = GL_CW ///< Frontfaces have clockwise vertexorder
 	};
 
 	class Settings {

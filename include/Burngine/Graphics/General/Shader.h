@@ -73,6 +73,14 @@ public:
 	 */
 	bool loadFromString(const std::string& vertexShader, const std::string& fragmentShader);
 
+	/**
+	 * @brief Loads shader from file
+	 *
+	 * @param vertexShaderFile File of vertex shader
+	 * @param fragmentShaderFile File of fragment shader
+	 *
+	 * @note BurngineShaders are loaded with this function
+	 */
 	bool loadFromFile(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
 
 	/**
@@ -98,11 +106,52 @@ public:
 	 */
 	GLuint getUniformLocation(const std::string& uniformName) const;
 
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const Matrix4f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const Vector4f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const Vector3f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const Vector2f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const int& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param name Variable name in the shader
+	 * @param value Value to set to the variable
+	 */
 	void setUniform(const std::string& name, const float& value) const;
 
 private:
