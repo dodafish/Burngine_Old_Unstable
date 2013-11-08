@@ -30,21 +30,77 @@
 
 namespace burn {
 
+/**
+ * @brief Characters are used internally by Font and Text.
+ * You don't have to use this class usually.
+ */
 class BURNGINE_API Character {
 public:
+	/**
+	 * @brief The default constructor
+	 */
 	Character(const Uint32& codePoint = 0, const unsigned int& size = 0);
+
+	/**
+	 * @brief The default destructor. Takes care about
+	 * proper cleanup.
+	 */
 	~Character();
 
+	/**
+	 * @brief Creates a texture from a freetype glyph
+	 *
+	 * @param glyph The freetype glyph
+	 * @param bitmap The glyph's bitmap
+	 *
+	 * @note This function should only be called by Font
+	 */
 	void createFromFtGlyph(void* glyph, void* bitmap);
 
+	/**
+	 * @brief Draws the character to screen
+	 *
+	 * @param position The position (left,bottom) where the character
+	 * should be drawn to
+	 * @param color The manipulating color for drawing
+	 *
+	 * @note This might be deprecated in future versions
+	 */
 	void draw(const Vector2f& position, const Vector4f& color) const;
 
+	/**
+	 * @brief Compares the character codes
+	 *
+	 * @return Returns true when both characters are the same
+	 */
 	bool operator==(const Uint32& codePoint) const;
 
+	/**
+	 * @brief Returns the real dimensions of the character
+	 *
+	 * @return Real dimensions of the character
+	 */
 	const Vector2i& getDimensions() const;
+
+	/**
+	 * @brief Returns the offset needed to draw the next character
+	 *
+	 * @return The advance of the character
+	 */
 	const Vector2i& getAdvance() const;
+
+	/**
+	 * @brief Returns the bearing of the character
+	 *
+	 * @return The character's bearing
+	 */
 	const Vector2i& getBearing() const;
 
+	/**
+	 * @brief Returns the fontsize of the character
+	 *
+	 * @return The fontsize of the character
+	 */
 	const unsigned int& getSize() const;
 
 private:

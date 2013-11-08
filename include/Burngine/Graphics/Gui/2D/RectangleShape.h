@@ -32,14 +32,54 @@ namespace burn {
 
 class BURNGINE_API RectangleShape : public GuiNode {
 public:
+	/**
+	 * @brief Default constructor
+	 */
 	RectangleShape();
 
+	/**
+	 * @brief Sets the dimensions of the rectangle
+	 *
+	 * @param dimensions Width and height of the rectangle
+	 *
+	 * @see getDimensions()
+	 */
 	void setDimensions(const Vector2f& dimensions);
+
+	/**
+	 * @brief Returns the dimensions of the rectangle in
+	 * width and height
+	 *
+	 * @return The dimensions of the rectangle
+	 *
+	 * @see setDimensions()
+	 */
 	const Vector2f& getDimensions() const;
 
+	/**
+	 * @brief Sets the color of the rectangle
+	 *
+	 * @param color 4-Component color in range [0, 1]
+	 *
+	 * @see getColor()
+	 */
 	void setColor(const Vector4f& color);
+
+	/**
+	 * @brief Returns a 4-component color in range
+	 * [0, 1]
+	 *
+	 * @return A 4-component color in range [0, 1]
+	 *
+	 * @see setColor()
+	 */
 	const Vector4f& getColor() const;
 
+	/**
+	 * @brief Draws the rectangle to the screen
+	 *
+	 * @note Might be depracated in future versions
+	 */
 	void draw();
 
 private:
