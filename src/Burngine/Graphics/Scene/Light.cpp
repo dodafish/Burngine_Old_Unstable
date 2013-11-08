@@ -23,12 +23,6 @@
 
 #include <Burngine/Graphics/Scene/Light.h>
 
-#include <Burngine/Graphics/General/Shader.h>
-#include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/Graphics/Scene/StaticMeshNode.h>
-#include <Burngine/Graphics/Scene/Mesh.h>
-#include <Burngine/Graphics/Window/Window.h>
-
 namespace burn {
 
 void Light::removeAllParents() {
@@ -45,7 +39,7 @@ void Light::removeAllParents() {
 	_parents.clear();
 }
 
-Light::Light(const ShadowCubeMap::Resolution& shadowMapResolution) :
+Light::Light() :
 _color(Vector3f(1.f)),
 _intensity(10.f) {
 
@@ -116,78 +110,5 @@ void Light::setIntensity(const float& intensity) {
 const float& Light::getIntensity() const {
 	return _intensity;
 }
-
-/*void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
-
-	if(!Window::isContextCreated() || !_shadowCubeMap.isCreated())
-		return;
-
-	//Clear old shadowMap and bind it for rendering
-	_shadowCubeMap.clear();
-
-	//Select shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH_POINTLIGHT);
-
-	//Calculate matrix
-	Matrix4f projectionMatrix = glm::perspective<float>(90.f, 1.f, 0.1f, 100.f);
-
-	//Set uniforms
-	shader.setUniform("projectionMatrix", projectionMatrix);
-	_biasProjectionMatrix = projectionMatrix;
-
-	for(int face = 0; face != 6; ++face){
-
-		_shadowCubeMap.bindAsRendertarget(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face);
-
-		glClear(GL_DEPTH_BUFFER_BIT);
-
-		shader.setUniform("viewMatrix", findViewMatrix(face));
-
-		//Scan through all nodes
-		for(size_t i = 0; i < nodes.size(); ++i){
-
-			if(!nodes[i]->isCastingShadows())
-				continue;
-
-			if(typeid(*(nodes[i])) == typeid(StaticMeshNode)){
-				StaticMeshNode* node = static_cast<StaticMeshNode*>(nodes[i]);
-
-				node->update();
-
-				//Skip if updating failed or is incomplete
-				if(!node->getModel().isUpdated())
-					continue;
-
-				Matrix4f modelMatrix = node->getModelMatrix();
-				shader.setUniform("modelMatrix", modelMatrix);
-
-				for(size_t j = 0; j < node->getModel().getMeshCount(); ++j){
-
-					//0 = Positions
-					glEnableVertexAttribArray(0);
-					node->getModel().getMesh(j).getPositionVbo().bind();
-					glVertexAttribPointer(0, // attribute 0
-					3,                  // size
-					GL_FLOAT,           // type
-					GL_FALSE,           // normalized?
-					0,                  // stride
-					(void*)0            // array buffer offset
-					);
-
-					//Draw
-					OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, node->getModel().getMesh(j).getVertexCount(),
-										shader);
-
-					glDisableVertexAttribArray(0);
-
-				}
-
-			}
-
-		}
-
-	}
-
-}*/
 
 } /* namespace burn */

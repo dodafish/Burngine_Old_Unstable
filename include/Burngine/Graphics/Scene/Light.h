@@ -32,7 +32,7 @@ namespace burn {
 
 class BURNGINE_API Light : public Transformable{
 public:
-	Light(const ShadowCubeMap::Resolution& shadowMapResolution = ShadowCubeMap::LOW);
+	Light();
 	Light(const Light& other);
 	Light& operator=(const Light& other);
 

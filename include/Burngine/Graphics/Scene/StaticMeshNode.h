@@ -75,22 +75,6 @@ public:
 
 	bool loadFromFile(const std::string& file);
 
-	/**
-	 * @brief Renders the node to the scene. Call this
-	 * indirect by calling the drawfunction of the Scene which
-	 * the node belongs to.
-	 *
-	 * @param cam The Camera that the node is rendered to accordingly
-	 * or nullptr to draw defaultposition
-	 *
-	 * @see Scene::drawAll()
-	 */
-	virtual void draw(const Camera& cam);
-
-	virtual void drawSingleColor(const Camera& camera, const Vector4f& color);
-
-	virtual void drawLighting(LightingType type, const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient);
-
 private:
 	//Hide methods, that are public in SceneNode.
 	//We have no need to have them public here, anymore.

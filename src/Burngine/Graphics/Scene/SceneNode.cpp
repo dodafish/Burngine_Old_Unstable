@@ -23,9 +23,6 @@
 
 #include <Burngine/Graphics/Scene/SceneNode.h>
 
-#include <Burngine/Graphics/Scene/Camera.h>
-#include <Burngine/Graphics/Scene/Light.h>
-
 namespace burn {
 
 void SceneNode::removeAllParents() {
@@ -80,19 +77,6 @@ void SceneNode::removeParentScene(Scene* scene) {
 			return; //addParentScene() ensures, that a scene is added only once. So return
 		}
 	}
-}
-
-void SceneNode::setMVPUniforms(const Shader& shader, const Camera& cam) {
-
-	//Calculate matrices
-	glm::mat4 projectionMatrix = glm::perspective(cam.getFov(), cam.getAspectRatio(), 0.1f, 10000.0f);
-	glm::mat4 viewMatrix = glm::lookAt(cam.getPosition(), cam.getLookAt(), glm::vec3(0, 1, 0));
-
-	//Set uniforms
-	shader.setUniform("modelMatrix", getModelMatrix());
-	shader.setUniform("viewMatrix", viewMatrix);
-	shader.setUniform("projectionMatrix", projectionMatrix);
-
 }
 
 bool SceneNode::isCastingShadows() const {

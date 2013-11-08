@@ -23,12 +23,6 @@
 
 #include <Burngine/Graphics/Scene/SpotLight.h>
 
-#include <Burngine/Graphics/General/Shader.h>
-#include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/Graphics/Scene/StaticMeshNode.h>
-#include <Burngine/Graphics/Scene/Mesh.h>
-#include <Burngine/Graphics/Window/Window.h>
-
 namespace burn {
 
 SpotLight::SpotLight() :

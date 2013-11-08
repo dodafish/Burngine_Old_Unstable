@@ -23,12 +23,6 @@
 
 #include <Burngine/Graphics/Scene/DirectionalLight.h>
 
-#include <Burngine/Graphics/General/Shader.h>
-#include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/Graphics/Scene/StaticMeshNode.h>
-#include <Burngine/Graphics/Scene/Mesh.h>
-#include <Burngine/Graphics/Window/Window.h>
-
 namespace burn {
 
 Vector4f DirectionalLight::getDirection() const {

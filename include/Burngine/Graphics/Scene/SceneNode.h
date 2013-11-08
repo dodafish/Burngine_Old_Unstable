@@ -55,32 +55,11 @@ public:
 
 	SceneNode& operator=(const SceneNode& other);
 
-	/**
-	 * @brief Virtual method for rendering.
-	 *
-	 * @param camera Pointer to Camera to draw node correctly or
-	 * nullptr for default rendermode.
-	 */
-	virtual void draw(const Camera& camera) = 0;
-
-	virtual void drawSingleColor(const Camera& camera, const Vector4f& color) = 0;
-
-	enum LightingType{
-		DIFFUSE,
-		SPECULAR
-	};
-
-	virtual void drawLighting(LightingType type, const Camera& camera, const std::vector<Light*>& lights, const Vector3f& ambient) = 0;
-
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
 	bool isCastingShadows() const;
 	void setCastingShadows(bool enabled);
-
-protected:
-
-	void setMVPUniforms(const Shader& shader, const Camera& cam);
 
 private:
 	void removeAllParents();
