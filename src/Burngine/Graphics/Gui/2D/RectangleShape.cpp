@@ -62,7 +62,7 @@ void RectangleShape::draw() {
 	shader.setUniform("projectionMatrix", ortho);
 	shader.setUniform("viewMatrix", modelView);
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("color", _color);
+	shader.setUniform("gColor", _color);
 
 	//Setup OpenGL for rendering
 	OpenGlControl::Settings ogl;
