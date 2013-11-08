@@ -51,6 +51,8 @@ namespace burn {
 
 class Window;
 class Shader;
+class SpotLight;
+class DirectionalLight;
 
 class BURNGINE_API Scene {
 public:
@@ -115,7 +117,8 @@ private:
 	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
-	void drawShadowmap(const Shader& shadowmapShader);
+	Matrix4f drawShadowmap(const DirectionalLight& dirLight);
+	Matrix4f drawShadowmap(const SpotLight& spotLight);
 	ShadowMap _shadowMap;
 
 };

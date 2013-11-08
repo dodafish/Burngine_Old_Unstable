@@ -273,7 +273,6 @@ void Scene::lightPass(const Camera& camera) {
 
 	ambientPart();
 
-	const Shader& shadowmapShader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 	for(size_t i = 0; i < _lights.size(); ++i){
 
 		//Clear shadowmap
@@ -284,13 +283,7 @@ void Scene::lightPass(const Camera& camera) {
 			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
 			//Render shadowmap:
-			Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
-			Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(light->getDirection()), Vector3f(1.f));
-			shadowmapShader.setUniform("projectionMatrix", projection);
-			shadowmapShader.setUniform("viewMatrix", view);
-
-			drawShadowmap(shadowmapShader);
-			Matrix4f shadowMatrix = MVP_TO_SHADOWCOORD * projection * view;
+			Matrix4f shadowMatrix = drawShadowmap(*light);
 
 			//Render light
 			_renderTexture.bindAsTarget();
@@ -322,14 +315,7 @@ void Scene::lightPass(const Camera& camera) {
 			SpotLight* light = static_cast<SpotLight*>(_lights[i]);
 
 			//Render shadowmap:
-			Matrix4f projection = glm::perspective<float>(light->getConeAngle()*2.f, 1.f, 0.01f, 2000.f);
-			Matrix4f view = glm::lookAt(light->getPosition(), light->getPosition() + Vector3f(light->getDirection()),
-										Vector3f(0.f, 1.f, 0.f));
-			shadowmapShader.setUniform("projectionMatrix", projection);
-			shadowmapShader.setUniform("viewMatrix", view);
-
-			drawShadowmap(shadowmapShader);
-			Matrix4f shadowMatrix = MVP_TO_SHADOWCOORD * projection * view;
+			Matrix4f shadowMatrix = drawShadowmap(*light);
 
 			//Render light
 			_renderTexture.bindAsTarget();
@@ -375,7 +361,7 @@ void Scene::lightPass(const Camera& camera) {
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-void Scene::drawShadowmap(const Shader& shadowmapShader) {
+Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableCulling(true);
@@ -386,6 +372,13 @@ void Scene::drawShadowmap(const Shader& shadowmapShader) {
 	_shadowMap.clear();
 	_shadowMap.bindAsRendertarget();
 
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+
+	Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
+	Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(dirLight.getDirection()), Vector3f(1.f));
+	shader.setUniform("projectionMatrix", projection);
+	shader.setUniform("viewMatrix", view);
+
 	for(size_t i = 0; i < _nodes.size(); ++i){
 
 		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
@@ -394,7 +387,7 @@ void Scene::drawShadowmap(const Shader& shadowmapShader) {
 
 			const Model& model = node->getModel();
 
-			shadowmapShader.setUniform("modelMatrix", node->getModelMatrix());
+			shader.setUniform("modelMatrix", node->getModelMatrix());
 
 			for(size_t j = 0; j < model.getMeshCount(); ++j){
 
@@ -403,7 +396,7 @@ void Scene::drawShadowmap(const Shader& shadowmapShader) {
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();
 				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shadowmapShader);
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 				glDisableVertexAttribArray(0);
 
 			}
@@ -411,6 +404,56 @@ void Scene::drawShadowmap(const Shader& shadowmapShader) {
 		}
 
 	}
+
+	return MVP_TO_SHADOWCOORD * projection * view;
+}
+
+Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableCulling(true);
+	ogl.setCulledSide(OpenGlControl::INSIDE);
+	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+	OpenGlControl::useSettings(ogl);
+
+	_shadowMap.clear();
+	_shadowMap.bindAsRendertarget();
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+
+	Matrix4f projection = glm::perspective<float>(spotlight.getConeAngle() * 2.f, 1.f, 0.01f, 2000.f);
+	Matrix4f view = glm::lookAt(spotlight.getPosition(), spotlight.getPosition() + Vector3f(spotlight.getDirection()),
+								Vector3f(0.f, 1.f, 0.f));
+	shader.setUniform("projectionMatrix", projection);
+	shader.setUniform("viewMatrix", view);
+
+	for(size_t i = 0; i < _nodes.size(); ++i){
+
+		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
+
+			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
+
+			const Model& model = node->getModel();
+
+			shader.setUniform("modelMatrix", node->getModelMatrix());
+
+			for(size_t j = 0; j < model.getMeshCount(); ++j){
+
+				const Mesh& mesh = model.getMesh(j);
+
+				glEnableVertexAttribArray(0);
+				mesh.getPositionVbo().bind();
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+				glDisableVertexAttribArray(0);
+
+			}
+
+		}
+
+	}
+
+	return MVP_TO_SHADOWCOORD * projection * view;
 
 }
 
@@ -436,8 +479,7 @@ void Scene::dumpOutDepthGBuffer() {
 	ogl.enableCulling(false);
 
 	_window.bind();
-	//_gBuffer.bindDepthBufferAsSourceTexture();
-	_shadowMap.bindAsSource();
+	_gBuffer.bindDepthBufferAsSourceTexture();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE_ONE_COMPONENT);
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
