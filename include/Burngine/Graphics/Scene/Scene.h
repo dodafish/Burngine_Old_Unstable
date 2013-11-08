@@ -34,6 +34,7 @@
 #include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
 #include <Burngine/Graphics/Texture/ShadowMap.h>
+#include <Burngine/Graphics/Texture/ShadowCubeMap.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
@@ -119,7 +120,12 @@ private:
 	//Shadow:
 	Matrix4f drawShadowmap(const DirectionalLight& dirLight);
 	Matrix4f drawShadowmap(const SpotLight& spotLight);
+	//Pointlight:
+	void drawShadowmap(const Light& pointlight);
+	Matrix4f findViewMatrix(const int& face, const Light& pointlight);
+	//ShadowMaps:
 	ShadowMap _shadowMap;
+	ShadowCubeMap _shadowCubeMap;
 
 };
 

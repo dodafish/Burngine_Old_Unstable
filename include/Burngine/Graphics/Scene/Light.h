@@ -27,7 +27,6 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
 #include <Burngine/Graphics/Scene/Scene.h>
-#include <Burngine/Graphics/Texture/ShadowCubeMap.h>
 
 namespace burn {
 
@@ -48,17 +47,6 @@ public:
 	void addParentScene(Scene* scene);
 	void removeParentScene(Scene* scene);
 
-	virtual void updateShadowMap(const std::vector<SceneNode*>& nodes);
-
-	virtual const Matrix4f& getBiasViewMatrix() const;
-	virtual const Matrix4f& getBiasProjectionMatrix() const;
-
-	void bindShadowCubeMap() const;
-
-	Matrix4f findViewMatrix(const int& face) const;
-
-	const ShadowCubeMap& getShadowCubeMap() const;
-
 protected:
 
 	Vector3f _color;
@@ -66,11 +54,6 @@ protected:
 
 	std::vector<Scene*> _parents;
 	void removeAllParents();
-
-	Matrix4f _biasViewMatrix, _biasProjectionMatrix;
-
-	ShadowCubeMap _shadowCubeMap;
-
 };
 
 } /* namespace burn */

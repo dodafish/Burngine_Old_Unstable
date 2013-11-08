@@ -186,7 +186,7 @@ void StaticMeshNode::drawSingleColor(const Camera& cam, const Vector4f& color) {
 void StaticMeshNode::drawLighting(LightingType type, const Camera& cam, const std::vector<Light*>& lights,
 const Vector3f& ambient) {
 
-	_model.update();
+	/*_model.update();
 
 	Vector3f camPosition = cam.getPosition();
 
@@ -207,7 +207,7 @@ const Vector3f& ambient) {
 
 			if(typeid(*(lights[j])) == typeid(Light)){ //It's a pointlight
 
-				//Get shader
+				/Get shader
 				const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 
 				//Set uniforms
@@ -225,7 +225,7 @@ const Vector3f& ambient) {
 				shader.setUniform("ambientColor", ambient);
 				shader.setUniform("specularColor", _model.getMesh(i).getMaterial().getSpecularColor());
 				shader.setUniform("lightIntensity", lights[j]->getIntensity());
-				shader.setUniform(
+				/*shader.setUniform(
 				"cubespaceMatrix",
 				lights[j]->getBiasProjectionMatrix() * lights[j]->findViewMatrix(5));
 
@@ -401,7 +401,7 @@ const Vector3f& ambient) {
 			}
 
 		}
-	}
+	}*/
 
 }
 

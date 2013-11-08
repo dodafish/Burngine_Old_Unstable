@@ -63,6 +63,11 @@ _window(parentWindow) {
 		exit(14);
 	}
 
+	if(!_shadowCubeMap.create(ShadowCubeMap::HIGH)){
+		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
+		exit(15);
+	}
+
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
 	Vector3f(1.f, -1.f, 0.f),
@@ -251,6 +256,7 @@ void Scene::lightPass(const Camera& camera) {
 		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
 		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
+		shader.setUniform("gSamplerShadowcubemap", 8);
 		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	{
@@ -301,8 +307,10 @@ void Scene::lightPass(const Camera& camera) {
 			Light* light = static_cast<Light*>(_lights[i]);
 
 			//Render shadowmap:
+			drawShadowmap(*light);
 
 			//Render light
+			_shadowCubeMap.bindAsSource(8);
 			_renderTexture.bindAsTarget();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 			shader.setUniform("gLightPosition", light->getPosition());
@@ -406,6 +414,80 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 	}
 
 	return MVP_TO_SHADOWCOORD * projection * view;
+}
+
+void Scene::drawShadowmap(const Light& pointlight) {
+
+	OpenGlControl::Settings ogl;
+	ogl.enableCulling(true);
+	ogl.setCulledSide(OpenGlControl::INSIDE);
+	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+	OpenGlControl::useSettings(ogl);
+
+	_shadowCubeMap.clear();
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+	Matrix4f projection = glm::perspective(90.f, 1.f, 0.01f, 2000.f);
+	shader.setUniform("projectionMatrix", projection);
+
+	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X+6; ++face){
+		_shadowCubeMap.bindAsRendertarget(face);
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		Matrix4f view = findViewMatrix(face, pointlight);
+		shader.setUniform("viewMatrix", view);
+
+		for(size_t i = 0; i < _nodes.size(); ++i){
+
+			if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
+
+				StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
+
+				const Model& model = node->getModel();
+
+				shader.setUniform("modelMatrix", node->getModelMatrix());
+
+				for(size_t j = 0; j < model.getMeshCount(); ++j){
+
+					const Mesh& mesh = model.getMesh(j);
+
+					glEnableVertexAttribArray(0);
+					mesh.getPositionVbo().bind();
+					glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+					OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+					glDisableVertexAttribArray(0);
+
+				}
+
+			}
+
+		}
+
+	}
+}
+
+Matrix4f Scene::findViewMatrix(const int& face, const Light& pointlight) {
+
+	Vector3f direction(1.f, 0.f, 0.f);
+	Vector3f headUp(0.f, 1.f, 0.f);
+
+	if(face == GL_TEXTURE_CUBE_MAP_POSITIVE_X){
+		direction = Vector3f(1.f, 0.f, 0.f);
+	}else if(face == GL_TEXTURE_CUBE_MAP_NEGATIVE_X){
+		direction = Vector3f(-1.f, 0.f, 0.f);
+	}else if(face == GL_TEXTURE_CUBE_MAP_POSITIVE_Y){
+		direction = Vector3f(0.f, -1.f, 0.f);
+		headUp = Vector3f(0.f, 0.f, -1.f);
+	}else if(face == GL_TEXTURE_CUBE_MAP_NEGATIVE_Y){
+		direction = Vector3f(0.f, 1.f, 0.f);
+		headUp = Vector3f(0.f, 0.f, 1.f);
+	}else if(face == GL_TEXTURE_CUBE_MAP_POSITIVE_Z){
+		direction = Vector3f(0.f, 0.f, -1.f);
+	}else{
+		direction = Vector3f(0.f, 0.f, 1.f);
+	}
+
+	return glm::lookAt(pointlight.getPosition(), pointlight.getPosition() + direction, headUp);
 }
 
 Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {

@@ -49,17 +49,11 @@ Light::Light(const ShadowCubeMap::Resolution& shadowMapResolution) :
 _color(Vector3f(1.f)),
 _intensity(10.f) {
 
-	if(!_shadowCubeMap.create(shadowMapResolution))
-		exit(20);
-
 }
 
 Light::Light(const Light& other) :
 _color(other._color),
 _intensity(other._intensity) {
-
-	if(!_shadowCubeMap.create(other._shadowCubeMap.getResolution()))
-		exit(20);
 
 	_parents = other._parents;
 	for(size_t i = 0; i < _parents.size(); ++i){
@@ -71,9 +65,6 @@ Light& Light::operator=(const Light& other) {
 
 	if(this == &other)
 		return *this;
-
-	if(!_shadowCubeMap.create(other._shadowCubeMap.getResolution()))
-		exit(20);
 
 	_color = other._color;
 	_intensity = other._intensity;
@@ -126,19 +117,7 @@ const float& Light::getIntensity() const {
 	return _intensity;
 }
 
-const Matrix4f& Light::getBiasViewMatrix() const {
-	return _biasViewMatrix;
-}
-
-const Matrix4f& Light::getBiasProjectionMatrix() const {
-	return _biasProjectionMatrix;
-}
-
-void Light::bindShadowCubeMap() const {
-	_shadowCubeMap.bindAsSource();
-}
-
-void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
+/*void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 
 	if(!Window::isContextCreated() || !_shadowCubeMap.isCreated())
 		return;
@@ -209,34 +188,6 @@ void Light::updateShadowMap(const std::vector<SceneNode*>& nodes) {
 
 	}
 
-}
-
-Matrix4f Light::findViewMatrix(const int& face) const {
-
-	Vector3f direction(1.f, 0.f, 0.f);
-	Vector3f headUp(0.f, 1.f, 0.f);
-
-	if(face == 0){
-		direction = Vector3f(1.f, 0.f, 0.f);
-	}else if(face == 1){
-		direction = Vector3f(-1.f, 0.f, 0.f);
-	}else if(face == 2){
-		direction = Vector3f(0.f, -1.f, 0.f);
-		headUp = Vector3f(0.f, 0.f, -1.f);
-	}else if(face == 3){
-		direction = Vector3f(0.f, 1.f, 0.f);
-		headUp = Vector3f(0.f, 0.f, 1.f);
-	}else if(face == 4){
-		direction = Vector3f(0.f, 0.f, -1.f);
-	}else{
-		direction = Vector3f(0.f, 0.f, 1.f);
-	}
-
-	return glm::lookAt(_position, _position + direction, headUp);
-}
-
-const ShadowCubeMap& Light::getShadowCubeMap() const {
-	return _shadowCubeMap;
-}
+}*/
 
 } /* namespace burn */
