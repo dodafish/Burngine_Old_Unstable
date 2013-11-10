@@ -54,6 +54,7 @@ class Window;
 class Shader;
 class SpotLight;
 class DirectionalLight;
+class BoundingBox;
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
@@ -199,7 +200,7 @@ private:
 	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
-	Matrix4f drawShadowmap(const DirectionalLight& dirLight);
+	Matrix4f drawShadowmap(const DirectionalLight& dirLight, const BoundingBox& sceneBb);
 	Matrix4f drawShadowmap(const SpotLight& spotLight);
 	//Pointlight:
 	void drawShadowmap(const Light& pointlight);

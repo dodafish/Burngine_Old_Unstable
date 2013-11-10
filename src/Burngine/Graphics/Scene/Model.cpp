@@ -189,8 +189,6 @@ bool Model::loadFromFile(const std::string& file) {
 
 	}
 
-	recalculateBoundingBox();
-
 	return true;
 }
 

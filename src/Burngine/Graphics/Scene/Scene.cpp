@@ -279,6 +279,23 @@ void Scene::lightPass(const Camera& camera) {
 
 	ambientPart();
 
+	//Get whole scene into a box:
+	Vector3f sceneBbPos, sceneBbDim;
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
+			const Model& m = static_cast<StaticMeshNode*>(_nodes[i])->getModel();
+			sceneBbPos.x = std::min(sceneBbPos.x, m.getBoundingBox().getPosition().x);
+			sceneBbPos.y = std::min(sceneBbPos.y, m.getBoundingBox().getPosition().y);
+			sceneBbPos.z = std::min(sceneBbPos.z, m.getBoundingBox().getPosition().z);
+			sceneBbDim.x = std::max(sceneBbDim.x, m.getBoundingBox().getDimensions().x);
+			sceneBbDim.y = std::max(sceneBbDim.y, m.getBoundingBox().getDimensions().y);
+			sceneBbDim.z = std::max(sceneBbDim.z, m.getBoundingBox().getDimensions().z);
+		}
+	}
+	BoundingBox sceneBoundingBox; //Whole scene in a bounding box
+	sceneBoundingBox.setPosition(sceneBbPos);
+	sceneBoundingBox.setDimensions(sceneBbDim);
+
 	for(size_t i = 0; i < _lights.size(); ++i){
 
 		//Clear shadowmap
@@ -289,7 +306,7 @@ void Scene::lightPass(const Camera& camera) {
 			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
 			//Render shadowmap:
-			Matrix4f shadowMatrix = drawShadowmap(*light);
+			Matrix4f shadowMatrix = drawShadowmap(*light, sceneBoundingBox);
 
 			//Render light
 			_renderTexture.bindAsTarget();
@@ -369,7 +386,7 @@ void Scene::lightPass(const Camera& camera) {
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
+Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight, const BoundingBox& sceneBb) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableCulling(true);
@@ -382,8 +399,26 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 
-	Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
+	//Cover whole scene with sceneBb
 	Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(dirLight.getDirection()), Vector3f(1.f));
+	/*Vector4f p = view * Vector4f(sceneBb.getPosition(), 1.f);
+	Vector4f p2 = view * Vector4f(sceneBb.getPosition() + sceneBb.getDimensions(), 1.f);
+	Vector2f xAxis, yAxis, zAxis;
+	if(p.x < p2.x)
+		xAxis = Vector2f(p.x, p2.x);
+	else
+		xAxis = Vector2f(p2.x, p.x);
+	if(p.y < p2.y)
+		yAxis = Vector2f(p.y, p2.y);
+	else
+		yAxis = Vector2f(p2.y, p.y);
+	if(p.z < p2.z)
+		zAxis = Vector2f(p.z, p2.z);
+	else
+		zAxis = Vector2f(p2.z, p.z);
+	Matrix4f projection = glm::ortho(xAxis.x, xAxis.y, yAxis.x, yAxis.y, zAxis.x, zAxis.y);*/
+	Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
+
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
 
@@ -430,7 +465,7 @@ void Scene::drawShadowmap(const Light& pointlight) {
 	Matrix4f projection = glm::perspective(90.f, 1.f, 0.01f, 2000.f);
 	shader.setUniform("projectionMatrix", projection);
 
-	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X+6; ++face){
+	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
 		_shadowCubeMap.bindAsRendertarget(face);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
