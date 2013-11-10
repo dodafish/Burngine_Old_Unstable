@@ -32,26 +32,64 @@
 
 namespace burn {
 
+/**
+ * @brief Texture to which you can render
+ */
 class BURNGINE_API RenderTexture : public BaseTexture{
 public:
+	/**
+	 * @brief Default constructor initializing some values
+	 */
 	RenderTexture();
+
+	/**
+	 * @brief Destructor cleaing up RenderTexture
+	 */
 	~RenderTexture();
 
 	//Rendertargets are not copyable
 	RenderTexture(const RenderTexture& other) = delete;
 	RenderTexture& operator=(const RenderTexture& other) = delete;
 
+	/**
+	 * @brief Creates the rendertarget according to the given dimensions
+	 *
+	 * @param dimensions The dimensions the rendertexture should have
+	 *
+	 * @return Return true on success. False otherwise
+	 */
 	bool create(const Vector2ui& dimensions);
 
+	/**
+	 * @brief Binds the RenderTexture as rendertarget. All sequential
+	 * rendercalls will get stored in this RenderTexture if no other
+	 * RenderTarget has been bound
+	 *
+	 * @see clear()
+	 */
 	void bindAsTarget() const;
 
+	/**
+	 * @brief Clears the RenderTexture.
+	 */
 	void clear() const;
 
-	void drawFullscreen();
-	void draw(const Vector2f& position, const Vector2f& size);
-
+	/**
+	 * @brief Returns true if the RenderTexture has beed created
+	 *
+	 * @return Returns false if the RenderTexture has not been created yet
+	 *
+	 * @see create()
+	 */
 	bool isCreated() const;
 
+	/**
+	 * @brief Adds a color attachment to the given attachment unit
+	 *
+	 * @param attachment The unit to which the attachment shall be added
+	 *
+	 * @return Returns true on success. False otherwise.
+	 */
 	bool addColorAttachment(const unsigned int& attachment);
 
 private:

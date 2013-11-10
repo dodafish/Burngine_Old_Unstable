@@ -35,12 +35,21 @@ namespace burn {
 class BURNGINE_API Transformable {
 public:
 	/**
-	 * @brief The default constructor
+	 * @brief The default constructor initializing
+	 * modifiers
 	 */
 	Transformable();
 
+	/**
+	 * @brief Copyconstructor copies another Transformable's
+	 * modifiers
+	 */
 	Transformable(const Transformable& other);
 
+	/**
+	 * @brief Assignmentoperator copies another Transformable's
+	 * modifiers
+	 */
 	Transformable& operator=(const Transformable& other);
 
 	/**

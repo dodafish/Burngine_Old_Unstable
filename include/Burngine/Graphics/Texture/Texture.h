@@ -35,10 +35,26 @@ namespace burn {
  */
 class BURNGINE_API Texture : public BaseTexture {
 public:
-
+	/**
+	 * @brief Initializes some values
+	 */
 	Texture();
+
+	/**
+	 * @brief Copies the attributes and data from another
+	 * Texture
+	 */
 	Texture(const Texture& other);
+
+	/**
+	 * @brief Copies the attributes and data from another
+	 * Texture
+	 */
 	Texture& operator=(const Texture& other);
+
+	/**
+	 * Destructor cleaning up Texture
+	 */
 	~Texture();
 
 	/**
@@ -51,6 +67,17 @@ public:
 	 */
 	bool loadFromFile(const std::string& file);
 
+	/**
+	 * @brief Loads an image from data and stores it
+	 * as texture ready for use.
+	 *
+	 * @param data The data to load from
+	 * @param dimensions The image's dimensions
+	 * @param bpp The bits-per-pixel
+	 * @param format The internal format (RGB, LUMINANCE etc.)
+	 *
+	 * @return Returns true on success. False otherwise
+	 */
 	bool loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format);
 
 protected:

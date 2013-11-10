@@ -36,13 +36,48 @@ namespace burn {
  */
 class BURNGINE_API SkyBox {
 public:
+	/**
+	 * @brief Default constructor initializing some
+	 * values
+	 */
 	SkyBox();
+
+	/**
+	 * @brief Copyconstructor makes a identical copy of the other
+	 * SkyBox and holding its data seperatly
+	 */
 	SkyBox(const SkyBox& other);
+
+	/**
+	 * @brief Assigmentoperator makes a identical copy of the other
+	 * SkyBox and holding its data seperatly
+	 */
 	SkyBox& operator=(const SkyBox& other);
 
+	/**
+	 * @brief Sets the CubeMap texture which describes the skybox
+	 *
+	 * @param cubeMap The CubeMap with the texture
+	 *
+	 * @see getCubeMap()
+	 */
 	void setCubeMap(const CubeMap& cubeMap);
+
+	/**
+	 * @brief Returns the currently used CubeMap that describes
+	 * the SkyBox
+	 *
+	 * @return The currently used CubeMap
+	 *
+	 * @see setCubeMap()
+	 */
 	const CubeMap& getCubeMap() const;
 
+	/**
+	 * @brief This draws the cubemap.
+	 *
+	 * @note This function will be deprecated in future versions
+	 */
 	void draw();
 
 private:

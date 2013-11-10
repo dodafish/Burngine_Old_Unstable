@@ -31,18 +31,50 @@
 
 namespace burn {
 
+/**
+ * @brief Set of six textures in form of a cube
+ */
 class BURNGINE_API CubeMap : public BaseTexture {
 public:
+	/**
+	 * @brief Default constructor initializing some values
+	 */
 	CubeMap();
+
+	/**
+	 * @brief Copyconstructor copies another CubeMap and holds
+	 * its data seperatly
+	 */
 	CubeMap(const CubeMap& other);
+
+	/**
+	 * @brief Assignmentoperator copies another CubeMap and holds
+	 * its data seperatly
+	 */
 	CubeMap& operator=(const CubeMap& other);
 
+	/**
+	 * @brief Default destructor cleaning up the CubeMap
+	 */
 	~CubeMap();
 
+	/**
+	 * @brief Loads a set of six textures from file and settings those to each side
+	 * of the CubeMap
+	 *
+	 * @return Returns true on success. False otherwise
+	 */
 	bool loadFromFile(const std::string& filePositiveX, const std::string& fileNegativeX,
 	const std::string& filePositiveY, const std::string& fileNegativeY, const std::string& filePositiveZ,
 	const std::string& fileNegativeZ);
 
+	/**
+	 * @brief Returns true if the cubemap is created aka. loaded
+	 *
+	 * @return False if CubeMap is not loaded
+	 *
+	 * @see loadFromFile()
+	 */
 	bool isCreated() const;
 
 private:

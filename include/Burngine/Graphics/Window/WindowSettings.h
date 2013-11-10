@@ -125,7 +125,20 @@ public:
 	 */
 	const bool& isFullscreen() const;
 
+	/**
+	 * @brief Sets whether the window should choose the highest resolution possible (on creation)
+	 *
+	 * @param useHighestPossible Set to true if window should choose highest resolution (on creation)
+	 *
+	 * @see isUsingHighestResolution()
+	 */
 	void useHighestResolution(const bool& useHighestPossible = true);
+
+	/**
+	 * @brief Checks whether the window is using the highest resolution possible (on creation)
+	 *
+	 * @return Returns true when this is so
+	 */
 	const bool& isUsingHighestResolution() const;
 
 private:

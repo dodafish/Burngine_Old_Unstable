@@ -29,12 +29,25 @@
 
 namespace burn {
 
+/**
+ * @brief High-precision clock
+ */
 class BURNGINE_API Clock {
 public:
-	Clock();
-
+	/**
+	 * @brief Resets the measured time. Also returns the time
+	 * elapsed until the call to this method
+	 *
+	 * @return The time elapsed
+	 */
 	Time reset();
 
+	/**
+	 * @brief Returns the time that elapsed since the last call
+	 * to reset()
+	 *
+	 * @return The time elapsed
+	 */
 	Time getElapsedTime() const;
 
 private:

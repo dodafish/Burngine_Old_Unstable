@@ -30,6 +30,9 @@
 #include <Burngine/System/Math.h>
 namespace burn {
 
+/**
+ * @brief Class handling mouse input
+ */
 class BURNGINE_API Mouse {
 public:
 	Mouse() = delete;
@@ -41,9 +44,31 @@ public:
 	static void buttonCallback(GLFWwindow * window, int button, int action, int mods);
 	static void cursorPosCallback(GLFWwindow * window, double x, double y);
 
+	/**
+	 * @brief Checks if a button is being pressed or not
+	 *
+	 * @param button The mousebutton to check
+	 *
+	 * @return Returns true if the button is being pressed.
+	 * False otherwise
+	 */
 	static bool isButtonPressed(Button button);
+
+	/**
+	 * @brief Returns the current position of the cursor
+	 * relative to the window in pixel coordinates
+	 *
+	 * @return the current position of the cursor
+	 * relative to the window in pixel coordinates
+	 */
 	static const Vector2d& getCursorPosition();
 
+	/**
+	 * @brief Sets the cursor to the given position
+	 *
+	 * @param relativeWindow The window to which the position is relative
+	 * @param position The position in pixel coordinates
+	 */
 	static void setCursorPosition(const Window& relativeWindow, const Vector2d& position);
 
 private:

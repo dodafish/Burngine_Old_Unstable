@@ -29,11 +29,35 @@
 
 namespace burn {
 
+/**
+ * @brief Lightsource imitating a light that shines in the shape of
+ * a cone. E.g. a flashlight
+ */
 class BURNGINE_API SpotLight : public DirectionalLight {
 public:
+	/**
+	 * @brief Default constructor initialzing the coneangle with a value
+	 * of 30 degrees
+	 */
 	SpotLight();
 
+	/**
+	 * @brief Sets the cone angle of the spotlight. Surfaces outside the
+	 * cone will not be lit.
+	 *
+	 * @param angle The coneangle in degrees
+	 *
+	 * @see getConeAngle()
+	 */
 	void setConeAngle(const float& angle);
+
+	/**
+	 * @brief Returns the coneangle in degrees.
+	 *
+	 * @return The coneangle in degrees
+	 *
+	 * @see setConeAngle()
+	 */
 	const float& getConeAngle() const;
 
 private:

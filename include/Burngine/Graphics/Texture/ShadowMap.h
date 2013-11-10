@@ -29,14 +29,24 @@
 
 namespace burn {
 
+/**
+ * @brief Same as Texture but storing only depth values.
+ * Used for simple shadow mapping
+ */
 class BURNGINE_API ShadowMap : public BaseTexture {
 public:
+	/**
+	 * @brief Constructor initializing some values
+	 */
 	ShadowMap();
 
 	//Rendertargets are not copyable!
 	ShadowMap(const ShadowMap& other) = delete;
 	ShadowMap& operator=(const ShadowMap& other) = delete;
 
+	/**
+	 * @brief Destructor cleaning up ShadowMap
+	 */
 	~ShadowMap();
 
 	enum Resolution{
@@ -47,11 +57,31 @@ public:
 		VERY_HIGH = 2048 ///< 2048x2048
 	};
 
+	/**
+	 * @brief Creates the ShadowMap with the given resolution
+	 *
+	 * @param resoltuion The resolution of the ShadowMap
+	 *
+	 * @return Returns true on success. False otherwise.
+	 */
 	bool create(const Resolution& resolution = HIGH);
 
+	/**
+	 * @brief Clears the ShadowMap
+	 */
 	void clear();
+
+	/**
+	 * @brief Binds the ShadowMap as rendertarget
+	 */
 	void bindAsRendertarget() const;
 
+	/**
+	 * @brief Checks if the shadowmap has already been created
+	 *
+	 * @return Returns true if the shadowmap has already been created.
+	 * False otherwise
+	 */
 	bool isCreated() const;
 
 private:

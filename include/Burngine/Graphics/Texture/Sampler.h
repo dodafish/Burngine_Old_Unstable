@@ -29,24 +29,73 @@
 
 namespace burn {
 
+/**
+ * @brief Sets values when sampling from a texture
+ */
 class BURNGINE_API Sampler {
 public:
 
+	/**
+	 * @brief Unbinds all samplers from the given unit
+	 *
+	 * @param unit The unit to free
+	 *
+	 * @see bind()
+	 */
 	static void unbind(const unsigned int& unit = 0);
 
 	//////////////////////////////////////////////////
 
+	/**
+	 * @brief Constructor initializes some values
+	 */
 	Sampler();
+
+	/**
+	 * @brief Copies all attributes of another Sampler
+	 */
 	Sampler(const Sampler& other);
+
+	/**
+	 * @brief Copies all attributes of another Sampler
+	 */
 	Sampler& operator=(const Sampler& other);
+
+	/**
+	 * @brief Destructor cleaning up Sampler
+	 */
 	~Sampler();
 
+	/**
+	 * @brief Creates the sampler
+	 *
+	 * @return Returns true on success. False otherwise
+	 *
+	 * @see destroy()
+	 */
 	bool create();
+
+	/**
+	 * @brief Destroys the sampler, just like the destructor does
+	 */
 	void destroy();
 
+	/**
+	 * @Checks if sampler has already been created
+	 *
+	 * @return Returns true if Sampler has already been created
+	 */
 	bool isCreated() const;
 
-	void bind(const unsigned int& unit = 0) const ;
+	/**
+	 * @brief Binds the sampler to the given unit
+	 *
+	 * @param unit The unit which the sampler should be bound
+	 * to
+	 *
+	 * @see unbind()
+	 */
+	void bind(const unsigned int& unit = 0) const;
 
 	enum MagnificationFiltering {
 		MAG_NEAREST, MAG_BILINEAR
@@ -55,8 +104,31 @@ public:
 		MIN_NEAREST, MIN_BILINEAR, MIN_TRILINEAR, MIN_NEAREST_MIPMAP, MIN_BILINEAR_MIPMAP
 	};
 
+	/**
+	 * @brief Sets the filtering method of the sampler.
+	 *
+	 * @param mag The magnification filter
+	 * @param min The minification filter
+	 *
+	 * @return Returns true if settings filtering was successful.
+	 * False otherwise
+	 */
 	bool setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min);
+
+	/**
+	 * @brief Sets a sampler parameter to the given value
+	 *
+	 * @param parameter The sampler parameter
+	 * @param value The value of the parameter
+	 */
 	bool setSamplerParameter(GLenum parameter, GLenum value);
+
+	/**
+	 * @brief Sets the anisotropical level. The lowest one and
+	 * meaning "no anisotropic filtering" is 1.0f
+	 *
+	 * @param level The anisotropical level
+	 */
 	bool setAnisotropicLevel(const GLfloat& level);
 
 	const GLfloat& getAnisotropicLevel() const;

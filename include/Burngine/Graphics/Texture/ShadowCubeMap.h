@@ -29,14 +29,24 @@
 
 namespace burn {
 
+/**
+ * @brief Same as CubeMap but it is storing only depth values.
+ * Used for omnidirectional lightsources
+ */
 class BURNGINE_API ShadowCubeMap : public BaseTexture {
 public:
+	/**
+	 * @brief Constructor initializing some values
+	 */
 	ShadowCubeMap();
 
 	//Rendertargets are not copyable!
 	ShadowCubeMap(const ShadowCubeMap& other) = delete;
 	ShadowCubeMap& operator=(const ShadowCubeMap& other) = delete;
 
+	/**
+	 * @brief Destructor cleaning up ShadowCubeMap
+	 */
 	~ShadowCubeMap();
 
 	enum Resolution {
@@ -47,15 +57,43 @@ public:
 		VERY_HIGH = 2048 ///< 2048x2048
 	};
 
-
+	/**
+	 * @brief Creates the ShadowCubeMap with the given
+	 * resolution
+	 *
+	 * @param resolution The resolution on which the ShadowCubeMap
+	 * should be created
+	 *
+	 * @return Returns true on success. False otherwise
+	 */
 	bool create(const Resolution& resolution = HIGH);
 
+	/**
+	 * @brief Clears the ShadowCubeMap
+	 */
 	void clear();
 
+	/**
+	 * @brief Binds the ShadowCubeMap as rendertarget. This binds
+	 * only one face of the CubeMap depending on the parameter
+	 *
+	 * @param face The face to bind [0; 5]
+	 */
 	void bindAsRendertarget(const int& face) const;
 
+	/**
+	 * @brief Checks if the ShadowCubeMap has already been created
+	 *
+	 * @return Returns true if the ShadowCubeMap has already been created.
+	 * False otherwise
+	 */
 	bool isCreated() const;
 
+	/**
+	 * @brief Returns the resolution of the ShadowCubeMap
+	 *
+	 * @return The resolution of the ShadowCubeMap
+	 */
 	const Resolution& getResolution() const;
 
 private:

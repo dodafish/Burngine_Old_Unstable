@@ -25,12 +25,6 @@
 
 namespace burn {
 
-StaticMeshNode::StaticMeshNode() {
-}
-
-StaticMeshNode::~StaticMeshNode() {
-}
-
 void StaticMeshNode::setModel(const Model& model) {
 	_model = model;
 }

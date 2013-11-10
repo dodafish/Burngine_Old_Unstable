@@ -31,25 +31,11 @@
 namespace burn {
 
 /**
- * @brief A static mesh. No animations are possible.
- *
- * @note Create a StaticMeshNode only by calling the
- * according function of a Scene! Otherwise you will
- * get undefined results.
- *
- * @see Scene::createStaticMeshNode()
+ * @brief A SceneNode describing a model that has no animations
+ * e.g. a building.
  */
 class BURNGINE_API StaticMeshNode : public SceneNode {
 public:
-	/**
-	 * @brief The default constructor
-	 */
-	StaticMeshNode();
-
-	/**
-	 * @brief The default destructor
-	 */
-	~StaticMeshNode();
 
 	/**
 	 * @brief Sets the Model that the node should use
@@ -61,7 +47,7 @@ public:
 	void setModel(const Model& model);
 
 	/**
-	 * @brief Returns the current Model the node is using
+	 * @brief Returns the current Model the node is currently using
 	 *
 	 * @return The current Model
 	 *
@@ -69,10 +55,33 @@ public:
 	 */
 	const Model& getModel() const;
 
+	/**
+	 * @brief Sets the flag of the SceneNode's material.
+	 *
+	 * @param flag Flag to set
+	 * @param enabled Either true or false to enable or disable the flag
+	 *
+	 * @see Material::setFlag()
+	 */
 	void setFlag(const Material::Flag& flag, const bool& enabled = true);
 
+	/**
+	 * @brief Updates the model by synchronizing the vertices with the
+	 * memory on the video card.
+	 *
+	 * @see Model::update()
+	 */
 	void update();
 
+	/**
+	 * @brief Loads a 3d model from file.
+	 *
+	 * @param file The file to load from
+	 *
+	 * @return Returns true on success. False otherwise
+	 *
+	 * @see Model::loadFromFile()
+	 */
 	bool loadFromFile(const std::string& file);
 
 private:

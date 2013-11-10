@@ -65,7 +65,7 @@ public:
 	SceneNode(const SceneNode& other);
 
 	/**
-	 * @brief Copyconstructor copying the parents of the other
+	 * @brief Assignmentoperator copying the parents of the other
 	 * SceneNode and attaching itself to those scenes too
 	 *
 	 * @param other The other SceneNode to copy from

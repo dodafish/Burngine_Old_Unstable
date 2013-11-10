@@ -290,7 +290,7 @@ void RenderTexture::clear() const {
 
 }
 
-void RenderTexture::drawFullscreen() {
+/*void RenderTexture::drawFullscreen() {
 
 	if(!Window::isContextCreated() || !isCreated())
 		return;
@@ -412,6 +412,6 @@ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 
 	glBindTexture(GL_TEXTURE_2D, previousTexture);
 
-}
+}*/
 
 } /* namespace burn */

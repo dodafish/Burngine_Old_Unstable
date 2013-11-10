@@ -28,6 +28,9 @@
 #include <Burngine/Graphics/General/OpenGL.h> ///<- GLFW
 namespace burn {
 
+/**
+ * @brief Handles keyboard input
+ */
 class BURNGINE_API Keyboard {
 public:
 
@@ -156,6 +159,13 @@ public:
 
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+	/**
+	 * @brief Checks if a key is being pressed or not
+	 *
+	 * @param key The key to check
+	 *
+	 * @return Returns true if the key is being pressed. False otherwise
+	 */
 	static bool isKeyPressed(Key key);
 
 private:

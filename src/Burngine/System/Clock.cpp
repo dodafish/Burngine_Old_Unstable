@@ -25,9 +25,6 @@
 
 namespace burn {
 
-Clock::Clock() {
-}
-
 Time Clock::reset() {
 	Time elapsed = getElapsedTime();
 	_time.setTime(Time::now());
