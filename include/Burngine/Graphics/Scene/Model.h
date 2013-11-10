@@ -26,6 +26,7 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Material.h>
+#include <Burngine/System/BoundingBox.h>
 
 #include <vector>
 #include <memory>
@@ -113,7 +114,22 @@ public:
 	 */
 	bool isUpdated() const;
 
+	/**
+	 * @brief Recalculates the bounding box when necessary and
+	 * returns it
+	 *
+	 * @return BoundingBox covering all vertices as tight as possible
+	 */
+	const BoundingBox& getBoundingBox() const;
+
+	/**
+	 * @brief Recalculates the bounding box depending on the
+	 * meshes
+	 */
+	void recalculateBoundingBox() const;
+
 private:
+	mutable BoundingBox _bb;
 	std::vector<std::shared_ptr<Mesh>> _meshes;
 };
 

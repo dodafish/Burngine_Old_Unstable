@@ -25,11 +25,11 @@
 #define MESH_H_
 
 #include <Burngine/Export.h>
-#include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/Vertex.h>
 #include <Burngine/Graphics/Scene/Material.h>
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
+#include <Burngine/Graphics/Scene/Model.h>
 
 #include <vector>
 
@@ -48,18 +48,7 @@ public:
 	/**
 	 * @brief The default constructor creating VBOs
 	 */
-	Mesh();
-
-	/**
-	 * @brief Loads a 3D-model into the Mesh object.
-	 * It uses the assimp importer, so it supports the files
-	 * that assimp does.
-	 *
-	 * @param file The file to load
-	 *
-	 * @return Returns true on load-success
-	 */
-	bool loadFromFile(const std::string& file);
+	Mesh(const Model& model);
 
 	/**
 	 * @brief Sets the vertices of the mesh, so that they can be
@@ -188,7 +177,33 @@ public:
 	 */
 	bool isUpdated() const;
 
+	/**
+	 * @brief Returns the minimum and maximum value according to the
+	 * chosen axis.
+	 *
+	 * @return Min and Max of chosen axis
+	 */
+	const Vector2f& getXMinMax() const;
+
+	/**
+	 * @brief Returns the minimum and maximum value according to the
+	 * chosen axis.
+	 *
+	 * @return Min and Max of chosen axis
+	 */
+	const Vector2f& getYMinMax() const;
+
+	/**
+	 * @brief Returns the minimum and maximum value according to the
+	 * chosen axis.
+	 *
+	 * @return Min and Max of chosen axis
+	 */
+	const Vector2f& getZMinMax() const;
+
 private:
+
+	const Model& _model;
 
 	/**
 	 * @brief Fills the buffers with data or creates them if needed.
@@ -203,12 +218,11 @@ private:
 	Material _material;
 
 	std::vector<Vertex> _vertices;
-
 	bool _needUpdate;
-
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
 
 	Texture _texture;
+	Vector2f _xMinMax, _yMinMax, _zMinMax;
 };
 
 } /* namespace burn */

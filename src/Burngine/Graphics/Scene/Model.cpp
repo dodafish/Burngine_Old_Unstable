@@ -112,7 +112,7 @@ bool Model::loadFromFile(const std::string& file) {
 
 		}
 
-		_meshes.push_back(std::shared_ptr<Mesh>(new Mesh()));
+		_meshes.push_back(std::shared_ptr<Mesh>(new Mesh(*this)));
 		_meshes.back()->setVertices(vertices);
 
 		Material mat = _meshes.back()->getMaterial();
@@ -189,6 +189,8 @@ bool Model::loadFromFile(const std::string& file) {
 
 	}
 
+	recalculateBoundingBox();
+
 	return true;
 }
 
@@ -212,6 +214,27 @@ bool Model::isUpdated() const {
 			return false;
 	}
 	return true;
+}
+
+void Model::recalculateBoundingBox() const {
+	Vector3f p, pMax; //little pos, high pos
+
+	for(size_t i = 0; i < _meshes.size(); ++i){
+		p.x = std::min(p.x, _meshes[i]->getXMinMax().x);
+		p.y = std::min(p.y, _meshes[i]->getYMinMax().x);
+		p.z = std::min(p.z, _meshes[i]->getZMinMax().x);
+
+		pMax.x = std::max(pMax.x, _meshes[i]->getXMinMax().y);
+		pMax.y = std::max(pMax.y, _meshes[i]->getYMinMax().y);
+		pMax.z = std::max(pMax.z, _meshes[i]->getZMinMax().y);
+	}
+
+	_bb.setPosition(p);
+	_bb.setDimensions(Vector3f(pMax.x - p.x, pMax.y - p.y, pMax.z - p.z));
+}
+
+const BoundingBox& Model::getBoundingBox() const {
+	return _bb;
 }
 
 } /* namespace burn */
