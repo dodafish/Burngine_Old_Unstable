@@ -21,40 +21,24 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef RECTANGLE_H_
-#define RECTANGLE_H_
-
-#include <Burngine/Export.h>
-#include <Burngine/System/Math.h>
+#include <Burngine/System/BoundingBox.h>
 
 namespace burn {
 
-/**
- * @brief Represents a 2D Rectangle (e.g. bounding box for GuiNodes)
- */
-template<typename T>
-class BURNGINE_API Rectangle {
-public:
-	/**
-	 * @brief Default constructor initializing some values
-	 */
-	Rectangle();
-
-	T left, bottom, width, height;
-};
-
-template<typename T>
-Rectangle<T>::Rectangle() :
-left(0),
-bottom(0),
-width(0),
-height(0) {
+void BoundingBox::setPosition(const Vector3f& position){
+	_position = position;
 }
 
+const Vector3f& BoundingBox::getPosition() const{
+	return _position;
+}
 
-//Predefine some Rectangle types
-typedef Rectangle<float> FloatRect;
-typedef Rectangle<Int32> IntRect;
+void BoundingBox::setDimensions(const Vector3f& dimensions){
+	_dimensions = dimensions;
+}
+
+const Vector3f& BoundingBox::getDimensions() const{
+	return _dimensions;
+}
 
 } /* namespace burn */
-#endif /* RECTANGLE_H_ */

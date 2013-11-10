@@ -63,3 +63,5 @@
 #include <Burngine/System/String.h>
 #include <Burngine/System/Time.h>
 #include <Burngine/System/Utf.h>
+#include <Burngine/System/Rectangle.h>
+#include <Burngine/System/BoundingBox.h>
