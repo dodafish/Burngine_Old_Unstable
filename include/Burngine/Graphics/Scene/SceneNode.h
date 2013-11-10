@@ -39,26 +39,81 @@ namespace burn {
 class Camera;
 class Light;
 
+/**
+ * @brief Describes an object attachable to the Scene
+ */
 class BURNGINE_API SceneNode : public Transformable {
 public:
 	/**
-	 * @brief Default Constructor.
+	 * @brief Default Constructor initialzing some
+	 * values
 	 */
 	SceneNode();
 
 	/**
-	 * @brief Default Destructor
+	 * @brief Default Destructor detaching the SceneNode
+	 * from all Scenes
 	 */
 	virtual ~SceneNode();
 
+	/**
+	 * @brief Copyconstructor copying the parents of the other
+	 * SceneNode and attaching itself to those scenes too
+	 *
+	 * @param other The other SceneNode to copy from
+	 */
 	SceneNode(const SceneNode& other);
 
+	/**
+	 * @brief Copyconstructor copying the parents of the other
+	 * SceneNode and attaching itself to those scenes too
+	 *
+	 * @param other The other SceneNode to copy from
+	 *
+	 * @note When this SceneNode is attached to any Scene it
+	 * will get detached before!
+	 */
 	SceneNode& operator=(const SceneNode& other);
 
+	/**
+	 * @brief Adds a Scene as parent. This is used by Scene when
+	 * attaching SceneNodes. You should use the Scene's methods for
+	 * connecting SceneNodes to Scenes instead of this method
+	 *
+	 * @param parent The parent Scene
+	 *
+	 * @see removeParentScene()
+	 */
 	void addParentScene(Scene* scene);
+
+	/**
+	 * @brief Removes a Scene from parents. This is used by Scene when
+	 * detaching SceneNodes. You should use the Scene's methods for
+	 * disconnecting SceneNodes from Scenes instead of this method
+	 *
+	 * @param parent The parent Scene
+	 *
+	 * @see addParentScene()
+	 */
 	void removeParentScene(Scene* scene);
 
+	/**
+	 * @brief Returns true when the SceneNode is casting shadows
+	 *
+	 * @return Returns false when the SceneNode casts no shadows
+	 *
+	 * @see setCastingShadows()
+	 */
 	bool isCastingShadows() const;
+
+	/**
+	 * @brief Sets whether the SceneNode should cast any shadows.
+	 *
+	 * @param enabled Set this to true when the SceneNode should cast
+	 * shadows. False otherwise.
+	 *
+	 * @see isCastingShadows()
+	 */
 	void setCastingShadows(bool enabled);
 
 private:

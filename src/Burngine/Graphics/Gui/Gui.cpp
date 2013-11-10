@@ -26,11 +26,8 @@
 
 namespace burn {
 
-Gui::Gui() {
-
-}
-
 Gui::~Gui() {
+	detachAll();
 }
 
 void Gui::attachNode(GuiNode& node) {

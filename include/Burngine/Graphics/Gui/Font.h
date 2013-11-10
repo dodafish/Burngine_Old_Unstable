@@ -34,18 +34,67 @@ template class BURNGINE_API std::vector<std::shared_ptr<burn::Character>>;
 
 namespace burn {
 
+/**
+ * @brief Can load fontsets from TTF format
+ */
 class BURNGINE_API Font {
 public:
+	/**
+	 * @brief Default constructor initializing values
+	 */
 	Font();
+
+
+	/**
+	 * @brief Default destructor cleaning up fontset
+	 */
 	~Font();
 
+	/**
+	 * @brief Load fontsets from file with this function and you
+	 * can use them with e.g. the Text class!
+	 *
+	 * @param file The fontset file to load
+	 */
 	bool loadFromFile(const std::string& file);
 
+	/**
+	 * @brief Retrieve a character based on the loaded fontset.
+	 * This is used for rendering mostly only internally.
+	 *
+	 * @param codePoint the character code
+	 * @param fontSize the fontsize in which the character has to be
+	 *
+	 * @note In order to get a valid character you have to load a fontset
+	 * first.
+	 *
+	 * @see loadFromFile()
+	 */
 	const Character& getCharacter(const Uint32& codePoint, const unsigned int& fontSize);
 
+	/**
+	 * @brief Check if a fontset is loaded
+	 *
+	 * @return Returns true if a fontset is loaded
+	 *
+	 * @see loadFromFile()
+	 */
 	bool isLoaded() const;
 
+	/**
+	 * @brief For rendering this will return the offset in pixels
+	 * you need to correctly display a new line
+	 *
+	 * @return The offset in pixels
+	 */
 	float getNextLineOffset() const;
+
+	/**
+	 * @brief For rendering this will return the offset in pixels
+	 * you need to correctly display a spacebreak
+	 *
+	 * @return The offset in pixels
+	 */
 	float getSpaceOffset() const;
 
 private:

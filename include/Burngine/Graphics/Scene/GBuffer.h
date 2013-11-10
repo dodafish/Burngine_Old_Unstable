@@ -30,31 +30,85 @@
 
 namespace burn {
 
+/**
+ * @brief The GBuffer is used for deferred shading.
+ */
 class BURNGINE_API GBuffer {
 public:
+	/**
+	 * @brief Default constructor initializing some
+	 * values
+	 */
 	GBuffer();
+
+	/**
+	 * @brief Default destructor cleaning up GBuffer
+	 */
 	~GBuffer();
 
 	//GBuffer is not copyable!
 	GBuffer(const GBuffer& other) = delete;
 	GBuffer& operator=(const GBuffer& other) = delete;
 
+	/**
+	 * @brief Creates the GBuffer on the GPU to be ready
+	 * to get geometrical buffers passed
+	 *
+	 * @param dimensions The dimensions of the buffers
+	 */
 	bool create(const Vector2ui& dimensions);
 
+	/**
+	 * @brief Clears the buffers. I.e. clears the textures and
+	 * clears the buffer bits of the framebuffer
+	 */
 	void clear();
 
+	/**
+	 * @brief Binds the GBuffer as target enabling passing
+	 * geometrical buffers to GBuffer
+	 *
+	 * @see bindAsSource()
+	 */
 	void bindAsTarget() const;
+
+	/**
+	 * @brief Binds the GBuffer as source with an attachment
+	 * offset enabling sampling from the geometrical buffers
+	 *
+	 * @param offset Offset value from GL_TEXTURE0
+	 *
+	 * @see bindAsTarget()
+	 */
 	void bindAsSource(const unsigned int& offset = 0) const;
 
 	enum GBufferType {
-		DIFFUSE = 0, NORMAL_WS, POSITION_WS,
+		DIFFUSE = 0, ///< Diffuse colors
+		NORMAL_WS, ///< Normals in worldspace
+		POSITION_WS, ///< Positions in worldspace
 
-		COUNT
+		COUNT ///< Geometrical buffer count; Keep last
 	};
 
+	/**
+	 * @brief Sets a buffer as source framebuffer. Used for copying
+	 * whole buffers to another.
+	 *
+	 * @param buffer The buffer to set as source
+	 */
 	void setSourceBuffer(const GBufferType& buffer);
+
+	/**
+	 * @brief Binds the depthattachment as texture to texture
+	 * unit 0
+	 */
 	void bindDepthBufferAsSourceTexture() const;
 
+	/**
+	 * @brief Return the dimensions of the GBuffer
+	 *
+	 * @return Dimensions of the GBuffer
+	 */
 	const Vector2ui& getDimensions() const;
 
 private:

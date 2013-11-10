@@ -30,22 +30,62 @@
 
 namespace burn {
 
+/**
+ * @brief This is an extension of simple Text. It adds
+ * an automatically sized background to the text.
+ */
 class BURNGINE_API Label : public Text {
 public:
+	/**
+	 * @brief Default constructor initializing some
+	 * values
+	 */
 	Label();
-	~Label();
 
+	/**
+	 * @brief This renders the text and the label's background.
+	 *
+	 * @note This might be deprecated in future versions.
+	 */
 	virtual void draw();
 
+	/**
+	 * @brief This sets the background color of the label
+	 *
+	 * @see getBackgroundColor()
+	 */
 	void setBackgroundColor(const Vector4f& color);
+
+	/**
+	 * @brief This returns the background color of the label's
+	 * background.
+	 *
+	 * @return The background color
+	 *
+	 * @see setBackgroundColor()
+	 */
 	const Vector4f& getBackgroundColor() const;
 
-	void setBorder(const float& border);
-	const float& getBorder() const;
+	/**
+	 * @brief This sets the margin of the label similar
+	 * to the behaviour of HTML margin.
+	 *
+	 * @param margin The amount of margin in pixels
+	 *
+	 * @see getMargin()
+	 */
+	void setMargin(const float& margin);
+
+	/**
+	 * @brief This returns the amount of margin in pixels
+	 *
+	 * @return Amount of margin in pixels
+	 */
+	const float& getMargin() const;
 
 private:
 	Vector4f _backgroundColor;
-	float _border;
+	float _margin;
 };
 
 } /* namespace burn */

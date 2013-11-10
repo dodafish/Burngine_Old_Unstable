@@ -38,9 +38,6 @@ _fontSize(32),
 _color(Vector4f(1.f, 1.f, 1.f, 1.f)) {
 }
 
-Text::~Text() {
-}
-
 void Text::setText(const String& text) {
 	_text = text;
 }

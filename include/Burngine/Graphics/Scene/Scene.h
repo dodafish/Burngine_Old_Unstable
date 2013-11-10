@@ -55,43 +55,124 @@ class Shader;
 class SpotLight;
 class DirectionalLight;
 
+/**
+ * @brief Renders attached SceneNodes properly with attached lights.
+ * Provides advanced rendering with built-in technology!
+ */
 class BURNGINE_API Scene {
 public:
 	/**
-	 * @brief The default constructor
+	 * @brief Constructor taking a window as the scene's parent.
+	 * This relationship is needed for some techniques
+	 *
+	 * @param parentWindow The parent of the scene
 	 */
 	Scene(const Window& parentWindow);
 
 	/**
-	 * @brief The default destructor. When called by e.g. deleting
-	 * the scene it cleans up its data. In other words it deletes all
-	 * nodes/cameras/etc. it is holding.
+	 * @brief The default destructor detaching all attached objects.
 	 */
 	~Scene();
 
-	enum RenderModus {
-		COMPOSITION, DIFFUSE, NORMAL_WS, DEPTH, POSITION_WS
+	enum RenderMode {
+		COMPOSITION, ///< The final render result
+		DIFFUSE, ///< Diffuse pass only
+		NORMAL_WS, ///< Normals pass only
+		DEPTH, ///< Depth pass only
+		POSITION_WS ///< Positions pass only
 	};
 
 	/**
-	 * @brief Draws every SceneNode.
+	 * @brief Draws the scene with selected technology
 	 *
-	 * @param modus Choose a gBuffer to dump to screen
-	 * or set to COMPOSITION to see final result
+	 * @param camera The camera which the scene is drawn
+	 * relative to
+	 * @param mode The mode selecting the output of the rendering
+	 *
+	 * @see RenderMode
 	 */
-	void draw(const Camera& camera, const RenderModus& modus = COMPOSITION);
+	void draw(const Camera& camera, const RenderMode& mode = COMPOSITION);
 
+	/**
+	 * @brief Attaches a SceneNode to the Scene.
+	 *
+	 * @param node The SceneNode to attach
+	 *
+	 * @note You don't have to care about detaching. When either the
+	 * SceneNode or the Scene gets destroyed the destructors will care
+	 * about deleting
+	 *
+	 * @see detachSceneNode()
+	 */
 	void attachSceneNode(SceneNode& node);
+
+	/**
+	 * @brief Detaches a SceneNode from the Scene.
+	 *
+	 * @param node The SceneNode to detach
+	 *
+	 * @see attachSceneNode()
+	 */
 	void detachSceneNode(SceneNode& node);
 
+	/**
+	 * @brief Attaches a Light to the Scene.
+	 *
+	 * @param node The Light to attach
+	 *
+	 * @note You don't have to care about detaching. When either the
+	 * Light or the Scene gets destroyed the destructors will care
+	 * about deleting
+	 *
+	 * @see detachLight()
+	 */
 	void attachLight(Light& light);
+
+	/**
+	 * @brief Detaches a Light from the Scene.
+	 *
+	 * @param node The Light to detach
+	 *
+	 * @see attachLight()
+	 */
 	void detachLight(Light& light);
 
+	/**
+	 * @brief Detaches everything from the Scene that is attached
+	 */
 	void detachAll();
 
+	/**
+	 * @brief Sets the Skybox which should be used to cover the Scene
+	 *
+	 * @param skyBox The used SkyBox
+	 *
+	 * @note SkyBoxes are not attached, but only set! This means that
+	 * the skybox will get copied, so you can destroy the original one
+	 */
 	void setSkyBox(const SkyBox& skyBox);
 
+	/**
+	 * @brief Sets the ambient part of the scene. E.g. while daytime
+	 * the light gets scattered over the whole scene. So this part will
+	 * fake the major indirect lighting
+	 *
+	 * @param color The ambient part's color
+	 *
+	 * @note When you want to make the scene half lit by
+	 * default just use this: Vector3f(1.f, 1.f, 1.f)
+	 *
+	 * @see getAmbientColor()
+	 */
 	void setAmbientColor(const Vector3f& color);
+
+	/**
+	 * @brief Returns the ambient part's color
+	 *
+	 * @return The ambient color
+	 *
+	 * @see setAmbientColor()
+	 */
 	const Vector3f& getAmbientColor() const;
 
 private:

@@ -32,9 +32,18 @@
 
 namespace burn {
 
+/**
+ * @brief Fakes lightsources that are far away with (almost)
+ * parallel lightrays (e.g. the sun)
+ */
 class BURNGINE_API DirectionalLight : public Light {
 public:
 
+	/**
+	 * @brief Returns the direction the light is facing.
+	 *
+	 * @return The direction of the light
+	 */
 	Vector4f getDirection() const;
 
 };

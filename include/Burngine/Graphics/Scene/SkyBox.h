@@ -30,6 +30,10 @@
 
 namespace burn {
 
+/**
+ * @brief A set of six textures (cubemap) used for simulating
+ * sky and horizon
+ */
 class BURNGINE_API SkyBox {
 public:
 	SkyBox();

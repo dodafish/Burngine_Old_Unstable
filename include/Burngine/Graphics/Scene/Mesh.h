@@ -39,10 +39,14 @@ namespace burn {
 
 class Model;
 
+/**
+ * @brief Holds the mesh's vertices with their attributes and
+ * an optional texture
+ */
 class BURNGINE_API Mesh {
 public:
 	/**
-	 * @brief The default constructor
+	 * @brief The default constructor creating VBOs
 	 */
 	Mesh();
 
@@ -154,9 +158,34 @@ public:
 	 */
 	void setMaterial(Material& material);
 
+	/**
+	 * @brief Synchronizes the vertices with the memory on the
+	 * video card
+	 *
+	 * @return Returns false synchronizing is not necessary
+	 *
+	 * @see setVertices()
+	 *
+	 * @note This will only synchronize vertices when necessary!
+	 * Use forceUpdate() to force synchronizing.
+	 */
 	bool update();
+
+	/**
+	 * @brief Synchronizes the vertices with the memory on the video card,
+	 * even if it's not necessary.
+	 *
+	 * @see update()
+	 */
 	void forceUpdate();
 
+	/**
+	 * @brief Returns true when no update (i.e. synchronizing) is necessary.
+	 *
+	 * @return False when an update is necessary
+	 *
+	 * @see update()
+	 */
 	bool isUpdated() const;
 
 private:

@@ -34,9 +34,6 @@ _useDiffuseColor(false) {
 	_flags[LIGHTING] = false;
 }
 
-Material::~Material() {
-}
-
 void Material::setFlag(Material::Flag flag, bool enabled) {
 	if(flag != COUNT){
 		_flags[flag] = enabled;

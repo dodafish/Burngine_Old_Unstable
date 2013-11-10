@@ -28,10 +28,7 @@
 namespace burn {
 
 Label::Label() :
-_border(0.f) {
-}
-
-Label::~Label() {
+_margin(0.f) {
 }
 
 void Label::draw() {
@@ -83,9 +80,9 @@ void Label::draw() {
 	//Draw the label's background
 	RectangleShape shape;
 	shape.setColor(_backgroundColor);
-	shape.setPosition(Vector2f(static_cast<float>(rect.left) - _border, static_cast<float>(rect.bottom) + _border));
+	shape.setPosition(Vector2f(static_cast<float>(rect.left) - _margin, static_cast<float>(rect.bottom) + _margin));
 	shape.setDimensions(
-	Vector2f(static_cast<float>(rect.width) + _border * 2.f, static_cast<float>(rect.height) - _border * 2.f));
+	Vector2f(static_cast<float>(rect.width) + _margin * 2.f, static_cast<float>(rect.height) - _margin * 2.f));
 	shape.setRotation(_rotation);
 	shape.draw();
 
@@ -102,12 +99,12 @@ const Vector4f& Label::getBackgroundColor() const {
 	return _backgroundColor;
 }
 
-void Label::setBorder(const float& border) {
-	_border = border;
+void Label::setMargin(const float& border) {
+	_margin = border;
 }
 
-const float& Label::getBorder() const {
-	return _border;
+const float& Label::getMargin() const {
+	return _margin;
 }
 
 } /* namespace burn */

@@ -29,6 +29,9 @@
 
 namespace burn {
 
+/**
+ * @brief Describes the material of surfaces
+ */
 class BURNGINE_API Material {
 public:
 	/**
@@ -39,13 +42,8 @@ public:
 	 */
 	Material();
 
-	/**
-	 * @brief The default destructor
-	 */
-	~Material();
-
 	enum Flag {
-		LIGHTING = 0,
+		LIGHTING = 0, ///< Can the surface be lit?
 
 		COUNT //Keep last!
 	};
@@ -98,16 +96,72 @@ public:
 	 */
 	bool isFlagSet(Flag flag) const;
 
+	/**
+	 * @brief Sets the specular color that should be reflected
+	 * from the surface
+	 *
+	 * @param color The specular color
+	 *
+	 * @see getSpecularColor()
+	 */
 	void setSpecularColor(const Vector3f& color);
+
+	/**
+	 * @brief Returns the specular that the surface reflects
+	 *
+	 * @return The reflected specular color
+	 *
+	 * @see setSpecularColor()
+	 */
 	const Vector3f& getSpecularColor() const;
 
+	/**
+	 * @brief Sets the diffuse color of the surface
+	 *
+	 * @param color The diffuse color
+	 *
+	 * @see getDiffuseColor()
+	 */
 	void setDiffuseColor(const Vector3f& color);
+
+	/**
+	 * @brief Returns the diffuse color of the surface
+	 *
+	 * @return The diffuse color
+	 *
+	 * @see setDiffuseColor()
+	 */
 	const Vector3f& getDiffuseColor() const;
 
+	/**
+	 * @brief Internal use only. Will be removed in future versions!
+	 */
 	void setIndex(const unsigned int& index);
+
+	/**
+	 * @brief Internal use only. Will be removed in future versions!
+	 */
 	const unsigned int& getIndex() const;
 
+	/**
+	 * @brief Sets whether the surface uses the diffuse color or a
+	 * texture.
+	 *
+	 * @param shouldUseDiffuse Set to false if surface uses a texture,
+	 *  true otherwise
+	 *
+	 * @see isUsingDiffuseColor()
+	 */
 	void useDiffuseColor(bool shouldUseDiffuse = true);
+
+	/**
+	 * @brief Returns true if the surface has no texture and uses the
+	 * diffuse color instead.
+	 *
+	 * @return Returns false if surface uses a texture, true otherwise
+	 *
+	 * @see useDiffuseColor()
+	 */
 	bool isUsingDiffuseColor() const;
 
 private:

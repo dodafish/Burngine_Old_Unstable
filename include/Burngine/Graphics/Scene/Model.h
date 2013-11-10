@@ -36,6 +36,9 @@ class Mesh;
 
 template class BURNGINE_API std::vector<std::shared_ptr<burn::Mesh>>;
 
+/**
+ * @brief Holds several meshes describing a 3D model
+ */
 namespace burn {
 
 /**
@@ -44,9 +47,39 @@ namespace burn {
 class BURNGINE_API Model {
 public:
 
+	/**
+	 * @brief Loads a 3D model from file. Supports most
+	 * common formats like .obj .3ds etc.
+	 *
+	 * @param file The modelfile to load from
+	 *
+	 * @return Returns false if loading failed
+	 */
 	bool loadFromFile(const std::string& file);
 
+	/**
+	 * @brief Returns the count of meshes needed for describing
+	 * the whole model
+	 *
+	 * @return The count of meshes
+	 *
+	 * @see getMesh()
+	 */
 	size_t getMeshCount() const;
+
+	/**
+	 * @brief Returns a mesh depending on the given index.
+	 *
+	 * @param index The mesh's index
+	 *
+	 * @return The mesh according to the index
+	 *
+	 * @note ATTENTION: When trying to get a mesh with an
+	 * invalid index can result in a crash! Thus this function
+	 * might (should) be deprecated in future versions.
+	 *
+	 * @see getMeshCount()
+	 */
 	const Mesh& getMesh(const size_t& index) const;
 
 	/**
@@ -64,7 +97,20 @@ public:
 	 */
 	void setFlag(const Material::Flag& flag, const bool& enabled = true);
 
+	/**
+	 * @brief Synchronizes the vertices of each mesh when necessary
+	 *
+	 * @see isUpdated()
+	 */
 	void update();
+
+	/**
+	 * @brief Returns true when every mesh's vertices is synchronized
+	 *
+	 * @return Return false when a mesh is not updated
+	 *
+	 * @see update()
+	 */
 	bool isUpdated() const;
 
 private:

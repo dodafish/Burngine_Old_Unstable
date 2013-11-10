@@ -29,7 +29,7 @@
 
 #include <vector>
 
-namespace burn{
+namespace burn {
 class Gui;
 }
 
@@ -37,27 +37,141 @@ template class BURNGINE_API std::vector<burn::Gui*>;
 
 namespace burn {
 
+/**
+ * @brief Baseclass for all GuiNodes providing some transform features
+ */
 class BURNGINE_API GuiNode {
 public:
+	/**
+	 * @brief Default constructor initializing some
+	 * values
+	 */
 	GuiNode();
+
+	/**
+	 * @brief Default destructor cleaning up GuiNode and
+	 * automatically detaching it from Guis
+	 */
 	virtual ~GuiNode();
 
+	/**
+	 * @brief Virtual method for rendering calls.
+	 *
+	 * @note This might be deprecated in future versions
+	 */
 	virtual void draw() = 0;
 
+	/**
+	 * @brief Sets the position of the GuiNode in pixel
+	 * coordinates
+	 *
+	 * @param position Position in pixel coordinates
+	 *
+	 * @note The origin is the lower left corner
+	 *
+	 * @see getPosition()
+	 */
 	void setPosition(const Vector2f& position);
+
+	/**
+	 * @brief Returns the current position of the GuiNode
+	 * in pixel coordinates.
+	 *
+	 * @return The current position in pixel coordinates
+	 *
+	 * @note The origin is the lower left corner
+	 *
+	 * @see setPosition()
+	 */
 	const Vector2f& getPosition() const;
 
+	/**
+	 * @brief Sets the rotation of the GuiNode.
+	 *
+	 * @param rotation Rotation in angles
+	 *
+	 * @note Initial value is 0 degrees. Positive
+	 * degrees rotate clockwise.
+	 */
 	void setRotation(const float& rotation);
+
+	/**
+	 * @brief Returns the current rotation of the GuiNode.
+	 *
+	 * @return Current rotation
+	 *
+	 * @note Initial value is 0 degrees. Positive
+	 * degrees rotate clockwise.
+	 */
 	const float& getRotation() const;
 
+	/**
+	 * @brief Changes rotation by the given offset
+	 *
+	 * @param angle The offset in degrees
+	 *
+	 * @note Positive degrees rotate clockwise
+	 */
 	void rotate(const float& angle);
+
+	/**
+	 * @brief Moves the GuiNode by the given offset
+	 *
+	 * @param offset Offset in pixels
+	 *
+	 * @note The origin is the lower left corner.
+	 */
 	void move(const Vector2f& offset);
+
+	/**
+	 * @brief Moves the GuiNode by the given offset
+	 *
+	 * @param offset Offset in pixels
+	 *
+	 * @note The origin is the lower left corner.
+	 */
 	void move(const float& offsetX, const float& offsetY);
 
+	/**
+	 * @brief Sets the Z-Index of the GuiNode. The higher the
+	 * Z-Index is the more important is the GuiNode and it will
+	 * be drawn on top of lower Z-Indices.
+	 *
+	 * @param zIndex The Z-Index the GuiNode shall get
+	 *
+	 * @see getZIndex()
+	 */
 	void setZIndex(const Int32& zIndex);
+
+	/**
+	 * @brief Returns the current Z-Index of the GuiNode
+	 *
+	 * @return Current Z-Index of the GuiNode
+	 *
+	 * @see setZIndex()
+	 */
 	const Int32& getZIndex() const;
 
+	/**
+	 * @brief Adds a Gui as parent. This is used by Gui when
+	 * attaching GuiNodes. You should use the Gui's methods for
+	 * connecting GuiNodes to Guis instead of this method
+	 *
+	 * @param parent The parent Gui
+	 *
+	 * @see removeParentGui()
+	 */
 	void addParentGui(Gui* parent);
+
+	/**
+	 * @brief Removes a Gui from parents. This is used by Gui when
+	 * detaching GuiNodes. You should use the Gui's methods for
+	 * disconnecting GuiNodes from Guis instead of this method
+	 *
+	 * @param parent The parent Gui
+	 *
+	 * @see addParentGui()
+	 */
 	void removeParentGui(Gui* parent);
 
 protected:
