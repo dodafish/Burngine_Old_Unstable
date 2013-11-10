@@ -168,7 +168,7 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 }
 
-void Scene::draw(const Camera& camera, const RenderModus& modus) {
+void Scene::draw(const Camera& camera, const RenderMode& mode) {
 
 	if(!Window::isContextCreated())
 		return;
@@ -177,7 +177,7 @@ void Scene::draw(const Camera& camera, const RenderModus& modus) {
 
 	_window.bind(); // As Target
 	_gBuffer.bindAsSource();
-	switch (modus) {
+	switch (mode) {
 		case COMPOSITION:
 
 			//Copy diffuse gBuffer to windowframebuffer:
