@@ -316,15 +316,12 @@ void Scene::lightPass(const Camera& camera) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
 			const Model& m = static_cast<StaticMeshNode*>(_nodes[i])->getModel();
-			BoundingBox bb = m.getBoundingBox();
-			bb = bb * static_cast<StaticMeshNode*>(_nodes[i])->getModelMatrix();
-
-			sceneBbPos.x = std::min(sceneBbPos.x, bb.getPosition().x);
-			sceneBbPos.y = std::min(sceneBbPos.y, bb.getPosition().y);
-			sceneBbPos.z = std::max(sceneBbPos.z, bb.getPosition().z);
-			sceneBbDim.x = std::max(sceneBbDim.x, bb.getDimensions().x);
-			sceneBbDim.y = std::max(sceneBbDim.y, bb.getDimensions().y);
-			sceneBbDim.z = std::min(sceneBbDim.z, bb.getDimensions().z);
+			sceneBbPos.x = std::min(sceneBbPos.x, m.getBoundingBox().getPosition().x);
+			sceneBbPos.y = std::min(sceneBbPos.y, m.getBoundingBox().getPosition().y);
+			sceneBbPos.z = std::min(sceneBbPos.z, m.getBoundingBox().getPosition().z);
+			sceneBbDim.x = std::max(sceneBbDim.x, m.getBoundingBox().getDimensions().x);
+			sceneBbDim.y = std::max(sceneBbDim.y, m.getBoundingBox().getDimensions().y);
+			sceneBbDim.z = std::max(sceneBbDim.z, m.getBoundingBox().getDimensions().z);
 		}
 	}
 	BoundingBox sceneBoundingBox; //Whole scene in a bounding box

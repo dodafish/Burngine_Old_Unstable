@@ -73,8 +73,6 @@ public:
 	 */
 	const Vector3f& getDimensions() const;
 
-	BoundingBox& operator*(const Matrix4f& matrix);
-
 private:
 	Vector3f _position, _dimensions;
 };
