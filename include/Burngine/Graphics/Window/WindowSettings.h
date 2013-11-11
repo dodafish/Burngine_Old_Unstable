@@ -39,8 +39,10 @@ public:
 	 * You can pass values now or let them get set to
 	 * default.
 	 */
-	WindowSettings(const unsigned int& width = 400, const unsigned int& height = 300, const std::string& title = "",
-	const bool& fullscreen = false);
+	WindowSettings(	const unsigned int& width = 400,
+					const unsigned int& height = 300,
+					const std::string& title = "Burngine Application",
+					const bool& fullscreen = false);
 
 	/**
 	 * @brief The default destructor

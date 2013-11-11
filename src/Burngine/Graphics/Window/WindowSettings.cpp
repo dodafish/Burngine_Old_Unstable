@@ -29,7 +29,7 @@ WindowSettings::WindowSettings(const unsigned int& width, const unsigned int& he
 const bool& fullscreen) :
 _width(width),
 _height(height),
-_title("Burngine"),
+_title(title),
 _isFullscreen(fullscreen),
 _useHighestResolution(true) {
 

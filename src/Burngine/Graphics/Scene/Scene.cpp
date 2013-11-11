@@ -58,15 +58,22 @@ _window(parentWindow) {
 		exit(13);
 	}
 
+	_renderTexture.clear();
+
 	if(!_shadowMap.create(ShadowMap::HIGH)){
 		Reporter::report("Unable to create shadowmap!", Reporter::ERROR);
 		exit(14);
 	}
 
-	if(!_shadowCubeMap.create(ShadowCubeMap::HIGH)){
+	if(!_shadowCubeMap.create(ShadowCubeMap::VERY_LOW)){
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
+
+	_shadowMap.clear();
+	_shadowCubeMap.clear();
+	_shadowMap.bindAsSource(8);
+	_shadowCubeMap.bindAsSource(8);
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -173,12 +180,17 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 	}
 
+	OpenGlControl::useSettings(OpenGlControl::Settings());
+
 }
 
 void Scene::draw(	const Camera& camera,
 					const RenderMode& mode) {
 
 	if(!Window::isContextCreated())
+		return;
+
+	if(_nodes.size() == 0)
 		return;
 
 	drawGBuffers(camera);
@@ -265,7 +277,10 @@ void Scene::lightPass(const Camera& camera) {
 	ogl.enableCulling(false);
 	ogl.enableBlending(true);
 	ogl.setBlendMode(OpenGlControl::ADD);
-	ogl.setClearColor(Vector4f(0.f));
+	if(_lights.size() == 0)
+		ogl.setClearColor(Vector4f(1.f));
+	else
+		ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
 	//Pre-Adjust Shaders:
@@ -409,11 +424,13 @@ void Scene::lightPass(const Camera& camera) {
 	ogl.setBlendMode(OpenGlControl::MULTIPLY);
 	drawFullscreenQuad(shader, ogl);
 
-	//Compose with specular part:
-	_renderTexture.bindAsSource();
-	shader.setUniform("gSampler", 1); //sample from diffuse
-	ogl.setBlendMode(OpenGlControl::ADD);
-	drawFullscreenQuad(shader, ogl);
+	if(_lights.size() != 0){
+		//Compose with specular part:
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 1); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, ogl);
+	}
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
@@ -482,7 +499,7 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 		right = std::max(right, corners[i].x);
 	}
 
-	Matrix4f projection = glm::ortho(left, right, bottom, top, -near, -far);
+	Matrix4f projection = glm::ortho(left - 10.f, right + 10.f, bottom - 10.f, top + 10.f, -near - 10.f, -far + 10.f);
 
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);

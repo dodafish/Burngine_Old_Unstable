@@ -189,6 +189,8 @@ bool Model::loadFromFile(const std::string& file) {
 
 	}
 
+	Reporter::report("Successfully loaded model: " + file);
+
 	return true;
 }
 

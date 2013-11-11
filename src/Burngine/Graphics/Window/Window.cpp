@@ -235,8 +235,12 @@ void Window::updateOrthoMatrix() {
 }
 
 void Window::bind() const {
+
+	if(!isContextCreated())
+		return;
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, _settings.getWidth(), _settings.getHeight());
+	glViewport(0, 0, static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()));
 }
 
 void Window::setCursorPosition(const Vector2d& position) const {
