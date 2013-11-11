@@ -85,7 +85,8 @@ _window(parentWindow) {
 		_fullscreenVbo.addData(&posData[i], sizeof(Vector3f));
 		_fullscreenVbo.addData(&uvData[i], sizeof(Vector2f));
 	}
-	_fullscreenVbo.uploadDataToGpu(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+	_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
+	GL_STATIC_DRAW);
 
 }
 
@@ -148,11 +149,17 @@ void Scene::drawGBuffers(const Camera& camera) {
 				glEnableVertexAttribArray(2);
 
 				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(0, 3,
+				GL_FLOAT,
+										GL_FALSE, 0, (void*)0);
 				mesh.getNormalVbo().bind();
-				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(1, 3,
+				GL_FLOAT,
+										GL_FALSE, 0, (void*)0);
 				mesh.getUvVbo().bind();
-				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(2, 2,
+				GL_FLOAT,
+										GL_FALSE, 0, (void*)0);
 
 				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
@@ -168,7 +175,8 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 }
 
-void Scene::draw(const Camera& camera, const RenderMode& mode) {
+void Scene::draw(	const Camera& camera,
+					const RenderMode& mode) {
 
 	if(!Window::isContextCreated())
 		return;
@@ -182,8 +190,14 @@ void Scene::draw(const Camera& camera, const RenderMode& mode) {
 
 			//Copy diffuse gBuffer to windowframebuffer:
 			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
-			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+			glBlitFramebuffer(	0,
+								0,
+								_gBuffer.getDimensions().x,
+								_gBuffer.getDimensions().y,
+								0,
+								0,
+								_window.getSettings().getWidth(),
+								_window.getSettings().getHeight(),
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 
@@ -192,22 +206,40 @@ void Scene::draw(const Camera& camera, const RenderMode& mode) {
 			break;
 		case DIFFUSE:
 			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
-			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+			glBlitFramebuffer(	0,
+								0,
+								_gBuffer.getDimensions().x,
+								_gBuffer.getDimensions().y,
+								0,
+								0,
+								_window.getSettings().getWidth(),
+								_window.getSettings().getHeight(),
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 			break;
 		case NORMAL_WS:
 			_gBuffer.setSourceBuffer(GBuffer::NORMAL_WS);
-			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+			glBlitFramebuffer(	0,
+								0,
+								_gBuffer.getDimensions().x,
+								_gBuffer.getDimensions().y,
+								0,
+								0,
+								_window.getSettings().getWidth(),
+								_window.getSettings().getHeight(),
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 			break;
 		case POSITION_WS:
 			_gBuffer.setSourceBuffer(GBuffer::POSITION_WS);
-			glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-								_window.getSettings().getWidth(), _window.getSettings().getHeight(),
+			glBlitFramebuffer(	0,
+								0,
+								_gBuffer.getDimensions().x,
+								_gBuffer.getDimensions().y,
+								0,
+								0,
+								_window.getSettings().getWidth(),
+								_window.getSettings().getHeight(),
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
 			break;
@@ -386,7 +418,8 @@ void Scene::lightPass(const Camera& camera) {
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight, const BoundingBox& sceneBb) {
+Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
+								const BoundingBox& sceneBb) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableCulling(true);
@@ -401,23 +434,55 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight, const BoundingBo
 
 	//Cover whole scene with sceneBb
 	Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(dirLight.getDirection()), Vector3f(1.f));
-	/*Vector4f p = view * Vector4f(sceneBb.getPosition(), 1.f);
-	Vector4f p2 = view * Vector4f(sceneBb.getPosition() + sceneBb.getDimensions(), 1.f);
-	Vector2f xAxis, yAxis, zAxis;
-	if(p.x < p2.x)
-		xAxis = Vector2f(p.x, p2.x);
-	else
-		xAxis = Vector2f(p2.x, p.x);
-	if(p.y < p2.y)
-		yAxis = Vector2f(p.y, p2.y);
-	else
-		yAxis = Vector2f(p2.y, p.y);
-	if(p.z < p2.z)
-		zAxis = Vector2f(p.z, p2.z);
-	else
-		zAxis = Vector2f(p2.z, p.z);
-	Matrix4f projection = glm::ortho(xAxis.x, xAxis.y, yAxis.x, yAxis.y, zAxis.x, zAxis.y);*/
-	Matrix4f projection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
+
+	Vector4f corners[8] = {
+	Vector4f(sceneBb.getPosition(), 1.f),
+	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
+				sceneBb.getPosition().y,
+				sceneBb.getPosition().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x,
+				sceneBb.getPosition().y + sceneBb.getDimensions().y,
+				sceneBb.getPosition().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x,
+				sceneBb.getPosition().y,
+				sceneBb.getPosition().z + sceneBb.getDimensions().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
+				sceneBb.getPosition().y + sceneBb.getDimensions().y,
+				sceneBb.getPosition().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
+				sceneBb.getPosition().y,
+				sceneBb.getPosition().z + sceneBb.getDimensions().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x,
+				sceneBb.getPosition().y + sceneBb.getDimensions().y,
+				sceneBb.getPosition().z + sceneBb.getDimensions().z,
+				1.f),
+	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
+				sceneBb.getPosition().y + sceneBb.getDimensions().y,
+				sceneBb.getPosition().z + sceneBb.getDimensions().z,
+				1.f) };
+
+	for(int i = 0; i != 8; ++i){
+		corners[i] = view * corners[i]; //Apply view matrix of light
+	}
+
+	//Find the extremas
+	float left, right, bottom, top, near, far;
+	left = right = bottom = top = near = far = 0.f;
+	for(int i = 0; i != 8; ++i){
+		left = std::min(left, corners[i].x);
+		bottom = std::min(bottom, corners[i].y);
+		near = std::max(near, corners[i].z);
+		far = std::min(far, corners[i].z);
+		top = std::max(top, corners[i].y);
+		right = std::max(right, corners[i].x);
+	}
+
+	Matrix4f projection = glm::ortho(left, right, bottom, top, -near, -far);
 
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
@@ -438,7 +503,9 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight, const BoundingBo
 
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(0, 3,
+				GL_FLOAT,
+										GL_FALSE, 0, (void*)0);
 				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 				glDisableVertexAttribArray(0);
 
@@ -488,7 +555,9 @@ void Scene::drawShadowmap(const Light& pointlight) {
 
 					glEnableVertexAttribArray(0);
 					mesh.getPositionVbo().bind();
-					glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+					glVertexAttribPointer(0, 3,
+					GL_FLOAT,
+											GL_FALSE, 0, (void*)0);
 					OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 					glDisableVertexAttribArray(0);
 
@@ -501,7 +570,8 @@ void Scene::drawShadowmap(const Light& pointlight) {
 	}
 }
 
-Matrix4f Scene::findViewMatrix(const int& face, const Light& pointlight) {
+Matrix4f Scene::findViewMatrix(	const int& face,
+								const Light& pointlight) {
 
 	Vector3f direction(1.f, 0.f, 0.f);
 	Vector3f headUp(0.f, 1.f, 0.f);
@@ -539,7 +609,8 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 
 	Matrix4f projection = glm::perspective<float>(spotlight.getConeAngle() * 2.f, 1.f, 0.01f, 2000.f);
-	Matrix4f view = glm::lookAt(spotlight.getPosition(), spotlight.getPosition() + Vector3f(spotlight.getDirection()),
+	Matrix4f view = glm::lookAt(spotlight.getPosition(),
+								spotlight.getPosition() + Vector3f(spotlight.getDirection()),
 								Vector3f(0.f, 1.f, 0.f));
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
@@ -560,7 +631,9 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(0, 3,
+				GL_FLOAT,
+										GL_FALSE, 0, (void*)0);
 				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 				glDisableVertexAttribArray(0);
 
@@ -581,7 +654,9 @@ void Scene::ambientPart() {
 
 	glEnableVertexAttribArray(0);
 	_fullscreenVbo.bind();
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
 
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 	glDisableVertexAttribArray(0);
@@ -609,7 +684,8 @@ void Scene::dumpOutDepthGBuffer() {
 
 }
 
-void Scene::drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settings& rendersettings) const {
+void Scene::drawFullscreenQuad(	const Shader& shader,
+								const OpenGlControl::Settings& rendersettings) const {
 
 	OpenGlControl::useSettings(rendersettings);
 
@@ -617,8 +693,12 @@ void Scene::drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settin
 	glEnableVertexAttribArray(1);
 
 	_fullscreenVbo.bind();
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	glVertexAttribPointer(1, 2,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
 
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
