@@ -25,20 +25,35 @@
 
 namespace burn {
 
-void BoundingBox::setPosition(const Vector3f& position){
+void BoundingBox::setPosition(const Vector3f& position) {
 	_position = position;
 }
 
-const Vector3f& BoundingBox::getPosition() const{
+const Vector3f& BoundingBox::getPosition() const {
 	return _position;
 }
 
-void BoundingBox::setDimensions(const Vector3f& dimensions){
+void BoundingBox::setDimensions(const Vector3f& dimensions) {
 	_dimensions = dimensions;
 }
 
-const Vector3f& BoundingBox::getDimensions() const{
+const Vector3f& BoundingBox::getDimensions() const {
 	return _dimensions;
+}
+
+BoundingBox& BoundingBox::operator*(const Matrix4f& matrix) {
+
+	Vector4f opposite(_position, 1.f);
+	opposite.x += _dimensions.x;
+	opposite.y += _dimensions.y;
+	opposite.z += _dimensions.z;
+
+	_position = Vector3f(matrix * Vector4f(_position, 1.f));
+	opposite = matrix * opposite;
+
+	_dimensions = Vector3f(opposite.x - _position.x, opposite.y - _position.y, opposite.z - _dimensions.z);
+
+	return *this;
 }
 
 } /* namespace burn */

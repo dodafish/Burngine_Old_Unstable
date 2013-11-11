@@ -220,11 +220,11 @@ void Model::recalculateBoundingBox() const {
 	for(size_t i = 0; i < _meshes.size(); ++i){
 		p.x = std::min(p.x, _meshes[i]->getXMinMax().x);
 		p.y = std::min(p.y, _meshes[i]->getYMinMax().x);
-		p.z = std::min(p.z, _meshes[i]->getZMinMax().x);
+		p.z = std::max(p.z, _meshes[i]->getZMinMax().x);
 
 		pMax.x = std::max(pMax.x, _meshes[i]->getXMinMax().y);
 		pMax.y = std::max(pMax.y, _meshes[i]->getYMinMax().y);
-		pMax.z = std::max(pMax.z, _meshes[i]->getZMinMax().y);
+		pMax.z = std::min(pMax.z, _meshes[i]->getZMinMax().y);
 	}
 
 	_bb.setPosition(p);
