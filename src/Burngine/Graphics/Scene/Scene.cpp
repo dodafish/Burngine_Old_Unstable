@@ -60,12 +60,12 @@ _window(parentWindow) {
 
 	_renderTexture.clear();
 
-	if(!_shadowMap.create(ShadowMap::HIGH)){
+	if(!_shadowMap.create(ShadowMap::VERY_HIGH)){
 		Reporter::report("Unable to create shadowmap!", Reporter::ERROR);
 		exit(14);
 	}
 
-	if(!_shadowCubeMap.create(ShadowCubeMap::MEDIUM)){
+	if(!_shadowCubeMap.create(ShadowCubeMap::HIGH)){
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
@@ -197,9 +197,9 @@ void Scene::draw(	const Camera& camera,
 
 	_window.bind(); // As Target
 	_gBuffer.bindAsSource();
-	switch (mode) {
-		case COMPOSITION:
+	if(mode == COMPOSITION || mode == LIGHTING){
 
+		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
 			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
 			glBlitFramebuffer(	0,
@@ -212,64 +212,55 @@ void Scene::draw(	const Camera& camera,
 								_window.getSettings().getHeight(),
 								GL_COLOR_BUFFER_BIT,
 								GL_LINEAR);
+		}
 
-			lightPass(camera);
+		lightPass(camera, mode == LIGHTING);
 
-			break;
-		case DIFFUSE:
-			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
-			glBlitFramebuffer(	0,
-								0,
-								_gBuffer.getDimensions().x,
-								_gBuffer.getDimensions().y,
-								0,
-								0,
-								_window.getSettings().getWidth(),
-								_window.getSettings().getHeight(),
-								GL_COLOR_BUFFER_BIT,
-								GL_LINEAR);
-			break;
-		case NORMAL_WS:
-			_gBuffer.setSourceBuffer(GBuffer::NORMAL_WS);
-			glBlitFramebuffer(	0,
-								0,
-								_gBuffer.getDimensions().x,
-								_gBuffer.getDimensions().y,
-								0,
-								0,
-								_window.getSettings().getWidth(),
-								_window.getSettings().getHeight(),
-								GL_COLOR_BUFFER_BIT,
-								GL_LINEAR);
-			break;
-		case POSITION_WS:
-			_gBuffer.setSourceBuffer(GBuffer::POSITION_WS);
-			glBlitFramebuffer(	0,
-								0,
-								_gBuffer.getDimensions().x,
-								_gBuffer.getDimensions().y,
-								0,
-								0,
-								_window.getSettings().getWidth(),
-								_window.getSettings().getHeight(),
-								GL_COLOR_BUFFER_BIT,
-								GL_LINEAR);
-			break;
-			/*case SSAO:
-			 _gBuffer.setSourceBuffer(GBuffer::SSAO);
-			 glBlitFramebuffer(0, 0, _gBuffer.getDimensions().x, _gBuffer.getDimensions().y, 0, 0,
-			 _window.getSettings().getWidth(), _window.getSettings().getHeight(),
-			 GL_COLOR_BUFFER_BIT,
-			 GL_LINEAR);
-			 break;*/
-		case DEPTH:
-			dumpOutDepthGBuffer(); //Special, because no GL_COLOR_BUFFER
-			break;
+	}else if(mode == DIFFUSE){
+		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
+		glBlitFramebuffer(	0,
+							0,
+							_gBuffer.getDimensions().x,
+							_gBuffer.getDimensions().y,
+							0,
+							0,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
+							GL_COLOR_BUFFER_BIT,
+							GL_LINEAR);
+	}else if(mode == NORMAL_WS){
+		_gBuffer.setSourceBuffer(GBuffer::NORMAL_WS);
+		glBlitFramebuffer(	0,
+							0,
+							_gBuffer.getDimensions().x,
+							_gBuffer.getDimensions().y,
+							0,
+							0,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
+							GL_COLOR_BUFFER_BIT,
+							GL_LINEAR);
+	}else if(mode == POSITION_WS){
+		_gBuffer.setSourceBuffer(GBuffer::POSITION_WS);
+		glBlitFramebuffer(	0,
+							0,
+							_gBuffer.getDimensions().x,
+							_gBuffer.getDimensions().y,
+							0,
+							0,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
+							GL_COLOR_BUFFER_BIT,
+							GL_LINEAR);
+	}else if(mode == DEPTH){
+		dumpOutDepthGBuffer(); //Special, because no GL_COLOR_BUFFER
+
 	}
 
 }
 
-void Scene::lightPass(const Camera& camera) {
+void Scene::lightPass(	const Camera& camera,
+						bool dumpLighting) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthtest(false);
@@ -418,18 +409,33 @@ void Scene::lightPass(const Camera& camera) {
 	shader.setUniform("mixColor", Vector3f(1.f));
 	_window.bind();
 
-	//Compose with diffuse part:
-	_renderTexture.bindAsSource();
-	shader.setUniform("gSampler", 0); //sample from diffuse
-	ogl.setBlendMode(OpenGlControl::MULTIPLY);
-	drawFullscreenQuad(shader, ogl);
+	if(!dumpLighting){
+		//Compose with diffuse part:
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 0); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::MULTIPLY);
+		drawFullscreenQuad(shader, ogl);
 
-	if(_lights.size() != 0){
-		//Compose with specular part:
+		if(_lights.size() != 0){
+			//Compose with specular part:
+			_renderTexture.bindAsSource();
+			shader.setUniform("gSampler", 1); //sample from diffuse
+			ogl.setBlendMode(OpenGlControl::ADD);
+			drawFullscreenQuad(shader, ogl);
+		}
+	}else{
+
+		_renderTexture.bindAsTarget();
 		_renderTexture.bindAsSource();
 		shader.setUniform("gSampler", 1); //sample from diffuse
 		ogl.setBlendMode(OpenGlControl::ADD);
 		drawFullscreenQuad(shader, ogl);
+
+		_window.bind();
+		shader.setUniform("gSampler", 0); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::OVERWRITE);
+		drawFullscreenQuad(shader, ogl);
+
 	}
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());

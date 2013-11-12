@@ -80,7 +80,8 @@ public:
 		DIFFUSE, ///< Diffuse pass only
 		NORMAL_WS, ///< Normals pass only
 		DEPTH, ///< Depth pass only
-		POSITION_WS ///< Positions pass only
+		POSITION_WS, ///< Positions pass only
+		LIGHTING ///< Diffuse and specular pass
 	};
 
 	/**
@@ -192,7 +193,7 @@ private:
 	GBuffer _gBuffer;
 
 	//Passes:
-	void lightPass(const Camera& camera);
+	void lightPass(const Camera& camera, bool dumpLighting = false);
 	//Pass-Helpers:
 	void ambientPart();
 	void drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settings& rendersettings) const;
