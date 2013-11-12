@@ -65,7 +65,7 @@ _window(parentWindow) {
 		exit(14);
 	}
 
-	if(!_shadowCubeMap.create(ShadowCubeMap::VERY_LOW)){
+	if(!_shadowCubeMap.create(ShadowCubeMap::MEDIUM)){
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
