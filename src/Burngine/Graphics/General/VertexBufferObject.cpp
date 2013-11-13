@@ -24,10 +24,11 @@
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/Window/Window.h>
 
+#include <Burngine/System/Reporter.h>
+
 namespace burn {
 
 VertexBufferObject::VertexBufferObject() :
-_lastBuffer(0),
 _isCreated(false),
 _isDataUploaded(false),
 _buffer(0),
@@ -35,7 +36,6 @@ _referenceCount(new unsigned int(1)) {
 }
 
 VertexBufferObject::VertexBufferObject(const VertexBufferObject& other) :
-_lastBuffer(other._lastBuffer),
 _isCreated(other._isCreated),
 _isDataUploaded(other._isDataUploaded),
 _buffer(other._buffer),
@@ -56,7 +56,6 @@ VertexBufferObject& VertexBufferObject::operator=(const VertexBufferObject& othe
 		--(*_referenceCount);
 	}
 
-	_lastBuffer = other._lastBuffer;
 	_isCreated = other._isCreated;
 	_isDataUploaded = other._isDataUploaded;
 	_buffer = other._buffer;
@@ -122,7 +121,8 @@ void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHi
 	}
 
 	//Get current buffer id
-	_lastBuffer = getLastBuffer();
+	GLint previousBuffer;
+	glGetIntegerv(type, &previousBuffer);
 
 	//Bind this buffer
 	bind(type);
@@ -132,20 +132,8 @@ void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHi
 	_isDataUploaded = true;
 
 	//Restore buffer bound before
-	glBindBuffer(type, _lastBuffer);
+	glBindBuffer(type, previousBuffer);
 
-}
-
-GLint VertexBufferObject::getLastBuffer(const GLint& type) {
-	if(!Window::isContextCreated())
-		return 0;
-	GLint last = 0;
-	glGetIntegerv(type, &last);
-	return last;
-}
-
-const GLuint& VertexBufferObject::getBuffer() const {
-	return _buffer;
 }
 
 void VertexBufferObject::addData(const void* data, const unsigned int& size) {
