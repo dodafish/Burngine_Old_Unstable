@@ -40,7 +40,8 @@ namespace burn {
 
 const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
 
-Scene::Scene(const Window& parentWindow) :
+Scene::Scene(const Window& parentWindow, const ShadowMap::Resolution& shadowmapRes,
+ 			const ShadowCubeMap::Resolution& shadowcubemapRes) :
 _window(parentWindow) {
 
 	if(!_gBuffer.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
@@ -60,12 +61,12 @@ _window(parentWindow) {
 
 	_renderTexture.clear();
 
-	if(!_shadowMap.create(ShadowMap::VERY_HIGH)){
+	if(!_shadowMap.create(shadowmapRes)){
 		Reporter::report("Unable to create shadowmap!", Reporter::ERROR);
 		exit(14);
 	}
 
-	if(!_shadowCubeMap.create(ShadowCubeMap::HIGH)){
+	if(!_shadowCubeMap.create(shadowcubemapRes)){
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}

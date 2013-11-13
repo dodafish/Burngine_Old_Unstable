@@ -68,7 +68,13 @@ public:
 	 *
 	 * @param parentWindow The parent of the scene
 	 */
-	Scene(const Window& parentWindow);
+	Scene(	const Window& parentWindow,
+			const ShadowMap::Resolution& shadowmapRes = ShadowMap::HIGH,
+			const ShadowCubeMap::Resolution& shadowcubemapRes = ShadowCubeMap::HIGH);
+
+	//Scenes are not copyable!
+	Scene(const Scene& other) = delete;
+	Scene& operator=(const Scene& other) = delete;
 
 	/**
 	 * @brief The default destructor detaching all attached objects.
@@ -93,7 +99,8 @@ public:
 	 *
 	 * @see RenderMode
 	 */
-	void draw(const Camera& camera, const RenderMode& mode = COMPOSITION);
+	void draw(	const Camera& camera,
+				const RenderMode& mode = COMPOSITION);
 
 	/**
 	 * @brief Attaches a SceneNode to the Scene.
@@ -193,19 +200,23 @@ private:
 	GBuffer _gBuffer;
 
 	//Passes:
-	void lightPass(const Camera& camera, bool dumpLighting = false);
+	void lightPass(	const Camera& camera,
+					bool dumpLighting = false);
 	//Pass-Helpers:
 	void ambientPart();
-	void drawFullscreenQuad(const Shader& shader, const OpenGlControl::Settings& rendersettings) const;
+	void drawFullscreenQuad(const Shader& shader,
+							const OpenGlControl::Settings& rendersettings) const;
 	RenderTexture _renderTexture;
 	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
-	Matrix4f drawShadowmap(const DirectionalLight& dirLight, const BoundingBox& sceneBb);
+	Matrix4f drawShadowmap(	const DirectionalLight& dirLight,
+							const BoundingBox& sceneBb);
 	Matrix4f drawShadowmap(const SpotLight& spotLight);
 	//Pointlight:
 	void drawShadowmap(const Light& pointlight);
-	Matrix4f findViewMatrix(const int& face, const Light& pointlight);
+	Matrix4f findViewMatrix(const int& face,
+							const Light& pointlight);
 	//ShadowMaps:
 	ShadowMap _shadowMap;
 	ShadowCubeMap _shadowCubeMap;
