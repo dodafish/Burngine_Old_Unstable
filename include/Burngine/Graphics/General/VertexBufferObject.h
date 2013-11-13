@@ -40,13 +40,13 @@ public:
 
 	~VertexBufferObject();
 
-	void create();
+	bool create();
 	void cleanup();
 
 	void reset();
 
 	void bind(const GLint& type = GL_ARRAY_BUFFER) const;
-	void uploadDataToGpu(const GLint& type = GL_ARRAY_BUFFER, const GLint& usageHint = GL_STATIC_DRAW);
+	bool uploadDataToGpu(const GLint& type = GL_ARRAY_BUFFER, const GLint& usageHint = GL_STATIC_DRAW);
 
 	void addData(const void* data, const unsigned int& size);
 

@@ -77,7 +77,7 @@ VertexBufferObject::~VertexBufferObject() {
 	}
 }
 
-void VertexBufferObject::create() {
+bool VertexBufferObject::create() {
 	if(Window::isContextCreated())
 		if(!_isCreated){
 
@@ -86,6 +86,7 @@ void VertexBufferObject::create() {
 			_isDataUploaded = false;
 			_isCreated = true;
 		}
+	return _isCreated;
 }
 
 void VertexBufferObject::cleanup() {
@@ -109,15 +110,16 @@ void VertexBufferObject::bind(const GLint& type) const {
 		glBindBuffer(type, _buffer);
 }
 
-void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHint) {
+bool VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHint) {
 	//Don't do anything, when there is no OpenGL-Context
 	if(!Window::isContextCreated()){
-		return;
+		return false;
 	}
 
 	//Ensure that we have a valid buffer
 	if(!_isCreated){
-		create();
+		if(!create())
+			return false;
 	}
 
 	//Get current buffer id
@@ -134,6 +136,7 @@ void VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHi
 	//Restore buffer bound before
 	glBindBuffer(type, previousBuffer);
 
+	return true;
 }
 
 void VertexBufferObject::addData(const void* data, const unsigned int& size) {
