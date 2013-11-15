@@ -29,7 +29,6 @@
 #include <Burngine/Graphics/Scene/Material.h>
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
-#include <Burngine/Graphics/Scene/Model.h>
 
 #include <vector>
 
@@ -145,7 +144,7 @@ public:
 	 *
 	 * @see getMaterial()
 	 */
-	void setMaterial(Material& material);
+	void setMaterial(const Material& material);
 
 	/**
 	 * @brief Synchronizes the vertices with the memory on the
@@ -212,8 +211,6 @@ private:
 	 * @see setVertices()
 	 */
 	bool data();
-
-	friend Model;
 
 	Material _material;
 

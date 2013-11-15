@@ -91,7 +91,7 @@ const Material& Mesh::getMaterial() const {
 	return _material;
 }
 
-void Mesh::setMaterial(Material& material) {
+void Mesh::setMaterial(const Material& material) {
 	_material = material;
 }
 
