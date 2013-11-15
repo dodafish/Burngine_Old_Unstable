@@ -36,8 +36,6 @@ template class BURNGINE_API std::vector<burn::Vertex>;
 
 namespace burn {
 
-class Model;
-
 /**
  * @brief Holds the mesh's vertices with their attributes and
  * an optional texture
