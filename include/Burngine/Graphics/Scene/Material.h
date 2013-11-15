@@ -143,6 +143,12 @@ public:
 	 */
 	const Vector3f& getDiffuseColor() const;
 
+	/**
+	 * @brief Sets OpenGL according to the set flags of
+	 * the material
+	 */
+	void setOpenGlByFlags() const;
+
 private:
 	Type _type;
 	bool _flags[COUNT];

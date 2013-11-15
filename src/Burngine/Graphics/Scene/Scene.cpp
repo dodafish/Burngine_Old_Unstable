@@ -105,22 +105,6 @@ Scene::~Scene() {
 
 }
 
-void Scene::setOpenGlByMaterial(const Material& material) {
-
-	OpenGlControl::Settings ogl;
-	ogl.enableCulling(true);
-	ogl.setCulledSide(OpenGlControl::INSIDE);
-
-	if(material.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE))
-		ogl.setVertexOrder(OpenGlControl::CLOCKWISE);
-	else
-		ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
-
-	ogl.enableDepthbufferWriting(material.isFlagSet(Material::DRAW_Z_BUFFER));
-
-	OpenGlControl::useSettings(ogl);
-}
-
 void Scene::drawGBuffers(const Camera& camera) {
 
 	_gBuffer.clear();
@@ -163,8 +147,8 @@ void Scene::drawGBuffers(const Camera& camera) {
 					mesh.getTexture().bindAsSource();
 				}
 
-				//Set OpenGL according to mesh's needs
-				setOpenGlByMaterial(mesh.getMaterial());
+				//Set OpenGL according to mesh's flags
+				mesh.getMaterial().setOpenGlByFlags();
 
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
@@ -516,7 +500,7 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 		right = std::max(right, corners[i].x);
 	}
 
-	Matrix4f projection = glm::ortho(left - 10.f, right + 10.f, bottom - 10.f, top + 10.f, -near - 10.f, -far + 10.f);
+	Matrix4f projection = glm::ortho(left - 50.f, right + 50.f, bottom - 50.f, top + 50.f, -near - 500.f, -far + 500.f);
 
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
@@ -539,8 +523,8 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
 					continue;
 
-				//Set OpenGL according to mesh's needs
-				setOpenGlByMaterial(mesh.getMaterial());
+				//Set OpenGL according to mesh's flags
+				mesh.getMaterial().setOpenGlByFlags();
 
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();
@@ -594,8 +578,8 @@ void Scene::drawShadowmap(const Light& pointlight) {
 					if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
 						continue;
 
-					//Set OpenGL according to mesh's needs
-					setOpenGlByMaterial(mesh.getMaterial());
+					//Set OpenGL according to mesh's flags
+					mesh.getMaterial().setOpenGlByFlags();
 
 					glEnableVertexAttribArray(0);
 					mesh.getPositionVbo().bind();
@@ -673,8 +657,8 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
 					continue;
 
-				//Set OpenGL according to mesh's needs
-				setOpenGlByMaterial(mesh.getMaterial());
+				//Set OpenGL according to mesh's flags
+				mesh.getMaterial().setOpenGlByFlags();
 
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();

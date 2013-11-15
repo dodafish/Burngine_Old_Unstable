@@ -186,20 +186,21 @@ public:
 	const Vector3f& getAmbientColor() const;
 
 private:
-	void setOpenGlByMaterial(const Material& material);
-
 	void drawGBuffers(const Camera& camera);
-
 	void dumpOutDepthGBuffer();
 
+	//Parent window and overall ambient color:
 	const Window& _window;
 	Vector3f _ambientColor;
 
+	//Attachable nodes:
 	std::vector<SceneNode*> _nodes;
 	std::vector<Light*> _lights;
 
+	//Copy of a skybox which is used
 	SkyBox _skyBox;
 
+	//The GBuffer with several passes
 	GBuffer _gBuffer;
 
 	//Passes:

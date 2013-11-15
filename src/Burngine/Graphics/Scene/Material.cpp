@@ -23,6 +23,8 @@
 
 #include <Burngine/Graphics/Scene/Material.h>
 
+#include <Burngine/Graphics/General/OpenGlControl.h>
+
 namespace burn {
 
 Material::Material() :
@@ -99,6 +101,23 @@ void Material::setDiffuseColor(const Vector3f& color) {
 
 const Vector3f& Material::getDiffuseColor() const {
 	return _diffuseColor;
+}
+
+void Material::setOpenGlByFlags() const {
+
+	OpenGlControl::Settings ogl;
+
+	ogl.enableCulling(true);
+	ogl.setCulledSide(OpenGlControl::INSIDE);
+
+	if(_flags[VERTEX_ORDER_CLOCKWISE])
+		ogl.setVertexOrder(OpenGlControl::CLOCKWISE);
+	else
+		ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+
+	ogl.enableDepthbufferWriting(_flags[DRAW_Z_BUFFER]);
+
+	OpenGlControl::useSettings(ogl);
 }
 
 } /* namespace burn */
