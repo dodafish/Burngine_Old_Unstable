@@ -35,22 +35,21 @@ namespace burn {
 class BURNGINE_API Material {
 public:
 	/**
-	 * @brief The default constructor
-	 * Default values:
-	 * - Type: SOLID_COLOR
-	 * - Flag[LIGHTING]: false
+	 * @brief The default constructor initialzing default Flags
 	 */
 	Material();
 
 	enum Flag {
-		LIGHTING = 0, ///< Can the surface be lit?
+		VERTEX_ORDER_CLOCKWISE = 0, ///< Are the vertices ordered clockwise or counter-clockwise? Default: false
+		DRAW_Z_BUFFER, ///< Does the node draw into the depth buffer? Default: true
+		CAST_SHADOWS, ///< Does the node cast shadows? Default: true
 
 		COUNT //Keep last!
 	};
 
 	enum Type {
-		SOLID_COLOR = 0, //Default
-		TEXTURED
+		SOLID_COLOR = 0, ///< Node has no texture, but colors.
+		TEXTURED ///< Node has a single texture supposed being the diffuse one
 	};
 
 	/**
@@ -61,7 +60,8 @@ public:
 	 *
 	 * @see isFlagSet()
 	 */
-	void setFlag(Flag flag, bool enabled = true);
+	void setFlag(	Flag flag,
+					bool enabled = true);
 
 	/**
 	 * @brief Sets the type of the material. The SceneNode
@@ -132,37 +132,6 @@ public:
 	 * @see setDiffuseColor()
 	 */
 	const Vector3f& getDiffuseColor() const;
-
-	/**
-	 * @brief Internal use only. Will be removed in future versions!
-	 */
-	void setIndex(const unsigned int& index);
-
-	/**
-	 * @brief Internal use only. Will be removed in future versions!
-	 */
-	const unsigned int& getIndex() const;
-
-	/**
-	 * @brief Sets whether the surface uses the diffuse color or a
-	 * texture.
-	 *
-	 * @param shouldUseDiffuse Set to false if surface uses a texture,
-	 *  true otherwise
-	 *
-	 * @see isUsingDiffuseColor()
-	 */
-	void useDiffuseColor(bool shouldUseDiffuse = true);
-
-	/**
-	 * @brief Returns true if the surface has no texture and uses the
-	 * diffuse color instead.
-	 *
-	 * @return Returns false if surface uses a texture, true otherwise
-	 *
-	 * @see useDiffuseColor()
-	 */
-	bool isUsingDiffuseColor() const;
 
 private:
 	Type _type;

@@ -55,7 +55,8 @@ size_t Mesh::getVertexCount() const {
 	return _vertices.size();
 }
 
-void Mesh::setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly) {
+void Mesh::setVertices(	const std::vector<Vertex>& vertices,
+						bool updateImmediatly) {
 	_vertices = vertices;
 	_needUpdate = true;
 	if(updateImmediatly)
@@ -116,13 +117,7 @@ bool Mesh::data() {
 
 			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
 
-			if(!_material.isUsingDiffuseColor()){
-
-				_colorVbo.addData(&(_vertices[i].getColor()), sizeof(Vector3f));
-			}else{
-
-				_colorVbo.addData(&(_material.getDiffuseColor()), sizeof(Vector3f));
-			}
+			_colorVbo.addData(&(_vertices[i].getColor()), sizeof(Vector3f));
 
 			_uvVbo.addData(&(_vertices[i].getUv()), sizeof(Vector2f));
 
