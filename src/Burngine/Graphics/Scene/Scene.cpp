@@ -40,8 +40,9 @@ namespace burn {
 
 const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
 
-Scene::Scene(const Window& parentWindow, const ShadowMap::Resolution& shadowmapRes,
- 			const ShadowCubeMap::Resolution& shadowcubemapRes) :
+Scene::Scene(	const Window& parentWindow,
+				const ShadowMap::Resolution& shadowmapRes,
+				const ShadowCubeMap::Resolution& shadowcubemapRes) :
 _window(parentWindow) {
 
 	if(!_gBuffer.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
@@ -104,13 +105,23 @@ Scene::~Scene() {
 
 }
 
-void Scene::drawGBuffers(const Camera& camera) {
+void Scene::setOpenGlByMaterial(const Material& material) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableCulling(true);
 	ogl.setCulledSide(OpenGlControl::INSIDE);
-	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+
+	if(material.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE))
+		ogl.setVertexOrder(OpenGlControl::CLOCKWISE);
+	else
+		ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+
+	ogl.enableDepthbufferWriting(material.isFlagSet(Material::DRAW_Z_BUFFER));
+
 	OpenGlControl::useSettings(ogl);
+}
+
+void Scene::drawGBuffers(const Camera& camera) {
 
 	_gBuffer.clear();
 	_gBuffer.bindAsTarget();
@@ -151,6 +162,9 @@ void Scene::drawGBuffers(const Camera& camera) {
 					shader.setUniform("diffuseType", 0); //Type = TEXTURED
 					mesh.getTexture().bindAsSource();
 				}
+
+				//Set OpenGL according to mesh's needs
+				setOpenGlByMaterial(mesh.getMaterial());
 
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
@@ -445,11 +459,7 @@ void Scene::lightPass(	const Camera& camera,
 Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 								const BoundingBox& sceneBb) {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableCulling(true);
-	ogl.setCulledSide(OpenGlControl::INSIDE);
-	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
-	OpenGlControl::useSettings(ogl);
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	_shadowMap.clear();
 	_shadowMap.bindAsRendertarget();
@@ -525,6 +535,13 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 
 				const Mesh& mesh = model.getMesh(j);
 
+				//Only draw when mesh can cast shadows
+				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
+					continue;
+
+				//Set OpenGL according to mesh's needs
+				setOpenGlByMaterial(mesh.getMaterial());
+
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();
 				glVertexAttribPointer(0, 3,
@@ -544,11 +561,7 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 
 void Scene::drawShadowmap(const Light& pointlight) {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableCulling(true);
-	ogl.setCulledSide(OpenGlControl::INSIDE);
-	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
-	OpenGlControl::useSettings(ogl);
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	_shadowCubeMap.clear();
 
@@ -576,6 +589,13 @@ void Scene::drawShadowmap(const Light& pointlight) {
 				for(size_t j = 0; j < model.getMeshCount(); ++j){
 
 					const Mesh& mesh = model.getMesh(j);
+
+					//Only draw when mesh can cast shadows
+					if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
+						continue;
+
+					//Set OpenGL according to mesh's needs
+					setOpenGlByMaterial(mesh.getMaterial());
 
 					glEnableVertexAttribArray(0);
 					mesh.getPositionVbo().bind();
@@ -621,11 +641,7 @@ Matrix4f Scene::findViewMatrix(	const int& face,
 
 Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableCulling(true);
-	ogl.setCulledSide(OpenGlControl::INSIDE);
-	ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
-	OpenGlControl::useSettings(ogl);
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 	_shadowMap.clear();
 	_shadowMap.bindAsRendertarget();
@@ -652,6 +668,13 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 			for(size_t j = 0; j < model.getMeshCount(); ++j){
 
 				const Mesh& mesh = model.getMesh(j);
+
+				//Only draw when mesh can cast shadows
+				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
+					continue;
+
+				//Set OpenGL according to mesh's needs
+				setOpenGlByMaterial(mesh.getMaterial());
 
 				glEnableVertexAttribArray(0);
 				mesh.getPositionVbo().bind();

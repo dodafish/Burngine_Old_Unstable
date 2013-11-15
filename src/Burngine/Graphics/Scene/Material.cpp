@@ -28,9 +28,7 @@ namespace burn {
 Material::Material() :
 _type(SOLID_COLOR),
 _specularColor(Vector3f(1.f, 1.f, 1.f)),
-_diffuseColor(Vector3f(1.f, 1.f, 1.f)),
-_index(0),
-_useDiffuseColor(false) {
+_diffuseColor(Vector3f(1.f, 1.f, 1.f)) {
 
 	_flags[VERTEX_ORDER_CLOCKWISE] = false;
 	_flags[DRAW_Z_BUFFER] = true;
@@ -38,7 +36,35 @@ _useDiffuseColor(false) {
 
 }
 
-void Material::setFlag(Material::Flag flag, bool enabled) {
+Material::Material(const Material& other) :
+_type(other._type),
+_specularColor(other._specularColor),
+_diffuseColor(other._diffuseColor) {
+
+	_flags[VERTEX_ORDER_CLOCKWISE] = other._flags[VERTEX_ORDER_CLOCKWISE];
+	_flags[DRAW_Z_BUFFER] = other._flags[DRAW_Z_BUFFER];
+	_flags[CAST_SHADOWS] = other._flags[CAST_SHADOWS];
+
+}
+
+Material& Material::operator=(const Material& other) {
+
+	if(this == &other)
+		return *this;
+
+	_type = other._type;
+	_specularColor = other._specularColor;
+	_diffuseColor = other._diffuseColor;
+
+	_flags[VERTEX_ORDER_CLOCKWISE] = other._flags[VERTEX_ORDER_CLOCKWISE];
+	_flags[DRAW_Z_BUFFER] = other._flags[DRAW_Z_BUFFER];
+	_flags[CAST_SHADOWS] = other._flags[CAST_SHADOWS];
+
+	return *this;
+}
+
+void Material::setFlag(	Material::Flag flag,
+						bool enabled) {
 	if(flag != COUNT){
 		_flags[flag] = enabled;
 	}
@@ -69,7 +95,6 @@ const Vector3f& Material::getSpecularColor() const {
 
 void Material::setDiffuseColor(const Vector3f& color) {
 	_diffuseColor = color;
-	_useDiffuseColor = true;
 }
 
 const Vector3f& Material::getDiffuseColor() const {

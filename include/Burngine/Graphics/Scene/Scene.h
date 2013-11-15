@@ -55,6 +55,7 @@ class Shader;
 class SpotLight;
 class DirectionalLight;
 class BoundingBox;
+class Material;
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
@@ -185,6 +186,8 @@ public:
 	const Vector3f& getAmbientColor() const;
 
 private:
+	void setOpenGlByMaterial(const Material& material);
+
 	void drawGBuffers(const Camera& camera);
 
 	void dumpOutDepthGBuffer();
