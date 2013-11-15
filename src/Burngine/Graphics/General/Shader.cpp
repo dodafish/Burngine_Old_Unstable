@@ -34,7 +34,6 @@ namespace burn {
 
 const std::hash<std::string> strToHash;
 
-Shader BurngineShaders::_colorShader;
 Shader BurngineShaders::_textureShader;
 Shader BurngineShaders::_textureOneComponentShader;
 Shader BurngineShaders::_pointlightShader;
@@ -44,7 +43,6 @@ Shader BurngineShaders::_singleColorShader;
 Shader BurngineShaders::_fontShader;
 Shader BurngineShaders::_depthShader;
 Shader BurngineShaders::_skyBoxShader;
-Shader BurngineShaders::_depthPointlight;
 Shader BurngineShaders::_gBufferShader;
 
 bool BurngineShaders::load(const std::string& d) {
@@ -54,9 +52,6 @@ bool BurngineShaders::load(const std::string& d) {
 	if(d[d.size() - 1] != '/' || d[d.size() - 1] != '\\')
 		dir = d + "/";
 
-	if(!_colorShader.loadFromFile(dir + "color.vert", dir + "color.frag")){
-		return false;
-	}
 	if(!_textureShader.loadFromFile(dir + "texture.vert", dir + "texture.frag")){
 		return false;
 	}
@@ -81,9 +76,6 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_depthShader.loadFromFile(dir + "depth.vert", dir + "depth.frag")){
 		return false;
 	}
-	if(!_depthPointlight.loadFromFile(dir + "pointlightDepth.vert", dir + "pointlightDepth.frag")){
-		return false;
-	}
 	if(!_skyBoxShader.loadFromFile(dir + "skyBox.vert", dir + "skyBox.frag")){
 		return false;
 	}
@@ -96,12 +88,9 @@ bool BurngineShaders::load(const std::string& d) {
 
 const Shader& BurngineShaders::getShader(const Type& type) {
 	switch (type) {
-		case COLOR:
+		case TEXTURE:
 			//Will be returned at end of function, so it always returns.
 			//This makes the compiler happy :)
-			break;
-		case TEXTURE:
-			return _textureShader;
 			break;
 		case TEXTURE_ONE_COMPONENT:
 			return _textureOneComponentShader;
@@ -124,9 +113,6 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 		case DEPTH:
 			return _depthShader;
 			break;
-		case DEPTH_POINTLIGHT:
-			return _depthPointlight;
-			break;
 		case SKY_BOX:
 			return _skyBoxShader;
 			break;
@@ -135,7 +121,7 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 	}
 	//See case of SOLID_COLOR above
-	return _colorShader;
+	return _textureShader;
 }
 
 //--------------------------------------------------------------------------------------

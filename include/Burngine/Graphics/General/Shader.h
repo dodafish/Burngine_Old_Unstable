@@ -179,18 +179,16 @@ struct BURNGINE_API BurngineShaders {
 	 * @see useShader()
 	 */
 	enum Type {
-		COLOR, ///< Color Shader. Material colors eg.
 		TEXTURE, ///< Simple 1-Texture Shader
-		TEXTURE_ONE_COMPONENT,
+		TEXTURE_ONE_COMPONENT, ///< Samples from a texture with a single component e.g. depth textures
 		POINTLIGHT, ///< Renders a pointlight
-		SPOTLIGHT,
-		DIRECTIONAL_LIGHT,
-		SINGLECOLOR, ///< Draws with only one color (internal use for depthbufferwriting)
-		FONT,
-		DEPTH,
-		DEPTH_POINTLIGHT,
-		SKY_BOX,
-		G_BUFFER
+		SPOTLIGHT, ///< Render a spotlight
+		DIRECTIONAL_LIGHT, ///< Renders a directional light
+		SINGLECOLOR, ///< Draws a single color
+		FONT, ///< Used for font rendering
+		DEPTH, ///< Outputs only the depthpart
+		SKY_BOX, ///< Used for skybox rendering (z-independant cubemap rendering)
+		G_BUFFER ///< Used by the GBuffer
 	};
 
 	/**
@@ -203,7 +201,6 @@ struct BURNGINE_API BurngineShaders {
 	static const Shader& getShader(const Type& type);
 
 private:
-	static Shader _colorShader;
 	static Shader _textureShader;
 	static Shader _textureOneComponentShader;
 	static Shader _pointlightShader;
@@ -212,7 +209,6 @@ private:
 	static Shader _singleColorShader;
 	static Shader _fontShader;
 	static Shader _depthShader;
-	static Shader _depthPointlight;
 	static Shader _skyBoxShader;
 	static Shader _gBufferShader;
 };

@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Scene/Mesh.h>
-
+#include <Burngine/Graphics/Scene/Model.h>
 #include <Burngine/Graphics/Window/Window.h>
 
 namespace burn {
