@@ -731,77 +731,14 @@ void Scene::drawFullscreenQuad(	const Shader& shader,
 
 }
 
-/*void Scene::drawNodes(const Camera& camera) {
- //Render objects without lighting:
- _window.bind();
- OpenGlControl::useSettings(OpenGlControl::Settings());
- for(size_t i = 0; i < _nodes.size(); ++i){
- _nodes[i]->draw(camera);
- }
- }
-
- bool Scene::drawDiffusepart(const Camera& camera) {
-
- if(!_diffuseLightTexture.isCreated())
- return false;
-
- //Render objects' lightings:
-
- OpenGlControl::Settings oglSettings;
- oglSettings.setClearColor(Vector4f(1.f));
- OpenGlControl::useSettings(oglSettings);
-
- _diffuseLightTexture.clear();
- _diffuseLightTexture.bindAsRendertarget();
-
- for(size_t i = 0; i < _nodes.size(); ++i){
- _nodes[i]->drawSingleColor(camera, Vector4f(0.f, 0.f, 0.f, 0.f));
- }
-
- oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
- oglSettings.setBlendMode(OpenGlControl::ADD);
- OpenGlControl::useSettings(oglSettings);
-
- for(size_t i = 0; i < _nodes.size(); ++i){
- _nodes[i]->drawLighting(SceneNode::DIFFUSE, camera, _lights, _ambientColor);
- }
-
- return true;
- }
-
- bool Scene::drawSpecularpart(const Camera& camera) {
- if(!_specularLightTexture.isCreated())
- return false;
-
- OpenGlControl::Settings oglSettings;
- oglSettings.setClearColor(Vector4f(0.f, 0.f, 0.f, 1.f));
- OpenGlControl::useSettings(oglSettings);
-
- _specularLightTexture.clear();
- _specularLightTexture.bindAsRendertarget();
-
- for(size_t i = 0; i < _nodes.size(); ++i){
- _nodes[i]->drawSingleColor(camera, Vector4f(0.f, 0.f, 0.f, 0.f));
- }
-
- oglSettings.setDepthtestTechnique(OpenGlControl::EQUAL);
- oglSettings.setBlendMode(OpenGlControl::ADD);
- OpenGlControl::useSettings(oglSettings);
- for(size_t i = 0; i < _nodes.size(); ++i){
- _nodes[i]->drawLighting(SceneNode::SPECULAR, camera, _lights, _ambientColor);
- }
-
- return true;
- }*/
-
 void Scene::detachAll() {
-//All SceneNodes:
+	//All SceneNodes:
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		_nodes[i]->removeParentScene(this);
 	}
 	_nodes.clear();
 
-//All Lights:
+	//All Lights:
 	for(size_t i = 0; i < _lights.size(); ++i){
 		_lights[i]->removeParentScene(this);
 	}
@@ -822,7 +759,7 @@ void Scene::detachSceneNode(SceneNode& node) {
 
 	node.removeParentScene(this);
 
-//Remove from attachement-list
+	//Remove from attachment-list
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
