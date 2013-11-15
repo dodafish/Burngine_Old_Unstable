@@ -43,7 +43,8 @@ const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0
 Scene::Scene(	const Window& parentWindow,
 				const ShadowMap::Resolution& shadowmapRes,
 				const ShadowCubeMap::Resolution& shadowcubemapRes) :
-_window(parentWindow) {
+_window(parentWindow),
+_isLightingEnabled(false) {
 
 	if(!_gBuffer.create(Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()))){
 		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
@@ -213,7 +214,8 @@ void Scene::draw(	const Camera& camera,
 								GL_LINEAR);
 		}
 
-		lightPass(camera, mode == LIGHTING);
+		if(_isLightingEnabled)
+			lightPass(camera, mode == LIGHTING);
 
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
@@ -267,10 +269,7 @@ void Scene::lightPass(	const Camera& camera,
 	ogl.enableCulling(false);
 	ogl.enableBlending(true);
 	ogl.setBlendMode(OpenGlControl::ADD);
-	if(_lights.size() == 0)
-		ogl.setClearColor(Vector4f(1.f));
-	else
-		ogl.setClearColor(Vector4f(0.f));
+	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
 	//Pre-Adjust Shaders:
@@ -415,13 +414,12 @@ void Scene::lightPass(	const Camera& camera,
 		ogl.setBlendMode(OpenGlControl::MULTIPLY);
 		drawFullscreenQuad(shader, ogl);
 
-		if(_lights.size() != 0){
-			//Compose with specular part:
-			_renderTexture.bindAsSource();
-			shader.setUniform("gSampler", 1); //sample from diffuse
-			ogl.setBlendMode(OpenGlControl::ADD);
-			drawFullscreenQuad(shader, ogl);
-		}
+		//Compose with specular part:
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 1); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, ogl);
+
 	}else{
 
 		_renderTexture.bindAsTarget();
@@ -500,7 +498,8 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 		right = std::max(right, corners[i].x);
 	}
 
-	Matrix4f projection = glm::ortho(left - 50.f, right + 50.f, bottom - 50.f, top + 50.f, -near - 500.f, -far + 500.f);
+	const float margin = 0.f;
+	Matrix4f projection = glm::ortho(left - margin, right + margin, -top - margin, -bottom + margin, -near, -far);
 
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
@@ -789,7 +788,7 @@ void Scene::detachLight(Light& light) {
 
 	light.removeParentScene(this);
 
-//Remove from attachement-list
+	//Remove from attachement-list
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light){
 			_lights.erase(_lights.begin() + i);
@@ -809,6 +808,14 @@ const Vector3f& Scene::getAmbientColor() const {
 
 void Scene::setSkyBox(const SkyBox& skyBox) {
 	_skyBox = skyBox;
+}
+
+void Scene::setLightingEnabled(bool enabled) {
+	_isLightingEnabled = enabled;
+}
+
+bool Scene::isLightingEnabled() const {
+	return _isLightingEnabled;
 }
 
 } /* namespace burn */

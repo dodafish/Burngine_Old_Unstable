@@ -185,6 +185,16 @@ public:
 	 */
 	const Vector3f& getAmbientColor() const;
 
+	/**
+	 * @brief Enables or disables lighting
+	 */
+	void setLightingEnabled(bool enabled = true);
+
+	/**
+	 * @brief Returns true when lighting is enabled
+	 */
+	bool isLightingEnabled() const;
+
 private:
 	void drawGBuffers(const Camera& camera);
 	void dumpOutDepthGBuffer();
@@ -192,6 +202,8 @@ private:
 	//Parent window and overall ambient color:
 	const Window& _window;
 	Vector3f _ambientColor;
+
+	bool _isLightingEnabled; ///< Does our scene render lighting? Default: false
 
 	//Attachable nodes:
 	std::vector<SceneNode*> _nodes;
