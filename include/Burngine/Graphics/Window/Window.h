@@ -70,7 +70,8 @@ public:
 	 *
 	 * @see close()
 	 */
-	bool create(const WindowSettings& ws = WindowSettings(), bool loadShaders = true);
+	bool create(const WindowSettings& ws = WindowSettings(),
+				bool loadShaders = true);
 
 	const WindowSettings& getSettings() const;
 
@@ -153,6 +154,12 @@ public:
 
 	static glm::mat4 getOrthoMatrix();
 
+	enum PolygonMode {
+		FILLED, LINE, POINT
+	};
+
+	void setPolygonMode(const PolygonMode& mode) const;
+
 	/**
 	 * @brief This function is used to ensure, that an
 	 * OpenGL-Context exists. Calling OpenGL-Methods will result
@@ -162,8 +169,6 @@ public:
 	 * A Context is created as soon as a window was created.
 	 */
 	static inline bool isContextCreated();
-
-
 
 private:
 	void updateOrthoMatrix();

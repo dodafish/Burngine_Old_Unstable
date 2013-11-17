@@ -68,7 +68,6 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	Reporter::report("Version string: " + ss.str());
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
-	glfwWindowHint(GLFW_SAMPLES, 16);
 
 	Reporter::report("All window-hints set. Attempting creation...");
 
@@ -247,6 +246,19 @@ void Window::setCursorPosition(const Vector2d& position) const {
 	if(_window != nullptr){
 		glfwSetCursorPos(_window, position.x, position.y);
 	}
+}
+
+void Window::setPolygonMode(const PolygonMode& mode) const{
+
+	if(!isContextCreated())
+		return;
+
+	if(mode == FILLED)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	else if(mode == LINE)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 }
 
 } /* namespace burn */
