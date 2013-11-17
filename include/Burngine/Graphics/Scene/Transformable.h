@@ -94,6 +94,8 @@ public:
 	 */
 	const Vector3f& getRotation() const;
 
+	void rotate(const float& offsetX, const float& offsetY, const float& offsetZ);
+
 	/**
 	 * @brief Sets the scale of the object
 	 *
