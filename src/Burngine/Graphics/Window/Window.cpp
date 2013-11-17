@@ -77,7 +77,7 @@ bool Window::create(const WindowSettings& settings,
 	estimateWindowResolution();
 
 	//Create OpenGL window
-	glfwCreateWindow(	static_cast<int>(_settings.getWidth()),
+	_window = glfwCreateWindow(	static_cast<int>(_settings.getWidth()),
 						static_cast<int>(_settings.getHeight()),
 						_settings.getTitle().c_str(),
 						_settings.isFullscreen() ? glfwGetPrimaryMonitor() : 0, //Pass the primary monitor if we want fullscreen
