@@ -70,6 +70,12 @@ const Vector3f& Transformable::getRotation() const {
 	return _rotation;
 }
 
+void Transformable::rotate(const float& offsetX, const float& offsetY, const float& offsetZ){
+	_rotation.x += offsetX;
+	_rotation.y += offsetY;
+	_rotation.z += offsetZ;
+}
+
 void Transformable::setScale(const Vector3f& scale) {
 	_scale = scale;
 }
