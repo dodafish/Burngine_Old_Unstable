@@ -220,10 +220,10 @@ void Scene::draw(	const Camera& camera,
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
-		if(mode != LIGHTING){
+		/*if(mode != LIGHTING){
 			_window.bind();
 			_skyBox.draw();
-		}
+		}*/
 
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
