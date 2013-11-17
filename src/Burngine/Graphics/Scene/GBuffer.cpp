@@ -68,7 +68,7 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	glGenTextures(COUNT, _textures);
 	for(unsigned int i = 0; i != COUNT; ++i){
 		glBindTexture(GL_TEXTURE_2D, _textures[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_FLOAT, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_FLOAT, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, _textures[i], 0);
