@@ -217,6 +217,13 @@ void Scene::draw(	const Camera& camera,
 		if(_isLightingEnabled)
 			lightPass(camera, mode == LIGHTING);
 
+		OpenGlControl::useSettings(OpenGlControl::Settings());
+
+		if(mode != LIGHTING){
+			_window.bind();
+			_skyBox.draw();
+		}
+
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
 		glBlitFramebuffer(	0,
@@ -315,23 +322,6 @@ void Scene::lightPass(	const Camera& camera,
 
 	ambientPart();
 
-	//Get whole scene into a box:
-	Vector3f sceneBbPos, sceneBbDim;
-	for(size_t i = 0; i < _nodes.size(); ++i){
-		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
-			const Model& m = static_cast<StaticMeshNode*>(_nodes[i])->getModel();
-			sceneBbPos.x = std::min(sceneBbPos.x, m.getBoundingBox().getPosition().x);
-			sceneBbPos.y = std::min(sceneBbPos.y, m.getBoundingBox().getPosition().y);
-			sceneBbPos.z = std::min(sceneBbPos.z, m.getBoundingBox().getPosition().z);
-			sceneBbDim.x = std::max(sceneBbDim.x, m.getBoundingBox().getDimensions().x);
-			sceneBbDim.y = std::max(sceneBbDim.y, m.getBoundingBox().getDimensions().y);
-			sceneBbDim.z = std::max(sceneBbDim.z, m.getBoundingBox().getDimensions().z);
-		}
-	}
-	BoundingBox sceneBoundingBox; //Whole scene in a bounding box
-	sceneBoundingBox.setPosition(sceneBbPos);
-	sceneBoundingBox.setDimensions(sceneBbDim);
-
 	for(size_t i = 0; i < _lights.size(); ++i){
 
 		//Clear shadowmap
@@ -342,7 +332,7 @@ void Scene::lightPass(	const Camera& camera,
 			DirectionalLight* light = static_cast<DirectionalLight*>(_lights[i]);
 
 			//Render shadowmap:
-			Matrix4f shadowMatrix = drawShadowmap(*light, sceneBoundingBox);
+			Matrix4f shadowMatrix = drawShadowmap(*light);
 
 			//Render light
 			_renderTexture.bindAsTarget();
@@ -438,8 +428,7 @@ void Scene::lightPass(	const Camera& camera,
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
-								const BoundingBox& sceneBb) {
+Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -451,55 +440,7 @@ Matrix4f Scene::drawShadowmap(	const DirectionalLight& dirLight,
 	//Cover whole scene with sceneBb
 	Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(dirLight.getDirection()), Vector3f(1.f));
 
-	Vector4f corners[8] = {
-	Vector4f(sceneBb.getPosition(), 1.f),
-	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
-				sceneBb.getPosition().y,
-				sceneBb.getPosition().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x,
-				sceneBb.getPosition().y + sceneBb.getDimensions().y,
-				sceneBb.getPosition().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x,
-				sceneBb.getPosition().y,
-				sceneBb.getPosition().z + sceneBb.getDimensions().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
-				sceneBb.getPosition().y + sceneBb.getDimensions().y,
-				sceneBb.getPosition().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
-				sceneBb.getPosition().y,
-				sceneBb.getPosition().z + sceneBb.getDimensions().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x,
-				sceneBb.getPosition().y + sceneBb.getDimensions().y,
-				sceneBb.getPosition().z + sceneBb.getDimensions().z,
-				1.f),
-	Vector4f(	sceneBb.getPosition().x + sceneBb.getDimensions().x,
-				sceneBb.getPosition().y + sceneBb.getDimensions().y,
-				sceneBb.getPosition().z + sceneBb.getDimensions().z,
-				1.f) };
-
-	for(int i = 0; i != 8; ++i){
-		corners[i] = view * corners[i]; //Apply view matrix of light
-	}
-
-	//Find the extremas
-	float left, right, bottom, top, near, far;
-	left = right = bottom = top = near = far = 0.f;
-	for(int i = 0; i != 8; ++i){
-		left = std::min(left, corners[i].x);
-		bottom = std::min(bottom, corners[i].y);
-		near = std::max(near, corners[i].z);
-		far = std::min(far, corners[i].z);
-		top = std::max(top, corners[i].y);
-		right = std::max(right, corners[i].x);
-	}
-
-	const float margin = 0.f;
-	Matrix4f projection = glm::ortho(left - margin, right + margin, -top - margin, -bottom + margin, -near, -far);
+	Matrix4f projection = glm::ortho(-30.f, 30.f, -30.f, 30.f, -30.f, 30.f);
 
 	shader.setUniform("projectionMatrix", projection);
 	shader.setUniform("viewMatrix", view);
