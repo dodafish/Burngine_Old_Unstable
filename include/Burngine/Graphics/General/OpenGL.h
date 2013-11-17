@@ -40,6 +40,16 @@ public:
 	//Static only
 	ContextHandler() = delete;
 
+	/**
+	 * @brief Ensures that any OpenGL context is active.
+	 * This allows OpenGL usage even without a "real" window
+	 * (There is a hidden fake window otherwise, just for a context)
+	 *
+	 * @note If previously used, the window which was set with @ref useContext()
+	 * before will be used
+	 *
+	 * @see useContext()
+	 */
 	static void ensureContext();
 
 	static GLFWwindow* createWindow(const WindowSettings& settings);
@@ -51,13 +61,23 @@ public:
 	 */
 	static void shutdown();
 
+	/**
+	 * @brief Sets a window as preferred context and uses its context
+	 * simultanously
+	 *
+	 * @note Further calls to @ref ensureContext() will activate this
+	 * window's context
+	 *
+	 * @see ensureContext()
+	 */
 	static void useContext(GLFWwindow* window);
 
 private:
 	static void ensureGlfw();
 
-	static GLFWwindow* _preferredWindow;
+	static GLFWwindow* _currentContextWindow;
 
+	static GLFWwindow* _preferredWindow;
 	static GLFWwindow* _fakeWindow;
 	static std::vector<GLFWwindow*> _windows; ///< These are real ones
 	static bool _contextEnsured;

@@ -36,6 +36,7 @@ bool ContextHandler::_isGlewInitialized = false;
 bool ContextHandler::_isGlfwInitialized = false;
 GLFWwindow* ContextHandler::_fakeWindow = nullptr;
 GLFWwindow* ContextHandler::_preferredWindow = nullptr;
+GLFWwindow* ContextHandler::_currentContextWindow = nullptr;
 std::vector<GLFWwindow*> ContextHandler::_windows;
 
 void ContextHandler::shutdown() {
@@ -46,6 +47,7 @@ void ContextHandler::shutdown() {
 	_windows.clear();
 	_fakeWindow = nullptr;
 	_preferredWindow = nullptr;
+	_currentContextWindow = nullptr;
 	_isGlewInitialized = false;
 	_isGlfwInitialized = false;
 	_contextEnsured = false;
@@ -54,9 +56,8 @@ void ContextHandler::shutdown() {
 
 void ContextHandler::useContext(GLFWwindow* window) {
 
-	if(_preferredWindow == window){
-		//Just refresh the current context to be sure...
-		glfwMakeContextCurrent(_preferredWindow);
+	if(_currentContextWindow == window){
+		//Context already in use
 		return;
 	}
 
@@ -140,9 +141,11 @@ void ContextHandler::ensureContext() {
 		if(_preferredWindow != nullptr){
 			//Use the context of the preferred window
 			glfwMakeContextCurrent(_preferredWindow);
+			_currentContextWindow = _preferredWindow;
 		}else{
 			//Just use the first window of the list
 			glfwMakeContextCurrent(_windows[0]);
+			_currentContextWindow = _windows[0];
 		}
 	}else{
 
@@ -175,6 +178,8 @@ void ContextHandler::ensureContext() {
 			//Fake window is created. Make its context current
 			glfwMakeContextCurrent(_fakeWindow);
 		}
+		_currentContextWindow = _fakeWindow;
+
 	}
 
 	////////////////////////////////////////////////////////
