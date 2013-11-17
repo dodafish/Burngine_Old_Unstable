@@ -51,7 +51,8 @@ Window::~Window() {
 	glfwTerminate();
 }
 
-bool Window::create(const WindowSettings& settings, bool loadShaders) {
+bool Window::create(const WindowSettings& settings,
+					bool loadShaders) {
 
 	close();
 	_settings = settings;
@@ -64,6 +65,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		_isGlfwInit = true;
 	}
 
+	//Log information
 	std::stringstream ss(glfwGetVersionString());
 	Reporter::report("Version string: " + ss.str());
 
@@ -71,41 +73,29 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 
 	Reporter::report("All window-hints set. Attempting creation...");
 
-	bool validVidmodeInformation = true;
-	const GLFWvidmode* vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	if(vidmode == nullptr){
-		validVidmodeInformation = false;
-	}
+	// Set the window resolution according to _settings
+	estimateWindowResolution();
 
-	if(!_settings.isFullscreen()){
-		_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
-									_settings.getTitle().c_str(), 0, 0);
-	}else{
-		if(!validVidmodeInformation || !_settings.isUsingHighestResolution()){
-			_window = glfwCreateWindow(static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()),
-										_settings.getTitle().c_str(), glfwGetPrimaryMonitor(), 0);
-		}else{
-			_window = glfwCreateWindow(vidmode->width, vidmode->height, _settings.getTitle().c_str(),
-										glfwGetPrimaryMonitor(), 0);
-			_settings.setWidth(vidmode->width);
-			_settings.setHeight(vidmode->height);
-		}
-	}
+	//Create OpenGL window
+	glfwCreateWindow(	static_cast<int>(_settings.getWidth()),
+						static_cast<int>(_settings.getHeight()),
+						_settings.getTitle().c_str(),
+						_settings.isFullscreen() ? glfwGetPrimaryMonitor() : 0, //Pass the primary monitor if we want fullscreen
+						0);
 
+	//Check if creation succeeded
 	if(_window == nullptr){
 		glfwTerminate();
 		Reporter::report("Failed to create window!", Reporter::ERROR);
 		return false;
-	}else{
-		Reporter::report("Window successfully created.");
 	}
 
+	//Make the window as current context
 	glfwMakeContextCurrent(_window);
 	_isContextCreated = true;
 
-	Reporter::report("Setting GLEW to experimental...");
+	//Initialize GLEW
 	glewExperimental = GL_TRUE;
-
 	if(glewInit() != GLEW_OK){
 		Reporter::report("Failed to init GLEW!", Reporter::ERROR);
 		return false;
@@ -113,7 +103,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		Reporter::report("GLEW successfully initialized.");
 	}
 
-	//Checks, if OpenGL 3.3+ is supported
+	//Check if OpenGL 3.3+ is supported
 	if(!checkOpenGLVersion()){
 		return false;
 	}
@@ -129,7 +119,7 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 		}
 		Reporter::report("Loaded BurngineShaders.");
 	}else{
-		Reporter::report("BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
+		Reporter::report(	"BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
 							Reporter::WARNING);
 	}
 
@@ -146,6 +136,29 @@ bool Window::create(const WindowSettings& settings, bool loadShaders) {
 	_uptime.reset();
 
 	return true;
+}
+
+void Window::estimateWindowResolution() {
+
+	//No need to estimate a resolution. Use the set resolution
+	if(!_settings.isFullscreen())
+		return;
+
+	//We don't want the highest res., but ours -> return
+	if(!_settings.isUsingHighestResolution())
+		return;
+
+	//We want fullscreen with the best resolution possible
+	const GLFWvidmode* vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	if(vidmode == nullptr){
+		//Failed to get information about the video mode
+		return;
+	}
+
+	//Overwrite the res. of settings with the highest ones
+	_settings.setWidth(vidmode->width);
+	_settings.setHeight(vidmode->height);
+
 }
 
 bool Window::checkOpenGLVersion() {
@@ -229,7 +242,9 @@ glm::mat4 Window::getOrthoMatrix() {
 }
 
 void Window::updateOrthoMatrix() {
-	_orthoMatrix = glm::ortho(0.f, static_cast<float>(_settings.getWidth()), 0.f,
+	_orthoMatrix = glm::ortho(	0.f,
+								static_cast<float>(_settings.getWidth()),
+								0.f,
 								static_cast<float>(_settings.getHeight()));
 }
 
@@ -248,7 +263,7 @@ void Window::setCursorPosition(const Vector2d& position) const {
 	}
 }
 
-void Window::setPolygonMode(const PolygonMode& mode) const{
+void Window::setPolygonMode(const PolygonMode& mode) const {
 
 	if(!isContextCreated())
 		return;

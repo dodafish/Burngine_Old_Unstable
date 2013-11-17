@@ -173,6 +173,7 @@ public:
 private:
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
+	void estimateWindowResolution();
 
 	static bool _isContextCreated;
 	bool _isGlfwInit;
