@@ -28,4 +28,31 @@
 #include <Burngine/extern/GL/glew.h>
 #include <Burngine/extern/glfw3.h>
 
+#include <Burngine/Export.h>
+#include <vector>
+
+namespace burn{
+
+class BURNGINE_API ContextHandler{
+public:
+
+	//Static only
+	ContextHandler() = delete;
+
+	static void registerWindow(GLFWwindow* window, bool activateContext = true);
+	static void deregisterWindow(GLFWwindow* window);
+
+	static void ensureContext();
+
+	static void ensureGlfw();
+
+private:
+	static GLFWwindow* _fakeWindow;
+	static std::vector<GLFWwindow*> _windows;
+	static bool _contextEnsured;
+	static bool _isGlewInitialized, _isGlfwInitialized;
+};
+
+}
+
 #endif /* OPENGL_H_ */

@@ -57,26 +57,17 @@ bool Window::create(const WindowSettings& settings,
 	close();
 	_settings = settings;
 
-	if(!_isGlfwInit && !glfwInit()){
-		Reporter::report("Failed to init GLFW!", Reporter::ERROR);
-		return false;
-	}else{
-		Reporter::report("GLFW successfully initialized.");
-		_isGlfwInit = true;
-	}
+	ContextHandler::ensureGlfw();
 
 	//Log information
 	std::stringstream ss(glfwGetVersionString());
 	Reporter::report("Version string: " + ss.str());
 
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
-
-	Reporter::report("All window-hints set. Attempting creation...");
-
 	// Set the window resolution according to _settings
 	estimateWindowResolution();
 
 	//Create OpenGL window
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
 	_window = glfwCreateWindow(	static_cast<int>(_settings.getWidth()),
 						static_cast<int>(_settings.getHeight()),
 						_settings.getTitle().c_str(),
@@ -90,18 +81,10 @@ bool Window::create(const WindowSettings& settings,
 		return false;
 	}
 
-	//Make the window as current context
-	glfwMakeContextCurrent(_window);
-	_isContextCreated = true;
+	//Register the window and make its context current
+	ContextHandler::registerWindow(_window, true);
 
-	//Initialize GLEW
-	glewExperimental = GL_TRUE;
-	if(glewInit() != GLEW_OK){
-		Reporter::report("Failed to init GLEW!", Reporter::ERROR);
-		return false;
-	}else{
-		Reporter::report("GLEW successfully initialized.");
-	}
+
 
 	//Check if OpenGL 3.3+ is supported
 	if(!checkOpenGLVersion()){
