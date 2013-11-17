@@ -78,11 +78,9 @@ public:
 	/**
 	 * @brief Destroys the current window
 	 *
-	 * @return Returns true on success
-	 *
 	 * @see create()
 	 */
-	bool close();
+	void close();
 
 	/**
 	 * @brief This call will check events which want to close the window
@@ -102,7 +100,7 @@ public:
 	 *
 	 * @see keepOpened()
 	 */
-	void update();
+	static void update();
 
 	/**
 	 * @brief Cleares the back buffer. (The buffer on which Burngine is
@@ -160,23 +158,11 @@ public:
 
 	void setPolygonMode(const PolygonMode& mode) const;
 
-	/**
-	 * @brief This function is used to ensure, that an
-	 * OpenGL-Context exists. Calling OpenGL-Methods will result
-	 * in crashes when no context is created.
-	 * This is internally used by all classes that call OpenGL-Methods
-	 *
-	 * A Context is created as soon as a window was created.
-	 */
-	static inline bool isContextCreated();
-
 private:
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
 	void estimateWindowResolution();
 
-	static bool _isContextCreated;
-	bool _isGlfwInit;
 	GLFWwindow* _window;
 	WindowSettings _settings;
 
@@ -190,10 +176,6 @@ private:
 
 	static glm::mat4 _orthoMatrix;
 };
-
-bool Window::isContextCreated() {
-	return (_isContextCreated);
-}
 
 } /* namespace burn */
 #endif /* WINDOW_H_ */

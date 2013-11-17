@@ -26,6 +26,7 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 #include <iostream>
 
 #include <ft2build.h>
@@ -45,8 +46,7 @@ void Text::setText(const String& text) {
 void Text::draw() {
 
 	//Valid OpenGL context has to exist
-	if(!Window::isContextCreated())
-		return;
+	ensureContext();
 
 	//Draw the string to screen
 	drawString();

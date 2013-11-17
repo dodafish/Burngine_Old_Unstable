@@ -29,6 +29,7 @@
 #include <Burngine/extern/glfw3.h>
 
 #include <Burngine/Export.h>
+#include <Burngine/Graphics/Window/WindowSettings.h>
 #include <vector>
 
 namespace burn{
@@ -39,19 +40,36 @@ public:
 	//Static only
 	ContextHandler() = delete;
 
-	static void registerWindow(GLFWwindow* window, bool activateContext = true);
-	static void deregisterWindow(GLFWwindow* window);
-
 	static void ensureContext();
 
-	static void ensureGlfw();
+	static GLFWwindow* createWindow(const WindowSettings& settings);
+	static void destroyWindow(GLFWwindow* window);
+
+	/**
+	 * @brief NEVER call this function yourself. Burngine uses it at
+	 * program end for cleaning up the OpenGL stuff
+	 */
+	static void shutdown();
+
+	static void useContext(GLFWwindow* window);
 
 private:
+	static void ensureGlfw();
+
+	static GLFWwindow* _preferredWindow;
+
 	static GLFWwindow* _fakeWindow;
-	static std::vector<GLFWwindow*> _windows;
+	static std::vector<GLFWwindow*> _windows; ///< These are real ones
 	static bool _contextEnsured;
 	static bool _isGlewInitialized, _isGlfwInitialized;
 };
+
+/*
+ * @brief Just a shortcut for ContextHandler::ensureContext()
+ */
+inline void ensureContext(){
+	ContextHandler::ensureContext();
+}
 
 }
 

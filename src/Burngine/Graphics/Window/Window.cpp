@@ -35,20 +35,16 @@
 
 namespace burn {
 
-bool Window::_isContextCreated = false;
 glm::mat4 Window::_orthoMatrix;
 
 Window::Window() :
-_isGlfwInit(false),
 _window(nullptr),
 _framerateLimit(0),
 _vertexArrayID(0) {
 }
 
 Window::~Window() {
-
 	close();
-	glfwTerminate();
 }
 
 bool Window::create(const WindowSettings& settings,
@@ -57,8 +53,6 @@ bool Window::create(const WindowSettings& settings,
 	close();
 	_settings = settings;
 
-	ContextHandler::ensureGlfw();
-
 	//Log information
 	std::stringstream ss(glfwGetVersionString());
 	Reporter::report("Version string: " + ss.str());
@@ -66,30 +60,9 @@ bool Window::create(const WindowSettings& settings,
 	// Set the window resolution according to _settings
 	estimateWindowResolution();
 
-	//Create OpenGL window
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
-	_window = glfwCreateWindow(	static_cast<int>(_settings.getWidth()),
-						static_cast<int>(_settings.getHeight()),
-						_settings.getTitle().c_str(),
-						_settings.isFullscreen() ? glfwGetPrimaryMonitor() : 0, //Pass the primary monitor if we want fullscreen
-						0);
-
-	//Check if creation succeeded
-	if(_window == nullptr){
-		glfwTerminate();
-		Reporter::report("Failed to create window!", Reporter::ERROR);
-		return false;
-	}
-
-	//Register the window and make its context current
-	ContextHandler::registerWindow(_window, true);
-
-
-
-	//Check if OpenGL 3.3+ is supported
-	if(!checkOpenGLVersion()){
-		return false;
-	}
+	//Create Window with ContextHandler :)
+	//This returns only on success, program will get terminated otherwise
+	_window = ContextHandler::createWindow(_settings);
 
 	//Inputhandling connection to callbacks
 	glfwSetKeyCallback(_window, Keyboard::keyCallback);
@@ -105,6 +78,10 @@ bool Window::create(const WindowSettings& settings,
 		Reporter::report(	"BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
 							Reporter::WARNING);
 	}
+
+	//////////////////////////////////////////////////////////////
+	// Window creation succeeded. Setup OpenGL a little bit
+	//////////////////////////////////////////////////////////////
 
 	glGenVertexArrays(1, &_vertexArrayID);
 	glBindVertexArray(_vertexArrayID);
@@ -144,44 +121,23 @@ void Window::estimateWindowResolution() {
 
 }
 
-bool Window::checkOpenGLVersion() {
-
-	if(GLEW_VERSION_4_3){
-		Reporter::report("OpenGL 4.3 supported");
-	}else if(GLEW_VERSION_4_2){
-		Reporter::report("OpenGL 4.2 supported");
-	}else if(GLEW_VERSION_4_1){
-		Reporter::report("OpenGL 4.1 supported");
-	}else if(GLEW_VERSION_4_0){
-		Reporter::report("OpenGL 4.0 supported");
-	}else if(GLEW_VERSION_3_3){
-		Reporter::report("OpenGL 3.3 supported");
-	}else{
-		Reporter::report("OpenGL 3.3 is not supported! Try updating your videocard's driver.", Reporter::ERROR);
-		return false;
-	}
-
-	return true;
-
-}
-
 const WindowSettings& Window::getSettings() const {
 	return _settings;
 }
 
-bool Window::close() {
-	if(_window != nullptr){
-		_isContextCreated = false;
-		glfwDestroyWindow(_window);
-		_window = nullptr;
+void Window::close() {
 
-		std::stringstream ss;
-		ss << _uptime.getElapsedTime().asSeconds() << " seconds (" << _uptime.getElapsedTime().asMilliseconds()
-		<< " milliseconds; " << _uptime.getElapsedTime().asNanoseconds() << " nanoseconds)";
-		Reporter::report("Window closed. Uptime: " + ss.str());
-		return true;
-	}
-	return false;
+	if(_window == nullptr)
+		return;
+
+	ContextHandler::destroyWindow(_window);
+	_window = nullptr;
+
+	std::stringstream ss;
+	ss << _uptime.getElapsedTime().asSeconds() << " seconds (" << _uptime.getElapsedTime().asMilliseconds()
+	<< " milliseconds; " << _uptime.getElapsedTime().asNanoseconds() << " nanoseconds)";
+	Reporter::report("Window closed. Uptime: " + ss.str());
+
 }
 
 bool Window::keepOpened() const {
@@ -193,10 +149,21 @@ void Window::update() {
 }
 
 void Window::clear() const {
+
+	if(_window == nullptr)
+		return;
+
+	ContextHandler::useContext(_window);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Window::display() {
+
+	if(_window == nullptr)
+		return;
+
+	ContextHandler::useContext(_window);
+
 	_elapsedTime = _clock.reset();
 
 	if(_framerateLimit != 0){
@@ -233,11 +200,14 @@ void Window::updateOrthoMatrix() {
 
 void Window::bind() const {
 
-	if(!isContextCreated())
+	if(_window == nullptr)
 		return;
+
+	ContextHandler::useContext(_window);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()));
+
 }
 
 void Window::setCursorPosition(const Vector2d& position) const {
@@ -248,8 +218,7 @@ void Window::setCursorPosition(const Vector2d& position) const {
 
 void Window::setPolygonMode(const PolygonMode& mode) const {
 
-	if(!isContextCreated())
-		return;
+	ContextHandler::useContext(_window);
 
 	if(mode == FILLED)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

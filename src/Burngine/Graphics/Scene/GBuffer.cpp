@@ -25,6 +25,7 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Texture/Sampler.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 #include <vector>
 
 namespace burn {
@@ -53,12 +54,7 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 		return false;
 	}
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create gBuffer! No valid context!", Reporter::ERROR);
-		return false;
-	}
-
-	////////////////////////////////////////
+	ensureContext();
 
 	_dimensions = dimensions;
 
@@ -82,7 +78,14 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	//DepthTexture:
 	glGenTextures(1, &_depthTexture);
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _dimensions.x, _dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+	glTexImage2D(	GL_TEXTURE_2D,
+					0,
+					GL_DEPTH_COMPONENT32F,
+					_dimensions.x,
+					_dimensions.y,
+					0,
+					GL_DEPTH_COMPONENT,
+					GL_FLOAT,
 					0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -109,10 +112,7 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 
 void GBuffer::clear() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to clear gBuffer. No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!_isCreated){
 		Reporter::report("Unable to clear gBuffer. gBuffer is not created.", Reporter::WARNING);
@@ -130,7 +130,14 @@ void GBuffer::clear() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, _dimensions.x, _dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+	glTexImage2D(	GL_TEXTURE_2D,
+					0,
+					GL_DEPTH_COMPONENT32F,
+					_dimensions.x,
+					_dimensions.y,
+					0,
+					GL_DEPTH_COMPONENT,
+					GL_FLOAT,
 					0);
 
 	//Restore previous bindings
@@ -140,10 +147,7 @@ void GBuffer::clear() {
 
 void GBuffer::bindAsTarget() const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind gBuffer. No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!_isCreated){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
@@ -155,10 +159,7 @@ void GBuffer::bindAsTarget() const {
 
 void GBuffer::bindAsSource(const unsigned int& offset) const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind gBuffer. No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!_isCreated){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
@@ -178,16 +179,11 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
 	Sampler::unbind(COUNT);
 
-
-
 }
 
 void GBuffer::setSourceBuffer(const GBufferType& buffer) {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to set source gBuffer. No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(buffer == COUNT){
 		Reporter::report("Refused attempt to bind gBuffer enum: COUNT.", Reporter::WARNING);
@@ -209,10 +205,7 @@ const Vector2ui& GBuffer::getDimensions() const {
 
 void GBuffer::bindDepthBufferAsSourceTexture() const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind depth gBuffer as source texture. No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!_isCreated){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);

@@ -24,6 +24,7 @@
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 #include <hash_set>
 
 #include <iostream>
@@ -134,12 +135,14 @@ _id(0) {
 }
 
 Shader::~Shader() {
-	if(_id != 0 && Window::isContextCreated()){
+	if(_id != 0){
+		ensureContext();
 		glDeleteProgram(_id);
 	}
 }
 
-void Shader::setUniform(const std::string& name, const Matrix4f& value) const {
+void Shader::setUniform(const std::string& name,
+						const Matrix4f& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
@@ -149,10 +152,13 @@ void Shader::setUniform(const std::string& name, const Matrix4f& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_matrix4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Matrix4f>(std::pair<size_t, std::string>(hash, name), value));
+	_matrix4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Matrix4f>(std::pair<size_t, std::string>(	hash,
+																													name),
+																					value));
 }
 
-void Shader::setUniform(const std::string& name, const Vector4f& value) const {
+void Shader::setUniform(const std::string& name,
+						const Vector4f& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
@@ -162,10 +168,13 @@ void Shader::setUniform(const std::string& name, const Vector4f& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_vector4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector4f>(std::pair<size_t, std::string>(hash, name), value));
+	_vector4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector4f>(std::pair<size_t, std::string>(	hash,
+																													name),
+																					value));
 }
 
-void Shader::setUniform(const std::string& name, const Vector3f& value) const {
+void Shader::setUniform(const std::string& name,
+						const Vector3f& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
@@ -175,10 +184,13 @@ void Shader::setUniform(const std::string& name, const Vector3f& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_vector3fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector3f>(std::pair<size_t, std::string>(hash, name), value));
+	_vector3fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector3f>(std::pair<size_t, std::string>(	hash,
+																													name),
+																					value));
 }
 
-void Shader::setUniform(const std::string& name, const Vector2f& value) const {
+void Shader::setUniform(const std::string& name,
+						const Vector2f& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
@@ -188,10 +200,13 @@ void Shader::setUniform(const std::string& name, const Vector2f& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_vector2fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector2f>(std::pair<size_t, std::string>(hash, name), value));
+	_vector2fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector2f>(std::pair<size_t, std::string>(	hash,
+																													name),
+																					value));
 }
 
-void Shader::setUniform(const std::string& name, const int& value) const {
+void Shader::setUniform(const std::string& name,
+						const int& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _intUniforms.size(); ++i){
@@ -201,10 +216,12 @@ void Shader::setUniform(const std::string& name, const int& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_intUniforms.push_back(std::pair<std::pair<size_t, std::string>, int>(std::pair<size_t, std::string>(hash, name), value));
+	_intUniforms.push_back(std::pair<std::pair<size_t, std::string>, int>(	std::pair<size_t, std::string>(hash, name),
+																			value));
 }
 
-void Shader::setUniform(const std::string& name, const float& value) const {
+void Shader::setUniform(const std::string& name,
+						const float& value) const {
 	//Scan and set when found
 	size_t hash = strToHash(name);
 	for(size_t i = 0; i < _floatUniforms.size(); ++i){
@@ -214,12 +231,13 @@ void Shader::setUniform(const std::string& name, const float& value) const {
 		}
 	}
 	//Not found. Create a pair
-	_floatUniforms.push_back(std::pair<std::pair<size_t, std::string>, float>(std::pair<size_t, std::string>(hash, name), value));
+	_floatUniforms.push_back(std::pair<std::pair<size_t, std::string>, float>(	std::pair<size_t, std::string>(	hash,
+																												name),
+																				value));
 }
 
 void Shader::activate() const {
-	if(!Window::isContextCreated())
-		return;
+	ensureContext();
 
 	glUseProgram(_id);
 	uploadUniforms();
@@ -263,179 +281,176 @@ void Shader::uploadUniforms() const {
 }
 
 GLuint Shader::getUniformLocation(const std::string& uniformName) const {
-	if(Window::isContextCreated() && _id != 0){
+	if(_id != 0){
+		ensureContext();
 		return glGetUniformLocation(_id, uniformName.c_str());
 	}
 	return 0;
 }
 
-bool Shader::loadFromString(const std::string& vertexShader, const std::string& fragmentShader) {
+bool Shader::loadFromString(const std::string& vertexShader,
+							const std::string& fragmentShader) {
 
-	if(Window::isContextCreated()){
+	ensureContext();
 
-		// Create the shaders
-		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	// Create the shaders
+	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-		// Read the Vertex Shader code from the file
-		std::string VertexShaderCode = vertexShader;
+	// Read the Vertex Shader code from the file
+	std::string VertexShaderCode = vertexShader;
 
-		// Read the Fragment Shader code from the file
-		std::string FragmentShaderCode = fragmentShader;
+	// Read the Fragment Shader code from the file
+	std::string FragmentShaderCode = fragmentShader;
 
-		GLint Result = GL_FALSE;
-		int InfoLogLength;
+	GLint Result = GL_FALSE;
+	int InfoLogLength;
 
-		// Compile Vertex Shader
-		Reporter::report("Compiling vertexshader...");
-		char const * VertexSourcePointer = VertexShaderCode.c_str();
-		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
-		glCompileShader(VertexShaderID);
+	// Compile Vertex Shader
+	Reporter::report("Compiling vertexshader...");
+	char const * VertexSourcePointer = VertexShaderCode.c_str();
+	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+	glCompileShader(VertexShaderID);
 
-		// Check Vertex Shader
-		glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		// Compile Fragment Shader
-		Reporter::report("Compiling fragmentshader...");
-		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
-		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
-		glCompileShader(FragmentShaderID);
-
-		// Check Fragment Shader
-		glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		// Link the program
-		Reporter::report("Linking program...");
-		GLuint ProgramID = glCreateProgram();
-		glAttachShader(ProgramID, VertexShaderID);
-		glAttachShader(ProgramID, FragmentShaderID);
-		glLinkProgram(ProgramID);
-
-		// Check the program
-		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
-		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
-		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		glDeleteShader(VertexShaderID);
-		glDeleteShader(FragmentShaderID);
-
-		_id = ProgramID;
-
-		return true;
+	// Check Vertex Shader
+	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+		return false;
 	}
 
-	Reporter::report("Cannot load Shader! (No valid OpenGL-Context)", Reporter::ERROR);
-	return false;
+	// Compile Fragment Shader
+	Reporter::report("Compiling fragmentshader...");
+	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
+	glCompileShader(FragmentShaderID);
+
+	// Check Fragment Shader
+	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+		return false;
+	}
+
+	// Link the program
+	Reporter::report("Linking program...");
+	GLuint ProgramID = glCreateProgram();
+	glAttachShader(ProgramID, VertexShaderID);
+	glAttachShader(ProgramID, FragmentShaderID);
+	glLinkProgram(ProgramID);
+
+	// Check the program
+	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
+	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+		return false;
+	}
+
+	glDeleteShader(VertexShaderID);
+	glDeleteShader(FragmentShaderID);
+
+	_id = ProgramID;
+
+	return true;
+
 }
 
-bool Shader::loadFromFile(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
-	if(Window::isContextCreated()){
+bool Shader::loadFromFile(	const std::string& vertexShaderFile,
+							const std::string& fragmentShaderFile) {
+	ensureContext();
 
-		// Create the shaders
-		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	// Create the shaders
+	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-		// Read the Vertex Shader code from the file
-		std::string VertexShaderCode;
-		std::ifstream VertexShaderStream(vertexShaderFile, std::ios::in);
-		if(VertexShaderStream.is_open()){
-			std::string Line = "";
-			while(getline(VertexShaderStream, Line))
-				VertexShaderCode += Line + "\n";
-			VertexShaderStream.close();
-		}
-
-		// Read the Fragment Shader code from the file
-		std::string FragmentShaderCode;
-		std::ifstream FragmentShaderStream(fragmentShaderFile, std::ios::in);
-		if(FragmentShaderStream.is_open()){
-			std::string Line = "";
-			while(getline(FragmentShaderStream, Line))
-				FragmentShaderCode += "\n" + Line;
-			FragmentShaderStream.close();
-		}
-
-		GLint Result = GL_FALSE;
-		int InfoLogLength;
-
-		// Compile Vertex Shader
-		Reporter::report("Compiling vertexshader...");
-		char const * VertexSourcePointer = VertexShaderCode.c_str();
-		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
-		glCompileShader(VertexShaderID);
-
-		// Check Vertex Shader
-		glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-		glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		// Compile Fragment Shader
-		Reporter::report("Compiling fragmentshader...");
-		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
-		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
-		glCompileShader(FragmentShaderID);
-
-		// Check Fragment Shader
-		glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-		glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		// Link the program
-		Reporter::report("Linking program...");
-		GLuint ProgramID = glCreateProgram();
-		glAttachShader(ProgramID, VertexShaderID);
-		glAttachShader(ProgramID, FragmentShaderID);
-		glLinkProgram(ProgramID);
-
-		// Check the program
-		glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
-		glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
-		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		if(!Result){
-			Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
-			return false;
-		}
-
-		glDeleteShader(VertexShaderID);
-		glDeleteShader(FragmentShaderID);
-
-		_id = ProgramID;
-
-		return true;
+	// Read the Vertex Shader code from the file
+	std::string VertexShaderCode;
+	std::ifstream VertexShaderStream(vertexShaderFile, std::ios::in);
+	if(VertexShaderStream.is_open()){
+		std::string Line = "";
+		while(getline(VertexShaderStream, Line))
+			VertexShaderCode += Line + "\n";
+		VertexShaderStream.close();
 	}
 
-	Reporter::report("Cannot load Shader! (No valid OpenGL-Context)", Reporter::ERROR);
-	return false;
+	// Read the Fragment Shader code from the file
+	std::string FragmentShaderCode;
+	std::ifstream FragmentShaderStream(fragmentShaderFile, std::ios::in);
+	if(FragmentShaderStream.is_open()){
+		std::string Line = "";
+		while(getline(FragmentShaderStream, Line))
+			FragmentShaderCode += "\n" + Line;
+		FragmentShaderStream.close();
+	}
+
+	GLint Result = GL_FALSE;
+	int InfoLogLength;
+
+	// Compile Vertex Shader
+	Reporter::report("Compiling vertexshader...");
+	char const * VertexSourcePointer = VertexShaderCode.c_str();
+	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+	glCompileShader(VertexShaderID);
+
+	// Check Vertex Shader
+	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+		return false;
+	}
+
+	// Compile Fragment Shader
+	Reporter::report("Compiling fragmentshader...");
+	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
+	glCompileShader(FragmentShaderID);
+
+	// Check Fragment Shader
+	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+		return false;
+	}
+
+	// Link the program
+	Reporter::report("Linking program...");
+	GLuint ProgramID = glCreateProgram();
+	glAttachShader(ProgramID, VertexShaderID);
+	glAttachShader(ProgramID, FragmentShaderID);
+	glLinkProgram(ProgramID);
+
+	// Check the program
+	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
+	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+	if(!Result){
+		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+		return false;
+	}
+
+	glDeleteShader(VertexShaderID);
+	glDeleteShader(FragmentShaderID);
+
+	_id = ProgramID;
+
+	return true;
+
 }
 
 } /* namespace burn */

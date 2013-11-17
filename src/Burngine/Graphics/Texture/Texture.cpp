@@ -89,10 +89,7 @@ void Texture::generate() {
 
 void Texture::cleanup() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to cleanup texture. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glDeleteTextures(1, &_textureId);
 
@@ -102,10 +99,7 @@ void Texture::cleanup() {
 
 bool Texture::loadFromFile(const std::string& file) {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to load texture. No valid context created!", Reporter::ERROR);
-		return false;
-	}
+	ensureContext();
 
 	generate();
 
@@ -134,10 +128,7 @@ bool Texture::loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int
 
 void Texture::onBind(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind texture. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(_textureId == 0){
 		Reporter::report("Binding uncreated texture. ID: 0!", Reporter::WARNING);
@@ -149,10 +140,7 @@ void Texture::onBind(const unsigned int& unit) const {
 
 void Texture::onUnbind(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to unbind texture. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

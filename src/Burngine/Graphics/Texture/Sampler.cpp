@@ -24,14 +24,12 @@
 #include <Burngine/Graphics/Texture/Sampler.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 namespace burn {
 
 void Sampler::unbind(const unsigned int& unit) {
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to unbind sampler. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glBindSampler(unit, 0);
 }
@@ -94,10 +92,12 @@ Sampler::~Sampler() {
 
 void Sampler::bind(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated() || !isCreated()){
-		Reporter::report("Unable to bind sampler. No valid context or sampler is not created!", Reporter::ERROR);
+	if(!isCreated()){
+		Reporter::report("Unable to bind sampler. Sampler is not created!", Reporter::ERROR);
 		return;
 	}
+
+	ensureContext();
 
 	if(_needsFilteringUpdate){
 		if(!updateFiltering())
@@ -110,10 +110,7 @@ void Sampler::bind(const unsigned int& unit) const {
 
 bool Sampler::create() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create sampler. No valid context available!", Reporter::ERROR);
-		return false;
-	}
+	ensureContext();
 
 	if(*_referenceCounter < 2){
 		destroy();
@@ -129,10 +126,7 @@ bool Sampler::create() {
 
 void Sampler::destroy() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to destroy sampler. No valid context available!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated())
 		return;
@@ -153,11 +147,12 @@ bool Sampler::isCreated() const {
 
 bool Sampler::updateFiltering() const {
 
-	if(!Window::isContextCreated() || !isCreated()){
-		Reporter::report("Unable to update sampler's filtering. No valid context available or sampler not created!",
-							Reporter::ERROR);
+	if(!isCreated()){
+		Reporter::report("Unable to update sampler's filtering. Sampler not created!", Reporter::ERROR);
 		return false;
 	}
+
+	ensureContext();
 
 	// Set magnification filter
 	if(_magnificationFiltering == MAG_NEAREST)
@@ -185,17 +180,22 @@ bool Sampler::updateFiltering() const {
 	return true;
 }
 
-bool Sampler::setSamplerParameter(GLenum parameter, GLenum value) {
-	if(Window::isContextCreated() && isCreated()){
+bool Sampler::setSamplerParameter(	GLenum parameter,
+									GLenum value) {
+
+	if(isCreated()){
+		ensureContext();
+
 		glSamplerParameteri(_id, parameter, value);
 		return true;
 	}
-	Reporter::report("Unable to set sampler's parameter. No valid context available or sampelr not created!",
+	Reporter::report(	"Unable to set sampler's parameter. No valid context available or sampelr not created!",
 						Reporter::ERROR);
 	return false;
 }
 
-bool Sampler::setFiltering(const MagnificationFiltering& mag, const MinificationFiltering& min) {
+bool Sampler::setFiltering(	const MagnificationFiltering& mag,
+							const MinificationFiltering& min) {
 	_magnificationFiltering = mag;
 	_minificationFiltering = min;
 

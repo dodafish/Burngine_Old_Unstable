@@ -36,6 +36,8 @@
 
 #include <Burngine/System/Reporter.h>
 
+#include <Burngine/Graphics/General/OpenGL.h>
+
 namespace burn {
 
 const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
@@ -187,8 +189,7 @@ void Scene::drawGBuffers(const Camera& camera) {
 void Scene::draw(	const Camera& camera,
 					const RenderMode& mode) {
 
-	if(!Window::isContextCreated())
-		return;
+	ensureContext();
 
 	if(_nodes.size() == 0)
 		return;

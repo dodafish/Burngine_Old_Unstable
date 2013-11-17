@@ -24,6 +24,7 @@
 #include <Burngine/Graphics/Texture/CubeMap.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 namespace burn {
 
@@ -110,10 +111,7 @@ void CubeMap::onUnbind(const unsigned int& unit) const {
 
 void CubeMap::generate() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create CubeMap. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(*_referenceCount < 2){
 		cleanup();
@@ -136,10 +134,7 @@ void CubeMap::cleanup() {
 	if(_cubemap == 0)
 		return;
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to cleanup CubeMap. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glDeleteTextures(1, &_cubemap);
 

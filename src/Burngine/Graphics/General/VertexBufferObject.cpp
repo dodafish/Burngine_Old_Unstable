@@ -25,6 +25,7 @@
 #include <Burngine/Graphics/Window/Window.h>
 
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 namespace burn {
 
@@ -78,26 +79,30 @@ VertexBufferObject::~VertexBufferObject() {
 }
 
 bool VertexBufferObject::create() {
-	if(Window::isContextCreated())
-		if(!_isCreated){
 
-			glGenBuffers(1, &_buffer);
+	ensureContext();
 
-			_isDataUploaded = false;
-			_isCreated = true;
-		}
+	if(!_isCreated){
+
+		glGenBuffers(1, &_buffer);
+
+		_isDataUploaded = false;
+		_isCreated = true;
+	}
+
 	return _isCreated;
 }
 
 void VertexBufferObject::cleanup() {
-	if(Window::isContextCreated())
-		if(_isCreated){
+	ensureContext();
 
-			glDeleteBuffers(1, &_buffer);
+	if(_isCreated){
 
-			_isDataUploaded = false;
-			_isCreated = false;
-		}
+		glDeleteBuffers(1, &_buffer);
+
+		_isDataUploaded = false;
+		_isCreated = false;
+	}
 }
 
 void VertexBufferObject::reset() {
@@ -106,15 +111,15 @@ void VertexBufferObject::reset() {
 }
 
 void VertexBufferObject::bind(const GLint& type) const {
-	if(Window::isContextCreated())
-		glBindBuffer(type, _buffer);
+	ensureContext();
+
+	glBindBuffer(type, _buffer);
 }
 
-bool VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHint) {
-	//Don't do anything, when there is no OpenGL-Context
-	if(!Window::isContextCreated()){
-		return false;
-	}
+bool VertexBufferObject::uploadDataToGpu(	const GLint& type,
+											const GLint& usageHint) {
+
+	ensureContext();
 
 	//Ensure that we have a valid buffer
 	if(!_isCreated){
@@ -139,7 +144,8 @@ bool VertexBufferObject::uploadDataToGpu(const GLint& type, const GLint& usageHi
 	return true;
 }
 
-void VertexBufferObject::addData(const void* data, const unsigned int& size) {
+void VertexBufferObject::addData(	const void* data,
+									const unsigned int& size) {
 	_data.insert(_data.end(), (GLbyte*)data, (GLbyte*)data + size);
 }
 

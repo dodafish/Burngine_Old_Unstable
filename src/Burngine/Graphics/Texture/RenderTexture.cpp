@@ -27,6 +27,7 @@
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 #include <iostream>
 
@@ -45,10 +46,10 @@ RenderTexture::~RenderTexture() {
 		glDeleteTextures(1, &_additionalAttachments[i].texture);
 	}
 
-	if(Window::isContextCreated()){
-		glDeleteFramebuffers(1, &_framebuffer);
-		glDeleteRenderbuffers(1, &_depthbuffer);
-	}
+	ensureContext();
+
+	glDeleteFramebuffers(1, &_framebuffer);
+	glDeleteRenderbuffers(1, &_depthbuffer);
 
 }
 
@@ -87,10 +88,7 @@ void RenderTexture::cleanup() {
 	if(!isCreated())
 		return;
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to cleanup rendertexture! No valid context.", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
 		glDeleteTextures(1, &_additionalAttachments[i].texture);
@@ -108,8 +106,7 @@ void RenderTexture::cleanup() {
 
 bool RenderTexture::create(const Vector2ui& dimensions) {
 
-	if(!Window::isContextCreated())
-		return false;
+	ensureContext();
 
 	cleanup();
 
@@ -163,10 +160,8 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 bool RenderTexture::addColorAttachment(const unsigned int& attachment) {
 
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to add color attachment. No valid context!", Reporter::ERROR);
-		return false;
-	}
+	ensureContext();
+
 	if(!isCreated()){
 		Reporter::report("Unable to add color attachment. Rendertexture does not exist!", Reporter::ERROR);
 		return false;
@@ -237,10 +232,7 @@ bool RenderTexture::addColorAttachment(const unsigned int& attachment) {
 void RenderTexture::bindAsTarget() const {
 
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind rendertexture. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Binding uncreated rendertexture disallowed!", Reporter::WARNING);
@@ -254,10 +246,7 @@ void RenderTexture::bindAsTarget() const {
 
 void RenderTexture::clear() const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to clear rendertexture. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Unable to clear rendertexture. Rendertexture not created!", Reporter::WARNING);
@@ -292,126 +281,126 @@ void RenderTexture::clear() const {
 
 /*void RenderTexture::drawFullscreen() {
 
-	if(!Window::isContextCreated() || !isCreated())
-		return;
+ if(!Window::isContextCreated() || !isCreated())
+ return;
 
-	Mesh mesh;
-	std::vector<Vertex> v;
-	v.push_back(Vertex(Vector3f(-1.f, -1.f, 0), Vector3f(), (Vector2f(0.f, 0.f))));
-	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(1.f, 1.f, 0), Vector3f(), (Vector2f(1.f, 1.f))));
-	mesh.setVertices(v);
-	mesh.update();
+ Mesh mesh;
+ std::vector<Vertex> v;
+ v.push_back(Vertex(Vector3f(-1.f, -1.f, 0), Vector3f(), (Vector2f(0.f, 0.f))));
+ v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+ v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+ v.push_back(Vertex(Vector3f(-1.f, 1.f, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+ v.push_back(Vertex(Vector3f(1.f, -1.f, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+ v.push_back(Vertex(Vector3f(1.f, 1.f, 0), Vector3f(), (Vector2f(1.f, 1.f))));
+ mesh.setVertices(v);
+ mesh.update();
 
-	//Get shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+ //Get shader
+ const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+ shader.setUniform("modelMatrix", Matrix4f(1.f));
+ shader.setUniform("viewMatrix", Matrix4f(1.f));
+ shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	//Get previous binding
-	GLint previousTexture = 0;
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+ //Get previous binding
+ GLint previousTexture = 0;
+ glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
-	//Bind texture only
-	bindAsSource();
+ //Bind texture only
+ bindAsSource();
 
-	//0 = Positions
-	glEnableVertexAttribArray(0);
-	mesh.getPositionVbo().bind();
-	glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	3,                  // size
-	GL_FLOAT,           // type
-	GL_FALSE,           // normalized?
-	0,                  // stride
-	(void*)0            // array buffer offset
-	);
+ //0 = Positions
+ glEnableVertexAttribArray(0);
+ mesh.getPositionVbo().bind();
+ glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+ 3,                  // size
+ GL_FLOAT,           // type
+ GL_FALSE,           // normalized?
+ 0,                  // stride
+ (void*)0            // array buffer offset
+ );
 
-	//1 = UVs
-	glEnableVertexAttribArray(1);
-	mesh.getUvVbo().bind();
-	glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	2,                  // size
-	GL_FLOAT,           // type
-	GL_FALSE,           // normalized?
-	0,                  // stride
-	(void*)0            // array buffer offset
-	);
+ //1 = UVs
+ glEnableVertexAttribArray(1);
+ mesh.getUvVbo().bind();
+ glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+ 2,                  // size
+ GL_FLOAT,           // type
+ GL_FALSE,           // normalized?
+ 0,                  // stride
+ (void*)0            // array buffer offset
+ );
 
-	OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+ OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+ glDisableVertexAttribArray(0);
+ glDisableVertexAttribArray(1);
 
-	glBindTexture(GL_TEXTURE_2D, previousTexture);
+ glBindTexture(GL_TEXTURE_2D, previousTexture);
 
-}
+ }
 
-void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
+ void RenderTexture::draw(const Vector2f& p, const Vector2f& s) {
 
-	if(!Window::isContextCreated() || !isCreated())
-		return;
+ if(!Window::isContextCreated() || !isCreated())
+ return;
 
-	Mesh mesh;
-	std::vector<Vertex> v;
+ Mesh mesh;
+ std::vector<Vertex> v;
 
-	v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), (Vector2f(0.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
-	v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), (Vector2f(1.f, 1.f))));
+ v.push_back(Vertex(Vector3f(p.x, p.y - s.y, 0), Vector3f(), (Vector2f(0.f, 0.f))));
+ v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+ v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+ v.push_back(Vertex(Vector3f(p.x, p.y, 0), Vector3f(), (Vector2f(0.f, 1.f))));
+ v.push_back(Vertex(Vector3f(p.x + s.x, p.y - s.y, 0), Vector3f(), (Vector2f(1.f, 0.f))));
+ v.push_back(Vertex(Vector3f(p.x + s.x, p.y, 0), Vector3f(), (Vector2f(1.f, 1.f))));
 
-	mesh.setVertices(v);
-	mesh.update();
+ mesh.setVertices(v);
+ mesh.update();
 
-	//Get shader
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+ //Get shader
+ const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+ shader.setUniform("modelMatrix", Matrix4f(1.f));
+ shader.setUniform("viewMatrix", Matrix4f(1.f));
+ shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	//Get previous binding
-	GLint previousTexture = 0;
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+ //Get previous binding
+ GLint previousTexture = 0;
+ glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
 
-	//Bind texture only
-	bindAsSource();
+ //Bind texture only
+ bindAsSource();
 
-	//0 = Positions
-	glEnableVertexAttribArray(0);
-	mesh.getPositionVbo().bind();
-	glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	3,                  // size
-	GL_FLOAT,           // type
-	GL_FALSE,           // normalized?
-	0,                  // stride
-	(void*)0            // array buffer offset
-	);
+ //0 = Positions
+ glEnableVertexAttribArray(0);
+ mesh.getPositionVbo().bind();
+ glVertexAttribPointer(0, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+ 3,                  // size
+ GL_FLOAT,           // type
+ GL_FALSE,           // normalized?
+ 0,                  // stride
+ (void*)0            // array buffer offset
+ );
 
-	//1 = UVs
-	glEnableVertexAttribArray(1);
-	mesh.getUvVbo().bind();
-	glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	2,                  // size
-	GL_FLOAT,           // type
-	GL_FALSE,           // normalized?
-	0,                  // stride
-	(void*)0            // array buffer offset
-	);
+ //1 = UVs
+ glEnableVertexAttribArray(1);
+ mesh.getUvVbo().bind();
+ glVertexAttribPointer(1, // attribute 0. No particular reason for 0, but must match the layout in the shader.
+ 2,                  // size
+ GL_FLOAT,           // type
+ GL_FALSE,           // normalized?
+ 0,                  // stride
+ (void*)0            // array buffer offset
+ );
 
-	OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+ OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+ glDisableVertexAttribArray(0);
+ glDisableVertexAttribArray(1);
 
-	glBindTexture(GL_TEXTURE_2D, previousTexture);
+ glBindTexture(GL_TEXTURE_2D, previousTexture);
 
-}*/
+ }*/
 
 } /* namespace burn */

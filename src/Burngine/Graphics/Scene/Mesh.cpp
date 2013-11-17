@@ -24,6 +24,7 @@
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/Scene/Model.h>
 #include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 namespace burn {
 
@@ -96,7 +97,9 @@ void Mesh::setMaterial(const Material& material) {
 }
 
 bool Mesh::data() {
-	if(Window::isContextCreated() && _vertices.size() != 0){
+	if(_vertices.size() != 0){
+
+		ensureContext();
 
 		_positionVbo.reset();
 		_colorVbo.reset();

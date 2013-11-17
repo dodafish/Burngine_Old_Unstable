@@ -24,6 +24,7 @@
 #include <Burngine/Graphics/Texture/ShadowCubeMap.h>
 
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/Window/Window.h>
 
 #include <iostream>
@@ -52,10 +53,7 @@ bool ShadowCubeMap::create(const Resolution& resolution) {
 
 	std::cout << "o";
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create ShadowCubeMap. No valid context!", Reporter::ERROR);
-		return false;
-	}
+	ensureContext();
 
 	//Save old bindings
 	GLint lastFB = 0;
@@ -111,10 +109,7 @@ bool ShadowCubeMap::create(const Resolution& resolution) {
 
 void ShadowCubeMap::clear() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to clear ShadowCubeMap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Unable to clear ShadowCubeMap. ShadowMap not created!", Reporter::WARNING);
@@ -147,10 +142,7 @@ void ShadowCubeMap::clear() {
 void ShadowCubeMap::bindAsRendertarget(const int& face) const {
 
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind ShadowCubeMap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Binding of uncreated ShadowCubeMap disallowed!", Reporter::WARNING);
@@ -186,10 +178,7 @@ void ShadowCubeMap::cleanup() {
 	if(!isCreated())
 		return;
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to cleanup ShadowCubeMap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glDeleteTextures(1, &_cubeMap);
 	glDeleteFramebuffers(1, &_framebuffer);

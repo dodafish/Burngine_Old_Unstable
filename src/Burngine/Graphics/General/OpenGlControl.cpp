@@ -25,6 +25,8 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/Shader.h>
 
+#include <Burngine/Graphics/General/OpenGL.h>
+
 namespace burn {
 
 void OpenGlControl::draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader){
@@ -58,8 +60,7 @@ _clearColor(clearColor) {
 
 void OpenGlControl::useSettings(const Settings& settings) {
 
-	if(!Window::isContextCreated())
-		return;
+	ensureContext();
 
 	if(settings.isBlendingEnabled())
 		glEnable(GL_BLEND);

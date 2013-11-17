@@ -25,6 +25,7 @@
 
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/General/Shader.h>
 
 namespace burn {
@@ -102,8 +103,7 @@ const CubeMap& SkyBox::getCubeMap() const {
 
 void SkyBox::draw() {
 
-	if(!Window::isContextCreated())
-		return;
+	ensureContext();
 
 	if(!_cubeMap.isCreated())
 		return;

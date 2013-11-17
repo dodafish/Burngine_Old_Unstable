@@ -43,10 +43,7 @@ void ShadowMap::cleanup() {
 	if(!isCreated())
 		return;
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to cleanup shadowmap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glDeleteTextures(1, &_texture);
 	glDeleteFramebuffers(1, &_framebuffer);
@@ -60,10 +57,7 @@ bool ShadowMap::create(const Resolution& resolution) {
 	//Cleanup first
 	cleanup();
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to create ShadowMap. No valid context!", Reporter::ERROR);
-		return false;
-	}
+	ensureContext();
 
 	//Save old bindings
 	GLint lastFB = 0;
@@ -111,10 +105,7 @@ bool ShadowMap::create(const Resolution& resolution) {
 
 void ShadowMap::bindAsRendertarget() const {
 	//Valid OpenGL-Context is needed
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind ShadowMap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Binding of uncreated ShadowMap disallowed!", Reporter::WARNING);
@@ -131,10 +122,7 @@ bool ShadowMap::isCreated() const {
 
 void ShadowMap::clear() {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to clear ShadowMap. No valid context!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	if(!isCreated()){
 		Reporter::report("Unable to clear ShadowMap. ShadowMap not created!", Reporter::WARNING);

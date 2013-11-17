@@ -65,3 +65,16 @@
 #include <Burngine/System/Utf.h>
 #include <Burngine/System/Rectangle.h>
 #include <Burngine/System/BoundingBox.h>
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+namespace burn{
+
+	void shutdown(){
+		ContextHandler::shutdown();
+		Reporter::report("Burngine shutdown.");
+	}
+
+}
+

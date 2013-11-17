@@ -23,6 +23,7 @@
 
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/Graphics/General/OpenGL.h>
 
 #include <Burngine/System/Reporter.h>
 #include <sstream>
@@ -78,10 +79,7 @@ bool BaseTexture::setAnisotropicLevel(const GLfloat& level){
 
 void BaseTexture::bindAsSource(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to bind. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	_sampler.bind(unit);
@@ -91,10 +89,7 @@ void BaseTexture::bindAsSource(const unsigned int& unit) const {
 
 void BaseTexture::unbindAsSource(const unsigned int& unit) const {
 
-	if(!Window::isContextCreated()){
-		Reporter::report("Unable to unbind. No valid context created!", Reporter::ERROR);
-		return;
-	}
+	ensureContext();
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	Sampler::unbind(unit);

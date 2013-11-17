@@ -25,65 +25,90 @@
 
 #include <Burngine/System/Reporter.h>
 
+//For the exit() func
+#include <cstdlib>
+
 namespace burn {
 
 //Static member declaration
-std::vector<GLFWwindow*> ContextHandler::_windows;
 bool ContextHandler::_contextEnsured = false;
 bool ContextHandler::_isGlewInitialized = false;
 bool ContextHandler::_isGlfwInitialized = false;
 GLFWwindow* ContextHandler::_fakeWindow = nullptr;
+GLFWwindow* ContextHandler::_preferredWindow = nullptr;
+std::vector<GLFWwindow*> ContextHandler::_windows;
 
-void ContextHandler::registerWindow(GLFWwindow* window,
-									bool activateContext) {
+void ContextHandler::shutdown() {
 
-	//window must not be a nullptr
-	if(window == nullptr){
-		Reporter::report("Failed to register window! Nullptr exception!", Reporter::ERROR);
-		return;
-	}
+	//This destroys all windows automatically
+	glfwTerminate();
 
-	//window must not be registered already
-	for(size_t i = 0; i < _windows.size(); ++i){
-		if(_windows[i] == window){
-			//Even though it's no fatal error, it must not happen.
-			Reporter::report("Failed to register window! Window is already registered!", Reporter::ERROR);
-			return;
-		}
-	}
+	_windows.clear();
+	_fakeWindow = nullptr;
+	_preferredWindow = nullptr;
+	_isGlewInitialized = false;
+	_isGlfwInitialized = false;
+	_contextEnsured = false;
 
-	//Ok, window is alright. Register it and activate its context if wanted
-	_windows.push_back(window);
-	if(activateContext){
-		glfwMakeContextCurrent(window);
-		_contextEnsured = true; //We now have a context
-	}
-
-	//Window successfully registered :)
 }
 
-void ContextHandler::deregisterWindow(GLFWwindow* window) {
+void ContextHandler::useContext(GLFWwindow* window) {
 
-	//window must not be a nullptr
+	if(_preferredWindow == window){
+		//Just refresh the current context to be sure...
+		glfwMakeContextCurrent(_preferredWindow);
+		return;
+	}
+
+	_preferredWindow = window;
+	_contextEnsured = false;
+
+	ensureContext();
+}
+
+GLFWwindow* ContextHandler::createWindow(const WindowSettings& settings) {
+
+	//We need GLFW here
+	ensureGlfw();
+
+	//The window to return and store
+	GLFWwindow* window;
+
+	//Create OpenGL window
+	glfwDefaultWindowHints();
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
+	window = glfwCreateWindow(	static_cast<int>(settings.getWidth()),
+								static_cast<int>(settings.getHeight()),
+								settings.getTitle().c_str(),
+								settings.isFullscreen() ? glfwGetPrimaryMonitor() : 0, //Pass the primary monitor if we want fullscreen
+								_fakeWindow != nullptr ? _fakeWindow : 0);
+
+	//Check if creation succeeded
 	if(window == nullptr){
-		Reporter::report("Failed to deregister window! Nullptr exception!", Reporter::ERROR);
+		Reporter::report("Failed to create window!", Reporter::ERROR);
+		glfwTerminate();
+		exit(4);
+	}else{
+		//Store window in list
+		_windows.push_back(window);
+		_preferredWindow = window;
+		_contextEnsured = false; //Use the new window, not the old context
+	}
+
+	ensureContext();
+
+	return window;
+}
+
+void ContextHandler::destroyWindow(GLFWwindow* window) {
+
+	if(!_isGlfwInitialized){
+		//If there is no GLFW initialized, there can't be any window
+		_windows.clear();
 		return;
 	}
 
-	//window must be registered already
-	bool isRegistered = false;
-	for(size_t i = 0; i < _windows.size(); ++i){
-		if(_windows[i] == window){
-			isRegistered = true;
-			break;
-		}
-	}
-	if(!isRegistered){
-		Reporter::report("Failed to deregister window! Window was not registered before!", Reporter::ERROR);
-		return;
-	}
-
-	//Remove window from list
+	//First remove it from the list
 	for(size_t i = 0; i < _windows.size(); ++i){
 		if(_windows[i] == window){
 			_windows.erase(_windows.begin() + i);
@@ -91,18 +116,16 @@ void ContextHandler::deregisterWindow(GLFWwindow* window) {
 		}
 	}
 
-	//Is there a need for a valid context?
-	if(_contextEnsured){
-		//We have to ensure a context. So deregistering a window with an activated context is fatal
-
-		//Is window the current context?
-		if(window == glfwGetCurrentContext()){
-			_contextEnsured = false;
-			ensureContext(); //Choose another context (or fake one)
-		}
+	//Remove it from preferred when necessary
+	if(window == _preferredWindow){
+		_preferredWindow = nullptr;
+		_contextEnsured = false; //Find a new one, as the old one might be the destroyed window
 	}
 
-	//Window successfully deregistered :)
+	//Finally destroy the window
+	glfwDestroyWindow(window);
+
+	//Done :)
 }
 
 void ContextHandler::ensureContext() {
@@ -112,23 +135,30 @@ void ContextHandler::ensureContext() {
 		return;
 	}
 
-	//The following commands need GLFW
-	ensureGlfw();
-
-	//Try to activate a window's context
-	if(_windows.size() != 0){
-		glfwMakeContextCurrent(_windows[0]); //Choose the first window in the list
+	//Try using the context of a real window
+	if(_isGlfwInitialized && _windows.size() != 0){
+		if(_preferredWindow != nullptr){
+			//Use the context of the preferred window
+			glfwMakeContextCurrent(_preferredWindow);
+		}else{
+			//Just use the first window of the list
+			glfwMakeContextCurrent(_windows[0]);
+		}
 	}else{
+
+		//When we land here we either have no windows or GLFW is not initialized.
+		//If the latter is the case, there can't be any window at all, so clear
+		//the vector just to be sure...
+		_windows.clear();
+
+		//The following commands need GLFW
+		ensureGlfw();
 
 		//We have to fake a window for having a valid context
 		if(_fakeWindow != nullptr){
-
 			//We already have a faked window. Use it
 			glfwMakeContextCurrent(_fakeWindow);
-
-		}
-		else{
-
+		}else{
 			//We have to create a fakewindow first
 			glfwDefaultWindowHints(); //Reset window hints
 			glfwWindowHint(GLFW_VISIBLE, GL_FALSE); //Hide the window
@@ -138,14 +168,13 @@ void ContextHandler::ensureContext() {
 			//Check if creation succeeded
 			if(_fakeWindow == nullptr){
 				Reporter::report("Failed to ensure context! Creation of fake window failed!", Reporter::ERROR);
+				glfwTerminate(); // <- ensureGlfw initialized it. Terminate before end
 				exit(1); //Terminate program... :(
 			}
 
 			//Fake window is created. Make its context current
 			glfwMakeContextCurrent(_fakeWindow);
-
 		}
-
 	}
 
 	////////////////////////////////////////////////////////
@@ -164,7 +193,25 @@ void ContextHandler::ensureContext() {
 	glewExperimental = GL_TRUE;
 	if(glewInit() != GLEW_OK){
 		Reporter::report("Failed to initialize GLEW!", Reporter::ERROR);
-		return;
+		glfwTerminate();
+		exit(2);
+	}
+
+	if(GLEW_VERSION_4_3){
+		Reporter::report("OpenGL 4.3 supported");
+	}else if(GLEW_VERSION_4_2){
+		Reporter::report("OpenGL 4.2 supported");
+	}else if(GLEW_VERSION_4_1){
+		Reporter::report("OpenGL 4.1 supported");
+	}else if(GLEW_VERSION_4_0){
+		Reporter::report("OpenGL 4.0 supported");
+	}else if(GLEW_VERSION_3_3){
+		Reporter::report("OpenGL 3.3 supported");
+	}else{
+		Reporter::report(	"OpenGL 3.3 or higher is not supported! Try updating your videocard's driver.",
+							Reporter::ERROR);
+		glfwTerminate();
+		exit(5);
 	}
 
 	_isGlewInitialized = true;
@@ -180,7 +227,7 @@ void ContextHandler::ensureGlfw() {
 	//Initialize GLFW
 	if(!glfwInit()){
 		Reporter::report("Failed to initialize GLFW!", Reporter::ERROR);
-		return;
+		exit(3);
 	}
 
 	_isGlfwInitialized = true;
