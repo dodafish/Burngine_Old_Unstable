@@ -230,8 +230,8 @@ private:
 	Matrix4f drawShadowmap(const SpotLight& spotLight);
 	//Pointlight:
 	void drawShadowmap(const Light& pointlight);
-	Matrix4f findViewMatrix(const int& face,
-							const Light& pointlight);
+	Camera findCamera(const int& face,
+						const Light& pointlight);
 	//ShadowMaps:
 	ShadowMap _shadowMap;
 	ShadowCubeMap _shadowCubeMap;

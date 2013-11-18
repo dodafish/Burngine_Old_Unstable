@@ -26,17 +26,39 @@
 
 namespace burn {
 
-#define NEAR 0.1f
-
 Camera::Camera() :
-_aspectRatio(16.f / 9.f),
+_aspectRatio(1.f),
+_headUp(Vector3f(0.f, 1.f, 0.f)),
 _fov(35.f),
-_far(1000.f) {
+_far(1000.f),
+_near(0.1f),
+_type(PERSPECTIVE) {
 
 }
 
-Camera::~Camera() {
+Camera::Camera(const Camera& other) :
+_aspectRatio(other._aspectRatio),
+_headUp(other._headUp),
+_fov(other._fov),
+_far(other._far),
+_near(other._near),
+_type(other._type) {
 
+}
+
+Camera& Camera::operator=(const Camera& other) {
+
+	if(this == &other)
+		return *this;
+
+	_aspectRatio = other._aspectRatio;
+	_headUp = other._headUp;
+	_fov = other._fov;
+	_far = other._far;
+	_near = other._near;
+	_type = other._type;
+
+	return *this;
 }
 
 void Camera::setAspectRatio(const float& aspectRatio) {
@@ -67,15 +89,40 @@ const float& Camera::getFov() const {
 }
 
 Matrix4f Camera::getProjectionMatrix() const {
-	return (glm::perspective<float>(_fov, _aspectRatio, NEAR, _far));
+
+	if(_type == ORTHOGONAL)
+		return (glm::ortho(	(_fov * _aspectRatio) / -2.f,
+							(_fov * _aspectRatio) / 2.f,
+							_fov / -2.f,
+							_fov / 2.f,
+							_near,
+							_far));
+
+	return (glm::perspective<float>(_fov, _aspectRatio, _near, _far));
 }
 
 Matrix4f Camera::getViewMatrix() const {
-	return (glm::lookAt(_position, _lookAt, Vector3f(0.f, 1.f, 0.f)));
+	return (glm::lookAt(_position, _lookAt, _headUp));
 }
 
 void Camera::setFar(const float& far) {
 	_far = far;
+}
+
+void Camera::setNear(const float& near){
+	_near = near;
+}
+
+void Camera::setType(const Type& type) {
+	_type = type;
+}
+
+const Camera::Type& Camera::getType() const {
+	return _type;
+}
+
+void Camera::setHeadUp(const Vector3f& headUp){
+	_headUp = headUp;
 }
 
 } /* namespace burn */

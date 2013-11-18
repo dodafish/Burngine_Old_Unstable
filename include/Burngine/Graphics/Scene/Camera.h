@@ -35,7 +35,7 @@ public:
 	/**
 	 * @brief Default Contstructor of Camera.
 	 * Default values:
-	 * - AspectRatio: 16/9
+	 * - AspectRatio: 1
 	 * - LookAt: 0/0/0 (Origin)
 	 * - FOV: 45
 	 *
@@ -46,14 +46,11 @@ public:
 	Camera();
 
 	/**
-	 * @brief Default Destructor.
-	 *
-	 * @note Make sure to delete the camera with
-	 * Scene::removeCamera() when you
-	 * have created it with Scene::createCamera() !
-	 *
+	 * @brief Copies another camera
 	 */
-	~Camera();
+	Camera(const Camera& other);
+
+	Camera& operator=(const Camera& other);
 
 	/**
 	 * @brief Changes the aspectratio that the scene will
@@ -110,16 +107,66 @@ public:
 	 */
 	const float& getFov() const;
 
+	/**
+	 * @brief This returns a 4x4 matrix which represents the
+	 * projection matrix according to the set FOV, aspect ratio and
+	 * the far clipping distance
+	 *
+	 * @return Projectionmatrix
+	 *
+	 * @see setFov()
+	 * @see setAspectRatio()
+	 * @see setFar()
+	 * @see setType()
+	 *
+	 * @note If you have an orthogonal camera, the orthogonal "box" is
+	 * set with the FOV. Where FOV describes the height of the box and
+	 * the width is set according to the aspect ratio. So
+	 * if you want a box size of 1280x800 you set FOV to 800 and
+	 * the aspect ratio to 16/10
+	 */
 	Matrix4f getProjectionMatrix() const;
+
+	/**
+	 * @brief This returns a 4x4 matrix which represents the
+	 * view matrix according to the looking direction and the position
+	 * of the camera
+	 *
+	 * @return Viewmatrix
+	 *
+	 * @see setPosition()
+	 * @see lookAt()
+	 */
 	Matrix4f getViewMatrix() const;
 
+	/**
+	 * @brief This sets the far clipping distance. Everything that is
+	 * further away than far won't be drawn anymore
+	 *
+	 * @param far Limit of distance
+	 */
 	void setFar(const float& far);
+	void setNear(const float& near);
+
+	enum Type{
+		PERSPECTIVE, ///< The camera has perspective projection
+		ORTHOGONAL ///< The camera has orthogonal projection
+	};
+
+	void setType(const Type& type);
+
+	const Type& getType() const;
+
+	void setHeadUp(const Vector3f& headUp);
 
 private:
 	float _aspectRatio;
 	Vector3f _lookAt;
+	Vector3f _headUp;
 	float _fov;
 	float _far;
+	float _near;
+	Type _type;
 };
 
 } /* namespace burn */

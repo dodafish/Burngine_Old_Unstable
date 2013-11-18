@@ -381,50 +381,18 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 
-	//Cover whole scene with sceneBb
-	Matrix4f view = glm::lookAt(Vector3f(0.f), Vector3f(dirLight.getDirection()), Vector3f(1.f));
-
-	Matrix4f projection = glm::ortho(-30.f, 30.f, -30.f, 30.f, -30.f, 30.f);
-
-	shader.setUniform("projectionMatrix", projection);
-	shader.setUniform("viewMatrix", view);
+	Camera virtualCamera;
+	virtualCamera.lookAt(Vector3f(dirLight.getDirection()));
+	virtualCamera.setType(Camera::ORTHOGONAL);
+	virtualCamera.setFov(80.f); //Dimensions of the "box"
+	virtualCamera.setNear(-1000.f);
+	virtualCamera.setFar(1000.f);
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-
-		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
-
-			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
-
-			const Model& model = node->getModel();
-
-			shader.setUniform("modelMatrix", node->getModelMatrix());
-
-			for(size_t j = 0; j < model.getMeshCount(); ++j){
-
-				const Mesh& mesh = model.getMesh(j);
-
-				//Only draw when mesh can cast shadows
-				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
-					continue;
-
-				//Set OpenGL according to mesh's flags
-				mesh.getMaterial().setOpenGlByFlags();
-
-				glEnableVertexAttribArray(0);
-				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
-				glDisableVertexAttribArray(0);
-
-			}
-
-		}
-
+		RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 	}
 
-	return MVP_TO_SHADOWCOORD * projection * view;
+	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
 
 void Scene::drawShadowmap(const Light& pointlight) {
@@ -434,56 +402,25 @@ void Scene::drawShadowmap(const Light& pointlight) {
 	_shadowCubeMap.clear();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
-	Matrix4f projection = glm::perspective(90.f, 1.f, 0.01f, 2000.f);
-	shader.setUniform("projectionMatrix", projection);
 
 	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
 		_shadowCubeMap.bindAsRendertarget(face);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		Matrix4f view = findViewMatrix(face, pointlight);
-		shader.setUniform("viewMatrix", view);
+		Camera virtualCamera = findCamera(face, pointlight);
 
 		for(size_t i = 0; i < _nodes.size(); ++i){
-
-			if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
-
-				StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
-
-				const Model& model = node->getModel();
-
-				shader.setUniform("modelMatrix", node->getModelMatrix());
-
-				for(size_t j = 0; j < model.getMeshCount(); ++j){
-
-					const Mesh& mesh = model.getMesh(j);
-
-					//Only draw when mesh can cast shadows
-					if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
-						continue;
-
-					//Set OpenGL according to mesh's flags
-					mesh.getMaterial().setOpenGlByFlags();
-
-					glEnableVertexAttribArray(0);
-					mesh.getPositionVbo().bind();
-					glVertexAttribPointer(0, 3,
-					GL_FLOAT,
-											GL_FALSE, 0, (void*)0);
-					OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
-					glDisableVertexAttribArray(0);
-
-				}
-
-			}
-
+			RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 		}
 
 	}
 }
 
-Matrix4f Scene::findViewMatrix(	const int& face,
-								const Light& pointlight) {
+Camera Scene::findCamera(	const int& face,
+							const Light& pointlight) {
+
+	Camera virtualCamera;
+	virtualCamera.setFov(90.f);
 
 	Vector3f direction(1.f, 0.f, 0.f);
 	Vector3f headUp(0.f, 1.f, 0.f);
@@ -504,7 +441,13 @@ Matrix4f Scene::findViewMatrix(	const int& face,
 		direction = Vector3f(0.f, 0.f, 1.f);
 	}
 
-	return glm::lookAt(pointlight.getPosition(), pointlight.getPosition() + direction, headUp);
+	virtualCamera.setPosition(pointlight.getPosition());
+	virtualCamera.lookAt(pointlight.getPosition() + direction);
+	virtualCamera.setHeadUp(headUp);
+	virtualCamera.setNear(0.01f);
+	virtualCamera.setFar(2000.f);
+
+	return virtualCamera;
 }
 
 Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
