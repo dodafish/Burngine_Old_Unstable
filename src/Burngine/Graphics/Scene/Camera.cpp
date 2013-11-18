@@ -26,9 +26,12 @@
 
 namespace burn {
 
+#define NEAR 0.1f
+
 Camera::Camera() :
 _aspectRatio(16.f / 9.f),
-_fov(35.f){
+_fov(35.f),
+_far(1000.f) {
 
 }
 
@@ -61,6 +64,18 @@ void Camera::setFov(const float& fov) {
 
 const float& Camera::getFov() const {
 	return _fov;
+}
+
+Matrix4f Camera::getProjectionMatrix() const {
+	return (glm::perspective<float>(_fov, _aspectRatio, NEAR, _far));
+}
+
+Matrix4f Camera::getViewMatrix() const {
+	return (glm::lookAt(_position, _lookAt, Vector3f(0.f, 1.f, 0.f)));
+}
+
+void Camera::setFar(const float& far) {
+	_far = far;
 }
 
 } /* namespace burn */

@@ -110,10 +110,16 @@ public:
 	 */
 	const float& getFov() const;
 
+	Matrix4f getProjectionMatrix() const;
+	Matrix4f getViewMatrix() const;
+
+	void setFar(const float& far);
+
 private:
 	float _aspectRatio;
 	Vector3f _lookAt;
 	float _fov;
+	float _far;
 };
 
 } /* namespace burn */

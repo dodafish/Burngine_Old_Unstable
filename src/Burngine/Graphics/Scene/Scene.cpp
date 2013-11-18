@@ -37,6 +37,7 @@
 #include <Burngine/System/Reporter.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/Graphics/Scene/RenderHelper.h>
 
 namespace burn {
 
@@ -100,6 +101,11 @@ _isLightingEnabled(false) {
 	_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
 	GL_STATIC_DRAW);
 
+	//Setup RenderHelper
+	RenderHelper::setVboIndex(RF::POSITION, 0);
+	RenderHelper::setVboIndex(RF::NORMAL, 1);
+	RenderHelper::setVboIndex(RF::UV, 2);
+
 }
 
 Scene::~Scene() {
@@ -115,74 +121,11 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::G_BUFFER);
 
-	//Calculate matrices
-	glm::mat4 projectionMatrix = glm::perspective(camera.getFov(), camera.getAspectRatio(), 0.1f, 10000.0f);
-	glm::mat4 viewMatrix = glm::lookAt(camera.getPosition(), camera.getLookAt(), glm::vec3(0, 1, 0));
-
-	shader.setUniform("viewMatrix", viewMatrix);
-	shader.setUniform("projectionMatrix", projectionMatrix);
-
 	for(size_t i = 0; i < _nodes.size(); ++i){
 
-		//_nodes[i] is a StaticMeshNode
-		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
-
-			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
-
-			node->update();
-			const Model& model = node->getModel();
-			if(!model.isUpdated())
-				continue; //Next node
-
-			Matrix4f normalMatrix = glm::transpose(glm::inverse(/*viewMatrix * */node->getModelMatrix()));
-			shader.setUniform("modelMatrix", node->getModelMatrix());
-			shader.setUniform("normalMatrix", normalMatrix);
-
-			for(size_t j = 0; j < model.getMeshCount(); ++j){
-
-				const Mesh& mesh = model.getMesh(j);
-
-				if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
-					shader.setUniform("diffuseType", 1);
-					shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
-				}else{
-					shader.setUniform("diffuseType", 0); //Type = TEXTURED
-					mesh.getTexture().bindAsSource();
-				}
-
-				//Set OpenGL according to mesh's flags
-				mesh.getMaterial().setOpenGlByFlags();
-
-				glEnableVertexAttribArray(0);
-				glEnableVertexAttribArray(1);
-				glEnableVertexAttribArray(2);
-
-				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				mesh.getNormalVbo().bind();
-				glVertexAttribPointer(1, 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				mesh.getUvVbo().bind();
-				glVertexAttribPointer(2, 2,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-
-				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
-
-				glDisableVertexAttribArray(0);
-				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(2);
-
-			}
-
-		}
+		RenderHelper::render(_nodes[i], RF::POSITION | RF::NORMAL | RF::UV, camera, shader);
 
 	}
-
-	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 }
 
@@ -573,50 +516,18 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
 
-	Matrix4f projection = glm::perspective<float>(spotlight.getConeAngle() * 2.f, 1.f, 0.01f, 2000.f);
-	Matrix4f view = glm::lookAt(spotlight.getPosition(),
-								spotlight.getPosition() + Vector3f(spotlight.getDirection()),
-								Vector3f(0.f, 1.f, 0.f));
-	shader.setUniform("projectionMatrix", projection);
-	shader.setUniform("viewMatrix", view);
+	//Camera from light's view
+	Camera virtualCamera;
+	virtualCamera.setFov(spotlight.getConeAngle() * 2.f);
+	virtualCamera.setAspectRatio(1.f);
+	virtualCamera.setPosition(spotlight.getPosition());
+	virtualCamera.lookAt(spotlight.getPosition() + Vector3f(spotlight.getDirection()));
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-
-		if(typeid(*(_nodes[i])) == typeid(StaticMeshNode)){
-
-			StaticMeshNode* node = static_cast<StaticMeshNode*>(_nodes[i]);
-
-			const Model& model = node->getModel();
-
-			shader.setUniform("modelMatrix", node->getModelMatrix());
-
-			for(size_t j = 0; j < model.getMeshCount(); ++j){
-
-				const Mesh& mesh = model.getMesh(j);
-
-				//Only draw when mesh can cast shadows
-				if(mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS) == false)
-					continue;
-
-				//Set OpenGL according to mesh's flags
-				mesh.getMaterial().setOpenGlByFlags();
-
-				glEnableVertexAttribArray(0);
-				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(0, 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
-				glDisableVertexAttribArray(0);
-
-			}
-
-		}
-
+		RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 	}
 
-	return MVP_TO_SHADOWCOORD * projection * view;
-
+	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
 
 void Scene::ambientPart() {
