@@ -32,8 +32,6 @@
 
 #include <vector>
 
-//template class BURNGINE_API std::vector<burn::Scene*>;
-
 namespace burn {
 
 class Camera;
