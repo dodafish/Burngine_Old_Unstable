@@ -28,16 +28,6 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <string>
 #include <Burngine/System/Math.h>
-#include <vector>
-#include <utility>
-
-//Vectors that store set uniforms
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Matrix4f> >;
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector4f> >;
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector3f> >;
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, burn::Vector2f> >;
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, int> >;
-template class BURNGINE_API std::vector<std::pair<std::pair<size_t, std::string>, float> >;
 
 namespace burn {
 
@@ -155,15 +145,8 @@ public:
 	void setUniform(const std::string& name, const float& value) const;
 
 private:
-	void uploadUniforms() const;
 	GLuint _id;
-
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, Matrix4f> > _matrix4fUniforms;
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector4f> > _vector4fUniforms;
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector3f> > _vector3fUniforms;
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, Vector2f> > _vector2fUniforms;
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, int> > _intUniforms;
-	mutable std::vector<std::pair<std::pair<size_t, std::string>, float> > _floatUniforms;
+	static GLuint _currentProgram;
 };
 
 struct BURNGINE_API BurngineShaders {

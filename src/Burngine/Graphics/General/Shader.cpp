@@ -25,7 +25,6 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/General/OpenGL.h>
-#include <hash_set>
 
 #include <iostream>
 #include <vector>
@@ -45,6 +44,8 @@ Shader BurngineShaders::_fontShader;
 Shader BurngineShaders::_depthShader;
 Shader BurngineShaders::_skyBoxShader;
 Shader BurngineShaders::_gBufferShader;
+
+GLuint Shader::_currentProgram = 0;
 
 bool BurngineShaders::load(const std::string& d) {
 
@@ -143,141 +144,89 @@ Shader::~Shader() {
 
 void Shader::setUniform(const std::string& name,
 						const Matrix4f& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
-		if(_matrix4fUniforms[i].first.first == hash){
-			_matrix4fUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_matrix4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Matrix4f>(std::pair<size_t, std::string>(	hash,
-																													name),
-																					value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
+	GL_FALSE,
+						&value[0][0]);
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::setUniform(const std::string& name,
 						const Vector4f& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
-		if(_vector4fUniforms[i].first.first == hash){
-			_vector4fUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_vector4fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector4f>(std::pair<size_t, std::string>(	hash,
-																													name),
-																					value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::setUniform(const std::string& name,
 						const Vector3f& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
-		if(_vector3fUniforms[i].first.first == hash){
-			_vector3fUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_vector3fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector3f>(std::pair<size_t, std::string>(	hash,
-																													name),
-																					value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::setUniform(const std::string& name,
 						const Vector2f& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
-		if(_vector2fUniforms[i].first.first == hash){
-			_vector2fUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_vector2fUniforms.push_back(std::pair<std::pair<size_t, std::string>, Vector2f>(std::pair<size_t, std::string>(	hash,
-																													name),
-																					value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::setUniform(const std::string& name,
 						const int& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _intUniforms.size(); ++i){
-		if(_intUniforms[i].first.first == hash){
-			_intUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_intUniforms.push_back(std::pair<std::pair<size_t, std::string>, int>(	std::pair<size_t, std::string>(hash, name),
-																			value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniform1i(glGetUniformLocation(_id, name.c_str()), value);
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::setUniform(const std::string& name,
 						const float& value) const {
-	//Scan and set when found
-	size_t hash = strToHash(name);
-	for(size_t i = 0; i < _floatUniforms.size(); ++i){
-		if(_floatUniforms[i].first.first == hash){
-			_floatUniforms[i].second = value;
-			return;
-		}
-	}
-	//Not found. Create a pair
-	_floatUniforms.push_back(std::pair<std::pair<size_t, std::string>, float>(	std::pair<size_t, std::string>(	hash,
-																												name),
-																				value));
+
+	ensureContext();
+
+	glUseProgram(_id);
+
+	glUniform1f(glGetUniformLocation(_id, name.c_str()), value);
+
+	glUseProgram(_currentProgram);
+
 }
 
 void Shader::activate() const {
 	ensureContext();
 
 	glUseProgram(_id);
-	uploadUniforms();
-}
-
-void Shader::uploadUniforms() const {
-	for(size_t i = 0; i < _matrix4fUniforms.size(); ++i){
-		glUniformMatrix4fv(glGetUniformLocation(_id, _matrix4fUniforms[i].first.second.c_str()), 1,
-		GL_FALSE,
-							&(_matrix4fUniforms[i].second[0][0]));
-	}
-	for(size_t i = 0; i < _vector4fUniforms.size(); ++i){
-		glUniform4fv(glGetUniformLocation(_id, _vector4fUniforms[i].first.second.c_str()), 1,
-
-		&(_vector4fUniforms[i].second[0]));
-	}
-	for(size_t i = 0; i < _vector3fUniforms.size(); ++i){
-		glUniform3fv(glGetUniformLocation(_id, _vector3fUniforms[i].first.second.c_str()), 1,
-
-		&(_vector3fUniforms[i].second[0]));
-	}
-	for(size_t i = 0; i < _vector2fUniforms.size(); ++i){
-		glUniform2fv(glGetUniformLocation(_id, _vector2fUniforms[i].first.second.c_str()), 1,
-
-		&(_vector2fUniforms[i].second[0]));
-	}
-	for(size_t i = 0; i < _intUniforms.size(); ++i){
-		glUniform1i(glGetUniformLocation(_id, _intUniforms[i].first.second.c_str()), (_intUniforms[i].second));
-	}
-	for(size_t i = 0; i < _floatUniforms.size(); ++i){
-		glUniform1f(glGetUniformLocation(_id, _floatUniforms[i].first.second.c_str()), (_floatUniforms[i].second));
-	}
-
-	//Testcode: delete after pass
-	Vector3f test;
-	test.r = 0.45f;
-	test.y = 0.25252f;
-	if(test[0] != test.r || test[1] != test.y){
-		std::cout << "FLAME";
-	}
+	_currentProgram = _id;
 }
 
 GLuint Shader::getUniformLocation(const std::string& uniformName) const {
@@ -293,26 +242,26 @@ bool Shader::loadFromString(const std::string& vertexShader,
 
 	ensureContext();
 
-	// Create the shaders
+// Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Read the Vertex Shader code from the file
+// Read the Vertex Shader code from the file
 	std::string VertexShaderCode = vertexShader;
 
-	// Read the Fragment Shader code from the file
+// Read the Fragment Shader code from the file
 	std::string FragmentShaderCode = fragmentShader;
 
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
 
-	// Compile Vertex Shader
+// Compile Vertex Shader
 	Reporter::report("Compiling vertexshader...");
 	char const * VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
 
-	// Check Vertex Shader
+// Check Vertex Shader
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
@@ -322,13 +271,13 @@ bool Shader::loadFromString(const std::string& vertexShader,
 		return false;
 	}
 
-	// Compile Fragment Shader
+// Compile Fragment Shader
 	Reporter::report("Compiling fragmentshader...");
 	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
 
-	// Check Fragment Shader
+// Check Fragment Shader
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
@@ -338,14 +287,14 @@ bool Shader::loadFromString(const std::string& vertexShader,
 		return false;
 	}
 
-	// Link the program
+// Link the program
 	Reporter::report("Linking program...");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
 	glLinkProgram(ProgramID);
 
-	// Check the program
+// Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
@@ -368,11 +317,11 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 							const std::string& fragmentShaderFile) {
 	ensureContext();
 
-	// Create the shaders
+// Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Read the Vertex Shader code from the file
+// Read the Vertex Shader code from the file
 	std::string VertexShaderCode;
 	std::ifstream VertexShaderStream(vertexShaderFile, std::ios::in);
 	if(VertexShaderStream.is_open()){
@@ -382,7 +331,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 		VertexShaderStream.close();
 	}
 
-	// Read the Fragment Shader code from the file
+// Read the Fragment Shader code from the file
 	std::string FragmentShaderCode;
 	std::ifstream FragmentShaderStream(fragmentShaderFile, std::ios::in);
 	if(FragmentShaderStream.is_open()){
@@ -395,13 +344,13 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
 
-	// Compile Vertex Shader
+// Compile Vertex Shader
 	Reporter::report("Compiling vertexshader...");
 	char const * VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
 
-	// Check Vertex Shader
+// Check Vertex Shader
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
@@ -411,13 +360,13 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 		return false;
 	}
 
-	// Compile Fragment Shader
+// Compile Fragment Shader
 	Reporter::report("Compiling fragmentshader...");
 	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
 
-	// Check Fragment Shader
+// Check Fragment Shader
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
@@ -427,14 +376,14 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 		return false;
 	}
 
-	// Link the program
+// Link the program
 	Reporter::report("Linking program...");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
 	glLinkProgram(ProgramID);
 
-	// Check the program
+// Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
