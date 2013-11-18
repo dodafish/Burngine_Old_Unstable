@@ -203,16 +203,16 @@ void Scene::draw(	const Camera& camera,
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
 			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
-			glBlitFramebuffer(	0,
-								0,
-								_gBuffer.getDimensions().x,
-								_gBuffer.getDimensions().y,
-								0,
-								0,
-								_window.getSettings().getWidth(),
-								_window.getSettings().getHeight(),
-								GL_COLOR_BUFFER_BIT,
-								GL_LINEAR);
+
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+			shader.setUniform("modelMatrix", Matrix4f(1.f));
+			shader.setUniform("viewMatrix", Matrix4f(1.f));
+			shader.setUniform("projectionMatrix", Matrix4f(1.f));
+			shader.setUniform("mixColor", Vector3f(1.f));
+			shader.setUniform("gSampler", GBuffer::DIFFUSE);
+
+			drawFullscreenQuad(shader, OpenGlControl::Settings());
+
 		}
 
 		if(_isLightingEnabled)
@@ -221,9 +221,9 @@ void Scene::draw(	const Camera& camera,
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
 		/*if(mode != LIGHTING){
-			_window.bind();
-			_skyBox.draw();
-		}*/
+		 _window.bind();
+		 _skyBox.draw();
+		 }*/
 
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
@@ -623,6 +623,9 @@ void Scene::ambientPart() {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
 	shader.setUniform("gColor", _ambientColor);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
 	glEnableVertexAttribArray(0);
 	_fullscreenVbo.bind();
