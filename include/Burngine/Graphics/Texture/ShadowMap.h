@@ -86,7 +86,6 @@ public:
 
 private:
 	void onBind(const unsigned int& unit) const;
-	void onUnbind(const unsigned int& unit) const;
 
 	void cleanup();
 

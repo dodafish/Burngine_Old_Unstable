@@ -81,19 +81,8 @@ void BaseTexture::bindAsSource(const unsigned int& unit) const {
 
 	ensureContext();
 
-	glActiveTexture(GL_TEXTURE0 + unit);
 	_sampler.bind(unit);
 	onBind(unit);
-
-}
-
-void BaseTexture::unbindAsSource(const unsigned int& unit) const {
-
-	ensureContext();
-
-	glActiveTexture(GL_TEXTURE0 + unit);
-	Sampler::unbind(unit);
-	onUnbind(unit);
 
 }
 

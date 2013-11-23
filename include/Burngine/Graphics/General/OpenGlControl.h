@@ -30,6 +30,8 @@
 
 namespace burn {
 
+#define MAX_TEXTURE_BINDINGS 32
+
 class Shader;
 
 class OpenGlControl {
@@ -112,6 +114,23 @@ public:
 	};
 
 	static void draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader);
+
+	//////////////////////////////////////////////
+	// Binding Control
+	//////////////////////////////////////////////
+	static void bindTexture(const GLuint& textureId, const GLuint& unit = 0);
+	static const GLuint& getTextureBinding(const GLuint& unit = 0);
+	static void bindCubeMap(const GLuint& cubemapId, const GLuint& unit = 0);
+	static void bindDrawBuffer(const GLuint& drawBufferId);
+	static const GLuint& getDrawBufferBinding();
+	static void bindReadBuffer(const GLuint& readBufferId);
+	static const GLuint& getReadBufferBinding();
+
+	//Keeping track of bindings avoid the inefficient glGet*
+	static GLuint _currentTextureBinding[MAX_TEXTURE_BINDINGS];
+	static GLuint _currentDrawBufferBinding;
+	static GLuint _currentReadBufferBinding;
+
 };
 
 } /* namespace burn */

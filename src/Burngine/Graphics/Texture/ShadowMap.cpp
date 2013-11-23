@@ -24,6 +24,7 @@
 #include <Burngine/Graphics/Texture/ShadowMap.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 namespace burn {
 
@@ -112,7 +113,7 @@ void ShadowMap::bindAsRendertarget() const {
 		return;
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 	glViewport(0, 0, _resolution, _resolution);
 }
 
@@ -129,23 +130,15 @@ void ShadowMap::clear() {
 		return;
 	}
 
-	//Get previous bindings
-	GLint previousTexture = 0;
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
-	GLint lastFB = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
-
-	//Clear texture
-	glBindTexture(GL_TEXTURE_2D, _texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, _resolution, _resolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	//Get previous binding
+	const GLuint& previousDrawBuffer = OpenGlControl::getDrawBufferBinding();
 
 	//Clear buffers
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	//Restore previous bindings
-	glBindTexture(GL_TEXTURE_2D, previousTexture);
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+	//Restore previous binding
+	OpenGlControl::bindDrawBuffer(previousDrawBuffer);
 
 }
 
@@ -156,13 +149,6 @@ void ShadowMap::onBind(const unsigned int& unit) const {
 		return;
 	}
 
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	OpenGlControl::bindTexture(_texture, unit);
 }
-
-void ShadowMap::onUnbind(const unsigned int& unit) const {
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-}
-
 } /* namespace burn */

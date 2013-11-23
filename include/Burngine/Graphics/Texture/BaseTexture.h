@@ -67,19 +67,6 @@ public:
 	void bindAsSource(const unsigned int& unit = 0) const;
 
 	/**
-	 * @brief Unbinds everything (texture and sampler) from the given
-	 * texture unit
-	 *
-	 * @param unit The unit to free
-	 *
-	 * @see bindAsSource()
-	 *
-	 * @note This is freeing only the source, not the target. Only sampling
-	 * from the chosen unit is impossible when not bound later
-	 */
-	void unbindAsSource(const unsigned int& unit = 0) const;
-
-	/**
 	 * @brief Sets the filtering method of the texture.
 	 *
 	 * @param mag The magnification filter
@@ -111,7 +98,6 @@ public:
 protected:
 
 	virtual void onBind(const unsigned int& unit) const = 0;
-	virtual void onUnbind(const unsigned int& unit) const = 0;
 
 private:
 	Sampler _sampler;

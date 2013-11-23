@@ -79,7 +79,6 @@ public:
 
 private:
 	virtual void onBind(const unsigned int& unit) const;
-	virtual void onUnbind(const unsigned int& unit) const;
 
 	void generate();
 	void cleanup();

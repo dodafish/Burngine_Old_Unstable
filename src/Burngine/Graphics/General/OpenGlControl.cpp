@@ -26,26 +26,40 @@
 #include <Burngine/Graphics/General/Shader.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/System/Reporter.h>
 
 namespace burn {
 
-void OpenGlControl::draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader){
+//Members of OpenGlControl
+GLuint OpenGlControl::_currentTextureBinding[];
+GLuint OpenGlControl::_currentDrawBufferBinding = 0;
+GLuint OpenGlControl::_currentReadBufferBinding = 0;
+
+void OpenGlControl::draw(	const DrawingTechnique& tech,
+							GLint first,
+							GLsizei count,
+							const Shader& shader) {
 
 	//Activates shader and uploads uniforms
 	shader.activate();
 
 	if(tech == TRIANGLES){
 		glDrawArrays(GL_TRIANGLES, first, count);
-	}
-	else{ //TRIANGLE_STRIP
+	}else{ //TRIANGLE_STRIP
 		glDrawArrays(GL_TRIANGLE_STRIP, first, count);
 	}
 
 }
 
-OpenGlControl::Settings::Settings(bool isBlendingEnabled, const BlendMode& blendMode, bool isCullingEnabled,
-const CullSide& culledSide, const VertexOrder& vertexOrder, bool isDepthtestEnabled,
-const DepthtestTechnique& technique, bool isDepthbufferWritingEnabled, const Vector4f& clearColor) :
+OpenGlControl::Settings::Settings(	bool isBlendingEnabled,
+									const BlendMode& blendMode,
+									bool isCullingEnabled,
+									const CullSide& culledSide,
+									const VertexOrder& vertexOrder,
+									bool isDepthtestEnabled,
+									const DepthtestTechnique& technique,
+									bool isDepthbufferWritingEnabled,
+									const Vector4f& clearColor) :
 _isBlendingEnabled(isBlendingEnabled),
 _blendMode(blendMode),
 _isCullingEnabled(isCullingEnabled),
@@ -175,6 +189,67 @@ void OpenGlControl::Settings::setClearColor(const Vector4f& color) {
 
 const Vector4f& OpenGlControl::Settings::getClearColor() const {
 	return _clearColor;
+}
+
+/////////////////////////////////////////////////////////////////////
+
+void OpenGlControl::bindTexture(const GLuint& textureId,
+								const GLuint& unit) {
+	ensureContext();
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	_currentTextureBinding[unit] = textureId;
+}
+
+void OpenGlControl::bindCubeMap(const GLuint& cubemapId, const GLuint& unit) {
+
+	ensureContext();
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapId);
+	_currentTextureBinding[unit] = cubemapId;
+
+}
+
+const GLuint& OpenGlControl::getTextureBinding(const GLuint& unit) {
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	return _currentTextureBinding[unit];
+}
+
+void OpenGlControl::bindDrawBuffer(const GLuint& drawBufferId) {
+	ensureContext();
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, drawBufferId);
+	_currentDrawBufferBinding = drawBufferId;
+}
+
+const GLuint& OpenGlControl::getDrawBufferBinding() {
+	return _currentDrawBufferBinding;
+}
+
+void OpenGlControl::bindReadBuffer(const GLuint& readBufferId) {
+	ensureContext();
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, readBufferId);
+	_currentReadBufferBinding = readBufferId;
+}
+
+const GLuint& OpenGlControl::getReadBufferBinding() {
+	return _currentReadBufferBinding;
 }
 
 } /* namespace burn */

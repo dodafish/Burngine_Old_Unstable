@@ -70,8 +70,8 @@ public:
 	 * @param parentWindow The parent of the scene
 	 */
 	Scene(	const Window& parentWindow,
-			const ShadowMap::Resolution& shadowmapRes = ShadowMap::HIGH,
-			const ShadowCubeMap::Resolution& shadowcubemapRes = ShadowCubeMap::HIGH);
+			const ShadowMap::Resolution& shadowmapRes = ShadowMap::MEDIUM,
+			const ShadowCubeMap::Resolution& shadowcubemapRes = ShadowCubeMap::MEDIUM);
 
 	//Scenes are not copyable!
 	Scene(const Scene& other) = delete;

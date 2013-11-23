@@ -26,6 +26,7 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Texture/Sampler.h>
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 #include <vector>
 
 namespace burn {
@@ -78,15 +79,11 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	//DepthTexture:
 	glGenTextures(1, &_depthTexture);
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	glTexImage2D(	GL_TEXTURE_2D,
-					0,
-					GL_DEPTH_COMPONENT32F,
-					_dimensions.x,
-					_dimensions.y,
-					0,
+	glTexImage2D( GL_TEXTURE_2D, 0,
+	GL_DEPTH_COMPONENT32F,
+					_dimensions.x, _dimensions.y, 0,
 					GL_DEPTH_COMPONENT,
-					GL_FLOAT,
-					0);
+					GL_FLOAT, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthTexture, 0);
@@ -120,29 +117,14 @@ void GBuffer::clear() {
 	}
 
 	//Get previous binding
-	GLint lastFB = 0;
-	GLint previousTex = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTex);
+	const GLuint& previousDrawBuffer = OpenGlControl::getDrawBufferBinding();
 
 	//Clear buffers
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	glTexImage2D(	GL_TEXTURE_2D,
-					0,
-					GL_DEPTH_COMPONENT32F,
-					_dimensions.x,
-					_dimensions.y,
-					0,
-					GL_DEPTH_COMPONENT,
-					GL_FLOAT,
-					0);
-
 	//Restore previous bindings
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
-	glBindTexture(GL_TEXTURE_2D, previousTex);
+	OpenGlControl::bindDrawBuffer(previousDrawBuffer);
 }
 
 void GBuffer::bindAsTarget() const {
@@ -154,7 +136,7 @@ void GBuffer::bindAsTarget() const {
 		return;
 	}
 
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 }
 
 void GBuffer::bindAsSource(const unsigned int& offset) const {
@@ -166,18 +148,16 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 		return;
 	}
 
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindReadBuffer(_framebuffer);
 
 	//Bind all buffers to texture units
 	for(unsigned int i = 0; i != COUNT; ++i){
-		glActiveTexture(GL_TEXTURE0 + i + offset);
-		glBindTexture(GL_TEXTURE_2D, _textures[i]);
-		Sampler::unbind(i);
+		OpenGlControl::bindTexture(_textures[i], i + offset);
+		Sampler::unbind(i + offset);
 	}
 	//And the depth one
-	glActiveTexture(GL_TEXTURE0 + COUNT + offset);
-	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	Sampler::unbind(COUNT);
+	OpenGlControl::bindTexture(_depthTexture, COUNT + offset);
+	Sampler::unbind(COUNT + offset);
 
 }
 
@@ -212,9 +192,7 @@ void GBuffer::bindDepthBufferAsSourceTexture() const {
 		return;
 	}
 
-	glActiveTexture(GL_TEXTURE0);
-	Sampler::unbind(0);
-	glBindTexture(GL_TEXTURE_2D, _depthTexture);
+	OpenGlControl::bindTexture(_depthTexture, 0);
 }
 
 } /* namespace burn */
