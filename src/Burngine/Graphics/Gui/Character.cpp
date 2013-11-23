@@ -106,8 +106,6 @@ void Character::createFromFtGlyph(void* g, void* b) {
 
 	_vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 
-	_texture.unbindAsSource();
-
 	//Free allocated memory
 	delete[] data;
 }
