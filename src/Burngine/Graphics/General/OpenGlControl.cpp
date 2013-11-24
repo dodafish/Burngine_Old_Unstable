@@ -31,7 +31,7 @@
 namespace burn {
 
 //Members of OpenGlControl
-GLuint OpenGlControl::_currentTextureBinding[];
+
 GLuint OpenGlControl::_currentDrawBufferBinding = 0;
 GLuint OpenGlControl::_currentReadBufferBinding = 0;
 
@@ -192,45 +192,6 @@ const Vector4f& OpenGlControl::Settings::getClearColor() const {
 }
 
 /////////////////////////////////////////////////////////////////////
-
-void OpenGlControl::bindTexture(const GLuint& textureId,
-								const GLuint& unit) {
-	ensureContext();
-
-	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
-		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
-		exit(72);
-	}
-
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-	_currentTextureBinding[unit] = textureId;
-}
-
-void OpenGlControl::bindCubeMap(const GLuint& cubemapId, const GLuint& unit) {
-
-	ensureContext();
-
-	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
-		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
-		exit(72);
-	}
-
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapId);
-	_currentTextureBinding[unit] = cubemapId;
-
-}
-
-const GLuint& OpenGlControl::getTextureBinding(const GLuint& unit) {
-
-	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
-		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
-		exit(72);
-	}
-
-	return _currentTextureBinding[unit];
-}
 
 void OpenGlControl::bindDrawBuffer(const GLuint& drawBufferId) {
 	ensureContext();

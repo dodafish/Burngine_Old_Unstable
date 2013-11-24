@@ -30,6 +30,8 @@
 
 namespace burn {
 
+GLuint BaseTexture::_currentTextureBinding[];
+
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 
@@ -65,15 +67,17 @@ BaseTexture::~BaseTexture() {
 	//Default D-Tor for virtual causes
 }
 
-bool BaseTexture::setFiltering(const Sampler::MagnificationFiltering& mag, const Sampler::MinificationFiltering& min){
+bool BaseTexture::setFiltering(	const Sampler::MagnificationFiltering& mag,
+								const Sampler::MinificationFiltering& min) {
 	return _sampler.setFiltering(mag, min);
 }
 
-bool BaseTexture::setSamplerParameter(GLenum parameter, GLenum value){
+bool BaseTexture::setSamplerParameter(	GLenum parameter,
+										GLenum value) {
 	return _sampler.setSamplerParameter(parameter, value);
 }
 
-bool BaseTexture::setAnisotropicLevel(const GLfloat& level){
+bool BaseTexture::setAnisotropicLevel(const GLfloat& level) {
 	return _sampler.setAnisotropicLevel(level);
 }
 
@@ -84,6 +88,48 @@ void BaseTexture::bindAsSource(const unsigned int& unit) const {
 	_sampler.bind(unit);
 	onBind(unit);
 
+}
+
+//////////////////////
+
+void BaseTexture::bindTexture(	const GLuint& textureId,
+								const GLuint& unit) {
+	ensureContext();
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	_currentTextureBinding[unit] = textureId;
+}
+
+void BaseTexture::bindCubeMap(	const GLuint& cubemapId,
+								const GLuint& unit) {
+
+	ensureContext();
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapId);
+	_currentTextureBinding[unit] = cubemapId;
+
+}
+
+const GLuint& BaseTexture::getTextureBinding(const GLuint& unit) {
+
+	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
+		Reporter::report("Unable to bind texture. Unit out of range!", Reporter::ERROR);
+		exit(72);
+	}
+
+	return _currentTextureBinding[unit];
 }
 
 } /* namespace burn */

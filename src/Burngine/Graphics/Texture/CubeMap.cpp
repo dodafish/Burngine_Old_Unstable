@@ -26,8 +26,6 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 
-#include <Burngine/Graphics/General/OpenGlControl.h>
-
 namespace burn {
 
 CubeMap::CubeMap() :
@@ -101,7 +99,7 @@ void CubeMap::onBind(const unsigned int& unit) const {
 		return;
 	}
 
-	OpenGlControl::bindCubeMap(_cubemap, unit);
+	bindCubeMap(_cubemap, unit);
 }
 
 void CubeMap::generate() {

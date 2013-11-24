@@ -26,6 +26,7 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Texture/Sampler.h>
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <vector>
 
@@ -152,11 +153,11 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 
 	//Bind all buffers to texture units
 	for(unsigned int i = 0; i != COUNT; ++i){
-		OpenGlControl::bindTexture(_textures[i], i + offset);
+		BaseTexture::bindTexture(_textures[i], i + offset);
 		Sampler::unbind(i + offset);
 	}
 	//And the depth one
-	OpenGlControl::bindTexture(_depthTexture, COUNT + offset);
+	BaseTexture::bindTexture(_depthTexture, COUNT + offset);
 	Sampler::unbind(COUNT + offset);
 
 }
@@ -192,7 +193,7 @@ void GBuffer::bindDepthBufferAsSourceTexture() const {
 		return;
 	}
 
-	OpenGlControl::bindTexture(_depthTexture, 0);
+	BaseTexture::bindTexture(_depthTexture, 0);
 }
 
 } /* namespace burn */

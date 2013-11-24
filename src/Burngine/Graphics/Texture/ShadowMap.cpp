@@ -149,6 +149,6 @@ void ShadowMap::onBind(const unsigned int& unit) const {
 		return;
 	}
 
-	OpenGlControl::bindTexture(_texture, unit);
+	bindTexture(_texture, unit);
 }
 } /* namespace burn */

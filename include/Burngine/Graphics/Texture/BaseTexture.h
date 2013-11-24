@@ -28,8 +28,11 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/System/Math.h>
 #include <Burngine/Graphics/Texture/Sampler.h>
+#include <Burngine/Graphics/Scene/GBuffer.h>
 
 namespace burn {
+
+#define MAX_TEXTURE_BINDINGS 32
 
 /**
  * @brief Baseclass providing major features for textures
@@ -77,7 +80,8 @@ public:
 	 *
 	 * @see Sampler::setFiltering()
 	 */
-	bool setFiltering(const Sampler::MagnificationFiltering& mag, const Sampler::MinificationFiltering& min);
+	bool setFiltering(	const Sampler::MagnificationFiltering& mag,
+						const Sampler::MinificationFiltering& min);
 
 	/**
 	 * @brief Sets a sampler parameter to the given value
@@ -85,7 +89,8 @@ public:
 	 * @param parameter The sampler parameter
 	 * @param value The value of the parameter
 	 */
-	bool setSamplerParameter(GLenum parameter, GLenum value);
+	bool setSamplerParameter(	GLenum parameter,
+								GLenum value);
 
 	/**
 	 * @brief Sets the anisotropical level. The lowest one and
@@ -97,10 +102,24 @@ public:
 
 protected:
 
+	//GBuffer does not own any Texture class types, but needs access
+	//to the bind methods
+	friend GBuffer;
+
+	//Binds textures to OpenGL and keeps track of those
+	static void bindTexture(	const GLuint& textureId,
+						const GLuint& unit = 0);
+	static void bindCubeMap(	const GLuint& cubemapId,
+						const GLuint& unit = 0);
+	static const GLuint& getTextureBinding(const GLuint& unit = 0);
+
+	// Called after bindAsSource()
 	virtual void onBind(const unsigned int& unit) const = 0;
 
 private:
 	Sampler _sampler;
+
+	static GLuint _currentTextureBinding[MAX_TEXTURE_BINDINGS];
 };
 
 } /* namespace burn */

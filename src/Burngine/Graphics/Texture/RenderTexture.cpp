@@ -25,9 +25,9 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/General/Shader.h>
-#include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <iostream>
 
@@ -64,14 +64,14 @@ void RenderTexture::onBind(const unsigned int& unit) const {
 		return;
 	}
 
-	OpenGlControl::bindTexture(_texture, 0);
+	bindTexture(_texture, 0);
 
 	for(size_t i = 0; i < _additionalAttachments.size(); ++i){
 
 		//Texture has filterung without sampler.
 		Sampler::unbind(_additionalAttachments[i].attachment);
 
-		OpenGlControl::bindTexture(_additionalAttachments[i].texture, _additionalAttachments[i].attachment);
+		bindTexture(_additionalAttachments[i].texture, _additionalAttachments[i].attachment);
 
 	}
 }

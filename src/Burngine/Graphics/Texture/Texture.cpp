@@ -26,8 +26,6 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
 
-#include <Burngine/Graphics/General/OpenGlControl.h>
-
 namespace burn {
 
 Texture::Texture() :
@@ -136,7 +134,7 @@ void Texture::onBind(const unsigned int& unit) const {
 		Reporter::report("Binding uncreated texture. ID: 0!", Reporter::WARNING);
 	}
 
-	OpenGlControl::bindTexture(_textureId, unit);
+	bindTexture(_textureId, unit);
 }
 
 } /* namespace burn */

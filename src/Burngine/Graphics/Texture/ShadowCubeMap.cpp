@@ -28,8 +28,6 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
-#include <iostream>
-
 namespace burn {
 
 ShadowCubeMap::ShadowCubeMap() :
@@ -149,7 +147,7 @@ void ShadowCubeMap::onBind(const unsigned int& unit) const {
 		return;
 	}
 
-	OpenGlControl::bindCubeMap(_cubeMap, unit);
+	bindCubeMap(_cubeMap, unit);
 }
 
 void ShadowCubeMap::cleanup() {
