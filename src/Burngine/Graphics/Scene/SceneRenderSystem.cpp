@@ -21,7 +21,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include <Burngine/Graphics/Scene/RenderHelper.h>
+#include <Burngine/Graphics/Scene/SceneRenderSystem.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -30,6 +30,7 @@
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/System/Reporter.h>
+#include <Burngine/Graphics/Texture/BaseTexture.h>
 
 namespace burn {
 
@@ -39,13 +40,13 @@ namespace burn {
 #define UV_ARRAY_INDEX 2
 
 //Static members
-GLuint RenderHelper::_vboIndices[];
+GLuint SceneRenderSystem::_vboIndices[];
 
 //Variables in shader
 #define DIFFUSE_TYPE_COLORED 1
 #define DIFFUSE_TYPE_TEXTURED 0
 
-void RenderHelper::setVboIndex(	const RenderFlag& flag,
+void SceneRenderSystem::setVboIndex(	const RenderFlag& flag,
 								const GLuint& index) {
 	switch (flag) {
 		case POSITION:
@@ -60,7 +61,10 @@ void RenderHelper::setVboIndex(	const RenderFlag& flag,
 	}
 }
 
-void RenderHelper::render(	SceneNode* node,
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void SceneRenderSystem::render(	SceneNode* node,
 							const int& constflags,
 							const Camera& camera,
 							const Shader& shader,
@@ -149,6 +153,13 @@ void RenderHelper::render(	SceneNode* node,
 		}
 
 	}
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void SceneRenderSystem::renderTextureToFramebuffer(const BaseTexture& source){
 
 }
 
