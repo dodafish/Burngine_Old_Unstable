@@ -37,9 +37,12 @@
 #include <Burngine/System/Reporter.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
-#include <Burngine/Graphics/Scene/RenderHelper.h>
+#include <Burngine/Graphics/Scene/SceneRenderSystem.h>
 
 namespace burn {
+
+//Shortcut for easy access
+typedef SceneRenderSystem::RenderFlag RF;
 
 const Matrix4f MVP_TO_SHADOWCOORD(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
 
@@ -102,9 +105,9 @@ _isLightingEnabled(false) {
 	GL_STATIC_DRAW);
 
 	//Setup RenderHelper
-	RenderHelper::setVboIndex(RF::POSITION, 0);
-	RenderHelper::setVboIndex(RF::NORMAL, 1);
-	RenderHelper::setVboIndex(RF::UV, 2);
+	SceneRenderSystem::setVboIndex(RF::POSITION, 0);
+	SceneRenderSystem::setVboIndex(RF::NORMAL, 1);
+	SceneRenderSystem::setVboIndex(RF::UV, 2);
 
 }
 
@@ -123,7 +126,7 @@ void Scene::drawGBuffers(const Camera& camera) {
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
 
-		RenderHelper::render(_nodes[i], RF::POSITION | RF::NORMAL | RF::UV, camera, shader);
+		SceneRenderSystem::render(_nodes[i], RF::POSITION | RF::NORMAL | RF::UV, camera, shader);
 
 	}
 
@@ -389,7 +392,7 @@ Matrix4f Scene::drawShadowmap(const DirectionalLight& dirLight) {
 	virtualCamera.setFar(1000.f);
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
+		SceneRenderSystem::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 	}
 
 	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
@@ -410,7 +413,7 @@ void Scene::drawShadowmap(const Light& pointlight) {
 		Camera virtualCamera = findCamera(face, pointlight);
 
 		for(size_t i = 0; i < _nodes.size(); ++i){
-			RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
+			SceneRenderSystem::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 		}
 
 	}
@@ -467,7 +470,7 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 	virtualCamera.lookAt(spotlight.getPosition() + Vector3f(spotlight.getDirection()));
 
 	for(size_t i = 0; i < _nodes.size(); ++i){
-		RenderHelper::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
+		SceneRenderSystem::render(_nodes[i], RF::POSITION, virtualCamera, shader, true);
 	}
 
 	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();

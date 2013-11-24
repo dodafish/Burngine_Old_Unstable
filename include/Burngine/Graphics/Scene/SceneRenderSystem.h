@@ -56,8 +56,5 @@ private:
 	static GLuint _vboIndices[3]; //Array size is elementcount of RenderFlag enum
 };
 
-//Shortcut for easy access
-typedef SceneRenderSystem::RenderFlag RF;
-
 } /* namespace burn */
 #endif /* SCENERENDERSYSTEM_H_ */
