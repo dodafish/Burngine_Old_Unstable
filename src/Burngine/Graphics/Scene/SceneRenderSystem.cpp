@@ -41,13 +41,14 @@ namespace burn {
 
 //Static members
 GLuint SceneRenderSystem::_vboIndices[];
+VertexBufferObject SceneRenderSystem::_fullscreenVbo;
 
 //Variables in shader
 #define DIFFUSE_TYPE_COLORED 1
 #define DIFFUSE_TYPE_TEXTURED 0
 
-void SceneRenderSystem::setVboIndex(	const RenderFlag& flag,
-								const GLuint& index) {
+void SceneRenderSystem::setVboIndex(const RenderFlag& flag,
+									const GLuint& index) {
 	switch (flag) {
 		case POSITION:
 			_vboIndices[POSITION_ARRAY_INDEX] = index;
@@ -65,10 +66,10 @@ void SceneRenderSystem::setVboIndex(	const RenderFlag& flag,
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void SceneRenderSystem::render(	SceneNode* node,
-							const int& constflags,
-							const Camera& camera,
-							const Shader& shader,
-							bool onlyShadowCasters) {
+								const int& constflags,
+								const Camera& camera,
+								const Shader& shader,
+								bool onlyShadowCasters) {
 
 	ensureContext();
 
@@ -159,7 +160,67 @@ void SceneRenderSystem::render(	SceneNode* node,
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void SceneRenderSystem::renderTextureToFramebuffer(const BaseTexture& source){
+void SceneRenderSystem::renderTextureToFramebuffer(	const BaseTexture& source,
+													const GLuint& targetFramebuffer,
+													const GLuint& textureAttachmentId,
+													const OpenGlControl::BlendMode& blendmode) {
+
+	if(!_fullscreenVbo.isCreated()){
+		Vector3f posData[] = {
+		Vector3f(-1.f, -1.f, 0.f),
+		Vector3f(1.f, -1.f, 0.f),
+		Vector3f(-1.f, 1.f, 0.f),
+		Vector3f(1.f, 1.f, 0.f) };
+
+		Vector2f uvData[] = {
+		Vector2f(0.f, 0.f),
+		Vector2f(1.f, 0.f),
+		Vector2f(0.f, 1.f),
+		Vector2f(1.f, 1.f), };
+
+		_fullscreenVbo.create();
+		for(int i = 0; i != 4; ++i){
+			_fullscreenVbo.addData(&posData[i], sizeof(Vector3f));
+			_fullscreenVbo.addData(&uvData[i], sizeof(Vector2f));
+		}
+		_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
+		GL_STATIC_DRAW);
+	}
+
+	ensureContext();
+
+	OpenGlControl::Settings ogl;
+	ogl.setBlendMode(blendmode);
+	ogl.enableCulling(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableDepthtest(false);
+	OpenGlControl::useSettings(ogl);
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	shader.setUniform("mixColor", Vector3f(1.f));
+	shader.setUniform("gSampler", static_cast<int>(textureAttachmentId));
+
+	source.bindAsSource(0); //Bind texture to unit 0
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	_fullscreenVbo.bind();
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	glVertexAttribPointer(1, 2,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 
 }
 

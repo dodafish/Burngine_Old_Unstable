@@ -222,6 +222,10 @@ bool RenderTexture::addColorAttachment(const unsigned int& attachment) {
 	return true;
 }
 
+const GLuint& RenderTexture::getFramebufferId() const {
+	return _framebuffer;
+}
+
 void RenderTexture::bindAsTarget() const {
 
 	//Valid OpenGL-Context is needed
