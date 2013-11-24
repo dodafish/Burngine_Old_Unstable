@@ -147,13 +147,23 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
-	GL_FALSE,
-						&value[0][0]);
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
+		GL_FALSE,
+							&value[0][0]);
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
+		GL_FALSE,
+							&value[0][0]);
+
+	}
 
 }
 
@@ -162,11 +172,19 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	}
 
 }
 
@@ -175,11 +193,19 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	}
 
 }
 
@@ -188,11 +214,19 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
+
+	}
 
 }
 
@@ -201,11 +235,19 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniform1i(glGetUniformLocation(_id, name.c_str()), value);
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniform1iv(glGetUniformLocation(_id, name.c_str()), 1, &value);
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniform1iv(glGetUniformLocation(_id, name.c_str()), 1, &value);
+
+	}
 
 }
 
@@ -214,11 +256,19 @@ void Shader::setUniform(const std::string& name,
 
 	ensureContext();
 
-	glUseProgram(_id);
+	if(_id != _currentProgram){
 
-	glUniform1f(glGetUniformLocation(_id, name.c_str()), value);
+		glUseProgram(_id);
 
-	glUseProgram(_currentProgram);
+		glUniform1fv(glGetUniformLocation(_id, name.c_str()), 1, &value);
+
+		glUseProgram(_currentProgram);
+
+	}else{
+
+		glUniform1fv(glGetUniformLocation(_id, name.c_str()), 1, &value);
+
+	}
 
 }
 
