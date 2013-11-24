@@ -218,8 +218,12 @@ private:
 	//Passes:
 	void lightPass(	const Camera& camera,
 					bool dumpLighting = false);
-	//Contains lightpasses
+	//Pass-Helpers:
+	void ambientPart();
+	void drawFullscreenQuad(const Shader& shader,
+							const OpenGlControl::Settings& rendersettings) const;
 	RenderTexture _renderTexture;
+	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
 	Matrix4f drawShadowmap(const DirectionalLight& dirLight);

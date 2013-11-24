@@ -84,6 +84,26 @@ _isLightingEnabled(false) {
 	_shadowMap.bindAsSource(8);
 	_shadowCubeMap.bindAsSource(8);
 
+	Vector3f posData[] = {
+	Vector3f(-1.f, -1.f, 0.f),
+	Vector3f(1.f, -1.f, 0.f),
+	Vector3f(-1.f, 1.f, 0.f),
+	Vector3f(1.f, 1.f, 0.f) };
+
+	Vector2f uvData[] = {
+	Vector2f(0.f, 0.f),
+	Vector2f(1.f, 0.f),
+	Vector2f(0.f, 1.f),
+	Vector2f(1.f, 1.f), };
+
+	_fullscreenVbo.create();
+	for(int i = 0; i != 4; ++i){
+		_fullscreenVbo.addData(&posData[i], sizeof(Vector3f));
+		_fullscreenVbo.addData(&uvData[i], sizeof(Vector2f));
+	}
+	_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
+	GL_STATIC_DRAW);
+
 	//Setup RenderHelper
 	SceneRenderSystem::setVboIndex(RF::POSITION, 0);
 	SceneRenderSystem::setVboIndex(RF::NORMAL, 1);
@@ -317,21 +337,39 @@ void Scene::lightPass(	const Camera& camera,
 	///////////////////////////////////////////////////////////////
 
 	//Multiply result with the scene
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	shader.setUniform("mixColor", Vector3f(1.f));
+	_window.bind();
+
 	if(!dumpLighting){
 		//Compose with diffuse part:
-		SceneRenderSystem::renderTextureToFramebuffer(_renderTexture, 0, 0, OpenGlControl::MULTIPLY);
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 0); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::MULTIPLY);
+		drawFullscreenQuad(shader, ogl);
 
 		//Compose with specular part:
-		SceneRenderSystem::renderTextureToFramebuffer(_renderTexture, 0, 1, OpenGlControl::ADD);
-	}else{
-		//Put specular part and diffuse part together
-		SceneRenderSystem::renderTextureToFramebuffer(	_renderTexture,
-														_renderTexture.getFramebufferId(),
-														1,
-														OpenGlControl::ADD);
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 1); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, ogl);
 
-		//Dump result to window
-		SceneRenderSystem::renderTextureToFramebuffer(_renderTexture, 0);
+	}else{
+
+		_renderTexture.bindAsTarget();
+		_renderTexture.bindAsSource();
+		shader.setUniform("gSampler", 1); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, ogl);
+
+		_window.bind();
+		shader.setUniform("gSampler", 0); //sample from diffuse
+		ogl.setBlendMode(OpenGlControl::OVERWRITE);
+		drawFullscreenQuad(shader, ogl);
+
 	}
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
@@ -438,6 +476,25 @@ Matrix4f Scene::drawShadowmap(const SpotLight& spotlight) {
 	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
 
+void Scene::ambientPart() {
+
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
+	shader.setUniform("gColor", _ambientColor);
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+
+	glEnableVertexAttribArray(0);
+	_fullscreenVbo.bind();
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+	glDisableVertexAttribArray(0);
+
+}
+
 void Scene::dumpOutDepthGBuffer() {
 
 	OpenGlControl::Settings ogl;
@@ -456,6 +513,29 @@ void Scene::dumpOutDepthGBuffer() {
 	drawFullscreenQuad(shader, ogl);
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
+
+}
+
+void Scene::drawFullscreenQuad(	const Shader& shader,
+								const OpenGlControl::Settings& rendersettings) const {
+
+	OpenGlControl::useSettings(rendersettings);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	_fullscreenVbo.bind();
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	glVertexAttribPointer(1, 2,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)sizeof(Vector3f));
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 
 }
 

@@ -93,10 +93,6 @@ bool VertexBufferObject::create() {
 	return _isCreated;
 }
 
-bool VertexBufferObject::isCreated() const {
-	return _isCreated;
-}
-
 void VertexBufferObject::cleanup() {
 	ensureContext();
 

@@ -50,8 +50,6 @@ public:
 
 	void addData(const void* data, const unsigned int& size);
 
-	bool isCreated() const;
-
 private:
 
 	bool _isCreated, _isDataUploaded;

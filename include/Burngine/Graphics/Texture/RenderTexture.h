@@ -92,8 +92,6 @@ public:
 	 */
 	bool addColorAttachment(const unsigned int& attachment);
 
-	const GLuint& getFramebufferId() const;
-
 private:
 	virtual void onBind(const unsigned int& unit) const;
 
