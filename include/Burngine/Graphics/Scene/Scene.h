@@ -40,22 +40,18 @@
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
+#include <Burngine/Graphics/Scene/SceneRenderSystem.h>
+
 namespace burn {
-class Light;
+/*class Light;
 class SceneNode;
-}
-
-template class BURNGINE_API std::vector<burn::SceneNode*>;
-template class BURNGINE_API std::vector<burn::Light*>;
-
-namespace burn {
 
 class Window;
 class Shader;
 class SpotLight;
 class DirectionalLight;
 class BoundingBox;
-class Material;
+class Material;*/
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
@@ -69,9 +65,7 @@ public:
 	 *
 	 * @param parentWindow The parent of the scene
 	 */
-	Scene(	const Window& parentWindow,
-			const ShadowMap::Resolution& shadowmapRes = ShadowMap::MEDIUM,
-			const ShadowCubeMap::Resolution& shadowcubemapRes = ShadowCubeMap::MEDIUM);
+	Scene(const Window& parentWindow);
 
 	//Scenes are not copyable!
 	Scene(const Scene& other) = delete;
@@ -81,15 +75,6 @@ public:
 	 * @brief The default destructor detaching all attached objects.
 	 */
 	~Scene();
-
-	enum RenderMode {
-		COMPOSITION, ///< The final render result
-		DIFFUSE, ///< Diffuse pass only
-		NORMAL_WS, ///< Normals pass only
-		DEPTH, ///< Depth pass only
-		POSITION_WS, ///< Positions pass only
-		LIGHTING ///< Diffuse and specular pass
-	};
 
 	/**
 	 * @brief Draws the scene with selected technology
@@ -101,7 +86,7 @@ public:
 	 * @see RenderMode
 	 */
 	void draw(	const Camera& camera,
-				const RenderMode& mode = COMPOSITION);
+				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
 
 	/**
 	 * @brief Attaches a SceneNode to the Scene.
@@ -196,12 +181,11 @@ public:
 	bool isLightingEnabled() const;
 
 private:
-	void drawGBuffers(const Camera& camera);
-	void dumpOutDepthGBuffer();
-
 	//Parent window and overall ambient color:
 	const Window& _window;
 	Vector3f _ambientColor;
+
+	SceneRenderSystem _renderSystem;
 
 	bool _isLightingEnabled; ///< Does our scene render lighting? Default: false
 
@@ -211,31 +195,6 @@ private:
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;
-
-	//The GBuffer with several passes
-	GBuffer _gBuffer;
-
-	//Passes:
-	void lightPass(	const Camera& camera,
-					bool dumpLighting = false);
-	//Pass-Helpers:
-	void ambientPart();
-	void drawFullscreenQuad(const Shader& shader,
-							const OpenGlControl::Settings& rendersettings) const;
-	RenderTexture _renderTexture;
-	VertexBufferObject _fullscreenVbo;
-
-	//Shadow:
-	Matrix4f drawShadowmap(const DirectionalLight& dirLight);
-	Matrix4f drawShadowmap(const SpotLight& spotLight);
-	//Pointlight:
-	void drawShadowmap(const Light& pointlight);
-	Camera findCamera(const int& face,
-						const Light& pointlight);
-	//ShadowMaps:
-	ShadowMap _shadowMap;
-	ShadowCubeMap _shadowCubeMap;
-
 };
 
 } /* namespace burn */
