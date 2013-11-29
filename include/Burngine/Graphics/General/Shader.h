@@ -171,7 +171,8 @@ struct BURNGINE_API BurngineShaders {
 		FONT, ///< Used for font rendering
 		DEPTH, ///< Outputs only the depthpart
 		SKY_BOX, ///< Used for skybox rendering (z-independant cubemap rendering)
-		G_BUFFER ///< Used by the GBuffer
+		G_BUFFER, ///< Used by the GBuffer
+		VSM_DRAW ///< Used for drawing into VSM (2-component shadowmap)
 	};
 
 	/**
@@ -194,6 +195,7 @@ private:
 	static Shader _depthShader;
 	static Shader _skyBoxShader;
 	static Shader _gBufferShader;
+	static Shader _vsmDrawShader;
 };
 
 } /* namespace burn */

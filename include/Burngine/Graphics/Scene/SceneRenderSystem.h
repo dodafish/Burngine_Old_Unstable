@@ -34,6 +34,7 @@
 #include <Burngine/Graphics/Scene/GBuffer.h>
 #include <Burngine/Graphics/Texture/ShadowMap.h>
 #include <Burngine/Graphics/Texture/ShadowCubeMap.h>
+#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
 
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -137,6 +138,8 @@ private:
 	//ShadowMaps:
 	ShadowMap _shadowMap;
 	ShadowCubeMap _shadowCubeMap;
+
+	VarianceShadowMap _vsm;
 
 };
 

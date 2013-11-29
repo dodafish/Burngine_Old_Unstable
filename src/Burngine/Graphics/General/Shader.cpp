@@ -44,6 +44,7 @@ Shader BurngineShaders::_fontShader;
 Shader BurngineShaders::_depthShader;
 Shader BurngineShaders::_skyBoxShader;
 Shader BurngineShaders::_gBufferShader;
+Shader BurngineShaders::_vsmDrawShader;
 
 GLuint Shader::_currentProgram = 0;
 
@@ -84,6 +85,9 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_gBufferShader.loadFromFile(dir + "gBuffer.vert", dir + "gBuffer.frag")){
 		return false;
 	}
+	if(!_vsmDrawShader.loadFromFile(dir + "depth.vert", dir + "vsmDraw.frag")){
+		return false;
+	}
 
 	return true;
 }
@@ -120,6 +124,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case G_BUFFER:
 			return _gBufferShader;
+			break;
+		case VSM_DRAW:
+			return _vsmDrawShader;
 			break;
 	}
 	//See case of SOLID_COLOR above

@@ -98,11 +98,19 @@ _window(parentWindow) {
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
+	if(!_vsm.create(Vector2ui(1024, 1024))){
+		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
+		exit(16);
+	}
+	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR_MIPMAP);
+
+	_vsm.clear();
 
 	_shadowMap.clear();
 	_shadowCubeMap.clear();
 	_shadowMap.bindAsSource(8);
 	_shadowCubeMap.bindAsSource(8);
+	_vsm.bindAsSource(8);
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -434,7 +442,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 			//Render light
 			_renderTexture.bindAsTarget();
-			_shadowMap.bindAsSource(8);
+			_vsm.bindAsSource(8);
+			glGenerateMipmap(GL_TEXTURE_2D);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
@@ -577,10 +586,10 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
-	_shadowMap.clear();
-	_shadowMap.bindAsRendertarget();
+	_vsm.clear();
+	_vsm.bindAsTarget();
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
 	//Camera from light's view
 	Camera virtualCamera;

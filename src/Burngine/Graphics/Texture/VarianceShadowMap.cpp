@@ -23,6 +23,7 @@
 
 #include <Burngine/Graphics/Texture/VarianceShadowMap.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
+#include <Burngine/System/Reporter.h>
 
 namespace burn {
 
