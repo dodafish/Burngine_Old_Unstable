@@ -43,8 +43,6 @@ namespace burn {
 //Shortcut for easy access
 typedef SceneRenderSystem::RenderFlag RF;
 
-
-
 Scene::Scene(const Window& parentWindow) :
 _window(parentWindow),
 _renderSystem(parentWindow),
@@ -53,16 +51,14 @@ _isLightingEnabled(false) {
 }
 
 Scene::~Scene() {
-
 	detachAll();
-
 }
 
 void Scene::draw(	const Camera& camera,
 					const SceneRenderSystem::RenderMode& mode) {
 
 	_renderSystem.render(	0,
-							Vector2ui(_window.getSettings().getHeight(), _window.getSettings().getWidth()),
+							Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()),
 							camera,
 							mode,
 							_nodes,

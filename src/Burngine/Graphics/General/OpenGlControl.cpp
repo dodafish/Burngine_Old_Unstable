@@ -34,6 +34,7 @@ namespace burn {
 
 GLuint OpenGlControl::_currentDrawBufferBinding = 0;
 GLuint OpenGlControl::_currentReadBufferBinding = 0;
+GLuint OpenGlControl::_currentRenderBufferBinding = 0;
 
 void OpenGlControl::draw(	const DrawingTechnique& tech,
 							GLint first,
@@ -193,7 +194,12 @@ const Vector4f& OpenGlControl::Settings::getClearColor() const {
 
 /////////////////////////////////////////////////////////////////////
 
-void OpenGlControl::bindDrawBuffer(const GLuint& drawBufferId) {
+void OpenGlControl::bindDrawBuffer(	const GLuint& drawBufferId,
+									bool forceBindingCall) {
+
+	if(!forceBindingCall && _currentDrawBufferBinding == drawBufferId)
+		return;
+
 	ensureContext();
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, drawBufferId);
 	_currentDrawBufferBinding = drawBufferId;
@@ -203,7 +209,12 @@ const GLuint& OpenGlControl::getDrawBufferBinding() {
 	return _currentDrawBufferBinding;
 }
 
-void OpenGlControl::bindReadBuffer(const GLuint& readBufferId) {
+void OpenGlControl::bindReadBuffer(	const GLuint& readBufferId,
+									bool forceBindingCall) {
+
+	if(!forceBindingCall && _currentReadBufferBinding == readBufferId)
+		return;
+
 	ensureContext();
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, readBufferId);
 	_currentReadBufferBinding = readBufferId;
@@ -211,6 +222,21 @@ void OpenGlControl::bindReadBuffer(const GLuint& readBufferId) {
 
 const GLuint& OpenGlControl::getReadBufferBinding() {
 	return _currentReadBufferBinding;
+}
+
+void OpenGlControl::bindRenderBuffer(	const GLuint& renderBufferId,
+										bool forceBindingCall) {
+
+	if(!forceBindingCall && _currentRenderBufferBinding == renderBufferId)
+		return;
+
+	ensureContext();
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferId);
+	_currentRenderBufferBinding = renderBufferId;
+}
+
+const GLuint& OpenGlControl::getRenderBufferBinding() {
+	return _currentRenderBufferBinding;
 }
 
 } /* namespace burn */

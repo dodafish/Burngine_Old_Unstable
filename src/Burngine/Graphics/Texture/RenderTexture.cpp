@@ -105,26 +105,23 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 
 	_dimensions = dimensions;
 
-	GLint lastFB = 0;
-	GLint lastRB = 0;
-	GLint lastTex = 0;
-	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &lastFB);
-	glGetIntegerv(GL_RENDERBUFFER_BINDING, &lastRB);
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTex);
+	GLuint previousDrawBufferBinding = OpenGlControl::getDrawBufferBinding();
+	GLuint previousRenderBufferBinding = OpenGlControl::getRenderBufferBinding();
+	GLuint previousTextureBinding = getTextureBinding(0);
 
 	//Framebuffer:
 	glGenFramebuffers(1, &_framebuffer);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 
 	//Texture:
 	glGenTextures(1, &_texture);
 	//Clear texture
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	bindTexture(_texture, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, _dimensions.x, _dimensions.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
 	//Depthbuffer:
 	glGenRenderbuffers(1, &_depthbuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, _depthbuffer);
+	OpenGlControl::bindRenderBuffer(_depthbuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
 	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
@@ -141,9 +138,9 @@ bool RenderTexture::create(const Vector2ui& dimensions) {
 	}
 
 	//Restore previous bindings
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lastFB);
-	glBindTexture(GL_TEXTURE_2D, lastTex);
-	glBindRenderbuffer(GL_RENDERBUFFER, lastRB);
+	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
+	bindTexture(previousTextureBinding, 0);
+	OpenGlControl::bindRenderBuffer(previousRenderBufferBinding);
 
 	_isCreated = true;
 

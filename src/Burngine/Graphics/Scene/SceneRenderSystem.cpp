@@ -239,14 +239,13 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 
 	drawGBuffers(camera, nodes);
 
-	OpenGlControl::bindDrawBuffer(targetFramebuffer);
 	_window.bind();
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
-			_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
+			//_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 			shader.setUniform("modelMatrix", Matrix4f(1.f));
@@ -277,8 +276,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							targetFramebufferDimensions.x,
-							targetFramebufferDimensions.y,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == NORMAL_WS){
@@ -289,8 +288,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							targetFramebufferDimensions.x,
-							targetFramebufferDimensions.y,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == POSITION_WS){
@@ -301,8 +300,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							targetFramebufferDimensions.x,
-							targetFramebufferDimensions.y,
+							_window.getSettings().getWidth(),
+							_window.getSettings().getHeight(),
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == DEPTH){

@@ -136,16 +136,6 @@ public:
 	 */
 	const unsigned int& getFramerateLimit() const;
 
-	/**
-	 * @brief Returns the time in seconds which was needed to draw the
-	 * last frame.
-	 * This is useful to make calculations framerate-independing but depending
-	 * on time.
-	 *
-	 * @return The elapsed time of the last frame in seconds
-	 */
-	const Time& getElapsedTime() const;
-
 	void setCursorPosition(const Vector2d& position) const;
 
 	void bind() const;

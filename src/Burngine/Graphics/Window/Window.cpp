@@ -164,11 +164,11 @@ void Window::display() {
 
 	ContextHandler::useContext(_window);
 
-	_elapsedTime = _clock.reset();
 
 	if(_framerateLimit != 0){
-		if(_elapsedTime.asMicroseconds() < (1000000 / _framerateLimit)){
-			usleep(((1000000 / _framerateLimit) - _elapsedTime.asMicroseconds()));
+		_elapsedTime = _clock.reset();
+		if(_elapsedTime.asMicroseconds() < (1000000.0 / _framerateLimit)){
+			usleep(((1000000.0 / _framerateLimit) - _elapsedTime.asMicroseconds()));
 		}
 	}
 
@@ -181,10 +181,6 @@ void Window::setFramerateLimit(const unsigned int& fps) {
 
 const unsigned int& Window::getFramerateLimit() const {
 	return _framerateLimit;
-}
-
-const Time& Window::getElapsedTime() const {
-	return _elapsedTime;
 }
 
 glm::mat4 Window::getOrthoMatrix() {
@@ -205,7 +201,7 @@ void Window::bind() const {
 
 	ContextHandler::useContext(_window);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	OpenGlControl::bindDrawBuffer(0, true);
 	glViewport(0, 0, static_cast<int>(_settings.getWidth()), static_cast<int>(_settings.getHeight()));
 
 }

@@ -116,15 +116,18 @@ public:
 	//////////////////////////////////////////////
 	// Binding Control
 	//////////////////////////////////////////////
-	static void bindDrawBuffer(const GLuint& drawBufferId);
+	static void bindDrawBuffer(const GLuint& drawBufferId, bool forceBindingCall = false);
 	static const GLuint& getDrawBufferBinding();
-	static void bindReadBuffer(const GLuint& readBufferId);
+	static void bindReadBuffer(const GLuint& readBufferId, bool forceBindingCall = false);
 	static const GLuint& getReadBufferBinding();
+	static void bindRenderBuffer(const GLuint& renderBufferId, bool forceBindingCall = false);
+	static const GLuint& getRenderBufferBinding();
 
 	//Keeping track of bindings avoid the inefficient glGet*
 
 	static GLuint _currentDrawBufferBinding;
 	static GLuint _currentReadBufferBinding;
+	static GLuint _currentRenderBufferBinding;
 
 };
 

@@ -28,7 +28,6 @@
 #include <Burngine/System/Math.h>
 
 #include <vector>
-#include <memory>
 
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
@@ -43,15 +42,6 @@
 #include <Burngine/Graphics/Scene/SceneRenderSystem.h>
 
 namespace burn {
-/*class Light;
-class SceneNode;
-
-class Window;
-class Shader;
-class SpotLight;
-class DirectionalLight;
-class BoundingBox;
-class Material;*/
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
