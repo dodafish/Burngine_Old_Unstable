@@ -141,7 +141,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 									const int& constflags,
 									const Camera& camera,
 									const Shader& shader,
-									bool onlyShadowCasters) {
+									bool shadowMapRendering) {
 
 	ensureContext();
 
@@ -172,8 +172,30 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			const Mesh& mesh = model.getMesh(i);
 
 			//If wanted, skip this mesh if it casts no shadows
-			if(onlyShadowCasters && !mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS))
-				continue;
+			if(shadowMapRendering){
+				if(!mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS)){
+					//Skip this mesh, due to its flag
+					continue;
+				}else{
+					//Setup OpenGL for proper shadowmap rendering
+					OpenGlControl::Settings ogl;
+
+					ogl.enableCulling(true);
+					ogl.setCulledSide(OpenGlControl::OUTSIDE); //Front-Face Culling to avoid selfshadowing
+
+					if(mesh.getMaterial().isFlagSet(Material::VERTEX_ORDER_CLOCKWISE))
+						ogl.setVertexOrder(OpenGlControl::CLOCKWISE);
+					else
+						ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
+
+					ogl.enableDepthbufferWriting(mesh.getMaterial().isFlagSet(Material::DRAW_Z_BUFFER));
+
+					OpenGlControl::useSettings(ogl);
+				}
+			}else{ //Default rendering:
+				   //Set OpenGL according to mesh's flags
+				mesh.getMaterial().setOpenGlByFlags();
+			}
 
 			//Set uniforms depending on mesh's material
 			if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
@@ -183,9 +205,6 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 				shader.setUniform("diffuseType", DIFFUSE_TYPE_TEXTURED); //Type = TEXTURED
 				mesh.getTexture().bindAsSource();
 			}
-
-			//Set OpenGL according to mesh's flags
-			mesh.getMaterial().setOpenGlByFlags();
 
 			//Bind bufferobjects according to renderflags
 			glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
@@ -584,7 +603,9 @@ Camera SceneRenderSystem::findCamera(	const int& face,
 Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 											const std::vector<SceneNode*>& nodes) {
 
-	OpenGlControl::useSettings(OpenGlControl::Settings());
+	//OpenGlControl::Settings ogl;
+	//ogl.setCulledSide(OpenGlControl::OUTSIDE);
+	//OpenGlControl::useSettings(ogl);
 
 	_vsm.clear();
 	_vsm.bindAsTarget();

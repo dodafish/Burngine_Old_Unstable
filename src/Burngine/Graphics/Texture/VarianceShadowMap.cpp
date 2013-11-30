@@ -71,7 +71,7 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 	glGenTextures(1, &_texture);
 	//Clear texture
 	bindTexture(_texture, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, _dimensions.x, _dimensions.y, 0, GL_RG, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, _dimensions.x, _dimensions.y, 0, GL_RG, GL_FLOAT, 0);
 
 	//Configure:
 	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _texture, 0);

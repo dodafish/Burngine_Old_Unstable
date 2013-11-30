@@ -103,7 +103,7 @@ private:
 					const int& flags,
 					const Camera& camera,
 					const Shader& shader,
-					bool onlyShadowCasters = false);
+					bool shadowMapRendering = false);
 
 	//////////////////////////////////////////////////////////////////////////////
 	void drawGBuffers(	const Camera& camera,
