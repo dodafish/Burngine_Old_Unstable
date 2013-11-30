@@ -70,6 +70,8 @@ public:
 	 */
 	bool isCreated() const;
 
+	const Vector2ui& getDimensions() const;
+
 private:
 
 	virtual void onBind(const unsigned int& unit) const;

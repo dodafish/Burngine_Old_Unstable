@@ -128,4 +128,10 @@ void VarianceShadowMap::onBind(const unsigned int& unit) const {
 	bindTexture(_texture, unit);
 }
 
+const Vector2ui& VarianceShadowMap::getDimensions() const {
+
+	return _dimensions;
+
+}
+
 } /* namespace burn */

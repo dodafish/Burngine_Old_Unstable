@@ -33,7 +33,8 @@
 
 namespace burn {
 
-Character::Character(const Uint32& codePoint, const unsigned int& size) :
+Character::Character(	const Uint32& codePoint,
+						const unsigned int& size) :
 _codePoint(codePoint),
 _size(size) {
 }
@@ -44,7 +45,8 @@ Character::~Character() {
 
 }
 
-void Character::createFromFtGlyph(void* g, void* b) {
+void Character::createFromFtGlyph(	void* g,
+									void* b) {
 
 	FT_GlyphSlot glyph = static_cast<FT_GlyphSlot>(g);
 	FT_Bitmap* bitmap = static_cast<FT_Bitmap*>(b);
@@ -120,7 +122,8 @@ const Vector2i& Character::getBearing() const {
 	return _bearing;
 }
 
-void Character::draw(const Vector2f& position, const Vector4f& color) const {
+void Character::draw(	const Vector2f& position,
+						const Vector4f& color) const {
 
 	//Setup OpenGL for textrendering
 	OpenGlControl::Settings ogl;

@@ -172,7 +172,9 @@ struct BURNGINE_API BurngineShaders {
 		DEPTH, ///< Outputs only the depthpart
 		SKY_BOX, ///< Used for skybox rendering (z-independant cubemap rendering)
 		G_BUFFER, ///< Used by the GBuffer
-		VSM_DRAW ///< Used for drawing into VSM (2-component shadowmap)
+		VSM_DRAW, ///< Used for drawing into VSM (2-component shadowmap)
+		GAUSSIAN_BLUR_HORIZONTAL,
+		GAUSSIAN_BLUR_VERTICAL
 	};
 
 	/**
@@ -196,6 +198,8 @@ private:
 	static Shader _skyBoxShader;
 	static Shader _gBufferShader;
 	static Shader _vsmDrawShader;
+	static Shader _gaussianBlurHorizontalShader;
+	static Shader _gaussianBlurVerticalShader;
 };
 
 } /* namespace burn */
