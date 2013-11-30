@@ -31,7 +31,7 @@
 namespace burn {
 
 void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
-								const float& blurSize = 0.001f) {
+								const float& blurSize) {
 
 	//Return if the VSM is not created
 	if(!vsm.isCreated())
@@ -75,43 +75,47 @@ void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
 	OpenGlControl::useSettings(ogl);
 
 	//First horizontal blur
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::GAUSSIAN_BLUR_HORIZONTAL);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	shader.setUniform("gSamplerSource", 0);
-	shader.setUniform("gBlurSize", blurSize);
+	const Shader& shaderGBH = BurngineShaders::getShader(BurngineShaders::GAUSSIAN_BLUR_HORIZONTAL);
+	shaderGBH.setUniform("modelMatrix", Matrix4f(1.f));
+	shaderGBH.setUniform("viewMatrix", Matrix4f(1.f));
+	shaderGBH.setUniform("projectionMatrix", Matrix4f(1.f));
+	shaderGBH.setUniform("gSamplerSource", 0);
+	shaderGBH.setUniform("gBlurSize", blurSize);
 
 	vsm.bindAsSource(0);
 	helperFbo.bindAsTarget();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
+	vbo.bind();
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), (void*)sizeof(Vector3f));
 
-	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shaderGBH);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 
 	//Now the vertical blur back to the source
-	shader = BurngineShaders::getShader(BurngineShaders::GAUSSIAN_BLUR_VERTICAL);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	shader.setUniform("gSamplerSource", 0);
-	shader.setUniform("gBlurSize", blurSize);
+	const Shader& shaderGBV = BurngineShaders::getShader(BurngineShaders::GAUSSIAN_BLUR_VERTICAL);
+	shaderGBV.setUniform("modelMatrix", Matrix4f(1.f));
+	shaderGBV.setUniform("viewMatrix", Matrix4f(1.f));
+	shaderGBV.setUniform("projectionMatrix", Matrix4f(1.f));
+	shaderGBV.setUniform("gSamplerSource", 0);
+	shaderGBV.setUniform("gBlurSize", blurSize);
 
 	vsm.bindAsTarget();
 	helperFbo.bindAsSource(0);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
+	vbo.bind();
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f) + sizeof(Vector3f), (void*)sizeof(Vector3f));
 
-	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shaderGBV);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

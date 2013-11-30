@@ -37,6 +37,8 @@
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Window/Window.h>
 
+#include <Burngine/Graphics/General/PostEffects.h>
+
 namespace burn {
 
 //RenderFlag to ArrayIndex Mapping:
@@ -622,6 +624,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
+
+	PostEffects::gaussianBlur(_vsm, 1.f / _vsm.getDimensions().x);
 
 	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
