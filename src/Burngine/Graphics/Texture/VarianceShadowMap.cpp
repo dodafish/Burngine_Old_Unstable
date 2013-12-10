@@ -29,6 +29,7 @@ namespace burn {
 
 VarianceShadowMap::VarianceShadowMap() :
 _framebuffer(0),
+_depthbuffer(0),
 _texture(0),
 _isCreated(false) {
 
@@ -45,10 +46,12 @@ void VarianceShadowMap::cleanup() {
 	ensureContext();
 
 	glDeleteFramebuffers(1, &_framebuffer);
+	glDeleteRenderbuffers(1, &_depthbuffer);
 	glDeleteTextures(1, &_texture);
 
 	_framebuffer = 0;
 	_texture = 0;
+	_depthbuffer = 0;
 
 	_isCreated = false;
 }
@@ -60,6 +63,7 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 
 	GLuint previousDrawBufferBinding = OpenGlControl::getDrawBufferBinding();
 	GLuint previousTextureBinding = getTextureBinding(0);
+	GLuint previousRenderBufferBinding = OpenGlControl::getRenderBufferBinding();
 
 	ensureContext();
 
@@ -72,6 +76,14 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 	//Clear texture
 	bindTexture(_texture, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, _dimensions.x, _dimensions.y, 0, GL_RG, GL_FLOAT, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	//Depthbuffer:
+	glGenRenderbuffers(1, &_depthbuffer);
+	OpenGlControl::bindRenderBuffer (_depthbuffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
 	//Configure:
 	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _texture, 0);
@@ -88,6 +100,7 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 	//Restore previous bindings
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
 	bindTexture(previousTextureBinding, 0);
+	OpenGlControl::bindRenderBuffer(previousRenderBufferBinding);
 
 	_isCreated = true;
 	return true;
@@ -109,7 +122,7 @@ void VarianceShadowMap::clear() const {
 	OpenGlControl::bindDrawBuffer(_framebuffer, true);
 
 	ensureContext();
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
 }

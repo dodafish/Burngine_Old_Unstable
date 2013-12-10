@@ -100,11 +100,11 @@ _window(parentWindow) {
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
-	if(!_vsm.create(Vector2ui(1024, 1024))){
+	if(!_vsm.create(Vector2ui(512, 512))){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
-	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR_MIPMAP);
+	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
 
 	_vsm.clear();
 
@@ -174,30 +174,19 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			const Mesh& mesh = model.getMesh(i);
 
 			//If wanted, skip this mesh if it casts no shadows
-			if(shadowMapRendering){
-				if(!mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS)){
-					//Skip this mesh, due to its flag
-					continue;
-				}else{
-					//Setup OpenGL for proper shadowmap rendering
-					OpenGlControl::Settings ogl;
+			/*if(shadowMapRendering)
+			 if(!mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS))
+			 //Skip this mesh, due to its flag
+			 continue;*/
 
-					ogl.enableCulling(true);
-					ogl.setCulledSide(OpenGlControl::OUTSIDE); //Front-Face Culling to avoid selfshadowing
-
-					if(mesh.getMaterial().isFlagSet(Material::VERTEX_ORDER_CLOCKWISE))
-						ogl.setVertexOrder(OpenGlControl::CLOCKWISE);
-					else
-						ogl.setVertexOrder(OpenGlControl::COUNTER_CLOCKWISE);
-
-					ogl.enableDepthbufferWriting(mesh.getMaterial().isFlagSet(Material::DRAW_Z_BUFFER));
-
-					OpenGlControl::useSettings(ogl);
-				}
-			}else{ //Default rendering:
-				   //Set OpenGL according to mesh's flags
+			//Material mat = mesh.getMaterial();
+			//if(shadowMapRendering){
+			//	mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
+			//	mat.setOpenGlByFlags();
+			//}else{
+				//Set OpenGL according to mesh's flags
 				mesh.getMaterial().setOpenGlByFlags();
-			}
+			//}
 
 			//Set uniforms depending on mesh's material
 			if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
@@ -363,14 +352,14 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 									const std::vector<Light*>& lights,
 									bool dumpLighting) {
 
-	OpenGlControl::Settings ogl;
-	ogl.enableDepthtest(false);
-	ogl.enableDepthbufferWriting(false);
-	ogl.enableCulling(false);
-	ogl.enableBlending(true);
-	ogl.setBlendMode(OpenGlControl::ADD);
-	ogl.setClearColor(Vector4f(0.f));
-	OpenGlControl::useSettings(ogl);
+	OpenGlControl::Settings toLightPassOgl;
+	toLightPassOgl.enableDepthtest(false);
+	toLightPassOgl.enableDepthbufferWriting(false);
+	toLightPassOgl.enableCulling(false);
+	toLightPassOgl.enableBlending(true);
+	toLightPassOgl.setBlendMode(OpenGlControl::ADD);
+	toLightPassOgl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(toLightPassOgl);
 
 	//Pre-Adjust Shaders:
 	{
@@ -411,7 +400,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 	//Render all dirlights together into rendertexture
 	_renderTexture.clear();
-	_renderTexture.bindAsTarget(); // <- Diffuse light (attachment 0); specular (1)
+	_renderTexture.bindAsTarget();		// <- Diffuse light (attachment 0); specular (1)
 
 	ambientPart();
 
@@ -436,7 +425,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			shader.setUniform("gLightIntensity", light->getIntensity());
 			shader.setUniform("shadowMatrix", shadowMatrix);
 
-			drawFullscreenQuad(shader, ogl);
+			drawFullscreenQuad(shader, toLightPassOgl);
 
 		}else if(typeid(*(lights[i])) == typeid(Light)){
 
@@ -453,7 +442,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
 
-			drawFullscreenQuad(shader, ogl);
+			drawFullscreenQuad(shader, toLightPassOgl);
 		}else{ //Spotlight
 
 			SpotLight* light = static_cast<SpotLight*>(lights[i]);
@@ -464,7 +453,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			//Render light
 			_renderTexture.bindAsTarget();
 			_vsm.bindAsSource(8);
-			glGenerateMipmap(GL_TEXTURE_2D);
+			//glGenerateMipmap(GL_TEXTURE_2D);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
@@ -475,7 +464,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			shader.setUniform("gLightConeCosine", lightConeCosine);
 			shader.setUniform("shadowMatrix", shadowMatrix);
 
-			drawFullscreenQuad(shader, ogl);
+			drawFullscreenQuad(shader, toLightPassOgl);
 
 		}
 
@@ -495,27 +484,27 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 		//Compose with diffuse part:
 		_renderTexture.bindAsSource();
 		shader.setUniform("gSampler", 0); //sample from diffuse
-		ogl.setBlendMode(OpenGlControl::MULTIPLY);
-		drawFullscreenQuad(shader, ogl);
+		toLightPassOgl.setBlendMode(OpenGlControl::MULTIPLY);
+		drawFullscreenQuad(shader, toLightPassOgl);
 
 		//Compose with specular part:
 		_renderTexture.bindAsSource();
 		shader.setUniform("gSampler", 1); //sample from diffuse
-		ogl.setBlendMode(OpenGlControl::ADD);
-		drawFullscreenQuad(shader, ogl);
+		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, toLightPassOgl);
 
 	}else{
 
 		_renderTexture.bindAsTarget();
 		_renderTexture.bindAsSource();
 		shader.setUniform("gSampler", 1); //sample from diffuse
-		ogl.setBlendMode(OpenGlControl::ADD);
-		drawFullscreenQuad(shader, ogl);
+		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, toLightPassOgl);
 
 		_window.bind();
 		shader.setUniform("gSampler", 0); //sample from diffuse
-		ogl.setBlendMode(OpenGlControl::OVERWRITE);
-		drawFullscreenQuad(shader, ogl);
+		toLightPassOgl.setBlendMode(OpenGlControl::OVERWRITE);
+		drawFullscreenQuad(shader, toLightPassOgl);
 
 	}
 
@@ -605,9 +594,9 @@ Camera SceneRenderSystem::findCamera(	const int& face,
 Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 											const std::vector<SceneNode*>& nodes) {
 
-	//OpenGlControl::Settings ogl;
-	//ogl.setCulledSide(OpenGlControl::OUTSIDE);
-	//OpenGlControl::useSettings(ogl);
+	OpenGlControl::Settings ogl;
+	ogl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(ogl);
 
 	_vsm.clear();
 	_vsm.bindAsTarget();
@@ -620,14 +609,15 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	virtualCamera.setAspectRatio(1.f);
 	virtualCamera.setPosition(spotlight.getPosition());
 	virtualCamera.lookAt(spotlight.getPosition() + Vector3f(spotlight.getDirection()));
+	virtualCamera.setFar(spotlight.getIntensity() * 0.5f);
 
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	PostEffects::gaussianBlur(_vsm, 1.f / _vsm.getDimensions().x);
+	PostEffects::gaussianBlur(_vsm, 0.5f / _vsm.getDimensions().x);
 
-	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
+	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
 
 void SceneRenderSystem::ambientPart() {

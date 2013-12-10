@@ -78,7 +78,7 @@ private:
 
 	void cleanup();
 
-	GLuint _framebuffer, _texture;
+	GLuint _framebuffer, _depthbuffer, _texture;
 	bool _isCreated;
 	Vector2ui _dimensions;
 
