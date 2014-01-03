@@ -87,7 +87,7 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_gBufferShader.loadFromFile(dir + "gBuffer.vert", dir + "gBuffer.frag")){
 		return false;
 	}
-	if(!_vsmDrawShader.loadFromFile(dir + "depth.vert", dir + "vsmDraw.frag")){
+	if(!_vsmDrawShader.loadFromFile(dir + "vsmDraw.vert", dir + "vsmDraw.frag")){
 		return false;
 	}
 	if(!_gaussianBlurHorizontalShader.loadFromFile(dir + "texture.vert", dir + "gaussianHorizontalBlur.frag")){

@@ -100,11 +100,12 @@ _window(parentWindow) {
 		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
 		exit(15);
 	}
-	if(!_vsm.create(Vector2ui(512, 512))){
+	if(!_vsm.create(Vector2ui(1024, 1024))){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
 	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	//_vsm.setSamplerParameter(GL_TEXTURE_BASE_LEVEL, 7);
 
 	_vsm.clear();
 
@@ -179,11 +180,11 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			 //Skip this mesh, due to its flag
 			 continue;*/
 
-			//Material mat = mesh.getMaterial();
-			//if(shadowMapRendering){
-			//	mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
-			//	mat.setOpenGlByFlags();
-			//}else{
+			/*if(shadowMapRendering){
+				Material mat = mesh.getMaterial();
+				mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
+				mat.setOpenGlByFlags();
+			}else{*/
 				//Set OpenGL according to mesh's flags
 				mesh.getMaterial().setOpenGlByFlags();
 			//}
@@ -609,13 +610,13 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	virtualCamera.setAspectRatio(1.f);
 	virtualCamera.setPosition(spotlight.getPosition());
 	virtualCamera.lookAt(spotlight.getPosition() + Vector3f(spotlight.getDirection()));
-	virtualCamera.setFar(spotlight.getIntensity() * 0.5f);
+	virtualCamera.setFar(std::sqrt(spotlight.getIntensity() / 0.02f));
 
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	PostEffects::gaussianBlur(_vsm, 0.5f / _vsm.getDimensions().x);
+	PostEffects::gaussianBlur(_vsm, 0.75f / _vsm.getDimensions().x);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
