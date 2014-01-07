@@ -616,7 +616,9 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	PostEffects::gaussianBlur(_vsm, 0.75f / _vsm.getDimensions().x);
+	const float& softness = spotlight.getSoftness();
+	if(softness != 0.f)
+		PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }

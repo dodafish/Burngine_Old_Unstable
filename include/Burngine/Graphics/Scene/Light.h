@@ -128,10 +128,23 @@ public:
 	 */
 	void removeParentScene(Scene* scene);
 
+	/**
+	 * @brief Softness is in development. Better don't use this
+	 * (set it to 0.f; default) until further notice
+	 */
+	void setSoftness(const float& softness);
+
+	/**
+	 * @brief Softness is in development. Better don't use this
+	 * (set it to 0.f; default) until further notice
+	 */
+	const float& getSoftness() const;
+
 protected:
 
 	Vector3f _color;
 	float _intensity;
+	float _softness;
 
 	std::vector<Scene*> _parents;
 	void removeAllParents();

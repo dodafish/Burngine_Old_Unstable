@@ -41,13 +41,15 @@ void Light::removeAllParents() {
 
 Light::Light() :
 _color(Vector3f(1.f)),
-_intensity(10.f) {
+_intensity(10.f),
+_softness(0.f){
 
 }
 
 Light::Light(const Light& other) :
 _color(other._color),
-_intensity(other._intensity) {
+_intensity(other._intensity),
+_softness(0.f){
 
 	_parents = other._parents;
 	for(size_t i = 0; i < _parents.size(); ++i){
@@ -62,6 +64,7 @@ Light& Light::operator=(const Light& other) {
 
 	_color = other._color;
 	_intensity = other._intensity;
+	_softness = other._softness;
 
 	removeAllParents();
 
@@ -109,6 +112,17 @@ void Light::setIntensity(const float& intensity) {
 
 const float& Light::getIntensity() const {
 	return _intensity;
+}
+
+void Light::setSoftness(const float& softness) {
+	if(softness < 0.f)
+		_softness = 0.f;
+	else
+		_softness = softness;
+}
+
+const float& Light::getSoftness() const {
+	return _softness;
 }
 
 } /* namespace burn */
