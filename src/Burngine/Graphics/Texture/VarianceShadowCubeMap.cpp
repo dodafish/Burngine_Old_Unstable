@@ -56,7 +56,7 @@ bool VarianceShadowCubeMap::create(const Resolution& resolution) {
 	//Save old bindings
 	GLint lastFB = 0;
 	GLint lastTex = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFB);
+	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &lastFB);
 	glGetIntegerv(GL_TEXTURE_BINDING_CUBE_MAP, &lastTex);
 
 	//Save resolution
@@ -67,7 +67,7 @@ bool VarianceShadowCubeMap::create(const Resolution& resolution) {
 
 	//Generate framebuffer
 	glGenFramebuffers(1, &_framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	OpenGlControl::bindDrawBuffer(_framebuffer);
 
 	//Bind and modify cubemap
 	glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMap);
@@ -81,19 +81,22 @@ bool VarianceShadowCubeMap::create(const Resolution& resolution) {
 	setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	setSamplerParameter(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, _cubeMap, 0);
-
 	//Depthbuffer:
 	glGenRenderbuffers(1, &_depthbuffer);
-	OpenGlControl::bindRenderBuffer (_depthbuffer);
+	OpenGlControl::bindRenderBuffer(_depthbuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, resolution, resolution);
 	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
 	//Configure:
-	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _cubeMap, 0);
-	GLenum drawBuffers[1] = {
-	GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, drawBuffers);
+	/*glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _cubeMap, 0);
+	 GLenum drawBuffers[1] = {
+	 GL_COLOR_ATTACHMENT0 };
+	 glDrawBuffers(1, drawBuffers);*/
+
+	//for(int i = 0; i != 6; ++i)
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, _cubeMap, 0);
+
+	//glDrawBuffer(GL_NONE); // No color buffer is drawn to.
 
 	// Always check that our framebuffer is ok
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
@@ -102,7 +105,7 @@ bool VarianceShadowCubeMap::create(const Resolution& resolution) {
 	}
 
 	//Restore old bindings
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFB);
+	OpenGlControl::bindDrawBuffer(lastFB);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, lastTex);
 	_isCreated = true;
 
@@ -142,7 +145,8 @@ void VarianceShadowCubeMap::bindAsRendertarget(const int& face) const {
 	}
 
 	OpenGlControl::bindDrawBuffer(_framebuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, face, _cubeMap, 0);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, face, _cubeMap, 0);
 	glViewport(0, 0, _resolution, _resolution);
 }
 

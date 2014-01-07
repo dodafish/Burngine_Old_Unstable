@@ -106,8 +106,21 @@ _window(parentWindow) {
 	}
 	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
 	//_vsm.setSamplerParameter(GL_TEXTURE_BASE_LEVEL, 7);
-
 	_vsm.clear();
+
+	Reporter::report("HERE", Reporter::ERROR);
+
+	if(!_vscm.create(VarianceShadowCubeMap::MEDIUM)){
+		Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
+		exit(17);
+	}
+	Reporter::report("HERE", Reporter::ERROR);
+	_vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	Reporter::report("HERE", Reporter::ERROR);
+	//_vscm.setSamplerParameter(GL_TEXTURE_BASE_LEVEL, 7);
+	_vscm.clear();
+
+	Reporter::report("HERE", Reporter::ERROR);
 
 	_shadowMap.clear();
 	_shadowCubeMap.clear();
@@ -181,12 +194,12 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			 continue;*/
 
 			/*if(shadowMapRendering){
-				Material mat = mesh.getMaterial();
-				mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
-				mat.setOpenGlByFlags();
-			}else{*/
-				//Set OpenGL according to mesh's flags
-				mesh.getMaterial().setOpenGlByFlags();
+			 Material mat = mesh.getMaterial();
+			 mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
+			 mat.setOpenGlByFlags();
+			 }else{*/
+			//Set OpenGL according to mesh's flags
+			mesh.getMaterial().setOpenGlByFlags();
 			//}
 
 			//Set uniforms depending on mesh's material
@@ -436,7 +449,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			drawShadowmap(*light, nodes);
 
 			//Render light
-			_shadowCubeMap.bindAsSource(8);
+			_vscm.bindAsSource(8);
 			_renderTexture.bindAsTarget();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 			shader.setUniform("gLightPosition", light->getPosition());
@@ -515,7 +528,9 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
 											const std::vector<SceneNode*>& nodes) {
 
-	OpenGlControl::useSettings(OpenGlControl::Settings());
+	OpenGlControl::Settings ogl;
+	ogl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(ogl);
 
 	_shadowMap.clear();
 	_shadowMap.bindAsRendertarget();
@@ -539,14 +554,16 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
 										const std::vector<SceneNode*>& nodes) {
 
-	OpenGlControl::useSettings(OpenGlControl::Settings());
+	OpenGlControl::Settings ogl;
+	ogl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(ogl);
 
-	_shadowCubeMap.clear();
+	_vscm.clear();
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
 	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
-		_shadowCubeMap.bindAsRendertarget(face);
+		_vscm.bindAsRendertarget(face);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		Camera virtualCamera = findCamera(face, pointlight);
@@ -587,7 +604,7 @@ Camera SceneRenderSystem::findCamera(	const int& face,
 	virtualCamera.lookAt(pointlight.getPosition() + direction);
 	virtualCamera.setHeadUp(headUp);
 	virtualCamera.setNear(0.01f);
-	virtualCamera.setFar(2000.f);
+	virtualCamera.setFar(500.f);
 
 	return virtualCamera;
 }
