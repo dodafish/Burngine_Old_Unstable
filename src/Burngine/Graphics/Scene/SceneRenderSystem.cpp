@@ -428,16 +428,17 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			DirectionalLight* light = static_cast<DirectionalLight*>(lights[i]);
 
 			//Render shadowmap:
-			Matrix4f shadowMatrix = drawShadowmap(*light, nodes);
+			VpMatrix vpm = drawShadowmap(*light, nodes);
 
 			//Render light
 			_renderTexture.bindAsTarget();
-			_shadowMap.bindAsSource(8);
+			_vsm.bindAsSource(8);
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
-			shader.setUniform("shadowMatrix", shadowMatrix);
+			shader.setUniform("shadowPMatrix", vpm.p);
+			shader.setUniform("shadowVMatrix", vpm.v);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -525,30 +526,35 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
-											const std::vector<SceneNode*>& nodes) {
+SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
+																const std::vector<SceneNode*>& nodes) {
 
 	OpenGlControl::Settings ogl;
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
-	_shadowMap.clear();
-	_shadowMap.bindAsRendertarget();
+	_vsm.clear();
+	_vsm.bindAsTarget();
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::DEPTH);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
 	Camera virtualCamera;
 	virtualCamera.lookAt(Vector3f(dirLight.getDirection()));
 	virtualCamera.setType(Camera::ORTHOGONAL);
-	virtualCamera.setFov(80.f); //Dimensions of the "box"
-	virtualCamera.setNear(-1000.f);
-	virtualCamera.setFar(1000.f);
+	virtualCamera.setFov(100.f); //Dimensions of the "box"
+	virtualCamera.setNear(-500.f);
+	virtualCamera.setFar(500.f);
+	virtualCamera.setAspectRatio(1.f);
 
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	return MVP_TO_SHADOWCOORD * virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
+	VpMatrix vpm;
+	vpm.p = virtualCamera.getProjectionMatrix();
+	vpm.v = virtualCamera.getViewMatrix();
+
+	return vpm;
 }
 
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,

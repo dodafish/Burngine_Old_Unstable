@@ -127,7 +127,11 @@ private:
 	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
-	Matrix4f drawShadowmap(	const DirectionalLight& dirLight,
+	struct VpMatrix {
+		Matrix4f v, p;
+	};
+
+	VpMatrix drawShadowmap(	const DirectionalLight& dirLight,
 							const std::vector<SceneNode*>& nodes);
 	Matrix4f drawShadowmap(	const SpotLight& spotLight,
 							const std::vector<SceneNode*>& nodes);
