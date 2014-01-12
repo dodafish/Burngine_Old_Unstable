@@ -63,6 +63,7 @@ void Scene::draw(	const Camera& camera,
 							mode,
 							_nodes,
 							_lights,
+							_ambientColor,
 							_isLightingEnabled);
 
 }
