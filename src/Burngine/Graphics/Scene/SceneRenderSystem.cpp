@@ -550,6 +550,10 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
+	const float& softness = dirLight.getSoftness();
+	if(softness != 0.f)
+		PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+
 	VpMatrix vpm;
 	vpm.p = virtualCamera.getProjectionMatrix();
 	vpm.v = virtualCamera.getViewMatrix();
