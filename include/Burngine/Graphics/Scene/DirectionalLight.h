@@ -26,9 +26,6 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Light.h>
-#include <Burngine/Graphics/Texture/ShadowMap.h>
-
-//template class BURNGINE_API std::vector<burn::Scene*>;
 
 namespace burn {
 
