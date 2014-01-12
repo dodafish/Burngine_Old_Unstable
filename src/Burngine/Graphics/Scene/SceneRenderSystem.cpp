@@ -96,6 +96,7 @@ _window(parentWindow) {
 		exit(16);
 	}
 	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	_vsm.setAnisotropicLevel(8.f);
 	_vsm.clear();
 
 	Reporter::report("HERE", Reporter::ERROR);
@@ -105,8 +106,8 @@ _window(parentWindow) {
 		exit(17);
 	}
 	_vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	_vscm.setAnisotropicLevel(8.f);
 	_vscm.clear();
-
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -167,20 +168,8 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			//Retreive the mesh
 			const Mesh& mesh = model.getMesh(i);
 
-			//If wanted, skip this mesh if it casts no shadows
-			/*if(shadowMapRendering)
-			 if(!mesh.getMaterial().isFlagSet(Material::CAST_SHADOWS))
-			 //Skip this mesh, due to its flag
-			 continue;*/
-
-			/*if(shadowMapRendering){
-			 Material mat = mesh.getMaterial();
-			 mat.setFlag(Material::VERTEX_ORDER_CLOCKWISE, !mat.isFlagSet(Material::VERTEX_ORDER_CLOCKWISE));
-			 mat.setOpenGlByFlags();
-			 }else{*/
 			//Set OpenGL according to mesh's flags
 			mesh.getMaterial().setOpenGlByFlags();
-			//}
 
 			//Set uniforms depending on mesh's material
 			if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
@@ -258,7 +247,6 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
-			//_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
 			shader.setUniform("modelMatrix", Matrix4f(1.f));
@@ -447,7 +435,6 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			//Render light
 			_renderTexture.bindAsTarget();
 			_vsm.bindAsSource(8);
-			//glGenerateMipmap(GL_TEXTURE_2D);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
