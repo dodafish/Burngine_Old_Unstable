@@ -262,6 +262,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 								const RenderMode& mode,
 								const std::vector<SceneNode*>& nodes,
 								const std::vector<Light*>& lights,
+								const Vector3f& ambient,
 								bool isLightingEnabled) {
 
 	ensureContext();
@@ -291,7 +292,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 		}
 
 		if(isLightingEnabled)
-			lightPass(camera, nodes, lights, mode == LIGHTING);
+			lightPass(camera, nodes, lights, ambient, mode == LIGHTING);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -364,6 +365,7 @@ void SceneRenderSystem::drawGBuffers(	const Camera& camera,
 void SceneRenderSystem::lightPass(	const Camera& camera,
 									const std::vector<SceneNode*>& nodes,
 									const std::vector<Light*>& lights,
+									const Vector3f& ambient,
 									bool dumpLighting) {
 
 	OpenGlControl::Settings toLightPassOgl;
@@ -416,7 +418,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	_renderTexture.clear();
 	_renderTexture.bindAsTarget();		// <- Diffuse light (attachment 0); specular (1)
 
-	ambientPart();
+	ambientPart(ambient);
 
 	for(size_t i = 0; i < lights.size(); ++i){
 
@@ -650,22 +652,30 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
 
-void SceneRenderSystem::ambientPart() {
+void SceneRenderSystem::ambientPart(const Vector3f& ambient) {
 
-	/*const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
-	 shader.setUniform("gColor", _ambientColor);
-	 shader.setUniform("modelMatrix", Matrix4f(1.f));
-	 shader.setUniform("viewMatrix", Matrix4f(1.f));
-	 shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	OpenGlControl::Settings ogl;
+	ogl.enableDepthtest(false);
+	ogl.enableDepthbufferWriting(false);
+	ogl.enableCulling(false);
+	ogl.enableBlending(true);
+	ogl.setBlendMode(OpenGlControl::OVERWRITE);
+	OpenGlControl::useSettings(ogl);
 
-	 glEnableVertexAttribArray(0);
-	 _fullscreenVbo.bind();
-	 glVertexAttribPointer(0, 3,
-	 GL_FLOAT,
-	 GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
+	shader.setUniform("gColor", Vector4f(ambient, 1.f));
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
 
-	 OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
-	 glDisableVertexAttribArray(0);*/
+	glEnableVertexAttribArray(0);
+	_fullscreenVbo.bind();
+	glVertexAttribPointer(0, 3,
+	GL_FLOAT,
+							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
+
+	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
+	glDisableVertexAttribArray(0);
 
 }
 

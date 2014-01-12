@@ -85,6 +85,7 @@ public:
 				const RenderMode& mode,
 				const std::vector<SceneNode*>& nodes,
 				const std::vector<Light*>& lights,
+				const Vector3f& ambient,
 				bool isLightingEnabled = true);
 
 	enum RenderFlag {
@@ -118,9 +119,10 @@ private:
 	void lightPass(	const Camera& camera,
 					const std::vector<SceneNode*>& nodes,
 					const std::vector<Light*>& lights,
+					const Vector3f& ambient,
 					bool dumpLighting = false);
 	//Pass-Helpers:
-	void ambientPart();
+	void ambientPart(const Vector3f& ambient);
 	void drawFullscreenQuad(const Shader& shader,
 							const OpenGlControl::Settings& rendersettings) const;
 	RenderTexture _renderTexture;
