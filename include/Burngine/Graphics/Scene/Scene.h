@@ -32,8 +32,6 @@
 #include <Burngine/Graphics/Scene/Camera.h>
 #include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
-#include <Burngine/Graphics/Texture/ShadowMap.h>
-#include <Burngine/Graphics/Texture/ShadowCubeMap.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>

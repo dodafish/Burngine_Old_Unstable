@@ -91,21 +91,11 @@ _window(parentWindow) {
 
 	_renderTexture.clear();
 
-	if(!_shadowMap.create(ShadowMap::MEDIUM)){
-		Reporter::report("Unable to create shadowmap!", Reporter::ERROR);
-		exit(14);
-	}
-
-	if(!_shadowCubeMap.create(ShadowCubeMap::MEDIUM)){
-		Reporter::report("Unable to create shadowcubemap!", Reporter::ERROR);
-		exit(15);
-	}
 	if(!_vsm.create(Vector2ui(1024, 1024))){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
 	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
-	//_vsm.setSamplerParameter(GL_TEXTURE_BASE_LEVEL, 7);
 	_vsm.clear();
 
 	Reporter::report("HERE", Reporter::ERROR);
@@ -114,19 +104,9 @@ _window(parentWindow) {
 		Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
 		exit(17);
 	}
-	Reporter::report("HERE", Reporter::ERROR);
 	_vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
-	Reporter::report("HERE", Reporter::ERROR);
-	//_vscm.setSamplerParameter(GL_TEXTURE_BASE_LEVEL, 7);
 	_vscm.clear();
 
-	Reporter::report("HERE", Reporter::ERROR);
-
-	_shadowMap.clear();
-	_shadowCubeMap.clear();
-	_shadowMap.bindAsSource(8);
-	_shadowCubeMap.bindAsSource(8);
-	_vsm.bindAsSource(8);
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -421,9 +401,6 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	ambientPart(ambient);
 
 	for(size_t i = 0; i < lights.size(); ++i){
-
-		//Clear shadowmap
-		_shadowMap.clear();
 
 		if(typeid(*(lights[i])) == typeid(DirectionalLight)){
 
