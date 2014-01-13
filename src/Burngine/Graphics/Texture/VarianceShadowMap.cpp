@@ -29,8 +29,11 @@ namespace burn {
 
 VarianceShadowMap::VarianceShadowMap() :
 _framebuffer(0),
+_msaaFramebuffer(0),
 _depthbuffer(0),
+_msaaDepthbuffer(0),
 _texture(0),
+_msaaTexture(0),
 _isCreated(false) {
 
 }
@@ -49,9 +52,16 @@ void VarianceShadowMap::cleanup() {
 	glDeleteRenderbuffers(1, &_depthbuffer);
 	glDeleteTextures(1, &_texture);
 
+	glDeleteFramebuffers(1, &_msaaFramebuffer);
+	glDeleteRenderbuffers(1, &_msaaDepthbuffer);
+	glDeleteTextures(1, &_msaaTexture);
+
 	_framebuffer = 0;
 	_texture = 0;
 	_depthbuffer = 0;
+	_msaaFramebuffer = 0;
+	_msaaDepthbuffer = 0;
+	_msaaTexture = 0;
 
 	_isCreated = false;
 }
@@ -81,7 +91,7 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 
 	//Depthbuffer:
 	glGenRenderbuffers(1, &_depthbuffer);
-	OpenGlControl::bindRenderBuffer (_depthbuffer);
+	OpenGlControl::bindRenderBuffer(_depthbuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
 	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 
@@ -97,6 +107,41 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 		return false;
 	}
 
+	/*
+	 * Do the same for MSAA rendering:
+	 */
+
+	int samples = 0;
+	glGetIntegerv(GL_MAX_SAMPLES_EXT, &samples);
+
+	//Framebuffer
+	glGenFramebuffers(1, &_msaaFramebuffer);
+	OpenGlControl::bindDrawBuffer(_msaaFramebuffer);
+
+	//Texture:
+	glGenTextures(1, &_msaaTexture);
+	//Clear texture
+	bindTexture(_msaaTexture, 0, GL_TEXTURE_2D_MULTISAMPLE);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples,
+	GL_RG32F,
+							_dimensions.x, _dimensions.y, 0);
+
+	//Depthbuffer:
+	glGenRenderbuffers(1, &_msaaDepthbuffer);
+	OpenGlControl::bindRenderBuffer(_msaaDepthbuffer);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH_COMPONENT24, _dimensions.x, _dimensions.y);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _msaaDepthbuffer);
+
+	//Configure this
+	glFramebufferTexture2D( GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, _msaaTexture, 0);
+
+	//Check:
+	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+		Reporter::report("RenderTexture: Failed to create framebuffer for MSAA!\n", Reporter::ERROR);
+		return false;
+	}
+
+	//----------------------------------------------------------
 	//Restore previous bindings
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
 	bindTexture(previousTextureBinding, 0);
@@ -106,13 +151,40 @@ bool VarianceShadowMap::create(const Vector2ui& dimensions) {
 	return true;
 }
 
-void VarianceShadowMap::bindAsTarget() const {
+void VarianceShadowMap::bindAsTarget(bool bindForMsaaRendering) const {
 
 	if(!_isCreated)
 		return;
 
-	OpenGlControl::bindDrawBuffer(_framebuffer, true);
+	if(bindForMsaaRendering)
+		OpenGlControl::bindDrawBuffer(_msaaFramebuffer, true);
+	else
+		OpenGlControl::bindDrawBuffer(_framebuffer, true);
+
 	glViewport(0, 0, _dimensions.x, _dimensions.y);
+}
+
+void VarianceShadowMap::finishMultisampling() const {
+
+	if(!isCreated())
+		return;
+
+	ensureContext();
+
+	const GLuint& previousDrawBufferBinding = OpenGlControl::getDrawBufferBinding();
+	const GLuint& previousReadBufferBinding = OpenGlControl::getReadBufferBinding();
+
+	OpenGlControl::bindDrawBuffer(_framebuffer, true);
+	OpenGlControl::bindReadBuffer(_msaaFramebuffer, true);
+	glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+	glBlitFramebuffer(0, 0, _dimensions.x, _dimensions.y, 0, 0, _dimensions.x, _dimensions.y,
+	GL_COLOR_BUFFER_BIT,
+						GL_LINEAR);
+
+	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding, true);
+	OpenGlControl::bindReadBuffer(previousReadBufferBinding, true);
+
 }
 
 void VarianceShadowMap::clear() const {
@@ -120,8 +192,8 @@ void VarianceShadowMap::clear() const {
 	GLuint previousDrawBufferBinding = OpenGlControl::getDrawBufferBinding();
 
 	OpenGlControl::bindDrawBuffer(_framebuffer, true);
-
-	ensureContext();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	OpenGlControl::bindDrawBuffer(_msaaFramebuffer, true);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);

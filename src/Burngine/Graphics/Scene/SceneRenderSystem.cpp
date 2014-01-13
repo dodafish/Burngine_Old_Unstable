@@ -91,7 +91,7 @@ _window(parentWindow) {
 
 	_renderTexture.clear();
 
-	if(!_vsm.create(Vector2ui(1024, 1024))){
+	if(!_vsm.create(Vector2ui(512, 512))){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
@@ -437,6 +437,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			_vsm.bindAsSource(8);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
+			//glGenerateMipmap(GL_TEXTURE_2D);
+
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightPosition", light->getPosition());
@@ -593,7 +595,7 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	OpenGlControl::useSettings(ogl);
 
 	_vsm.clear();
-	_vsm.bindAsTarget();
+	_vsm.bindAsTarget(true);
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
@@ -608,6 +610,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
+
+	_vsm.finishMultisampling();
 
 	const float& softness = spotlight.getSoftness();
 	if(softness != 0.f)

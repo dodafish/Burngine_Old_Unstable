@@ -93,7 +93,7 @@ void BaseTexture::bindAsSource(const unsigned int& unit) const {
 //////////////////////
 
 void BaseTexture::bindTexture(	const GLuint& textureId,
-								const GLuint& unit) {
+								const GLuint& unit, const GLenum& target) {
 	ensureContext();
 
 	if(unit >= MAX_TEXTURE_BINDINGS || unit >= GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS){
@@ -102,7 +102,7 @@ void BaseTexture::bindTexture(	const GLuint& textureId,
 	}
 
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	glBindTexture(target, textureId);
 	_currentTextureBinding[unit] = textureId;
 }
 
