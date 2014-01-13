@@ -54,7 +54,9 @@ public:
 	 *
 	 * @see clear()
 	 */
-	void bindAsTarget() const;
+	void bindAsTarget(bool bindForMsaaRendering = false) const;
+
+	void finishMultisampling() const ;
 
 	/**
 	 * @brief Clears the RenderTexture.
@@ -78,7 +80,7 @@ private:
 
 	void cleanup();
 
-	GLuint _framebuffer, _depthbuffer, _texture;
+	GLuint _framebuffer, _msaaFramebuffer, _depthbuffer, _msaaDepthbuffer, _texture, _msaaTexture;
 	bool _isCreated;
 	Vector2ui _dimensions;
 

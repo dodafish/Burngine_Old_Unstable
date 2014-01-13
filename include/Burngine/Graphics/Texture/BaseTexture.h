@@ -108,7 +108,7 @@ protected:
 
 	//Binds textures to OpenGL and keeps track of those
 	static void bindTexture(	const GLuint& textureId,
-						const GLuint& unit = 0);
+						const GLuint& unit = 0, const GLenum& target = GL_TEXTURE_2D);
 	static void bindCubeMap(	const GLuint& cubemapId,
 						const GLuint& unit = 0);
 	static const GLuint& getTextureBinding(const GLuint& unit = 0);

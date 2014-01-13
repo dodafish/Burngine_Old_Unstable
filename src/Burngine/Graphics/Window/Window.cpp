@@ -88,6 +88,8 @@ bool Window::create(const WindowSettings& settings,
 
 	Reporter::report("Created default VAO. Window creation done.");
 
+	glEnable(GL_MULTISAMPLE);
+
 	//Set default (for Burngine) OpenGL settings
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
