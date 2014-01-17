@@ -25,7 +25,7 @@
 #include <iostream>
 #include <unistd.h>
 
-#include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/BurngineShaders.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
 #include <Burngine/System/Keyboard.h>

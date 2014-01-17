@@ -23,7 +23,7 @@
 
 #include <Burngine/Graphics/Gui/2D/RectangleShape.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
-#include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/BurngineShaders.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
