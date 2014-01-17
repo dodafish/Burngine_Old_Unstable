@@ -35,7 +35,7 @@ namespace burn {
 class Mesh;
 }
 
-template class BURNGINE_API std::vector<std::shared_ptr<burn::Mesh>>;
+template class BURNGINE_API std::vector<burn::Mesh>;
 
 /**
  * @brief Holds several meshes describing a 3D model
@@ -61,16 +61,6 @@ public:
 	bool loadFromFile(const std::string& file);
 
 	/**
-	 * @brief Returns the count of meshes needed for describing
-	 * the whole model
-	 *
-	 * @return The count of meshes
-	 *
-	 * @see getMesh()
-	 */
-	size_t getMeshCount() const;
-
-	/**
 	 * @brief Returns a mesh depending on the given index.
 	 *
 	 * @param index The mesh's index
@@ -83,10 +73,12 @@ public:
 	 *
 	 * @see getMeshCount()
 	 */
-	const Mesh& getMesh(const size_t& index) const;
+	const std::vector<Mesh>& getMeshes() const;
+
+	bool isLoaded() const;
 
 private:
-	std::vector<std::shared_ptr<Mesh>> _meshes;
+	std::vector<Mesh> _meshes;
 
 	bool _isLoaded;
 };

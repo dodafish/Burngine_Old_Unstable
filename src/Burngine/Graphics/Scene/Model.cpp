@@ -51,12 +51,12 @@ _isLoaded(false) {
 
 }
 
-size_t Model::getMeshCount() const {
-	return _meshes.size();
+bool Model::isLoaded() const {
+	return _isLoaded;
 }
 
-const Mesh& Model::getMesh(const size_t& index) const {
-	return *(_meshes[index]);
+const std::vector<Mesh>& Model::getMeshes() const {
+	return _meshes;
 }
 
 bool Model::loadFromFile(const std::string& file) {
@@ -173,18 +173,20 @@ bool Model::loadFromFile(const std::string& file) {
 
 	//Create all meshes
 	for(size_t i = 0; i != meshData.size(); ++i){
-		std::shared_ptr<Mesh> mesh(new Mesh());
+		Mesh mesh;
 
-		mesh->setMaterial(meshData[i].material);
-		mesh->setVertices(meshData[i].vertices);
-		mesh->setTexture(meshData[i].texture);
+		mesh.setMaterial(meshData[i].material);
+		mesh.setVertices(meshData[i].vertices);
+		mesh.setTexture(meshData[i].texture);
 
 		_meshes.push_back(mesh);
 	}
 
 	Reporter::report("Successfully loaded model: " + file);
 
-	return true;
+	_isLoaded = true;
+
+	return _isLoaded;
 }
 
 } /* namespace burn */
