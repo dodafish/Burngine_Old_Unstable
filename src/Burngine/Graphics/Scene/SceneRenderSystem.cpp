@@ -159,16 +159,20 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 		//Cast this ugly pointer to a real object
 		StaticMeshNode n = *(static_cast<StaticMeshNode*>(node));
 
+		if(!n.isLoaded())
+			return;
+
 		//Calculate and set model's matrices
 		Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
 		shader.setUniform("modelMatrix", node->getModelMatrix());
 		shader.setUniform("normalMatrix", normalMatrix);
 
 		//StaticMeshNode consists of several meshes
-		for(size_t i = 0; i < n.getMeshCount(); ++i){
+		const std::vector<Mesh>& meshes = n.getMeshes();
+		for(size_t i = 0; i < meshes.size(); ++i){
 
 			//Retreive the mesh
-			const Mesh& mesh = n.getMesh(i);
+			const Mesh& mesh = meshes[i];
 
 			//Set OpenGL according to mesh's flags
 			mesh.getMaterial().setOpenGlByFlags();
