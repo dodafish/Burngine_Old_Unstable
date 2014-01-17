@@ -36,7 +36,7 @@
 
 namespace burn {
 
-struct MeshData{
+struct MeshData {
 	unsigned int index;
 	std::vector<Vertex> vertices;
 	Material material;
@@ -103,7 +103,6 @@ bool Model::loadFromFile(const std::string& file) {
 
 				//Store vertex
 				vertices.push_back(Vertex(	Vector3f(pos.x, pos.y, pos.z),
-											Vector3f(1.f), //<- Will get loaded later
 											Vector2f(uv.x, uv.y),
 											Vector3f(normal.x, normal.y, normal.z)));
 			}
@@ -167,7 +166,7 @@ bool Model::loadFromFile(const std::string& file) {
 				}
 			}
 
-		//Texture type not supported
+			//Texture type not supported
 		}else{
 			Reporter::report("Material texture is invalid.", Reporter::WARNING);
 		}
