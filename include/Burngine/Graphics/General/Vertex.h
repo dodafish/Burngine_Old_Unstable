@@ -45,8 +45,9 @@ public:
 	 * @param uv The vertex UV
 	 * @param normal The vertex Normal
 	 */
-	Vertex(const Vector3f& position = Vector3f(), const Vector3f& color = Vector3f(1.0f, 1.0f, 1.0f),
-	const Vector2f& uv = Vector2f(), const Vector3f& normal = Vector3f(1.0f, 1.0f, 1.0f));
+	Vertex(	const Vector3f& position = Vector3f(0.f),
+			const Vector2f& uv = Vector2f(0.f),
+			const Vector3f& normal = Vector3f(1.f));
 
 	/**
 	 * @brief The default destructor
@@ -70,24 +71,6 @@ public:
 	 * @see setPosition()
 	 */
 	const Vector3f& getPosition() const;
-
-	/**
-	 * @brief Sets the color of the vertex
-	 *
-	 * @param color The new color
-	 *
-	 * @see getColor()
-	 */
-	void setColor(const Vector3f& color);
-
-	/**
-	 * @brief Return the current color of the vertex
-	 *
-	 * @return The current color
-	 *
-	 * @see setColor()
-	 */
-	const Vector3f& getColor() const;
 
 	/**
 	 * @brief Sets the current UV-coordinates of the vertex
@@ -128,7 +111,7 @@ public:
 	const Vector3f& getNormal() const;
 
 private:
-	Vector3f _position, _color, _normal;
+	Vector3f _position, _normal;
 	Vector2f _uv;
 };
 

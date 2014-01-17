@@ -25,9 +25,8 @@
 
 namespace burn {
 
-Vertex::Vertex(const Vector3f& position, const Vector3f& color, const Vector2f& uv, const Vector3f& normal) :
+Vertex::Vertex(const Vector3f& position, const Vector2f& uv, const Vector3f& normal) :
 _position(position),
-_color(color),
 _normal(normal),
 _uv(uv) {
 }
@@ -49,14 +48,6 @@ void Vertex::setNormal(const Vector3f& normal) {
 
 const Vector3f& Vertex::getNormal() const {
 	return _normal;
-}
-
-void Vertex::setColor(const Vector3f& color) {
-	_color = color;
-}
-
-const Vector3f& Vertex::getColor() const {
-	return _color;
 }
 
 void Vertex::setUv(const Vector2f& uv) {

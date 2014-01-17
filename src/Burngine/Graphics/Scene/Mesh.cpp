@@ -120,7 +120,7 @@ bool Mesh::data() {
 
 			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
 
-			_colorVbo.addData(&(_vertices[i].getColor()), sizeof(Vector3f));
+			_colorVbo.addData(&(_material.getDiffuseColor()), sizeof(Vector3f));
 
 			_uvVbo.addData(&(_vertices[i].getUv()), sizeof(Vector2f));
 
