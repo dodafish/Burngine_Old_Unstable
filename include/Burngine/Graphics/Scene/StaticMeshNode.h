@@ -34,65 +34,12 @@ namespace burn {
  * @brief A SceneNode describing a model that has no animations
  * e.g. a building.
  */
-class BURNGINE_API StaticMeshNode : public SceneNode {
-public:
-
-	/**
-	 * @brief Sets the Model that the node should use
-	 *
-	 * @param model The Model to use
-	 *
-	 * @see getModel()
-	 */
-	void setModel(const Model& model);
-
-	/**
-	 * @brief Returns the current Model the node is currently using
-	 *
-	 * @return The current Model
-	 *
-	 * @see setModel()
-	 */
-	const Model& getModel() const;
-
-	/**
-	 * @brief Sets the flag of the SceneNode's material.
-	 *
-	 * @param flag Flag to set
-	 * @param enabled Either true or false to enable or disable the flag
-	 *
-	 * @see Material::setFlag()
-	 */
-	void setFlag(const Material::Flag& flag, const bool& enabled = true);
-
-	/**
-	 * @brief Updates the model by synchronizing the vertices with the
-	 * memory on the video card.
-	 *
-	 * @see Model::update()
-	 */
-	void update();
-
-	/**
-	 * @brief Loads a 3d model from file.
-	 *
-	 * @param file The file to load from
-	 *
-	 * @return Returns true on success. False otherwise
-	 *
-	 * @see Model::loadFromFile()
-	 */
-	bool loadFromFile(const std::string& file);
-
+class BURNGINE_API StaticMeshNode : public SceneNode, public Model {
 private:
 	//Hide methods, that are public in SceneNode.
 	//We have no need to have them public here, anymore.
 	using SceneNode::addParentScene;
 	using SceneNode::removeParentScene;
-	////////////////////////////////////////////////////
-
-	//Attributes:
-	Model _model;
 };
 
 } /* namespace burn */
