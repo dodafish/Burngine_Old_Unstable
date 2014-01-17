@@ -39,20 +39,9 @@ public:
 	 */
 	Material();
 
-	/**
-	 * @brief Copies all flags and the type from another material
-	 */
-	Material(const Material& other);
-
-	/**
-	 * @brief Copies all flags and the type from another material
-	 */
-	Material& operator=(const Material& other);
-
 	enum Flag {
 		VERTEX_ORDER_CLOCKWISE = 0, ///< Are the vertices ordered clockwise or counter-clockwise? Default: false
 		DRAW_Z_BUFFER, ///< Does the node draw into the depth buffer? Default: true
-		CAST_SHADOWS, ///< Does the node cast shadows? Default: true
 
 		COUNT //Keep last!
 	};

@@ -34,35 +34,7 @@ _diffuseColor(Vector3f(1.f, 1.f, 1.f)) {
 
 	_flags[VERTEX_ORDER_CLOCKWISE] = false;
 	_flags[DRAW_Z_BUFFER] = true;
-	_flags[CAST_SHADOWS] = true;
 
-}
-
-Material::Material(const Material& other) :
-_type(other._type),
-_specularColor(other._specularColor),
-_diffuseColor(other._diffuseColor) {
-
-	_flags[VERTEX_ORDER_CLOCKWISE] = other._flags[VERTEX_ORDER_CLOCKWISE];
-	_flags[DRAW_Z_BUFFER] = other._flags[DRAW_Z_BUFFER];
-	_flags[CAST_SHADOWS] = other._flags[CAST_SHADOWS];
-
-}
-
-Material& Material::operator=(const Material& other) {
-
-	if(this == &other)
-		return *this;
-
-	_type = other._type;
-	_specularColor = other._specularColor;
-	_diffuseColor = other._diffuseColor;
-
-	_flags[VERTEX_ORDER_CLOCKWISE] = other._flags[VERTEX_ORDER_CLOCKWISE];
-	_flags[DRAW_Z_BUFFER] = other._flags[DRAW_Z_BUFFER];
-	_flags[CAST_SHADOWS] = other._flags[CAST_SHADOWS];
-
-	return *this;
 }
 
 void Material::setFlag(	Material::Flag flag,
