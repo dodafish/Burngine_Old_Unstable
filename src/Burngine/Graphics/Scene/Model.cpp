@@ -43,6 +43,14 @@ struct MeshData {
 	Texture texture;
 };
 
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+Model::Model() :
+_isLoaded(false) {
+
+}
+
 size_t Model::getMeshCount() const {
 	return _meshes.size();
 }
@@ -67,18 +75,11 @@ bool Model::loadFromFile(const std::string& file) {
 	}
 
 	//Asset successfully loaded.
-
 	_meshes.clear();
 	std::vector<MeshData> meshData;
 
 	std::vector<Vertex> vertices;
 	for(unsigned int i = 0; i < scene->mNumMeshes; ++i){
-
-		{
-			std::stringstream ss;
-			ss << i;
-			//Reporter::report("----- Loading mesh #" + ss.str());
-		}
 
 		aiMesh* mesh = scene->mMeshes[i];
 
@@ -94,12 +95,10 @@ bool Model::loadFromFile(const std::string& file) {
 				aiVector3D pos = mesh->mVertices[face.mIndices[k]];
 
 				//Get UV-Coords
-				aiVector3D uv =
-				mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.0f, 0.0f, 0.0f);
+				aiVector3D uv = mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.f);
 
 				//Get Normal
-				aiVector3D normal =
-				mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(1.0f, 1.0f, 1.0f);
+				aiVector3D normal = mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(0.f, 1.f, 0.f);
 
 				//Store vertex
 				vertices.push_back(Vertex(	Vector3f(pos.x, pos.y, pos.z),
@@ -124,7 +123,7 @@ bool Model::loadFromFile(const std::string& file) {
 		//Get Assimp material
 		aiMaterial* material = scene->mMaterials[i];
 
-		//Get specular color
+		//Get colors
 		aiColor3D specularColor(1.f);
 		aiColor3D diffuseColor(1.f);
 		material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
@@ -133,10 +132,9 @@ bool Model::loadFromFile(const std::string& file) {
 		//Find and set according material
 		for(size_t j = 0; j < meshData.size(); ++j){
 			if(meshData[j].index == i){
-
 				meshData[j].material.setSpecularColor(Vector3f(specularColor.r, specularColor.g, specularColor.b));
 				meshData[j].material.setDiffuseColor(Vector3f(diffuseColor.r, diffuseColor.g, diffuseColor.b));
-
+				break;
 			}
 		}
 
@@ -175,10 +173,10 @@ bool Model::loadFromFile(const std::string& file) {
 
 	//Create all meshes
 	for(size_t i = 0; i != meshData.size(); ++i){
-		std::shared_ptr<Mesh> mesh(new Mesh(*this));
+		std::shared_ptr<Mesh> mesh(new Mesh());
 
-		mesh->setVertices(meshData[i].vertices);
 		mesh->setMaterial(meshData[i].material);
+		mesh->setVertices(meshData[i].vertices);
 		mesh->setTexture(meshData[i].texture);
 
 		_meshes.push_back(mesh);
@@ -187,50 +185,6 @@ bool Model::loadFromFile(const std::string& file) {
 	Reporter::report("Successfully loaded model: " + file);
 
 	return true;
-}
-
-void Model::setFlag(const Material::Flag& flag,
-					const bool& enabled) {
-	for(size_t i = 0; i < _meshes.size(); ++i){
-		Material temp = _meshes[i]->getMaterial();
-		temp.setFlag(flag, enabled);
-		_meshes[i]->setMaterial(temp);
-	}
-}
-
-void Model::update() {
-	for(size_t i = 0; i < _meshes.size(); ++i){
-		_meshes[i]->update();
-	}
-}
-
-bool Model::isUpdated() const {
-	for(size_t i = 0; i < _meshes.size(); ++i){
-		if(!_meshes[i]->isUpdated())
-			return false;
-	}
-	return true;
-}
-
-void Model::recalculateBoundingBox() const {
-	Vector3f p, pMax; //little pos, high pos
-
-	for(size_t i = 0; i < _meshes.size(); ++i){
-		p.x = std::min(p.x, _meshes[i]->getXMinMax().x);
-		p.y = std::min(p.y, _meshes[i]->getYMinMax().x);
-		p.z = std::min(p.z, _meshes[i]->getZMinMax().x);
-
-		pMax.x = std::max(pMax.x, _meshes[i]->getXMinMax().y);
-		pMax.y = std::max(pMax.y, _meshes[i]->getYMinMax().y);
-		pMax.z = std::max(pMax.z, _meshes[i]->getZMinMax().y);
-	}
-
-	_bb.setPosition(p);
-	_bb.setDimensions(Vector3f(pMax.x - p.x, pMax.y - p.y, pMax.z - p.z));
-}
-
-const BoundingBox& Model::getBoundingBox() const {
-	return _bb;
 }
 
 } /* namespace burn */

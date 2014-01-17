@@ -48,6 +48,8 @@ namespace burn {
 class BURNGINE_API Model {
 public:
 
+	Model();
+
 	/**
 	 * @brief Loads a 3D model from file. Supports most
 	 * common formats like .obj .3ds etc.
@@ -83,54 +85,10 @@ public:
 	 */
 	const Mesh& getMesh(const size_t& index) const;
 
-	/**
-	 * @brief Changes the flags of all meshes to the given parameter.
-	 * It replaces the Material::setFlag function, just that this one
-	 * sets the flag to every mesh.
-	 * If you want to affect only a single mesh, you have to get the
-	 * mesh via getMesh()
-	 *
-	 * @param flag The material flag to set
-	 * @param enabled Enables/Disables the flag
-	 *
-	 * @see Material
-	 * @see getMesh()
-	 */
-	void setFlag(const Material::Flag& flag, const bool& enabled = true);
-
-	/**
-	 * @brief Synchronizes the vertices of each mesh when necessary
-	 *
-	 * @see isUpdated()
-	 */
-	void update();
-
-	/**
-	 * @brief Returns true when every mesh's vertices is synchronized
-	 *
-	 * @return Return false when a mesh is not updated
-	 *
-	 * @see update()
-	 */
-	bool isUpdated() const;
-
-	/**
-	 * @brief Recalculates the bounding box when necessary and
-	 * returns it
-	 *
-	 * @return BoundingBox covering all vertices as tight as possible
-	 */
-	const BoundingBox& getBoundingBox() const;
-
-	/**
-	 * @brief Recalculates the bounding box depending on the
-	 * meshes
-	 */
-	void recalculateBoundingBox() const;
-
 private:
-	mutable BoundingBox _bb;
 	std::vector<std::shared_ptr<Mesh>> _meshes;
+
+	bool _isLoaded;
 };
 
 } /* namespace burn */

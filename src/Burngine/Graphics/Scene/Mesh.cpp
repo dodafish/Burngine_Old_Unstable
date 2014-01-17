@@ -28,9 +28,7 @@
 
 namespace burn {
 
-Mesh::Mesh(const Model& model) :
-_model(model),
-_needUpdate(false) {
+Mesh::Mesh() {
 
 	_positionVbo.create();
 	_colorVbo.create();
@@ -39,29 +37,13 @@ _needUpdate(false) {
 
 }
 
-bool Mesh::update() {
-	bool updated = false;
-	if(_needUpdate){
-		updated = data();
-		_needUpdate = !updated;
-	}
-	return updated;
-}
-
-void Mesh::forceUpdate() {
-	_needUpdate = true;
-}
-
 size_t Mesh::getVertexCount() const {
 	return _vertices.size();
 }
 
-void Mesh::setVertices(	const std::vector<Vertex>& vertices,
-						bool updateImmediatly) {
+void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	_vertices = vertices;
-	_needUpdate = true;
-	if(updateImmediatly)
-		update();
+	update();
 }
 
 const VertexBufferObject& Mesh::getPositionVbo() const {
@@ -94,9 +76,10 @@ const Material& Mesh::getMaterial() const {
 
 void Mesh::setMaterial(const Material& material) {
 	_material = material;
+	update();
 }
 
-bool Mesh::data() {
+bool Mesh::update() {
 	if(_vertices.size() != 0){
 
 		ensureContext();
@@ -105,18 +88,9 @@ bool Mesh::data() {
 		_colorVbo.reset();
 		_normalVbo.reset();
 		_uvVbo.reset();
-		_xMinMax = _yMinMax = _zMinMax = Vector2f(0.f);
 
 		std::vector<GLfloat> pos, col, uv, norm;
 		for(size_t i = 0; i < _vertices.size(); ++i){
-
-			//Save minimums and maximums for bounding box
-			_xMinMax.x = std::min(_xMinMax.x, _vertices[i].getPosition().x);
-			_xMinMax.y = std::max(_xMinMax.y, _vertices[i].getPosition().x);
-			_yMinMax.x = std::min(_yMinMax.x, _vertices[i].getPosition().y);
-			_yMinMax.y = std::max(_yMinMax.y, _vertices[i].getPosition().y);
-			_zMinMax.x = std::min(_zMinMax.x, _vertices[i].getPosition().z);
-			_zMinMax.y = std::max(_zMinMax.y, _vertices[i].getPosition().z);
 
 			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
 
@@ -132,28 +106,10 @@ bool Mesh::data() {
 		_normalVbo.uploadDataToGpu();
 		_uvVbo.uploadDataToGpu();
 
-		_model.recalculateBoundingBox();
-
 		return true;
 
 	}
 	return false;
-}
-
-bool Mesh::isUpdated() const {
-	return (!_needUpdate);
-}
-
-const Vector2f& Mesh::getXMinMax() const {
-	return _xMinMax;
-}
-
-const Vector2f& Mesh::getYMinMax() const {
-	return _yMinMax;
-}
-
-const Vector2f& Mesh::getZMinMax() const {
-	return _zMinMax;
 }
 
 } /* namespace burn */

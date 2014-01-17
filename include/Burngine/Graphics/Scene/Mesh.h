@@ -36,8 +36,6 @@ template class BURNGINE_API std::vector<burn::Vertex>;
 
 namespace burn {
 
-class Model;
-
 /**
  * @brief Holds the mesh's vertices with their attributes and
  * an optional texture
@@ -47,7 +45,7 @@ public:
 	/**
 	 * @brief The default constructor creating VBOs
 	 */
-	Mesh(const Model& model);
+	Mesh();
 
 	/**
 	 * @brief Sets the vertices of the mesh, so that they can be
@@ -57,7 +55,7 @@ public:
 	 *
 	 * @see Vertex
 	 */
-	void setVertices(const std::vector<Vertex>& vertices, bool updateImmediatly = true);
+	void setVertices(const std::vector<Vertex>& vertices);
 
 	/**
 	 * @brief Returns the count of the vertices which the mesh
@@ -128,15 +126,6 @@ public:
 	const Texture& getTexture() const;
 
 	/**
-	 * @brief Returns the material that the node is using.
-	 *
-	 * @return The Material of the node.
-	 *
-	 * @see setMaterial()
-	 */
-	const Material& getMaterial() const;
-
-	/**
 	 * @brief Sets the material of the node. Influences the rendering
 	 * behaviour.
 	 *
@@ -147,62 +136,15 @@ public:
 	void setMaterial(const Material& material);
 
 	/**
-	 * @brief Synchronizes the vertices with the memory on the
-	 * video card
+	 * @brief Returns the material that the node is using.
 	 *
-	 * @return Returns false synchronizing is not necessary
+	 * @return The Material of the node.
 	 *
-	 * @see setVertices()
-	 *
-	 * @note This will only synchronize vertices when necessary!
-	 * Use forceUpdate() to force synchronizing.
+	 * @see setMaterial()
 	 */
-	bool update();
-
-	/**
-	 * @brief Synchronizes the vertices with the memory on the video card,
-	 * even if it's not necessary.
-	 *
-	 * @see update()
-	 */
-	void forceUpdate();
-
-	/**
-	 * @brief Returns true when no update (i.e. synchronizing) is necessary.
-	 *
-	 * @return False when an update is necessary
-	 *
-	 * @see update()
-	 */
-	bool isUpdated() const;
-
-	/**
-	 * @brief Returns the minimum and maximum value according to the
-	 * chosen axis.
-	 *
-	 * @return Min and Max of chosen axis
-	 */
-	const Vector2f& getXMinMax() const;
-
-	/**
-	 * @brief Returns the minimum and maximum value according to the
-	 * chosen axis.
-	 *
-	 * @return Min and Max of chosen axis
-	 */
-	const Vector2f& getYMinMax() const;
-
-	/**
-	 * @brief Returns the minimum and maximum value according to the
-	 * chosen axis.
-	 *
-	 * @return Min and Max of chosen axis
-	 */
-	const Vector2f& getZMinMax() const;
+	const Material& getMaterial() const;
 
 private:
-
-	const Model& _model;
 
 	/**
 	 * @brief Fills the buffers with data or creates them if needed.
@@ -210,16 +152,13 @@ private:
 	 *
 	 * @see setVertices()
 	 */
-	bool data();
+	bool update();
 
 	Material _material;
+	Texture _texture;
 
 	std::vector<Vertex> _vertices;
-	bool _needUpdate;
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
-
-	Texture _texture;
-	Vector2f _xMinMax, _yMinMax, _zMinMax;
 };
 
 } /* namespace burn */
