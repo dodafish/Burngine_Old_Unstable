@@ -149,58 +149,5 @@ private:
 	static GLuint _currentProgram;
 };
 
-struct BURNGINE_API BurngineShaders {
-	/**
-	 * @brief Constructor is deleted, because this is a static struct
-	 */
-	BurngineShaders() = delete;
-
-	/**
-	 * @brief Enum for several predefined shaders
-	 *
-	 * @see loadShader()
-	 * @see useShader()
-	 */
-	enum Type {
-		TEXTURE, ///< Simple 1-Texture Shader
-		TEXTURE_ONE_COMPONENT, ///< Samples from a texture with a single component e.g. depth textures
-		POINTLIGHT, ///< Renders a pointlight
-		SPOTLIGHT, ///< Render a spotlight
-		DIRECTIONAL_LIGHT, ///< Renders a directional light
-		SINGLECOLOR, ///< Draws a single color
-		FONT, ///< Used for font rendering
-		DEPTH, ///< Outputs only the depthpart
-		SKY_BOX, ///< Used for skybox rendering (z-independant cubemap rendering)
-		G_BUFFER, ///< Used by the GBuffer
-		VSM_DRAW, ///< Used for drawing into VSM (2-component shadowmap)
-		GAUSSIAN_BLUR_HORIZONTAL,
-		GAUSSIAN_BLUR_VERTICAL
-	};
-
-	/**
-	 * @brief Loads and creates all predefined shaders.
-	 *
-	 * @see loadShader()
-	 */
-	static bool load(const std::string& directory = "/");
-
-	static const Shader& getShader(const Type& type);
-
-private:
-	static Shader _textureShader;
-	static Shader _textureOneComponentShader;
-	static Shader _pointlightShader;
-	static Shader _spotlightShader;
-	static Shader _dirlightShader;
-	static Shader _singleColorShader;
-	static Shader _fontShader;
-	static Shader _depthShader;
-	static Shader _skyBoxShader;
-	static Shader _gBufferShader;
-	static Shader _vsmDrawShader;
-	static Shader _gaussianBlurHorizontalShader;
-	static Shader _gaussianBlurVerticalShader;
-};
-
 } /* namespace burn */
 #endif /* SHADER_H_ */
