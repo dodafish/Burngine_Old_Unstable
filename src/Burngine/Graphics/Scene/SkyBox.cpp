@@ -26,7 +26,7 @@
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/OpenGL.h>
-#include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/BurngineShaders.h>
 
 namespace burn {
 

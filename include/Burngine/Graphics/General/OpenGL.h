@@ -32,13 +32,10 @@
 #include <Burngine/Graphics/Window/WindowSettings.h>
 #include <vector>
 
-namespace burn{
+namespace burn {
 
-class BURNGINE_API ContextHandler{
+class BURNGINE_API ContextHandler {
 public:
-
-	//Static only
-	ContextHandler() = delete;
 
 	/**
 	 * @brief Ensures that any OpenGL context is active.
@@ -73,6 +70,13 @@ public:
 	static void useContext(GLFWwindow* window);
 
 private:
+
+	//Static only
+	//C-Tor as private (also older C++) as alternative to deleting it (only C++11)
+	ContextHandler();
+
+	//-------------------------
+
 	static void ensureGlfw();
 
 	static GLFWwindow* _currentContextWindow;
@@ -87,7 +91,7 @@ private:
 /*
  * @brief Just a shortcut for ContextHandler::ensureContext()
  */
-inline void ensureContext(){
+inline void ensureContext() {
 	ContextHandler::ensureContext();
 }
 

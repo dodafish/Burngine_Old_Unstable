@@ -24,7 +24,7 @@
 #include <Burngine/Graphics/General/PostEffects.h>
 
 #include <Burngine/Graphics/Texture/VarianceShadowMap.h>
-#include <Burngine/Graphics/General/Shader.h>
+#include <Burngine/Graphics/General/BurngineShaders.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 

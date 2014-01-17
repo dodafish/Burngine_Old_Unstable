@@ -32,10 +32,15 @@ class VarianceShadowMap;
 
 class BURNGINE_API PostEffects {
 public:
+
+	static void gaussianBlur(	const VarianceShadowMap& vsm,
+								const float& blurSize = 0.001f);
+
+private:
+
+	//C-Tor as private (also older C++) as alternative to deleting it (only C++11)
 	//Static class
 	PostEffects() = delete;
-
-	static void gaussianBlur(const VarianceShadowMap& vsm, const float& blurSize = 0.001f);
 
 };
 

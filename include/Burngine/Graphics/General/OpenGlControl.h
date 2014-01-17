@@ -34,8 +34,6 @@ class Shader;
 
 class OpenGlControl {
 public:
-	//Static only
-	OpenGlControl() = delete;
 
 	enum BlendMode {
 		OVERWRITE, ///< Ignores source's data
@@ -62,10 +60,15 @@ public:
 
 	class Settings {
 	public:
-		Settings(bool isBlendingEnabled = true, const BlendMode& blendMode = OVERWRITE, bool isCullingEnabled = true,
-		const CullSide& culledSide = INSIDE, const VertexOrder& vertexOrder = COUNTER_CLOCKWISE,
-		bool isDepthtestEnabled = true, const DepthtestTechnique& technique = LESS, bool isDepthbufferWritingEnabled =
-		true, const Vector4f& clearColor = Vector4f(0.1, 0.1, 0.3, 1.0));
+		Settings(	bool isBlendingEnabled = true,
+					const BlendMode& blendMode = OVERWRITE,
+					bool isCullingEnabled = true,
+					const CullSide& culledSide = INSIDE,
+					const VertexOrder& vertexOrder = COUNTER_CLOCKWISE,
+					bool isDepthtestEnabled = true,
+					const DepthtestTechnique& technique = LESS,
+					bool isDepthbufferWritingEnabled = true,
+					const Vector4f& clearColor = Vector4f(0.1, 0.1, 0.3, 1.0));
 
 		void enableBlending(bool enabled = true);
 		bool isBlendingEnabled() const;
@@ -106,25 +109,36 @@ public:
 
 	static void useSettings(const Settings& settings);
 
-	enum DrawingTechnique{
-		TRIANGLES,
-		TRIANGLE_STRIP
+	enum DrawingTechnique {
+		TRIANGLES, TRIANGLE_STRIP
 	};
 
-	static void draw(const DrawingTechnique& tech, GLint first, GLsizei count, const Shader& shader);
+	static void draw(	const DrawingTechnique& tech,
+						GLint first,
+						GLsizei count,
+						const Shader& shader);
 
 	//////////////////////////////////////////////
 	// Binding Control
 	//////////////////////////////////////////////
-	static void bindDrawBuffer(const GLuint& drawBufferId, bool forceBindingCall = false);
+	static void bindDrawBuffer(	const GLuint& drawBufferId,
+								bool forceBindingCall = false);
 	static const GLuint& getDrawBufferBinding();
-	static void bindReadBuffer(const GLuint& readBufferId, bool forceBindingCall = false);
+	static void bindReadBuffer(	const GLuint& readBufferId,
+								bool forceBindingCall = false);
 	static const GLuint& getReadBufferBinding();
-	static void bindRenderBuffer(const GLuint& renderBufferId, bool forceBindingCall = false);
+	static void bindRenderBuffer(	const GLuint& renderBufferId,
+									bool forceBindingCall = false);
 	static const GLuint& getRenderBufferBinding();
 
-	//Keeping track of bindings avoid the inefficient glGet*
+private:
 
+	//Static only
+	//C-Tor as private (also older C++) as alternative to deleting it (only C++11)
+	OpenGlControl() = delete;
+	/////////////////////////////////////////////////////////////////////////////
+
+	//Keeping track of bindings avoid the inefficient glGet*
 	static GLuint _currentDrawBufferBinding;
 	static GLuint _currentReadBufferBinding;
 	static GLuint _currentRenderBufferBinding;

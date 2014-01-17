@@ -23,21 +23,29 @@
 
 #include <Burngine/Graphics/Scene/SceneRenderSystem.h>
 
+//General Includes
+#include <Burngine/Graphics/General/BurngineShaders.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/Graphics/Scene/SceneNode.h>
-#include <Burngine/Graphics/Scene/StaticMeshNode.h>
-#include <Burngine/Graphics/Scene/Camera.h>
-#include <Burngine/Graphics/Scene/Light.h>
-#include <Burngine/Graphics/Scene/DirectionalLight.h>
-#include <Burngine/Graphics/Scene/SpotLight.h>
-#include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Window/Window.h>
 
+//SceneNodes
+#include <Burngine/Graphics/Scene/SceneNode.h>
+#include <Burngine/Graphics/Scene/Mesh.h>
+#include <Burngine/Graphics/Scene/StaticMeshNode.h>
+#include <Burngine/Graphics/Scene/Camera.h>
+#include <Burngine/Graphics/Scene/Light.h>
+#include <Burngine/Graphics/Scene/DirectionalLight.h>
+#include <Burngine/Graphics/Scene/SpotLight.h>
+
+//Additional Includes
 #include <Burngine/Graphics/General/PostEffects.h>
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 namespace burn {
 
