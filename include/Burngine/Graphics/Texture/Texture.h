@@ -30,66 +30,37 @@
 
 namespace burn {
 
+//Limited to 32, because almost every graphicscard supports at least 32
+#define MAX_TEXTURE_BINDINGS 32
+
 /**
- * @brief Holds OpenGL comfort images as textures.
+ * @brief A texture that holds 2D pixeldata
  */
 class BURNGINE_API Texture : public BaseTexture {
 public:
-	/**
-	 * @brief Initializes some values
-	 */
 	Texture();
-
-	/**
-	 * @brief Copies the attributes and data from another
-	 * Texture
-	 */
+	Texture(const Vector2ui& dimensions,
+			const InternalFormat& internalFormat);
 	Texture(const Texture& other);
-
-	/**
-	 * @brief Copies the attributes and data from another
-	 * Texture
-	 */
 	Texture& operator=(const Texture& other);
-
-	/**
-	 * Destructor cleaning up Texture
-	 */
 	~Texture();
 
-	/**
-	 * @brief Loads an image from file and stores it
-	 * as texture ready for use.
-	 *
-	 * @param file The image to load
-	 *
-	 * @return Returns true on success
-	 */
-	bool loadFromFile(const std::string& file);
+	///////////////////////////////////////////////////////////////////////////
 
-	/**
-	 * @brief Loads an image from data and stores it
-	 * as texture ready for use.
-	 *
-	 * @param data The data to load from
-	 * @param dimensions The image's dimensions
-	 * @param bpp The bits-per-pixel
-	 * @param format The internal format (RGB, LUMINANCE etc.)
-	 *
-	 * @return Returns true on success. False otherwise
-	 */
-	bool loadFromData(GLubyte* data, const Vector2ui& dimensions, const Int32& bpp, const GLenum& format);
+	bool create(const Vector2ui& dimensions,
+				const InternalFormat& internalFormat);
 
-protected:
-	GLuint _textureId;
-
-	virtual void onBind(const unsigned int& unit) const;
+	bool bind(const Uint32& unit) const;
 
 private:
-	void generate();
-	void cleanup();
+	GLuint _textureId;
 
-	unsigned int* _referenceCount;
+	//Used for copying
+	void copyTextureData(const GLuint& src);
+
+	//Used for keeping track of bound textures
+	static GLuint _currentTextureBinding[MAX_TEXTURE_BINDINGS];
+	static Int32 _realTextureBindingCap;
 };
 
 } /* namespace burn */
