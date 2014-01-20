@@ -314,6 +314,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to compile shader: " + vertexShaderFile, Reporter::ERROR);
 		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -330,6 +331,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to compile shader: " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -347,6 +349,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to compile shader: " + vertexShaderFile + " & " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
