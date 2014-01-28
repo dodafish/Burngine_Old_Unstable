@@ -51,7 +51,7 @@ public:
 				const InternalFormat& internalFormat,
 				GLubyte* data = 0);
 
-	bool bind(const Uint32& unit) const;
+	bool bind(const Uint32& unit = 0) const;
 
 	bool loadFromFile(const std::string& file);
 

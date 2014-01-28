@@ -34,15 +34,21 @@ namespace burn {
 class BURNGINE_API RenderTarget : public NonCopyable {
 public:
 	RenderTarget();
+	~RenderTarget();
 
 	enum DepthbufferType {
 		NO_DEPTHBUFFER, DEPTHBUFFER_16, DEPTHBUFFER_24, DEPTHBUFFER_32
 
 	};
 
+	bool create(const Vector2ui& dimensions, const DepthbufferType& depthbufferType);
+
 private:
 	GLuint _framebuffer;
 	GLuint _depthbuffer;
+
+	Vector2ui _dimensions;
+
 };
 
 } /* namespace burn */

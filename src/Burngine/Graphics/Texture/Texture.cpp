@@ -28,22 +28,6 @@
 
 namespace burn {
 
-Uint32 nextPowerOf2(const Uint32& n) {
-
-	//The power of 2 value to return
-	Uint32 p2 = 1;
-
-	//Look for the next greater power of 2
-	while(n > p2){
-		p2 <<= 1;    //Shift one to the left. Equals p2 *= 2
-	}
-
-	return p2;
-
-}
-
-/////////////////////////////////////////////////////////////////////
-
 void Texture::ensureConstants() {
 	if(_realTextureBindingCap == 0){
 		//Get OpenGL informations about textures
@@ -127,7 +111,7 @@ bool Texture::create(	const Vector2ui& dimensions,
 						const InternalFormat& internalFormat,
 						GLubyte* data) {
 
-	_dimensions = Vector2ui(nextPowerOf2(dimensions.x), nextPowerOf2(dimensions.y));
+	_dimensions = dimensions;
 	_internalFormat = internalFormat;
 
 	ensureContext();
