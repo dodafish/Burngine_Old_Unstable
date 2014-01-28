@@ -33,6 +33,22 @@
 
 namespace burn {
 
+Uint32 nextPowerOf2(const Uint32& n) {
+
+	//The power of 2 value to return
+	Uint32 p2 = 1;
+
+	//Look for the next greater power of 2
+	while(n > p2){
+		p2 <<= 1;    //Shift one to the left. Equals p2 *= 2
+	}
+
+	return p2;
+
+}
+
+/////////////////////////////////////////////////////////////////////
+
 Character::Character(	const Uint32& codePoint,
 						const unsigned int& size) :
 _codePoint(codePoint),
@@ -55,8 +71,7 @@ void Character::createFromFtGlyph(	void* g,
 	Vector2ui glyphDimensions(bitmap->width, bitmap->rows);
 
 	//Create a texture so we know its final dimensions
-	_texture.create(glyphDimensions, Texture::DEPTH_COMPONENT16);
-	const Vector2ui& textureDimensions = _texture.getDimensions();
+	const Vector2ui textureDimensions(nextPowerOf2(glyphDimensions.x), nextPowerOf2(glyphDimensions.y));
 
 	//Create an array to store glyph data
 	GLubyte* data = new GLubyte[textureDimensions.x * textureDimensions.y];
@@ -77,7 +92,7 @@ void Character::createFromFtGlyph(	void* g,
 	_texture.create(textureDimensions, Texture::DEPTH_COMPONENT16, data);
 
 	//Modify settings of the texture
-	_texture.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	_texture.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
 	_texture.setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	_texture.setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	_texture.setSamplerParameter(GL_DEPTH_TEXTURE_MODE, GL_LUMINANCE);
@@ -148,7 +163,7 @@ void Character::draw(	const Vector2f& position,
 	shader.setUniform("fontColor", color);
 
 	//Bind and draw
-	_texture.bindAsSource();
+	_texture.bind();
 	_vbo.bind();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
