@@ -55,7 +55,8 @@ void Character::createFromFtGlyph(	void* g,
 	Vector2ui glyphDimensions(bitmap->width, bitmap->rows);
 
 	//Create a texture so we know its final dimensions
-	const Vector2ui& textureDimensions = BaseTexture::calculatePow2Dimensions(glyphDimensions);
+	_texture.create(glyphDimensions, Texture::DEPTH_COMPONENT16);
+	const Vector2ui& textureDimensions = _texture.getDimensions();
 
 	//Create an array to store glyph data
 	GLubyte* data = new GLubyte[textureDimensions.x * textureDimensions.y];
@@ -73,7 +74,7 @@ void Character::createFromFtGlyph(	void* g,
 	}
 
 	//Fill texture with data
-	_texture.loadFromData(data, textureDimensions, 16, GL_DEPTH_COMPONENT);
+	_texture.create(textureDimensions, Texture::DEPTH_COMPONENT16, data);
 
 	//Modify settings of the texture
 	_texture.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);

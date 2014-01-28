@@ -24,14 +24,27 @@
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/System/Reporter.h>
 
+#include <Burngine/extern/SOIL.h>
+
 namespace burn {
 
-GLuint Texture::_currentTextureBinding[];
-Int32 Texture::_realTextureBindingCap = 0;
+Uint32 nextPowerOf2(const Uint32& n) {
 
-Texture::Texture() :
-_textureId(0) {
+	//The power of 2 value to return
+	Uint32 p2 = 1;
 
+	//Look for the next greater power of 2
+	while(n > p2){
+		p2 <<= 1;    //Shift one to the left. Equals p2 *= 2
+	}
+
+	return p2;
+
+}
+
+/////////////////////////////////////////////////////////////////////
+
+void Texture::ensureConstants() {
 	if(_realTextureBindingCap == 0){
 		//Get OpenGL informations about textures
 		ensureContext();
@@ -47,27 +60,35 @@ _textureId(0) {
 	}
 }
 
+GLuint Texture::_currentTextureBinding[];
+Int32 Texture::_realTextureBindingCap = 0;
+
+Texture::Texture() :
+_textureId(0) {
+	ensureConstants();
+}
+
+Texture::Texture(	const Vector2ui& dimensions,
+					const InternalFormat& internalFormat) :
+_textureId(0) {
+
+	ensureConstants();
+
+	//Create texture immediatly
+	create(_dimensions, _internalFormat);
+
+}
+
 Texture::Texture(const Texture& other) :
-_textureId(0),
-_dimensions(other._dimensions),
-_internalFormat(other._internalFormat) {
+_textureId(0) {
 
 	ensureContext();
 
 	//Create texture
-	glGenTextures(1, &_textureId);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
-	glTexImage2D( 	GL_TEXTURE_2D,
-					0,
-					_internalFormat,
-					_dimensions.x,
-					_dimensions.y,
-					0,
-					estimateFormat(_internalFormat),
-					estimateType(_internalFormat),
-					0);
+	create(_dimensions, _internalFormat);
 
 	//Copy the texture's pixels
+	copyTextureData(other._textureId);
 
 }
 
@@ -76,13 +97,37 @@ Texture& Texture::operator=(const Texture& other) {
 	if(this == &other)
 		return *this;
 
+	//Create texture
+	create(_dimensions, _internalFormat);
+
+	//Copy the texture's pixels
+	copyTextureData(other._textureId);
+
 	return *this;
 }
 
-bool Texture::create(	const Vector2ui& dimensions,
-						const InternalFormat& internalFormat) {
+Texture::~Texture() {
 
-	_dimensions = dimensions;
+	if(_textureId != 0){
+
+		//Unbind where necessary
+		for(size_t i = 0; i != MAX_TEXTURE_BINDINGS; ++i){
+			if(_currentTextureBinding[i] == _textureId){
+				_currentTextureBinding[i] = 0;
+			}
+		}
+
+		ensureContext();
+		glDeleteTextures(1, &_textureId);
+	}
+
+}
+
+bool Texture::create(	const Vector2ui& dimensions,
+						const InternalFormat& internalFormat,
+						GLubyte* data) {
+
+	_dimensions = Vector2ui(nextPowerOf2(dimensions.x), nextPowerOf2(dimensions.y));
 	_internalFormat = internalFormat;
 
 	ensureContext();
@@ -102,10 +147,14 @@ bool Texture::create(	const Vector2ui& dimensions,
 					0,
 					estimateFormat(_internalFormat),
 					estimateType(_internalFormat),
-					0);
+					data);
 
 	//Restore previous bound texture
 	glBindTexture(GL_TEXTURE_2D, _currentTextureBinding[0]);
+
+	if(_textureId == 0){
+		Reporter::report("Failed to create texture.", Reporter::ERROR);
+	}
 
 	return (_textureId != 0);
 }
@@ -117,7 +166,7 @@ bool Texture::bind(const Uint32& unit) const {
 		return false;
 	}
 	if(unit > _realTextureBindingCap - 1 || unit > MAX_TEXTURE_BINDINGS - 1){
-		Reporter::report("Cannot bind texture. Chosen texture unit too large.", Reporter::ERROR);
+		Reporter::report("Cannot bind texture. Chosen texture unit is too large.", Reporter::ERROR);
 		return false;
 	}
 
@@ -133,6 +182,22 @@ bool Texture::bind(const Uint32& unit) const {
 
 void Texture::copyTextureData(const GLuint& src) {
 
+}
+
+/////////////////////////////////////////////////////////////////////
+
+bool Texture::loadFromFile(const std::string& file) {
+
+	ensureContext();
+
+	SOIL_load_OGL_texture(	file.c_str(),
+							SOIL_LOAD_AUTO,
+							(_textureId == 0) ? SOIL_CREATE_NEW_ID :
+												_textureId,
+							SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
+							| SOIL_FLAG_COMPRESS_TO_DXT);
+
+	return (_textureId != 0);
 }
 
 } /* namespace burn */

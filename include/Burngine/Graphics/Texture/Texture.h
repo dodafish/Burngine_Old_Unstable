@@ -48,12 +48,18 @@ public:
 	///////////////////////////////////////////////////////////////////////////
 
 	bool create(const Vector2ui& dimensions,
-				const InternalFormat& internalFormat);
+				const InternalFormat& internalFormat,
+				GLubyte* data = 0);
 
 	bool bind(const Uint32& unit) const;
 
+	bool loadFromFile(const std::string& file);
+
 private:
 	GLuint _textureId;
+
+	//Once called at first instanciation
+	void ensureConstants();
 
 	//Used for copying
 	void copyTextureData(const GLuint& src);
