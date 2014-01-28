@@ -51,11 +51,39 @@ public:
 		DEPTH_COMPONENT32F = GL_DEPTH_COMPONENT32F
 	};
 
+	const Vector2ui& getDimensions() const;
+	const InternalFormat& getInternalFormat() const;
+
+	enum MagnificationFilter {
+		MAG_NEAREST, MAG_BILINEAR
+	};
+	enum MinificationFilter {
+		MIN_NEAREST, MIN_BILINEAR, MIN_NEAREST_MIPMAP, MIN_BILINEAR_MIPMAP, MIN_TRILINEAR
+	};
+
+	void setFiltering(	const MagnificationFilter& mag,
+						const MinificationFilter& min);
+	const MagnificationFilter& getMagnificationFilter() const;
+	const MinificationFilter& getMinificationFilter() const;
+	void setSamplerParameter(	const GLenum& parameter,
+								const GLenum& value);
+
 protected:
 
 	//Only inherited classes can be created
 	BaseTexture();
+	BaseTexture(const BaseTexture& other);
+	BaseTexture& operator=(const BaseTexture& other);
+	~BaseTexture();
 
+	GLuint _samplerId;
+	void bindSampler(const Uint32& unit) const;
+
+	//Sampler attributes
+	MagnificationFilter _magFilter;
+	MinificationFilter _minFilter;
+
+	//Texture attributes
 	Vector2ui _dimensions;
 	InternalFormat _internalFormat;
 
