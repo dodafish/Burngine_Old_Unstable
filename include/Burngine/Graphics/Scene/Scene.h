@@ -30,7 +30,6 @@
 #include <vector>
 
 #include <Burngine/Graphics/Scene/Camera.h>
-#include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
 
 #include <Burngine/Graphics/Scene/SkyBox.h>

@@ -27,10 +27,11 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/System/Math.h>
+#include <Burngine/System/NonCopyable.h>
 
 namespace burn {
 
-class BURNGINE_API BaseTexture {
+class BURNGINE_API BaseTexture : public NonCopyable {
 public:
 
 	enum InternalFormat {
@@ -72,8 +73,6 @@ protected:
 
 	//Only inherited classes can be created
 	BaseTexture();
-	BaseTexture(const BaseTexture& other);
-	BaseTexture& operator=(const BaseTexture& other);
 	~BaseTexture();
 
 	GLuint _samplerId;

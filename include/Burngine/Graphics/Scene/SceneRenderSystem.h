@@ -30,10 +30,13 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 
 #include <Burngine/Graphics/Scene/Camera.h>
-#include <Burngine/Graphics/Texture/RenderTexture.h>
+//#include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
-#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
-#include <Burngine/Graphics/Texture/VarianceShadowCubeMap.h>
+//#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
+//#include <Burngine/Graphics/Texture/VarianceShadowCubeMap.h>
+
+#include <Burngine/Graphics/Texture/RenderTarget.h>
+#include <Burngine/Graphics/Texture/Texture.h>
 
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -123,7 +126,7 @@ private:
 	void ambientPart(const Vector3f& ambient);
 	void drawFullscreenQuad(const Shader& shader,
 							const OpenGlControl::Settings& rendersettings) const;
-	RenderTexture _renderTexture;
+	RenderTarget _renderTarget;
 	VertexBufferObject _fullscreenVbo;
 
 	//Shadow:
@@ -141,9 +144,13 @@ private:
 	Camera findCamera(	const int& face,
 						const Light& pointlight);
 
+	//Textures for lighting
+	Texture _diffusePartTexture, _specularPartTexture;
+
 	//Shadowmaps:
-	VarianceShadowMap _vsm;
-	VarianceShadowCubeMap _vscm;
+	Texture _vsm;
+	RenderTarget _vsmTarget;
+	//Texture _vscm;
 
 };
 

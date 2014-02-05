@@ -63,34 +63,11 @@ _textureId(0) {
 
 }
 
-Texture::Texture(const Texture& other) :
-_textureId(0) {
-
-	ensureContext();
-
-	//Create texture
-	create(_dimensions, _internalFormat);
-
-	//Copy the texture's pixels
-	copyTextureData(other._textureId);
-
-}
-
-Texture& Texture::operator=(const Texture& other) {
-
-	if(this == &other)
-		return *this;
-
-	//Create texture
-	create(_dimensions, _internalFormat);
-
-	//Copy the texture's pixels
-	copyTextureData(other._textureId);
-
-	return *this;
-}
-
 Texture::~Texture() {
+	cleanup();
+}
+
+void Texture::cleanup() {
 
 	if(_textureId != 0){
 
@@ -103,6 +80,8 @@ Texture::~Texture() {
 
 		ensureContext();
 		glDeleteTextures(1, &_textureId);
+
+		_textureId = 0;
 	}
 
 }
@@ -116,9 +95,10 @@ bool Texture::create(	const Vector2ui& dimensions,
 
 	ensureContext();
 
-	//Generate texture if needed
-	if(_textureId == 0)
-		glGenTextures(1, &_textureId);
+	//Remove old texture and delete opengl entry
+	cleanup();
+	//Generate texture
+	glGenTextures(1, &_textureId);
 
 	//Assign memory on gpu
 	glActiveTexture(GL_TEXTURE0);
@@ -158,14 +138,15 @@ bool Texture::bind(const Uint32& unit) const {
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glBindSampler(unit, _samplerId);
 
 	_currentTextureBinding[unit] = _textureId;
 
 	return true;
 }
 
-void Texture::copyTextureData(const GLuint& src) {
-
+const GLuint& Texture::getId() const {
+	return _textureId;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -174,12 +155,14 @@ bool Texture::loadFromFile(const std::string& file) {
 
 	ensureContext();
 
-	SOIL_load_OGL_texture(	file.c_str(),
-							SOIL_LOAD_AUTO,
-							(_textureId == 0) ? SOIL_CREATE_NEW_ID :
-												_textureId,
-							SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-							| SOIL_FLAG_COMPRESS_TO_DXT);
+	//cleanup();
+
+	_textureId = SOIL_load_OGL_texture(	file.c_str(),
+										SOIL_LOAD_AUTO,
+										(_textureId == 0) ? SOIL_CREATE_NEW_ID :
+															_textureId,
+										SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
+										| SOIL_FLAG_COMPRESS_TO_DXT);
 
 	return (_textureId != 0);
 }

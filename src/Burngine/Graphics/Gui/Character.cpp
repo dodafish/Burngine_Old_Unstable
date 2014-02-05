@@ -51,6 +51,7 @@ Uint32 nextPowerOf2(const Uint32& n) {
 
 Character::Character(	const Uint32& codePoint,
 						const unsigned int& size) :
+_texture(new Texture()),
 _codePoint(codePoint),
 _size(size) {
 }
@@ -89,13 +90,13 @@ void Character::createFromFtGlyph(	void* g,
 	}
 
 	//Fill texture with data
-	_texture.create(textureDimensions, Texture::DEPTH_COMPONENT16, data);
+	_texture->create(textureDimensions, Texture::DEPTH_COMPONENT16, data);
 
 	//Modify settings of the texture
-	_texture.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
-	_texture.setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	_texture.setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	_texture.setSamplerParameter(GL_DEPTH_TEXTURE_MODE, GL_LUMINANCE);
+	_texture->setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
+	_texture->setSamplerParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	_texture->setSamplerParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	_texture->setSamplerParameter(GL_DEPTH_TEXTURE_MODE, GL_LUMINANCE);
 
 	//Get glyph metrics (Shifted to right by 6 to fit pixeldimensions)
 	_dimensions = Vector2i(glyph->metrics.width >> 6, glyph->metrics.height >> 6);
@@ -163,7 +164,7 @@ void Character::draw(	const Vector2f& position,
 	shader.setUniform("fontColor", color);
 
 	//Bind and draw
-	_texture.bind();
+	_texture->bind();
 	_vbo.bind();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

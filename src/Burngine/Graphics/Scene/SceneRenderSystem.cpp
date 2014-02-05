@@ -86,36 +86,51 @@ _window(parentWindow) {
 		exit(11);
 	}
 
-	if(!_renderTexture.create(Vector2ui(parentWindow.getSettings().getWidth(),
-										parentWindow.getSettings().getHeight()))){
+	/*if(!_renderTexture.create(Vector2ui(parentWindow.getSettings().getWidth(),
+	 parentWindow.getSettings().getHeight()))){
+	 Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+	 exit(12);
+	 }*/
+
+	const Vector2ui& screenRes = Vector2ui(	parentWindow.getSettings().getWidth(),
+											parentWindow.getSettings().getHeight());
+
+	_diffusePartTexture.create(screenRes, Texture::RGB);
+	_specularPartTexture.create(screenRes, Texture::RGB);
+
+	if(!_renderTarget.create(screenRes, RenderTarget::DEPTHBUFFER_24, _diffusePartTexture)){
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(12);
 	}
 
-	if(!_renderTexture.addColorAttachment(1)){
+	if(!_renderTarget.addColorAttachment(_specularPartTexture, 1)){
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(13);
 	}
 
-	_renderTexture.clear();
+	_renderTarget.addColorAttachment(_diffusePartTexture, 0);
 
-	if(!_vsm.create(Vector2ui(512, 512))){
+	_renderTarget.clear();
+
+	if(!_vsm.create(Vector2ui(512, 512), Texture::RG32F)){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
-	_vsm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
-	_vsm.setAnisotropicLevel(8.f);
-	_vsm.clear();
+	_vsm.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
+	//_vsm.setAnisotropicLevel(8.f);
+	//_vsm.clear();
+
+	_vsmTarget.create(_vsm.getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm);
 
 	Reporter::report("HERE", Reporter::ERROR);
 
-	if(!_vscm.create(VarianceShadowCubeMap::MEDIUM)){
-		Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
-		exit(17);
-	}
-	_vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
-	_vscm.setAnisotropicLevel(8.f);
-	_vscm.clear();
+	/*if(!_vscm.create(VarianceShadowCubeMap::MEDIUM)){
+	 Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
+	 exit(17);
+	 }
+	 _vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
+	 _vscm.setAnisotropicLevel(8.f);
+	 _vscm.clear();*/
 
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
@@ -182,8 +197,8 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 				shader.setUniform("diffuseType", DIFFUSE_TYPE_COLORED);
 				shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
 			}else{
-				shader.setUniform("diffuseType", DIFFUSE_TYPE_TEXTURED); //Type = TEXTURED
-				mesh.getTexture().bindAsSource();
+				shader.setUniform("diffuseType", DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
+				mesh.getTexture().bind();
 			}
 
 			//Bind bufferobjects according to renderflags
@@ -231,7 +246,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is default
+void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window is default
 								const Vector2ui& targetFramebufferDimensions,
 								const Camera& camera,
 								const RenderMode& mode,
@@ -312,7 +327,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer, ///< Window is 
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == DEPTH){
-		dumpOutDepthGBuffer(); //Special, because no GL_COLOR_BUFFER
+		dumpOutDepthGBuffer();    //Special, because no GL_COLOR_BUFFER
 
 	}
 
@@ -389,8 +404,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	/////////////////////////////////////////////////////
 
 	//Render all dirlights together into rendertexture
-	_renderTexture.clear();
-	_renderTexture.bindAsTarget();		// <- Diffuse light (attachment 0); specular (1)
+	_renderTarget.clear();
+	_renderTarget.bind();		// <- Diffuse light (attachment 0); specular (1)
 
 	ambientPart(ambient);
 
@@ -404,8 +419,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			VpMatrix vpm = drawShadowmap(*light, nodes);
 
 			//Render light
-			_renderTexture.bindAsTarget();
-			_vsm.bindAsSource(8);
+			_renderTarget.bind();
+			_vsm.bind(8);
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
@@ -417,21 +432,21 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 		}else if(typeid(*(lights[i])) == typeid(Light)){
 
-			Light* light = static_cast<Light*>(lights[i]);
+			/*Light* light = static_cast<Light*>(lights[i]);
 
-			//Render shadowmap:
-			drawShadowmap(*light, nodes);
+			 //Render shadowmap:
+			 drawShadowmap(*light, nodes);
 
-			//Render light
-			_vscm.bindAsSource(8);
-			_renderTexture.bindAsTarget();
-			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-			shader.setUniform("gLightPosition", light->getPosition());
-			shader.setUniform("gLightColor", light->getColor());
-			shader.setUniform("gLightIntensity", light->getIntensity());
+			 //Render light
+			 _vscm.bindAsSource(8);
+			 _renderTexture.bindAsTarget();
+			 const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+			 shader.setUniform("gLightPosition", light->getPosition());
+			 shader.setUniform("gLightColor", light->getColor());
+			 shader.setUniform("gLightIntensity", light->getIntensity());
 
-			drawFullscreenQuad(shader, toLightPassOgl);
-		}else{ //Spotlight
+			 drawFullscreenQuad(shader, toLightPassOgl);*/
+		}else{    //Spotlight
 
 			SpotLight* light = static_cast<SpotLight*>(lights[i]);
 
@@ -439,8 +454,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			Matrix4f shadowMatrix = drawShadowmap(*light, nodes);
 
 			//Render light
-			_renderTexture.bindAsTarget();
-			_vsm.bindAsSource(8);
+			_renderTarget.bind();
+			_vsm.bind(8);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			//glGenerateMipmap(GL_TEXTURE_2D);
@@ -471,30 +486,31 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 	if(!dumpLighting){
 		//Compose with diffuse part:
-		_renderTexture.bindAsSource();
-		shader.setUniform("gSampler", 0); //sample from diffuse
+		_diffusePartTexture.bind(1);
+		shader.setUniform("gSampler", 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::MULTIPLY);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
 		//Compose with specular part:
-		_renderTexture.bindAsSource();
-		shader.setUniform("gSampler", 1); //sample from diffuse
+		_specularPartTexture.bind(1);
+		//shader.setUniform("gSampler", 1);    //sample from specular
 		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
 	}else{
 
-		_renderTexture.bindAsTarget();
-		_renderTexture.bindAsSource();
-		shader.setUniform("gSampler", 1); //sample from diffuse
-		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
-		drawFullscreenQuad(shader, toLightPassOgl);
+		//_renderTarget.bind();
 
-		_window.bind();
-		shader.setUniform("gSampler", 0); //sample from diffuse
+		_diffusePartTexture.bind(1);
+		//_window.bind();
+		shader.setUniform("gSampler", 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::OVERWRITE);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
+		_specularPartTexture.bind(1);
+		//shader.setUniform("gSampler", 0);    //sample from diffuse
+		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
+		drawFullscreenQuad(shader, toLightPassOgl);
 	}
 
 	OpenGlControl::useSettings(OpenGlControl::Settings());
@@ -507,15 +523,15 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
-	_vsm.clear();
-	_vsm.bindAsTarget();
+	_vsmTarget.clear();
+	_vsmTarget.bind();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
 	Camera virtualCamera;
 	virtualCamera.lookAt(Vector3f(dirLight.getDirection()));
 	virtualCamera.setType(Camera::ORTHOGONAL);
-	virtualCamera.setFov(100.f); //Dimensions of the "box"
+	virtualCamera.setFov(100.f);    //Dimensions of the "box"
 	virtualCamera.setNear(-500.f);
 	virtualCamera.setFar(500.f);
 	virtualCamera.setAspectRatio(1.f);
@@ -525,8 +541,8 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 	}
 
 	const float& softness = dirLight.getSoftness();
-	if(softness != 0.f)
-		PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	//if(softness != 0.f)
+	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
 
 	VpMatrix vpm;
 	vpm.p = virtualCamera.getProjectionMatrix();
@@ -538,25 +554,25 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
 										const std::vector<SceneNode*>& nodes) {
 
-	OpenGlControl::Settings ogl;
-	ogl.setClearColor(Vector4f(0.f));
-	OpenGlControl::useSettings(ogl);
+	/*OpenGlControl::Settings ogl;
+	 ogl.setClearColor(Vector4f(0.f));
+	 OpenGlControl::useSettings(ogl);
 
-	_vscm.clear();
+	 _vscm.clear();
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+	 const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
-	for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
-		_vscm.bindAsRendertarget(face);
-		glClear(GL_DEPTH_BUFFER_BIT);
+	 for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
+	 _vscm.bindAsRendertarget(face);
+	 glClear(GL_DEPTH_BUFFER_BIT);
 
-		Camera virtualCamera = findCamera(face, pointlight);
+	 Camera virtualCamera = findCamera(face, pointlight);
 
-		for(size_t i = 0; i < nodes.size(); ++i){
-			renderNode(nodes[i], POSITION, virtualCamera, shader, true);
-		}
+	 for(size_t i = 0; i < nodes.size(); ++i){
+	 renderNode(nodes[i], POSITION, virtualCamera, shader, true);
+	 }
 
-	}
+	 }*/
 }
 
 Camera SceneRenderSystem::findCamera(	const int& face,
@@ -600,8 +616,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
-	_vsm.clear();
-	_vsm.bindAsTarget(true);
+	_vsmTarget.clear();
+	_vsmTarget.bind();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
@@ -617,11 +633,11 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	_vsm.finishMultisampling();
+	//_vsm.finishMultisampling();
 
 	const float& softness = spotlight.getSoftness();
-	if(softness != 0.f)
-		PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	//if(softness != 0.f)
+	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }

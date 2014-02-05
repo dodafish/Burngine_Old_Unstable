@@ -37,6 +37,35 @@ Mesh::Mesh() {
 
 }
 
+Mesh::Mesh(const Mesh& other) :
+_material(other._material),
+_texture(other._texture),
+_vertices(other._vertices),
+_positionVbo(other._positionVbo),
+_colorVbo(other._colorVbo),
+_uvVbo(other._uvVbo),
+_normalVbo(other._normalVbo) {
+
+}
+Mesh& Mesh::operator==(const Mesh& other) {
+
+	if(this == &other)
+		return *this;
+
+	_material = (other._material);
+	_texture = (other._texture);
+	_vertices = (other._vertices);
+	_positionVbo = (other._positionVbo);
+	_colorVbo = (other._colorVbo);
+	_uvVbo = (other._uvVbo);
+	_normalVbo = (other._normalVbo);
+
+	return *this;
+}
+Mesh::~Mesh() {
+
+}
+
 size_t Mesh::getVertexCount() const {
 	return _vertices.size();
 }
@@ -62,12 +91,12 @@ const VertexBufferObject& Mesh::getUvVbo() const {
 	return _uvVbo;
 }
 
-void Mesh::setTexture(const Texture& tex) {
+void Mesh::setTexture(const std::shared_ptr<Texture>& tex) {
 	_texture = tex;
 }
 
 const Texture& Mesh::getTexture() const {
-	return _texture;
+	return *_texture;
 }
 
 const Material& Mesh::getMaterial() const {

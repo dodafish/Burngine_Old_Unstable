@@ -24,7 +24,6 @@
 #include <Burngine/Graphics/Scene/GBuffer.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Reporter.h>
-#include <Burngine/Graphics/Texture/Sampler.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -173,12 +172,19 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 
 	//Bind all buffers to texture units
 	for(unsigned int i = 0; i != COUNT; ++i){
-		BaseTexture::bindTexture(_textures[i], i + offset);
-		Sampler::unbind(i + offset);
+		//BaseTexture::bindTexture(_textures[i], i + offset);
+		//Sampler::unbind(i + offset);
+		glActiveTexture(GL_TEXTURE0 + i + offset);
+		glBindTexture(GL_TEXTURE_2D, _textures[i]);
+		glBindSampler(i + offset, 0);
+
 	}
 	//And the depth one
-	BaseTexture::bindTexture(_depthTexture, COUNT + offset);
-	Sampler::unbind(COUNT + offset);
+	//BaseTexture::bindTexture(_depthTexture, COUNT + offset);
+	//Sampler::unbind(COUNT + offset);
+	glActiveTexture(GL_TEXTURE0 + COUNT + offset);
+	glBindTexture(GL_TEXTURE_2D, _depthTexture);
+	glBindSampler(COUNT + offset, 0);
 
 }
 
@@ -213,7 +219,10 @@ void GBuffer::bindDepthBufferAsSourceTexture() const {
 		return;
 	}
 
-	BaseTexture::bindTexture(_depthTexture, 0);
+	//BaseTexture::bindTexture(_depthTexture, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _depthTexture);
+	glBindSampler(0, 0);
 }
 
 } /* namespace burn */
