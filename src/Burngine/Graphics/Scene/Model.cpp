@@ -37,11 +37,18 @@
 namespace burn {
 
 struct MeshData {
+	MeshData();
 	unsigned int index;
 	std::vector<Vertex> vertices;
 	Material material;
-	Texture texture;
+	std::shared_ptr<Texture> texture;
 };
+
+MeshData::MeshData() :
+index(0),
+texture(new Texture()) {
+
+}
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -95,10 +102,12 @@ bool Model::loadFromFile(const std::string& file) {
 				aiVector3D pos = mesh->mVertices[face.mIndices[k]];
 
 				//Get UV-Coords
-				aiVector3D uv = mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] : aiVector3D(0.f);
+				aiVector3D uv = mesh->HasTextureCoords(0) ? mesh->mTextureCoords[0][face.mIndices[k]] :
+															aiVector3D(0.f);
 
 				//Get Normal
-				aiVector3D normal = mesh->HasNormals() ? mesh->mNormals[face.mIndices[k]] : aiVector3D(0.f, 1.f, 0.f);
+				aiVector3D normal = mesh->HasNormals() ? 	mesh->mNormals[face.mIndices[k]] :
+															aiVector3D(0.f, 1.f, 0.f);
 
 				//Store vertex
 				vertices.push_back(Vertex(	Vector3f(pos.x, pos.y, pos.z),
@@ -152,8 +161,10 @@ bool Model::loadFromFile(const std::string& file) {
 			for(size_t j = 0; j < meshData.size(); ++j){
 				if(meshData[j].index == i){
 
+					//meshData[j].texture = std::make_shared<Texture>(new Texture());
+
 					//Load texture
-					if(meshData[j].texture.loadFromFile(file)){
+					if(meshData[j].texture->loadFromFile(file)){
 						meshData[j].material.setType(Material::Type::TEXTURED);
 						break;
 					}else{

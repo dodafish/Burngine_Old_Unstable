@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
+//#include <Burngine/Graphics/Texture/RenderTarget.h>
 
 namespace burn {
 
@@ -41,8 +42,6 @@ public:
 	Texture();
 	Texture(const Vector2ui& dimensions,
 			const InternalFormat& internalFormat);
-	Texture(const Texture& other);
-	Texture& operator=(const Texture& other);
 	~Texture();
 
 	///////////////////////////////////////////////////////////////////////////
@@ -55,14 +54,18 @@ public:
 
 	bool loadFromFile(const std::string& file);
 
+	const GLuint& getId() const;
+
 private:
+	//std::vector<RenderTarget&> _boundRenderTargets;
+
 	GLuint _textureId;
+
+	//Cleans up OpenGL
+	void cleanup();
 
 	//Once called at first instanciation
 	void ensureConstants();
-
-	//Used for copying
-	void copyTextureData(const GLuint& src);
 
 	//Used for keeping track of bound textures
 	static GLuint _currentTextureBinding[MAX_TEXTURE_BINDINGS];

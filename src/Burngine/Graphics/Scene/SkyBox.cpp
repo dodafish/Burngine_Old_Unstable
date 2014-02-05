@@ -78,7 +78,7 @@ SkyBox::SkyBox() {
 }
 
 SkyBox::SkyBox(const SkyBox& other) :
-_cubeMap(other._cubeMap),
+//_cubeMap(other._cubeMap),
 _boxVbo(other._boxVbo) {
 }
 
@@ -87,23 +87,23 @@ SkyBox& SkyBox::operator=(const SkyBox& other) {
 	if(this == &other)
 		return *this;
 
-	_cubeMap = other._cubeMap;
+	//_cubeMap = other._cubeMap;
 	_boxVbo = other._boxVbo;
 
 	return *this;
 }
 
-void SkyBox::setCubeMap(const CubeMap& cubeMap) {
+/*void SkyBox::setCubeMap(const CubeMap& cubeMap) {
 	_cubeMap = cubeMap;
 }
 
 const CubeMap& SkyBox::getCubeMap() const {
 	return _cubeMap;
-}
+}*/
 
 void SkyBox::draw() {
 
-	ensureContext();
+	/*ensureContext();
 
 	if(!_cubeMap.isCreated())
 		return;
@@ -130,7 +130,7 @@ void SkyBox::draw() {
 	OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, 6 * 2 * 3, shader);
 	glDisableVertexAttribArray(0);
 
-	OpenGlControl::useSettings(OpenGlControl::Settings());
+	OpenGlControl::useSettings(OpenGlControl::Settings());*/
 }
 
 } /* namespace burn */

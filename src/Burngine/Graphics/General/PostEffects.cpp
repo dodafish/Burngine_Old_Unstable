@@ -23,14 +23,13 @@
 
 #include <Burngine/Graphics/General/PostEffects.h>
 
-#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
 #include <Burngine/Graphics/General/BurngineShaders.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 
 namespace burn {
 
-void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
+/*void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
 								const float& blurSize) {
 
 	//Return if the VSM is not created
@@ -123,7 +122,7 @@ void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
 	//Restore default OGL settings
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
-}
+}*/
 
 } /* namespace burn */
 

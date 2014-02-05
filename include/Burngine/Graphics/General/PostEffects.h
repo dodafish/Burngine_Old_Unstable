@@ -28,13 +28,13 @@
 
 namespace burn {
 
-class VarianceShadowMap;
+//class VarianceShadowMap;
 
 class BURNGINE_API PostEffects {
 public:
 
-	static void gaussianBlur(	const VarianceShadowMap& vsm,
-								const float& blurSize = 0.001f);
+	//static void gaussianBlur(	const VarianceShadowMap& vsm,
+	//							const float& blurSize = 0.001f);
 
 private:
 

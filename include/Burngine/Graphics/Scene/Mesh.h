@@ -30,6 +30,7 @@
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 
+#include <memory>
 #include <vector>
 
 template class BURNGINE_API std::vector<burn::Vertex>;
@@ -46,6 +47,10 @@ public:
 	 * @brief The default constructor creating VBOs
 	 */
 	Mesh();
+
+	Mesh(const Mesh& other);
+	Mesh& operator==(const Mesh& other);
+	~Mesh();
 
 	/**
 	 * @brief Sets the vertices of the mesh, so that they can be
@@ -114,7 +119,7 @@ public:
 	 *
 	 * @see getTexture()
 	 */
-	void setTexture(const Texture& texture);
+	void setTexture(const std::shared_ptr<Texture>& texture);
 
 	/**
 	 * @brief Returns the current Texture of the mesh
@@ -155,7 +160,7 @@ private:
 	bool update();
 
 	Material _material;
-	Texture _texture;
+	std::shared_ptr<Texture> _texture;
 
 	std::vector<Vertex> _vertices;
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;

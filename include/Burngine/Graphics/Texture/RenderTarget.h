@@ -26,10 +26,15 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
-#include <Burngine/Graphics/Texture/Texture.h>
+
 #include <Burngine/System/NonCopyable.h>
+#include <Burngine/System/Math.h>
+
+#include <vector>
 
 namespace burn {
+
+class Texture;
 
 class BURNGINE_API RenderTarget : public NonCopyable {
 public:
@@ -37,13 +42,40 @@ public:
 	~RenderTarget();
 
 	enum DepthbufferType {
-		NO_DEPTHBUFFER, DEPTHBUFFER_16, DEPTHBUFFER_24, DEPTHBUFFER_32
-
+		NO_DEPTHBUFFER,
+		DEPTHBUFFER_16 = GL_DEPTH_COMPONENT16,
+		DEPTHBUFFER_24 = GL_DEPTH_COMPONENT24,
+		DEPTHBUFFER_32 = GL_DEPTH_COMPONENT32
 	};
 
-	bool create(const Vector2ui& dimensions, const DepthbufferType& depthbufferType);
+	bool create(const Vector2ui& dimensions,
+				const DepthbufferType& depthbufferType,
+				const Texture& texture);
+
+	bool addColorAttachment(const Texture& texture,
+							const GLuint& attachmentPosition);
+	bool removeColorAttachment(const Texture& texture);
+
+	bool bind() const;
+
+	void clear() const;
 
 private:
+
+	struct ColorAttachment {
+		ColorAttachment(const GLuint& textureIdArg,
+						const GLuint& attachmentPositionArg);
+
+		GLuint textureId;
+		GLuint attachmentPosition;
+	};
+
+	std::vector<ColorAttachment> _colorAttachments;
+
+	void cleanup();
+
+	//std::vector<const Texture&> _attachedTextures;
+
 	GLuint _framebuffer;
 	GLuint _depthbuffer;
 

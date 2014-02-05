@@ -25,7 +25,7 @@
 #define SKYBOX_H_
 
 #include <Burngine/Export.h>
-#include <Burngine/Graphics/Texture/CubeMap.h>
+//#include <Burngine/Graphics/Texture/CubeMap.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 
 namespace burn {
@@ -61,7 +61,7 @@ public:
 	 *
 	 * @see getCubeMap()
 	 */
-	void setCubeMap(const CubeMap& cubeMap);
+	//void setCubeMap(const CubeMap& cubeMap);
 
 	/**
 	 * @brief Returns the currently used CubeMap that describes
@@ -71,7 +71,7 @@ public:
 	 *
 	 * @see setCubeMap()
 	 */
-	const CubeMap& getCubeMap() const;
+	//const CubeMap& getCubeMap() const;
 
 	/**
 	 * @brief This draws the cubemap.
@@ -81,7 +81,7 @@ public:
 	void draw();
 
 private:
-	CubeMap _cubeMap;
+	//CubeMap _cubeMap;
 	VertexBufferObject _boxVbo;
 };
 

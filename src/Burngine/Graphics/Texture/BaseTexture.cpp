@@ -37,35 +37,6 @@ _internalFormat(RGB) {
 
 }
 
-BaseTexture::BaseTexture(const BaseTexture& other) :
-_samplerId(0),
-_magFilter(other._magFilter),
-_minFilter(other._minFilter),
-_dimensions(other._dimensions),
-_internalFormat(other._internalFormat) {
-
-	ensureContext();
-	glGenSamplers(1, &_samplerId);
-
-	setFiltering(_magFilter, _minFilter);
-
-}
-
-BaseTexture& BaseTexture::operator=(const BaseTexture& other) {
-
-	if(this == &other)
-		return *this;
-
-	_magFilter = other._magFilter;
-	_minFilter = other._minFilter;
-	_dimensions = other._dimensions;
-	_internalFormat = other._internalFormat;
-
-	setFiltering(_magFilter, _minFilter);
-
-	return *this;
-}
-
 BaseTexture::~BaseTexture() {
 
 	ensureContext();

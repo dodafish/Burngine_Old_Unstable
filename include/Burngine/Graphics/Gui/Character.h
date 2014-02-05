@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
+#include <memory>
 
 namespace burn {
 
@@ -104,7 +105,7 @@ public:
 	const unsigned int& getSize() const;
 
 private:
-	Texture _texture;
+	std::shared_ptr<Texture> _texture;
 	Uint32 _codePoint;
 	Vector2i _dimensions, _advance, _bearing;
 	VertexBufferObject _vbo;
