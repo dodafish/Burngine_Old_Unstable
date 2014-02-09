@@ -98,7 +98,7 @@ _window(parentWindow) {
 	_diffusePartTexture.create(screenRes, Texture::RGB);
 	_specularPartTexture.create(screenRes, Texture::RGB);
 
-	if(!_renderTarget.create(screenRes, RenderTarget::DEPTHBUFFER_24, _diffusePartTexture)){
+	if(!_renderTarget.create(screenRes, RenderTarget::DEPTHBUFFER_16, _diffusePartTexture)){
 		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
 		exit(12);
 	}
@@ -108,11 +108,11 @@ _window(parentWindow) {
 		exit(13);
 	}
 
-	_renderTarget.addColorAttachment(_diffusePartTexture, 0);
+	//_renderTarget.addColorAttachment(_diffusePartTexture, 0);
 
 	_renderTarget.clear();
 
-	if(!_vsm.create(Vector2ui(512, 512), Texture::RG32F)){
+	if(!_vsm.create(Vector2ui(1024, 1024), Texture::RG32F)){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
 		exit(16);
 	}
