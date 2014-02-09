@@ -159,10 +159,11 @@ bool Texture::loadFromFile(const std::string& file) {
 
 	_textureId = SOIL_load_OGL_texture(	file.c_str(),
 										SOIL_LOAD_AUTO,
-										(_textureId == 0) ? SOIL_CREATE_NEW_ID :
-															_textureId,
+										_textureId,
 										SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
 										| SOIL_FLAG_COMPRESS_TO_DXT);
+
+	setFiltering(MAG_BILINEAR, MIN_TRILINEAR);
 
 	return (_textureId != 0);
 }
