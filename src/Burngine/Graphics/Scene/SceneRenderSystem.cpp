@@ -108,8 +108,6 @@ _window(parentWindow) {
 		exit(13);
 	}
 
-	//_renderTarget.addColorAttachment(_diffusePartTexture, 0);
-
 	_renderTarget.clear();
 
 	if(!_vsm.create(Vector2ui(1024, 1024), Texture::RG32F)){
@@ -117,10 +115,21 @@ _window(parentWindow) {
 		exit(16);
 	}
 	_vsm.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
-	//_vsm.setAnisotropicLevel(8.f);
-	//_vsm.clear();
+	if(!_vsmTarget.create(_vsm.getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm)){
+		Reporter::report("Unable to create VarianceShadowMap RenderTarget!", Reporter::ERROR);
+		exit(18);
+	}
 
-	_vsmTarget.create(_vsm.getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm);
+	if(!_vscm.create(Vector2ui(512, 512), Texture::RG32F)){
+		Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
+		exit(17);
+	}
+
+	_vscm.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
+	if(!_vscmTarget.create(_vscm.getDimensions(), CubeRenderTarget::DEPTHBUFFER_32, _vscm)){
+		Reporter::report("Unable to create VarianceShadowCubeMap RenderTarget!", Reporter::ERROR);
+		exit(19);
+	}
 
 	Reporter::report("HERE", Reporter::ERROR);
 
@@ -432,20 +441,21 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 		}else if(typeid(*(lights[i])) == typeid(Light)){
 
-			/*Light* light = static_cast<Light*>(lights[i]);
+			Light* light = static_cast<Light*>(lights[i]);
 
-			 //Render shadowmap:
-			 drawShadowmap(*light, nodes);
+			//Render shadowmap:
+			drawShadowmap(*light, nodes);
 
-			 //Render light
-			 _vscm.bindAsSource(8);
-			 _renderTexture.bindAsTarget();
-			 const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-			 shader.setUniform("gLightPosition", light->getPosition());
-			 shader.setUniform("gLightColor", light->getColor());
-			 shader.setUniform("gLightIntensity", light->getIntensity());
+			//Render light
+			_vscm.bind(8);
+			_renderTarget.bind();
+			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+			shader.setUniform("gLightPosition", light->getPosition());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
 
-			 drawFullscreenQuad(shader, toLightPassOgl);*/
+			drawFullscreenQuad(shader, toLightPassOgl);
+
 		}else{    //Spotlight
 
 			SpotLight* light = static_cast<SpotLight*>(lights[i]);
@@ -554,25 +564,25 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
 										const std::vector<SceneNode*>& nodes) {
 
-	/*OpenGlControl::Settings ogl;
-	 ogl.setClearColor(Vector4f(0.f));
-	 OpenGlControl::useSettings(ogl);
+	OpenGlControl::Settings ogl;
+	ogl.setClearColor(Vector4f(0.f));
+	OpenGlControl::useSettings(ogl);
 
-	 _vscm.clear();
+	_vscmTarget.clear();
 
-	 const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
-	 for(int face = GL_TEXTURE_CUBE_MAP_POSITIVE_X; face != GL_TEXTURE_CUBE_MAP_POSITIVE_X + 6; ++face){
-	 _vscm.bindAsRendertarget(face);
-	 glClear(GL_DEPTH_BUFFER_BIT);
+	for(int face = 0; face != 6; ++face){
+		_vscmTarget.bind(face);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-	 Camera virtualCamera = findCamera(face, pointlight);
+		Camera virtualCamera = findCamera(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, pointlight);
 
-	 for(size_t i = 0; i < nodes.size(); ++i){
-	 renderNode(nodes[i], POSITION, virtualCamera, shader, true);
-	 }
+		for(size_t i = 0; i < nodes.size(); ++i){
+			renderNode(nodes[i], POSITION, virtualCamera, shader, true);
+		}
 
-	 }*/
+	}
 }
 
 Camera SceneRenderSystem::findCamera(	const int& face,

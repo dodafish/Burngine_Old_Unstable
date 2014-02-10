@@ -21,64 +21,52 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef RENDERTARGET_H_
-#define RENDERTARGET_H_
+#ifndef CUBEMAP_H_
+#define CUBEMAP_H_
 
 #include <Burngine/Export.h>
-#include <Burngine/Graphics/General/OpenGL.h>
-
-#include <Burngine/System/NonCopyable.h>
-#include <Burngine/System/Math.h>
+#include <Burngine/Graphics/Texture/BaseTexture.h>
 
 #include <vector>
 
 namespace burn {
 
-class Texture;
-
-class BURNGINE_API RenderTarget : public NonCopyable {
+class BURNGINE_API CubeMap : public BaseTexture {
 public:
-	RenderTarget();
-	~RenderTarget();
 
-	enum DepthbufferType {
-		NO_DEPTHBUFFER,
-		DEPTHBUFFER_16 = GL_DEPTH_COMPONENT16,
-		DEPTHBUFFER_24 = GL_DEPTH_COMPONENT24,
-		DEPTHBUFFER_32 = GL_DEPTH_COMPONENT32
-	};
+	CubeMap();
+	CubeMap(const Vector2ui& dimensions,
+			const InternalFormat& internalFormat);
+	~CubeMap();
+
+	///////////////////////////////////////////////////////////////////////////
 
 	bool create(const Vector2ui& dimensions,
-				const DepthbufferType& depthbufferType,
-				const Texture& texture);
+				const InternalFormat& internalFormat);
 
-	bool addColorAttachment(const Texture& texture,
-							const GLuint& attachmentPosition);
-	bool removeColorAttachment(const Texture& texture);
+	bool bind(const Uint32& unit = 0) const;
 
-	bool bind() const;
+	bool loadFromFile(	const std::string& filePositiveX,
+						const std::string& fileNegativeX,
+						const std::string& filePositiveY,
+						const std::string& fileNegativeY,
+						const std::string& filePositiveZ,
+						const std::string& fileNegativeZ);
 
-	void clear() const;
+	const GLuint& getId() const;
 
 private:
+	GLuint _cubemapId;
 
-	struct ColorAttachment {
-		ColorAttachment(const GLuint& textureIdArg,
-						const GLuint& attachmentPositionArg);
-
-		GLuint textureId;
-		GLuint attachmentPosition;
-	};
-
-	std::vector<ColorAttachment> _colorAttachments;
-
+	//Cleans up OpenGL
 	void cleanup();
 
-	GLuint _framebuffer;
-	GLuint _depthbuffer;
+	//Once called at first instanciation
+	void ensureConstants();
 
-	Vector2ui _dimensions;
+	//Used for keeping track of bound textures
+	static GLuint _currentCubeMapBinding[MAX_TEXTURE_BINDINGS];
 };
 
 } /* namespace burn */
-#endif /* RENDERTARGET_H_ */
+#endif /* CUBEMAP_H_ */

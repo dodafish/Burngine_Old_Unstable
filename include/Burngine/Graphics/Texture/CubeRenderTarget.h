@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef RENDERTARGET_H_
-#define RENDERTARGET_H_
+#ifndef CUBERENDERTARGET_H_
+#define CUBERENDERTARGET_H_
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
@@ -34,12 +34,12 @@
 
 namespace burn {
 
-class Texture;
+class CubeMap;
 
-class BURNGINE_API RenderTarget : public NonCopyable {
+class BURNGINE_API CubeRenderTarget {
 public:
-	RenderTarget();
-	~RenderTarget();
+	CubeRenderTarget();
+	~CubeRenderTarget();
 
 	enum DepthbufferType {
 		NO_DEPTHBUFFER,
@@ -50,18 +50,16 @@ public:
 
 	bool create(const Vector2ui& dimensions,
 				const DepthbufferType& depthbufferType,
-				const Texture& texture);
+				const CubeMap& texture);
 
-	bool addColorAttachment(const Texture& texture,
+	bool addColorAttachment(const CubeMap& texture,
 							const GLuint& attachmentPosition);
-	bool removeColorAttachment(const Texture& texture);
+	bool removeColorAttachment(const CubeMap& texture);
 
-	bool bind() const;
+	bool bind(const Uint32& face) const;
 
 	void clear() const;
-
 private:
-
 	struct ColorAttachment {
 		ColorAttachment(const GLuint& textureIdArg,
 						const GLuint& attachmentPositionArg);
@@ -81,4 +79,4 @@ private:
 };
 
 } /* namespace burn */
-#endif /* RENDERTARGET_H_ */
+#endif /* CUBERENDERTARGET_H_ */

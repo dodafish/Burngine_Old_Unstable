@@ -21,31 +21,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include <Burngine/Graphics/Texture/RenderTarget.h>
+#include <Burngine/Graphics/Texture/CubeRenderTarget.h>
 
-#include <Burngine/Graphics/Texture/Texture.h>
+#include <Burngine/Graphics/Texture/CubeMap.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/System/Reporter.h>
 
 namespace burn {
 
-RenderTarget::ColorAttachment::ColorAttachment(	const GLuint& textureIdArg,
-												const GLuint& attachmentPositionArg) :
+CubeRenderTarget::ColorAttachment::ColorAttachment(	const GLuint& textureIdArg,
+													const GLuint& attachmentPositionArg) :
 textureId(textureIdArg),
 attachmentPosition(attachmentPositionArg) {
 }
 
-RenderTarget::RenderTarget() :
+CubeRenderTarget::CubeRenderTarget() :
 _framebuffer(0),
 _depthbuffer(0) {
 
 }
 
-RenderTarget::~RenderTarget() {
+CubeRenderTarget::~CubeRenderTarget() {
 	cleanup();
 }
 
-void RenderTarget::cleanup() {
+void CubeRenderTarget::cleanup() {
 
 	if(_framebuffer != 0){
 		ensureContext();
@@ -62,17 +62,17 @@ void RenderTarget::cleanup() {
 
 }
 
-bool RenderTarget::create(	const Vector2ui& dimensions,
-							const DepthbufferType& depthbufferType,
-							const Texture& texture) {
+bool CubeRenderTarget::create(	const Vector2ui& dimensions,
+								const DepthbufferType& depthbufferType,
+								const CubeMap& cubemap) {
 
-	if(dimensions.x == 0 || dimensions.y == 0){
-		Reporter::report("Unable to create RenderTarget! Dimensions are too little.", Reporter::ERROR);
+	if(dimensions.x == 0 || dimensions.y == 0 || dimensions.x != dimensions.y){
+		Reporter::report("Unable to create CubeRenderTarget! Dimensions are too little or invalid.", Reporter::ERROR);
 		return false;
 	}
 
-	if(texture.getId() == 0){
-		Reporter::report("Unable to create RenderTarget! Initial color attachment not created.", Reporter::ERROR);
+	if(cubemap.getId() == 0){
+		Reporter::report("Unable to create CubeRenderTarget! Initial color attachment not created.", Reporter::ERROR);
 		return false;
 	}
 
@@ -100,19 +100,23 @@ bool RenderTarget::create(	const Vector2ui& dimensions,
 		glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthbuffer);
 	}
 
-	//addColorAttachment(texture, 0);
+	if(!checkError())
+		return false;
 
 	//For later attachments:
-	ColorAttachment ca(texture.getId(), 0);
+	ColorAttachment ca(cubemap.getId(), 0);
 	_colorAttachments.push_back(ca);
 
-	glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture.getId(), 0);
-	GLenum drawBuffers[1] = {
-	GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, drawBuffers);
+	/*glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, cubemap.getId(), 0);
+	 GLenum drawBuffers[1] = {
+	 GL_COLOR_ATTACHMENT0 };
+	 glDrawBuffers(1, drawBuffers);*/
+
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, ca.textureId, 0);
 
 	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("RenderTexture: Failed to create render target!\n", Reporter::ERROR);
+		Reporter::report("CubeRenderTarget: Failed to create render target!\n", Reporter::ERROR);
+		checkError();
 		return false;
 	}
 
@@ -120,18 +124,18 @@ bool RenderTarget::create(	const Vector2ui& dimensions,
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
 	OpenGlControl::bindRenderBuffer(previousRenderBufferBinding);
 
-	return _framebuffer != 0;
+	return _framebuffer != 0 && checkError();
 }
 
-bool RenderTarget::addColorAttachment(	const Texture& texture,
-										const GLuint& attachmentPosition) {
+bool CubeRenderTarget::addColorAttachment(	const CubeMap& cubemap,
+											const GLuint& attachmentPosition) {
 
 	if(_framebuffer == 0){
 		Reporter::report("Cannot add color attachment. No framebuffer created!", Reporter::ERROR);
 		return false;
 	}
 
-	if(texture.getDimensions() != _dimensions){
+	if(cubemap.getDimensions() != _dimensions){
 		Reporter::report("Unable to add color attachment. Attachment has wrong dimensions!", Reporter::ERROR);
 		return false;
 	}
@@ -145,37 +149,25 @@ bool RenderTarget::addColorAttachment(	const Texture& texture,
 		if(_colorAttachments[i].attachmentPosition == attachmentPosition){
 			Reporter::report("Unable to add color attachment. Slot already taken!", Reporter::ERROR);
 			return false;
-		}else if(_colorAttachments[i].textureId == texture.getId()){
+		}else if(_colorAttachments[i].textureId == cubemap.getId()){
 			Reporter::report("Unable to add color attachment. Texture already attached!", Reporter::ERROR);
 			return false;
 		}
 	}
 
-	ColorAttachment ca(texture.getId(), attachmentPosition);
+	ColorAttachment ca(cubemap.getId(), attachmentPosition);
+	_colorAttachments.push_back(ca);
 
 	const GLuint& previousDrawBufferBinding = OpenGlControl::getDrawBufferBinding();
 
 	//Reconfigure framebuffer:
 	OpenGlControl::bindDrawBuffer(_framebuffer);
-	//Connect texture to framebuffer
-	glFramebufferTexture2D( GL_DRAW_FRAMEBUFFER,
-	GL_COLOR_ATTACHMENT0 + ca.attachmentPosition,
-							GL_TEXTURE_2D, ca.textureId, 0);
 
-	_colorAttachments.push_back(ca);
-
-	//Tell the framebuffer the new drawbufferset
-	std::vector<GLenum> drawBuffers;
-	for(size_t i = 0; i < _colorAttachments.size(); ++i){
-		drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + _colorAttachments[i].attachmentPosition);
-	}
-	glDrawBuffers(drawBuffers.size(), &drawBuffers[0]);
-
-	//Check:
-	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("RenderTexture: Failed to add color attachment!\n", Reporter::ERROR);
-		return false;
-	}
+	//Connect textures to framebuffer
+	for(size_t i = 0; i < _colorAttachments.size(); ++i)
+		glFramebufferTexture2D( GL_DRAW_FRAMEBUFFER,
+		GL_COLOR_ATTACHMENT0 + _colorAttachments[i].attachmentPosition,
+								GL_TEXTURE_CUBE_MAP_POSITIVE_X, _colorAttachments[i].textureId, 0);
 
 	//Restore:
 	OpenGlControl::bindDrawBuffer(previousDrawBufferBinding);
@@ -183,7 +175,7 @@ bool RenderTarget::addColorAttachment(	const Texture& texture,
 	return true;
 }
 
-bool RenderTarget::removeColorAttachment(const Texture& texture) {
+bool CubeRenderTarget::removeColorAttachment(const CubeMap& cubemap) {
 
 	if(_framebuffer == 0){
 		//Framebuffer is not created. No need to remove something (nothing attached)
@@ -192,7 +184,7 @@ bool RenderTarget::removeColorAttachment(const Texture& texture) {
 
 	//Lookup texture
 	for(size_t i = 0; i < _colorAttachments.size(); ++i){
-		if(_colorAttachments[i].textureId == texture.getId()){
+		if(_colorAttachments[i].textureId == cubemap.getId()){
 
 			_colorAttachments.erase(_colorAttachments.begin() + i);
 
@@ -201,12 +193,11 @@ bool RenderTarget::removeColorAttachment(const Texture& texture) {
 			//Reconfigure framebuffer:
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
 
-			//Tell the framebuffer the new drawbufferset
-			std::vector<GLenum> drawBuffers;
-			for(size_t i = 0; i < _colorAttachments.size(); ++i){
-				drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + _colorAttachments[i].attachmentPosition);
-			}
-			glDrawBuffers(drawBuffers.size(), &drawBuffers[0]);
+			//ReConnect textures to framebuffer
+			for(size_t i = 0; i < _colorAttachments.size(); ++i)
+				glFramebufferTexture2D( GL_DRAW_FRAMEBUFFER,
+				GL_COLOR_ATTACHMENT0 + _colorAttachments[i].attachmentPosition,
+										GL_TEXTURE_CUBE_MAP_POSITIVE_X, _colorAttachments[i].textureId, 0);
 
 			//Check:
 			if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
@@ -225,7 +216,10 @@ bool RenderTarget::removeColorAttachment(const Texture& texture) {
 	return true;
 }
 
-bool RenderTarget::bind() const {
+bool CubeRenderTarget::bind(const Uint32& face) const {
+
+	if(face > 5)
+		return false;
 
 	if(_framebuffer == 0)
 		return false;
@@ -235,10 +229,16 @@ bool RenderTarget::bind() const {
 	glViewport(0, 0, _dimensions.x, _dimensions.y);
 	OpenGlControl::bindDrawBuffer(_framebuffer);
 
+	//Bind the right faces:
+	for(size_t i = 0; i < _colorAttachments.size(); ++i)
+		glFramebufferTexture2D( GL_DRAW_FRAMEBUFFER,
+		GL_COLOR_ATTACHMENT0 + _colorAttachments[i].attachmentPosition,
+								GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, _colorAttachments[i].textureId, 0);
+
 	return true;
 }
 
-void RenderTarget::clear() const {
+void CubeRenderTarget::clear() const {
 
 	if(_framebuffer == 0)
 		return;

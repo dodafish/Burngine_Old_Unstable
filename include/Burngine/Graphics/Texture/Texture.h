@@ -31,9 +31,6 @@
 
 namespace burn {
 
-//Limited to 32, because almost every graphicscard supports at least 32
-#define MAX_TEXTURE_BINDINGS 32
-
 /**
  * @brief A texture that holds 2D pixeldata
  */
@@ -57,8 +54,6 @@ public:
 	const GLuint& getId() const;
 
 private:
-	//std::vector<RenderTarget&> _boundRenderTargets;
-
 	GLuint _textureId;
 
 	//Cleans up OpenGL
@@ -68,8 +63,7 @@ private:
 	void ensureConstants();
 
 	//Used for keeping track of bound textures
-	static GLuint _currentTextureBinding[MAX_TEXTURE_BINDINGS];
-	static Int32 _realTextureBindingCap;
+	static GLuint _currentTexture2DBinding[MAX_TEXTURE_BINDINGS];
 };
 
 } /* namespace burn */
