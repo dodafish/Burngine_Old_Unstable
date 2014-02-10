@@ -33,7 +33,7 @@ void Texture::ensureConstants() {
 		//Get OpenGL informations about textures
 		ensureContext();
 		for(int i = 0; i != MAX_TEXTURE_BINDINGS; ++i)
-			_currentTextureBinding[i] = 0;
+			_currentTexture2DBinding[i] = 0;
 		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &_realTextureBindingCap);
 
 		if(_realTextureBindingCap == 0){
@@ -44,8 +44,7 @@ void Texture::ensureConstants() {
 	}
 }
 
-GLuint Texture::_currentTextureBinding[];
-Int32 Texture::_realTextureBindingCap = 0;
+GLuint Texture::_currentTexture2DBinding[];
 
 Texture::Texture() :
 _textureId(0) {
@@ -73,8 +72,8 @@ void Texture::cleanup() {
 
 		//Unbind where necessary
 		for(size_t i = 0; i != MAX_TEXTURE_BINDINGS; ++i){
-			if(_currentTextureBinding[i] == _textureId){
-				_currentTextureBinding[i] = 0;
+			if(_currentTexture2DBinding[i] == _textureId){
+				_currentTexture2DBinding[i] = 0;
 			}
 		}
 
@@ -89,6 +88,11 @@ void Texture::cleanup() {
 bool Texture::create(	const Vector2ui& dimensions,
 						const InternalFormat& internalFormat,
 						GLubyte* data) {
+
+	if(dimensions.x == 0 || dimensions.y == 0){
+		Reporter::report("Unable to create texture. Dimensions must be greater than 0!", Reporter::ERROR);
+		return false;
+	}
 
 	_dimensions = dimensions;
 	_internalFormat = internalFormat;
@@ -114,7 +118,7 @@ bool Texture::create(	const Vector2ui& dimensions,
 					data);
 
 	//Restore previous bound texture
-	glBindTexture(GL_TEXTURE_2D, _currentTextureBinding[0]);
+	glBindTexture(GL_TEXTURE_2D, _currentTexture2DBinding[0]);
 
 	if(_textureId == 0){
 		Reporter::report("Failed to create texture.", Reporter::ERROR);
@@ -140,7 +144,7 @@ bool Texture::bind(const Uint32& unit) const {
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 	glBindSampler(unit, _samplerId);
 
-	_currentTextureBinding[unit] = _textureId;
+	_currentTexture2DBinding[unit] = _textureId;
 
 	return true;
 }
@@ -154,8 +158,6 @@ const GLuint& Texture::getId() const {
 bool Texture::loadFromFile(const std::string& file) {
 
 	ensureContext();
-
-	//cleanup();
 
 	_textureId = SOIL_load_OGL_texture(	file.c_str(),
 										SOIL_LOAD_AUTO,

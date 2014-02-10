@@ -131,6 +131,10 @@ public:
 									bool forceBindingCall = false);
 	static const GLuint& getRenderBufferBinding();
 
+	//////////////////////////////////////////////
+
+	static bool checkError();
+
 private:
 
 	//Static only
@@ -144,6 +148,11 @@ private:
 	static GLuint _currentRenderBufferBinding;
 
 };
+
+//Shortcut
+inline bool checkError(){
+	return OpenGlControl::checkError();
+}
 
 } /* namespace burn */
 #endif /* OPENGLCONTROL_H_ */

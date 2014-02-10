@@ -239,4 +239,15 @@ const GLuint& OpenGlControl::getRenderBufferBinding() {
 	return _currentRenderBufferBinding;
 }
 
+bool OpenGlControl::checkError() {
+	ensureContext();
+
+	GLenum err = glGetError();
+	if(err != GL_NO_ERROR){
+		Reporter::report("OpenGL Error: " + err, Reporter::ERROR);
+	}
+
+	return err == GL_NO_ERROR;
+}
+
 } /* namespace burn */

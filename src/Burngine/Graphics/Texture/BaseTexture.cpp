@@ -25,6 +25,8 @@
 
 namespace burn {
 
+Int32 BaseTexture::_realTextureBindingCap = 0;
+
 BaseTexture::BaseTexture() :
 _samplerId(0),
 _magFilter(MAG_BILINEAR),

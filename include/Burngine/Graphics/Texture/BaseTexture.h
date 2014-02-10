@@ -31,6 +31,9 @@
 
 namespace burn {
 
+//Limited to 32, because almost every graphicscard supports at least 32
+#define MAX_TEXTURE_BINDINGS 32
+
 class BURNGINE_API BaseTexture : public NonCopyable {
 public:
 
@@ -92,6 +95,7 @@ protected:
 	GLenum estimateFormat(const InternalFormat& internalFormat) const;
 	GLenum estimateType(const InternalFormat& internalFormat) const;
 
+	static Int32 _realTextureBindingCap;
 };
 
 } /* namespace burn */

@@ -30,13 +30,12 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 
 #include <Burngine/Graphics/Scene/Camera.h>
-//#include <Burngine/Graphics/Texture/RenderTexture.h>
 #include <Burngine/Graphics/Scene/GBuffer.h>
-//#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
-//#include <Burngine/Graphics/Texture/VarianceShadowCubeMap.h>
 
 #include <Burngine/Graphics/Texture/RenderTarget.h>
 #include <Burngine/Graphics/Texture/Texture.h>
+#include <Burngine/Graphics/Texture/CubeRenderTarget.h>
+#include <Burngine/Graphics/Texture/CubeMap.h>
 
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -150,7 +149,8 @@ private:
 	//Shadowmaps:
 	Texture _vsm;
 	RenderTarget _vsmTarget;
-	//Texture _vscm;
+	CubeMap _vscm;
+	CubeRenderTarget _vscmTarget;
 
 };
 
