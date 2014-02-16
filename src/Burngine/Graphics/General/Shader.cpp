@@ -215,10 +215,10 @@ void Shader::setUniform(const GLint& uniformLocation,
 
 	if(_id != _currentProgram){
 		glUseProgram(_id);
-		glUniform4fv(uniformLocation, 1, &value);
+		glUniform4fv(uniformLocation, 1, &(value[0]));
 		glUseProgram(_currentProgram);
 	}else{
-		glUniform4fv(uniformLocation, 1, &value);
+		glUniform4fv(uniformLocation, 1, &(value[0]));
 	}
 
 }
@@ -233,10 +233,10 @@ void Shader::setUniform(const GLint& uniformLocation,
 
 	if(_id != _currentProgram){
 		glUseProgram(_id);
-		glUniform3fv(uniformLocation, 1, &value);
+		glUniform3fv(uniformLocation, 1, &(value[0]));
 		glUseProgram(_currentProgram);
 	}else{
-		glUniform3fv(uniformLocation, 1, &value);
+		glUniform3fv(uniformLocation, 1, &(value[0]));
 	}
 
 }
@@ -251,10 +251,10 @@ void Shader::setUniform(const GLint& uniformLocation,
 
 	if(_id != _currentProgram){
 		glUseProgram(_id);
-		glUniform2fv(uniformLocation, 1, &value);
+		glUniform2fv(uniformLocation, 1, &(value[0]));
 		glUseProgram(_currentProgram);
 	}else{
-		glUniform2fv(uniformLocation, 1, &value);
+		glUniform2fv(uniformLocation, 1, &(value[0]));
 	}
 
 }
@@ -430,6 +430,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to load/compile shader: " + vertexShaderFile, Reporter::ERROR);
 		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -446,6 +447,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to load/compile shader: " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -463,6 +465,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 	if(!Result){
+		Reporter::report("Failed to link shaders: " + vertexShaderFile + " & " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
