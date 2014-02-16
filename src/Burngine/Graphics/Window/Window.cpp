@@ -58,7 +58,7 @@ bool Window::create(const WindowSettings& settings,
 	Reporter::report("Version string: " + ss.str());
 
 	// Set the window resolution according to _settings
-	estimateWindowResolution();
+	_settings = ContextHandler::estimateWindowResolution(_settings);
 
 	//Create Window with ContextHandler :)
 	//This returns only on success, program will get terminated otherwise
@@ -98,29 +98,6 @@ bool Window::create(const WindowSettings& settings,
 	_uptime.reset();
 
 	return true;
-}
-
-void Window::estimateWindowResolution() {
-
-	//No need to estimate a resolution. Use the set resolution
-	if(!_settings.isFullscreen())
-		return;
-
-	//We don't want the highest res., but ours -> return
-	if(!_settings.isUsingHighestResolution())
-		return;
-
-	//We want fullscreen with the best resolution possible
-	const GLFWvidmode* vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	if(vidmode == nullptr){
-		//Failed to get information about the video mode
-		return;
-	}
-
-	//Overwrite the res. of settings with the highest ones
-	_settings.setWidth(vidmode->width);
-	_settings.setHeight(vidmode->height);
-
 }
 
 const WindowSettings& Window::getSettings() const {
@@ -224,6 +201,8 @@ void Window::setPolygonMode(const PolygonMode& mode) const {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	glPointSize(2.5f);
+
 }
 
 } /* namespace burn */

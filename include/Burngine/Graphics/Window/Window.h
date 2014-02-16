@@ -151,7 +151,6 @@ public:
 private:
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
-	void estimateWindowResolution();
 
 	GLFWwindow* _window;
 	WindowSettings _settings;

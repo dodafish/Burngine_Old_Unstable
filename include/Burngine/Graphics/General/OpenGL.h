@@ -69,6 +69,8 @@ public:
 	 */
 	static void useContext(GLFWwindow* window);
 
+	static WindowSettings estimateWindowResolution(const WindowSettings& ws);
+
 private:
 
 	//Static only
@@ -83,7 +85,7 @@ private:
 
 	static GLFWwindow* _preferredWindow;
 	static GLFWwindow* _fakeWindow;
-	static std::vector<GLFWwindow*> _windows; ///< These are real ones
+	static std::vector<GLFWwindow*> _windows;    ///< These are real ones
 	static bool _contextEnsured;
 	static bool _isGlewInitialized, _isGlfwInitialized;
 };
