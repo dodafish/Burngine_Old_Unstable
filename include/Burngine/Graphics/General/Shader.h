@@ -61,7 +61,8 @@ public:
 	 *
 	 * @see activate()
 	 */
-	bool loadFromString(const std::string& vertexShader, const std::string& fragmentShader);
+	bool loadFromString(const std::string& vertexShader,
+						const std::string& fragmentShader);
 
 	/**
 	 * @brief Loads shader from file
@@ -71,7 +72,8 @@ public:
 	 *
 	 * @note BurngineShaders are loaded with this function
 	 */
-	bool loadFromFile(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
+	bool loadFromFile(	const std::string& vertexShaderFile,
+						const std::string& fragmentShaderFile);
 
 	/**
 	 * @brief Activates the shader. It will be used for rendering until
@@ -92,9 +94,9 @@ public:
 	 * @param uniformName The name of the uniform.
 	 *
 	 * @return Returns a value >= 0 on success or -1 when the uniform
-	 * could not be found.
+	 * could not be found or the uniform's name is invalid.
 	 */
-	GLuint getUniformLocation(const std::string& uniformName) const;
+	GLint getUniformLocation(const std::string& uniformName) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -102,7 +104,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const Matrix4f& value) const;
+	void setUniform(const std::string& name,
+					const Matrix4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -110,7 +113,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const Vector4f& value) const;
+	void setUniform(const std::string& name,
+					const Vector4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -118,7 +122,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const Vector3f& value) const;
+	void setUniform(const std::string& name,
+					const Vector3f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -126,7 +131,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const Vector2f& value) const;
+	void setUniform(const std::string& name,
+					const Vector2f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -134,7 +140,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const int& value) const;
+	void setUniform(const std::string& name,
+					const int& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -142,7 +149,76 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	void setUniform(const std::string& name, const float& value) const;
+	void setUniform(const std::string& name,
+					const float& value) const;
+
+	////////////////////////////////////////////////////////////
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const Matrix4f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const Vector4f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const Vector3f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const Vector2f& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const int& value) const;
+
+	/**
+	 * @brief Sets a variable in the shader program
+	 *
+	 * @param uniformLocation Location of the uniform
+	 * @param value Value to set to the variable
+	 *
+	 * @see getUniformLocation()
+	 */
+	void setUniform(const GLint& uniformLocation,
+					const float& value) const;
 
 private:
 	GLuint _id;

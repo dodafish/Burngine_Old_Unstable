@@ -180,6 +180,122 @@ void Shader::setUniform(const std::string& name,
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const Matrix4f& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniformMatrix4fv(uniformLocation, 1,
+		GL_FALSE,
+							&value[0][0]);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniformMatrix4fv(uniformLocation, 1,
+		GL_FALSE,
+							&value[0][0]);
+	}
+
+}
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const Vector4f& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniform4fv(uniformLocation, 1, &value);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniform4fv(uniformLocation, 1, &value);
+	}
+
+}
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const Vector3f& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniform3fv(uniformLocation, 1, &value);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniform3fv(uniformLocation, 1, &value);
+	}
+
+}
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const Vector2f& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniform2fv(uniformLocation, 1, &value);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniform2fv(uniformLocation, 1, &value);
+	}
+
+}
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const int& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniform1iv(uniformLocation, 1, &value);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniform1iv(uniformLocation, 1, &value);
+	}
+
+}
+
+void Shader::setUniform(const GLint& uniformLocation,
+						const float& value) const {
+
+	if(uniformLocation < 0)
+		return;
+
+	ensureContext();
+
+	if(_id != _currentProgram){
+		glUseProgram(_id);
+		glUniform1fv(uniformLocation, 1, &value);
+		glUseProgram(_currentProgram);
+	}else{
+		glUniform1fv(uniformLocation, 1, &value);
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void Shader::activate() const {
 	ensureContext();
 
@@ -187,12 +303,12 @@ void Shader::activate() const {
 	_currentProgram = _id;
 }
 
-GLuint Shader::getUniformLocation(const std::string& uniformName) const {
+GLint Shader::getUniformLocation(const std::string& uniformName) const {
 	if(_id != 0){
 		ensureContext();
 		return glGetUniformLocation(_id, uniformName.c_str());
 	}
-	return 0;
+	return -1;
 }
 
 bool Shader::loadFromString(const std::string& vertexShader,
