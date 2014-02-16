@@ -77,12 +77,14 @@ GLFWwindow* ContextHandler::createWindow(const WindowSettings& settings) {
 
 	//Create OpenGL window
 	glfwDefaultWindowHints();
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //No resizable window
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);    //No resizable window
 	window = glfwCreateWindow(	static_cast<int>(settings.getWidth()),
 								static_cast<int>(settings.getHeight()),
 								settings.getTitle().c_str(),
-								settings.isFullscreen() ? glfwGetPrimaryMonitor() : 0, //Pass the primary monitor if we want fullscreen
-								_fakeWindow != nullptr ? _fakeWindow : 0);
+								settings.isFullscreen() ? 	glfwGetPrimaryMonitor() :
+															0,    //Pass the primary monitor if we want fullscreen
+								_fakeWindow != nullptr ? 	_fakeWindow :
+															0);
 
 	//Check if creation succeeded
 	if(window == nullptr){
@@ -93,12 +95,42 @@ GLFWwindow* ContextHandler::createWindow(const WindowSettings& settings) {
 		//Store window in list
 		_windows.push_back(window);
 		_preferredWindow = window;
-		_contextEnsured = false; //Use the new window, not the old context
+		_contextEnsured = false;    //Use the new window, not the old context
 	}
 
 	ensureContext();
 
 	return window;
+}
+
+WindowSettings ContextHandler::estimateWindowResolution(const WindowSettings& ws) {
+
+	//We need GLFW here
+	ensureGlfw();
+
+	//No need to estimate a resolution. Use the set resolution
+	if(!ws.isFullscreen())
+		return ws;
+
+	//We don't want the highest res., but ours -> return
+	if(!ws.isUsingHighestResolution())
+		return ws;
+
+	//We want fullscreen with the best resolution possible
+	const GLFWvidmode* vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	if(vidmode == nullptr){
+		//Failed to get information about the video mode
+		return ws;
+	}
+
+	WindowSettings newWs(ws);
+
+	//Overwrite the res. of settings with the highest ones
+	newWs.setWidth(vidmode->width);
+	newWs.setHeight(vidmode->height);
+
+	return newWs;
+
 }
 
 void ContextHandler::destroyWindow(GLFWwindow* window) {
@@ -120,7 +152,7 @@ void ContextHandler::destroyWindow(GLFWwindow* window) {
 	//Remove it from preferred when necessary
 	if(window == _preferredWindow){
 		_preferredWindow = nullptr;
-		_contextEnsured = false; //Find a new one, as the old one might be the destroyed window
+		_contextEnsured = false;    //Find a new one, as the old one might be the destroyed window
 	}
 
 	//Finally destroy the window
@@ -163,16 +195,16 @@ void ContextHandler::ensureContext() {
 			glfwMakeContextCurrent(_fakeWindow);
 		}else{
 			//We have to create a fakewindow first
-			glfwDefaultWindowHints(); //Reset window hints
-			glfwWindowHint(GLFW_VISIBLE, GL_FALSE); //Hide the window
+			glfwDefaultWindowHints();    //Reset window hints
+			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);    //Hide the window
 			_fakeWindow = glfwCreateWindow(1, 1, "", 0, 0);
-			glfwDefaultWindowHints(); //Reset window hints
+			glfwDefaultWindowHints();    //Reset window hints
 
 			//Check if creation succeeded
 			if(_fakeWindow == nullptr){
 				Reporter::report("Failed to ensure context! Creation of fake window failed!", Reporter::ERROR);
-				glfwTerminate(); // <- ensureGlfw initialized it. Terminate before end
-				exit(1); //Terminate program... :(
+				glfwTerminate();    // <- ensureGlfw initialized it. Terminate before end
+				exit(1);    //Terminate program... :(
 			}
 
 			//Fake window is created. Make its context current
