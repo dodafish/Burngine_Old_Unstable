@@ -66,6 +66,10 @@ const std::vector<Mesh>& Model::getMeshes() const {
 	return _meshes;
 }
 
+std::vector<Mesh>* Model::getMeshesPointer(){
+	return &_meshes;
+}
+
 bool Model::loadFromFile(const std::string& file) {
 
 	Assimp::Importer importer;

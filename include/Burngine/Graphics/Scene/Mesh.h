@@ -70,7 +70,7 @@ public:
 	 *
 	 * @see setVertices()
 	 */
-	size_t getVertexCount() const;
+	inline const size_t& getVertexCount() const;
 
 	/**
 	 * @brief Returns the id of the position-buffer.
@@ -164,7 +164,12 @@ private:
 
 	std::vector<Vertex> _vertices;
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
+	size_t _verticesCount;
 };
+
+const size_t& Mesh::getVertexCount() const {
+	return _verticesCount;
+}
 
 } /* namespace burn */
 #endif /* MESH_H_ */

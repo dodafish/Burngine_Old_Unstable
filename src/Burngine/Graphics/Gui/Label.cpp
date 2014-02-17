@@ -61,11 +61,11 @@ void Label::draw() {
 		}
 
 		//Default character
-		rect.width += (_font.getCharacter(_text[i], _fontSize).getAdvance().x
-		- _font.getCharacter(_text[i], _fontSize).getBearing().x)
-		+ _font.getCharacter(_text[i], _fontSize).getBearing().x;
-		rect.height = std::max(_font.getCharacter(_text[i], _fontSize).getDimensions().y, rect.height);
-		highestAdvanceY = std::max(highestAdvanceY, _font.getCharacter(_text[i], _fontSize).getAdvance().y);
+		const std::shared_ptr<Character>& c = _font.getCharacter(_text[i], _fontSize);
+
+		rect.width += (c->getAdvance().x - c->getBearing().x) + c->getBearing().x;
+		rect.height = std::max(c->getDimensions().y, rect.height);
+		highestAdvanceY = std::max(highestAdvanceY, c->getAdvance().y);
 		finalWidth = std::max(finalWidth, rect.width);
 	}
 	if(!firstLine){
@@ -81,8 +81,8 @@ void Label::draw() {
 	RectangleShape shape;
 	shape.setColor(_backgroundColor);
 	shape.setPosition(Vector2f(static_cast<float>(rect.left) - _margin, static_cast<float>(rect.bottom) + _margin));
-	shape.setDimensions(
-	Vector2f(static_cast<float>(rect.width) + _margin * 2.f, static_cast<float>(rect.height) - _margin * 2.f));
+	shape.setDimensions(Vector2f(	static_cast<float>(rect.width) + _margin * 2.f,
+									static_cast<float>(rect.height) - _margin * 2.f));
 	shape.setRotation(_rotation);
 	shape.draw();
 

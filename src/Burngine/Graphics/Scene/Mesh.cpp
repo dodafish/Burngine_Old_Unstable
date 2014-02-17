@@ -26,9 +26,12 @@
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 
+#include <iostream>
+
 namespace burn {
 
-Mesh::Mesh() {
+Mesh::Mesh() :
+_verticesCount(0) {
 
 	_positionVbo.create();
 	_colorVbo.create();
@@ -44,8 +47,9 @@ _vertices(other._vertices),
 _positionVbo(other._positionVbo),
 _colorVbo(other._colorVbo),
 _uvVbo(other._uvVbo),
-_normalVbo(other._normalVbo) {
-
+_normalVbo(other._normalVbo),
+_verticesCount(other._verticesCount) {
+	std::cout << "Evil copy!\n";
 }
 Mesh& Mesh::operator==(const Mesh& other) {
 
@@ -60,14 +64,11 @@ Mesh& Mesh::operator==(const Mesh& other) {
 	_uvVbo = (other._uvVbo);
 	_normalVbo = (other._normalVbo);
 
+	std::cout << "Evil copy!\n";
 	return *this;
 }
 Mesh::~Mesh() {
 
-}
-
-size_t Mesh::getVertexCount() const {
-	return _vertices.size();
 }
 
 void Mesh::setVertices(const std::vector<Vertex>& vertices) {
@@ -134,6 +135,8 @@ bool Mesh::update() {
 		_colorVbo.uploadDataToGpu();
 		_normalVbo.uploadDataToGpu();
 		_uvVbo.uploadDataToGpu();
+
+		_verticesCount = _vertices.size();
 
 		return true;
 

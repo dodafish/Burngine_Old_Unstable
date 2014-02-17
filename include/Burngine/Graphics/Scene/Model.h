@@ -74,6 +74,7 @@ public:
 	 * @see getMeshCount()
 	 */
 	const std::vector<Mesh>& getMeshes() const;
+	std::vector<Mesh>* getMeshesPointer();
 
 	bool isLoaded() const;
 

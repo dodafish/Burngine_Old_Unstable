@@ -70,7 +70,7 @@ public:
 	 *
 	 * @see loadFromFile()
 	 */
-	const Character& getCharacter(const Uint32& codePoint, const unsigned int& fontSize);
+	const std::shared_ptr<Character>& getCharacter(const Uint32& codePoint, const unsigned int& fontSize);
 
 	/**
 	 * @brief Check if a fontset is loaded
@@ -99,7 +99,7 @@ public:
 
 private:
 	void cleanup();
-	const Character& createCharacter(const Uint32& codePoint);
+	const std::shared_ptr<Character>& createCharacter(const Uint32& codePoint);
 	bool setFontSize(const unsigned int& fontSize);
 
 	void* _face;
@@ -107,7 +107,7 @@ private:
 	unsigned int _loadedFontSize;
 
 	std::vector<std::shared_ptr<burn::Character>> _characters;
-	Character _emptyCharacter; ///< Will be return on errors and fails
+	std::shared_ptr<Character> _emptyCharacter; ///< Will be return on errors and fails
 };
 
 } /* namespace burn */

@@ -34,7 +34,7 @@ Font::Font() :
 _face(0),
 _isLoaded(false),
 _loadedFontSize(32),
-_emptyCharacter() {
+_emptyCharacter(new Character()) {
 
 }
 
@@ -102,7 +102,7 @@ void Font::cleanup() {
 
 }
 
-const Character& Font::getCharacter(const Uint32& codePoint, const unsigned int& fontSize) {
+const std::shared_ptr<Character>& Font::getCharacter(const Uint32& codePoint, const unsigned int& fontSize) {
 
 	//Update the wished fontsize
 	if(!setFontSize(fontSize))
@@ -112,7 +112,7 @@ const Character& Font::getCharacter(const Uint32& codePoint, const unsigned int&
 	for(size_t i = 0; i < _characters.size(); ++i){
 		if(*(_characters[i]) == codePoint){
 			if(_characters[i]->getSize() == fontSize){
-				return *(_characters[i]);
+				return _characters[i];
 			}
 		}
 	}
@@ -139,7 +139,7 @@ bool Font::setFontSize(const unsigned int& fontSize) {
 	return false;
 }
 
-const Character& Font::createCharacter(const Uint32& codePoint) {
+const std::shared_ptr<Character>& Font::createCharacter(const Uint32& codePoint) {
 
 	FT_Face face = static_cast<FT_Face>(_face);
 
@@ -172,7 +172,7 @@ const Character& Font::createCharacter(const Uint32& codePoint) {
 	//the texture they hold is not destroyed automatically
 	_characters.push_back(ch);
 
-	return *ch;
+	return ch;
 }
 
 bool Font::isLoaded() const {
