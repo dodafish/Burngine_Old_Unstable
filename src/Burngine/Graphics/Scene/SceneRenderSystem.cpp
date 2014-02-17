@@ -250,7 +250,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 	shader.setUniform(viewMatrixLoc, camera.getViewMatrix());
 	shader.setUniform(projectionMatrixLoc, camera.getProjectionMatrix());
 
-	if(typeid(*(node)) == typeid(StaticMeshNode)){
+	//if(typeid(*(node)) == typeid(StaticMeshNode)){
 
 		//Cast this ugly pointer to a real object
 		StaticMeshNode n = *(static_cast<StaticMeshNode*>(node));
@@ -320,7 +320,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 
 		}
 
-	}
+	//}
 
 }
 
