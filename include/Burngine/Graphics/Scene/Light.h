@@ -129,22 +129,21 @@ public:
 	void removeParentScene(Scene* scene);
 
 	/**
-	 * @brief Softness is in development. Better don't use this
-	 * (set it to 0.f; default) until further notice
+	 * @brief Enables or disables the softening step of this light's shadows
 	 */
-	void setSoftness(const float& softness);
+	void softenShadow(bool enabled = true);
 
 	/**
-	 * @brief Softness is in development. Better don't use this
-	 * (set it to 0.f; default) until further notice
+	 * @brief Returns true or false whether this light's shadows are
+	 * softened
 	 */
-	const float& getSoftness() const;
+	bool isSofteningShadow() const;
 
 protected:
 
 	Vector3f _color;
 	float _intensity;
-	float _softness;
+	bool _isSofteningShadow;
 
 	std::vector<Scene*> _parents;
 	void removeAllParents();

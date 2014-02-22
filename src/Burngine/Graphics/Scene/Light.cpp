@@ -42,14 +42,14 @@ void Light::removeAllParents() {
 Light::Light() :
 _color(Vector3f(1.f)),
 _intensity(10.f),
-_softness(0.f){
+_isSofteningShadow(false) {
 
 }
 
 Light::Light(const Light& other) :
 _color(other._color),
 _intensity(other._intensity),
-_softness(0.f){
+_isSofteningShadow(other._isSofteningShadow) {
 
 	_parents = other._parents;
 	for(size_t i = 0; i < _parents.size(); ++i){
@@ -64,7 +64,7 @@ Light& Light::operator=(const Light& other) {
 
 	_color = other._color;
 	_intensity = other._intensity;
-	_softness = other._softness;
+	_isSofteningShadow = other._isSofteningShadow;
 
 	removeAllParents();
 
@@ -84,16 +84,16 @@ Light::~Light() {
 void Light::addParentScene(Scene* scene) {
 	for(size_t i = 0; i < _parents.size(); ++i){
 		if(_parents[i] == scene)
-			return; //Already added as parent
+			return;    //Already added as parent
 	}
-	_parents.push_back(scene); //Add to parents
+	_parents.push_back(scene);    //Add to parents
 }
 
 void Light::removeParentScene(Scene* scene) {
 	for(size_t i = 0; i < _parents.size(); ++i){
 		if(_parents[i] == scene){
 			_parents.erase(_parents.begin() + i);
-			return; //addParentScene() ensures, that a scene is added only once. So return
+			return;    //addParentScene() ensures, that a scene is added only once. So return
 		}
 	}
 }
@@ -107,22 +107,20 @@ const Vector3f& Light::getColor() const {
 }
 
 void Light::setIntensity(const float& intensity) {
-	_intensity = (intensity > 0) ? intensity : 0;
+	_intensity = (intensity > 0) ? 	intensity :
+									0;
 }
 
 const float& Light::getIntensity() const {
 	return _intensity;
 }
 
-void Light::setSoftness(const float& softness) {
-	if(softness < 0.f)
-		_softness = 0.f;
-	else
-		_softness = softness;
+void Light::softenShadow(bool enabled) {
+	_isSofteningShadow = enabled;
 }
 
-const float& Light::getSoftness() const {
-	return _softness;
+bool Light::isSofteningShadow() const {
+	return _isSofteningShadow;
 }
 
 } /* namespace burn */

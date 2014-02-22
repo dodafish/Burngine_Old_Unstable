@@ -55,16 +55,18 @@ Scene::~Scene() {
 }
 
 void Scene::draw(	const Camera& camera,
-					const SceneRenderSystem::RenderMode& mode) {
+					const SceneRenderSystem::RenderMode& mode,
+					Texture* targetTexture) {
 
-	_renderSystem.render(	0,
-							Vector2ui(_window.getSettings().getWidth(), _window.getSettings().getHeight()),
-							camera,
-							mode,
-							_nodes,
-							_lights,
-							_ambientColor,
-							_isLightingEnabled);
+	GLuint target = 0;
+	Vector2ui targetDims(_window.getSettings().getWidth(), _window.getSettings().getHeight());
+
+	if(targetTexture != nullptr && targetTexture->getId() != 0){
+		target = targetTexture->getId();
+		targetDims = targetTexture->getDimensions();
+	}
+
+	_renderSystem.render(target, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
 
 }
 
@@ -86,7 +88,7 @@ void Scene::detachAll() {
 void Scene::attachSceneNode(SceneNode& node) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node)
-			return; //Already attached
+			return;    //Already attached
 	}
 	_nodes.push_back(&node);
 	node.addParentScene(this);
@@ -109,7 +111,7 @@ void Scene::detachSceneNode(SceneNode& node) {
 void Scene::attachLight(Light& light) {
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light)
-			return; //Already attached
+			return;    //Already attached
 	}
 	_lights.push_back(&light);
 	light.addParentScene(this);

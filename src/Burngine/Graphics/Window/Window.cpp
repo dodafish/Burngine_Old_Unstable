@@ -38,6 +38,7 @@ namespace burn {
 glm::mat4 Window::_orthoMatrix;
 
 Window::Window() :
+_polygonMode(FILLED),
 _window(nullptr),
 _framerateLimit(0),
 _vertexArrayID(0) {
@@ -143,7 +144,6 @@ void Window::display() {
 
 	ContextHandler::useContext(_window);
 
-
 	if(_framerateLimit != 0){
 		_elapsedTime = _clock.reset();
 		if(_elapsedTime.asMicroseconds() < (1000000.0 / _framerateLimit)){
@@ -195,14 +195,20 @@ void Window::setPolygonMode(const PolygonMode& mode) const {
 
 	ContextHandler::useContext(_window);
 
+	_polygonMode = mode;
+
 	if(mode == FILLED)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	else if(mode == LINE)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	glPointSize(2.5f);
+	glPointSize(2.0f);
 
+}
+
+const Window::PolygonMode& Window::getPolygonMode() const {
+	return _polygonMode;
 }
 
 } /* namespace burn */

@@ -252,73 +252,73 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 
 	//if(typeid(*(node)) == typeid(StaticMeshNode)){
 
-		//Cast this ugly pointer to a real object
-		StaticMeshNode* n = (static_cast<StaticMeshNode*>(node));
+	//Cast this ugly pointer to a real object
+	StaticMeshNode* n = (static_cast<StaticMeshNode*>(node));
 
-		if(!n->isLoaded())
-			return;
+	if(!n->isLoaded())
+		return;
 
-		//Calculate and set model's matrices
-		Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
-		shader.setUniform(modelMatrixLoc, node->getModelMatrix());
-		shader.setUniform(normalMatrixLoc, normalMatrix);
+	//Calculate and set model's matrices
+	Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
+	shader.setUniform(modelMatrixLoc, node->getModelMatrix());
+	shader.setUniform(normalMatrixLoc, normalMatrix);
 
-		//StaticMeshNode consists of several meshes
-		std::vector<Mesh>* meshes = n->getMeshesPointer();
-		for(size_t i = 0; i < meshes->size(); ++i){
+	//StaticMeshNode consists of several meshes
+	std::vector<Mesh>* meshes = n->getMeshesPointer();
+	for(size_t i = 0; i < meshes->size(); ++i){
 
-			//Retreive the mesh
-			Mesh* mesh = &((*meshes)[i]);
+		//Retreive the mesh
+		Mesh* mesh = &((*meshes)[i]);
 
-			//Set OpenGL according to mesh's flags
-			mesh->getMaterial().setOpenGlByFlags();
+		//Set OpenGL according to mesh's flags
+		mesh->getMaterial().setOpenGlByFlags();
 
-			//Set uniforms depending on mesh's material
-			if(mesh->getMaterial().getType() == Material::SOLID_COLOR){
-				shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_COLORED);
-				shader.setUniform(meshColorLoc, mesh->getMaterial().getDiffuseColor());
-			}else{
-				shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
-				mesh->getTexture().bind();
-			}
-
-			//Bind bufferobjects according to renderflags
-			glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
-			glEnableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
-			glEnableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
-
-			//Reset flags to original parameter
-			int flags = constflags;
-
-			if(flags >= UV){
-				mesh->getUvVbo().bind();
-				glVertexAttribPointer(_vboIndices[UV_ARRAY_INDEX], 2,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= UV;
-			}
-			if(flags >= NORMAL){
-				mesh->getNormalVbo().bind();
-				glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= NORMAL;
-			}
-			if(flags >= POSITION){
-				mesh->getPositionVbo().bind();
-				glVertexAttribPointer(_vboIndices[POSITION_ARRAY_INDEX], 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= POSITION;
-			}
-
-			OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh->getVertexCount(), shader);
-
-			glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
-			glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
-			glDisableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
-
+		//Set uniforms depending on mesh's material
+		if(mesh->getMaterial().getType() == Material::SOLID_COLOR){
+			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_COLORED);
+			shader.setUniform(meshColorLoc, mesh->getMaterial().getDiffuseColor());
+		}else{
+			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
+			mesh->getTexture().bind();
 		}
+
+		//Bind bufferobjects according to renderflags
+		glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
+		glEnableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
+		glEnableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+
+		//Reset flags to original parameter
+		int flags = constflags;
+
+		if(flags >= UV){
+			mesh->getUvVbo().bind();
+			glVertexAttribPointer(_vboIndices[UV_ARRAY_INDEX], 2,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= UV;
+		}
+		if(flags >= NORMAL){
+			mesh->getNormalVbo().bind();
+			glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= NORMAL;
+		}
+		if(flags >= POSITION){
+			mesh->getPositionVbo().bind();
+			glVertexAttribPointer(_vboIndices[POSITION_ARRAY_INDEX], 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= POSITION;
+		}
+
+		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh->getVertexCount(), shader);
+
+		glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
+		glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
+		glDisableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+
+	}
 
 	//}
 
@@ -343,9 +343,12 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 
 	drawGBuffers(camera, nodes);
 
-	_window.bind();
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
+
+		Window::PolygonMode polygonMode = _window.getPolygonMode();
+		_window.setPolygonMode(Window::FILLED);
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
@@ -362,7 +365,9 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		}
 
 		if(isLightingEnabled)
-			lightPass(camera, nodes, lights, ambient, mode == LIGHTING);
+			lightPass(targetFramebuffer, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
+
+		_window.setPolygonMode(polygonMode);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -379,8 +384,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == NORMAL_WS){
@@ -391,8 +396,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == POSITION_WS){
@@ -403,12 +408,12 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == DEPTH){
-		dumpOutDepthGBuffer();    //Special, because no GL_COLOR_BUFFER
+		dumpOutDepthGBuffer(targetFramebuffer, targetFramebufferDimensions);    //Special, because no GL_COLOR_BUFFER
 
 	}
 
@@ -432,7 +437,9 @@ void SceneRenderSystem::drawGBuffers(	const Camera& camera,
 
 }
 
-void SceneRenderSystem::lightPass(	const Camera& camera,
+void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Window as default
+									const Vector2ui& targetFramebufferDimensions,
+									const Camera& camera,
 									const std::vector<SceneNode*>& nodes,
 									const std::vector<Light*>& lights,
 									const Vector3f& ambient,
@@ -468,7 +475,7 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	_renderTarget.clear();
 	_renderTarget.bind();		// <- Diffuse light (attachment 0); specular (1)
 
-	//ambientPart(ambient);
+	ambientPart(ambient);
 
 	for(size_t i = 0; i < lights.size(); ++i){
 
@@ -544,7 +551,9 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
 	shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
 	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
-	_window.bind();
+
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 
 	if(!dumpLighting){
 		//Compose with diffuse part:
@@ -596,9 +605,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	const float& softness = dirLight.getSoftness();
-	//if(softness != 0.f)
-	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	if(dirLight.isSofteningShadow())
+		PostEffects::gaussianBlur(_vsm);
 
 	return virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
@@ -687,9 +695,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 
 	//_vsm.finishMultisampling();
 
-	const float& softness = spotlight.getSoftness();
-	//if(softness != 0.f)
-	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	if(spotlight.isSofteningShadow())
+		PostEffects::gaussianBlur(_vsm);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
@@ -721,14 +728,16 @@ void SceneRenderSystem::ambientPart(const Vector3f& ambient) {
 
 }
 
-void SceneRenderSystem::dumpOutDepthGBuffer() {
+void SceneRenderSystem::dumpOutDepthGBuffer(const GLuint& targetFramebuffer,    ///< Window as default
+											const Vector2ui& targetFramebufferDimensions) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthtest(false);
 	ogl.enableDepthbufferWriting(false);
 	ogl.enableCulling(false);
 
-	_window.bind();
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 	_gBuffer.bindDepthBufferAsSourceTexture();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE_ONE_COMPONENT);

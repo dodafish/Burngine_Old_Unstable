@@ -37,6 +37,9 @@ _internalFormat(RGB) {
 	ensureContext();
 	glGenSamplers(1, &_samplerId);
 
+	//Update Sampler
+	setFiltering(_magFilter, _minFilter);
+
 }
 
 BaseTexture::~BaseTexture() {
@@ -54,9 +57,12 @@ void BaseTexture::bindSampler(const Uint32& unit) const {
 }
 
 void BaseTexture::setFiltering(	const MagnificationFilter& mag,
-								const MinificationFilter& min) {
+								const MinificationFilter& min) const {
 
 	ensureContext();
+
+	_magFilter = mag;
+	_minFilter = min;
 
 	// Set magnification filter
 	if(_magFilter == MAG_NEAREST)

@@ -108,13 +108,16 @@ private:
 	//////////////////////////////////////////////////////////////////////////////
 	void drawGBuffers(	const Camera& camera,
 						const std::vector<SceneNode*>& nodes);
-	void dumpOutDepthGBuffer();
+	void dumpOutDepthGBuffer(	const GLuint& targetFramebuffer,    ///< Window as default
+								const Vector2ui& targetFramebufferDimensions);
 
 	//The GBuffer with several passes
 	GBuffer _gBuffer;
 
 	//Passes:
-	void lightPass(	const Camera& camera,
+	void lightPass(	const GLuint& targetFramebuffer,    ///< Window as default
+					const Vector2ui& targetFramebufferDimensions,
+					const Camera& camera,
 					const std::vector<SceneNode*>& nodes,
 					const std::vector<Light*>& lights,
 					const Vector3f& ambient,

@@ -66,7 +66,7 @@ public:
 	};
 
 	void setFiltering(	const MagnificationFilter& mag,
-						const MinificationFilter& min);
+						const MinificationFilter& min) const;
 	const MagnificationFilter& getMagnificationFilter() const;
 	const MinificationFilter& getMinificationFilter() const;
 	void setSamplerParameter(	const GLenum& parameter,
@@ -82,8 +82,8 @@ protected:
 	void bindSampler(const Uint32& unit) const;
 
 	//Sampler attributes
-	MagnificationFilter _magFilter;
-	MinificationFilter _minFilter;
+	mutable MagnificationFilter _magFilter;
+	mutable MinificationFilter _minFilter;
 
 	//Texture attributes
 	Vector2ui _dimensions;
