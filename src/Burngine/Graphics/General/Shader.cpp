@@ -50,136 +50,7 @@ Shader::~Shader() {
 	}
 }
 
-void Shader::setUniform(const std::string& name,
-						const Matrix4f& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
-		GL_FALSE,
-							&value[0][0]);
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
-		GL_FALSE,
-							&value[0][0]);
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const Vector4f& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniform4fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const Vector3f& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const Vector2f& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniform2fv(glGetUniformLocation(_id, name.c_str()), 1, &(value[0]));
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const int& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniform1iv(glGetUniformLocation(_id, name.c_str()), 1, &value);
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniform1iv(glGetUniformLocation(_id, name.c_str()), 1, &value);
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const float& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniform1fv(glGetUniformLocation(_id, name.c_str()), 1, &value);
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniform1fv(glGetUniformLocation(_id, name.c_str()), 1, &value);
-
-	}
-
-}
-
+////////////////////////////////////////////////////////////////////////////////
 void Shader::activate() const {
 	ensureContext();
 
@@ -187,12 +58,12 @@ void Shader::activate() const {
 	_currentProgram = _id;
 }
 
-GLuint Shader::getUniformLocation(const std::string& uniformName) const {
+GLint Shader::getUniformLocation(const std::string& uniformName) const {
 	if(_id != 0){
 		ensureContext();
 		return glGetUniformLocation(_id, uniformName.c_str());
 	}
-	return 0;
+	return -1;
 }
 
 bool Shader::loadFromString(const std::string& vertexShader,
@@ -314,7 +185,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to compile shader: " + vertexShaderFile, Reporter::ERROR);
+		Reporter::report("Failed to load/compile shader: " + vertexShaderFile, Reporter::ERROR);
 		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -331,7 +202,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to compile shader: " + fragmentShaderFile, Reporter::ERROR);
+		Reporter::report("Failed to load/compile shader: " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
 		return false;
 	}
@@ -349,7 +220,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to compile shader: " + vertexShaderFile + " & " + fragmentShaderFile, Reporter::ERROR);
+		Reporter::report("Failed to link shaders: " + vertexShaderFile + " & " + fragmentShaderFile, Reporter::ERROR);
 		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
 		return false;
 	}

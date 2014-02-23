@@ -71,12 +71,12 @@ void Text::drawString() {
 			continue;
 		}
 
-		const Character& character = _font.getCharacter(_text[i], _fontSize);
-		curPosition.x += character.getBearing().x;
+		const std::shared_ptr<Character>& character = _font.getCharacter(_text[i], _fontSize);
+		curPosition.x += character->getBearing().x;
 
-		character.draw(curPosition, _color);
+		character->draw(curPosition, _color);
 
-		curPosition.x += (character.getAdvance().x - character.getBearing().x);
+		curPosition.x += (character->getAdvance().x - character->getBearing().x);
 	}
 
 }

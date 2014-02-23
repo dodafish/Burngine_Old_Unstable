@@ -21,8 +21,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-//TODO Export the rendercalls all to this class and release scene
-
 #ifndef SCENERENDERSYSTEM_H_
 #define SCENERENDERSYSTEM_H_
 
@@ -71,15 +69,15 @@ public:
 	SceneRenderSystem& operator=(const SceneRenderSystem& other) = delete;
 
 	enum RenderMode {
-		COMPOSITION, ///< The final render result
-		DIFFUSE, ///< Diffuse pass only
-		NORMAL_WS, ///< Normals pass only
-		DEPTH, ///< Depth pass only
-		POSITION_WS, ///< Positions pass only
-		LIGHTING ///< Diffuse and specular pass
+		COMPOSITION,    ///< The final render result
+		DIFFUSE,    ///< Diffuse pass only
+		NORMAL_WS,    ///< Normals pass only
+		DEPTH,    ///< Depth pass only
+		POSITION_WS,    ///< Positions pass only
+		LIGHTING    ///< Diffuse and specular pass
 	};
 
-	void render(const GLuint& targetFramebuffer, ///< Window as default
+	void render(const GLuint& targetFramebuffer,    ///< Window as default
 				const Vector2ui& targetFramebufferDimensions,
 				const Camera& camera,
 				const RenderMode& mode,
@@ -98,7 +96,7 @@ public:
 	void renderTextureToFramebuffer(const BaseTexture& source);
 
 private:
-	GLuint _vboIndices[3]; //Array size is elementcount of RenderFlag enum
+	GLuint _vboIndices[3];    //Array size is elementcount of RenderFlag enum
 	const Window& _window;
 
 	void renderNode(SceneNode* node,
@@ -110,13 +108,16 @@ private:
 	//////////////////////////////////////////////////////////////////////////////
 	void drawGBuffers(	const Camera& camera,
 						const std::vector<SceneNode*>& nodes);
-	void dumpOutDepthGBuffer();
+	void dumpOutDepthGBuffer(	const GLuint& targetFramebuffer,    ///< Window as default
+								const Vector2ui& targetFramebufferDimensions);
 
 	//The GBuffer with several passes
 	GBuffer _gBuffer;
 
 	//Passes:
-	void lightPass(	const Camera& camera,
+	void lightPass(	const GLuint& targetFramebuffer,    ///< Window as default
+					const Vector2ui& targetFramebufferDimensions,
+					const Camera& camera,
 					const std::vector<SceneNode*>& nodes,
 					const std::vector<Light*>& lights,
 					const Vector3f& ambient,
@@ -128,12 +129,7 @@ private:
 	RenderTarget _renderTarget;
 	VertexBufferObject _fullscreenVbo;
 
-	//Shadow:
-	struct VpMatrix {
-		Matrix4f v, p;
-	};
-
-	VpMatrix drawShadowmap(	const DirectionalLight& dirLight,
+	Matrix4f drawShadowmap(	const DirectionalLight& dirLight,
 							const std::vector<SceneNode*>& nodes);
 	Matrix4f drawShadowmap(	const SpotLight& spotLight,
 							const std::vector<SceneNode*>& nodes);
@@ -151,6 +147,63 @@ private:
 	RenderTarget _vsmTarget;
 	CubeMap _vscm;
 	CubeRenderTarget _vscmTarget;
+
+	/////////////////////////////////////////////////////////////////////////
+	//Performance optimization:
+	/////////////////////////////////////////////////////////////////////////
+	//Save uniform locations:
+	static struct UniformLocations {
+		struct TextureShader {
+			GLint modelMatrixLoc;
+			GLint viewMatrixLoc;
+			GLint projectionMatrixLoc;
+			GLint mixColorLoc;
+			GLint gSamplerLoc;
+		} textureShader;
+		struct DirectionalLightShader {
+			GLint modelMatrixLoc;
+			GLint viewMatrixLoc;
+			GLint projectionMatrixLoc;
+			GLint gSamplerNormalsLoc;
+			GLint gSamplerPositionsLoc;
+			GLint gSamplerColorLoc;
+			GLint gSamplerShadowmapLoc;
+			GLint gEyePositionLoc;
+			GLint gLightDirectionLoc;
+			GLint gLightColorLoc;
+			GLint gLightIntensityLoc;
+			GLint shadowMatrixLoc;
+		} directionalLightShader;
+		struct SpotLightShader {
+			GLint modelMatrixLoc;
+			GLint viewMatrixLoc;
+			GLint projectionMatrixLoc;
+			GLint gSamplerNormalsLoc;
+			GLint gSamplerPositionsLoc;
+			GLint gSamplerColorLoc;
+			GLint gSamplerShadowmapLoc;
+			GLint gEyePositionLoc;
+			GLint gLightDirectionLoc;
+			GLint gLightPositionLoc;
+			GLint gLightConeCosineLoc;
+			GLint gLightColorLoc;
+			GLint gLightIntensityLoc;
+			GLint shadowMatrixLoc;
+		} spotLightShader;
+		struct PointLightShader {
+			GLint modelMatrixLoc;
+			GLint viewMatrixLoc;
+			GLint projectionMatrixLoc;
+			GLint gSamplerNormalsLoc;
+			GLint gSamplerPositionsLoc;
+			GLint gSamplerColorLoc;
+			GLint gSamplerShadowcubemapLoc;
+			GLint gEyePositionLoc;
+			GLint gLightPositionLoc;
+			GLint gLightColorLoc;
+			GLint gLightIntensityLoc;
+		} pointLightShader;
+	} uniformLocations;
 
 };
 

@@ -49,6 +49,8 @@
 
 namespace burn {
 
+SceneRenderSystem::UniformLocations SceneRenderSystem::uniformLocations;
+
 //RenderFlag to ArrayIndex Mapping:
 #define POSITION_ARRAY_INDEX 0
 #define NORMAL_ARRAY_INDEX 1
@@ -85,12 +87,6 @@ _window(parentWindow) {
 		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
 		exit(11);
 	}
-
-	/*if(!_renderTexture.create(Vector2ui(parentWindow.getSettings().getWidth(),
-	 parentWindow.getSettings().getHeight()))){
-	 Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
-	 exit(12);
-	 }*/
 
 	const Vector2ui& screenRes = Vector2ui(	parentWindow.getSettings().getWidth(),
 											parentWindow.getSettings().getHeight());
@@ -131,16 +127,6 @@ _window(parentWindow) {
 		exit(19);
 	}
 
-	Reporter::report("HERE", Reporter::ERROR);
-
-	/*if(!_vscm.create(VarianceShadowCubeMap::MEDIUM)){
-	 Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
-	 exit(17);
-	 }
-	 _vscm.setFiltering(Sampler::MAG_BILINEAR, Sampler::MIN_BILINEAR);
-	 _vscm.setAnisotropicLevel(8.f);
-	 _vscm.clear();*/
-
 	Vector3f posData[] = {
 	Vector3f(-1.f, -1.f, 0.f),
 	Vector3f(1.f, -1.f, 0.f),
@@ -161,6 +147,84 @@ _window(parentWindow) {
 	_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
 	GL_STATIC_DRAW);
 
+	/////////////////////////////////////////////////////////////////////////////////
+
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+		uniformLocations.textureShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
+		uniformLocations.textureShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
+		uniformLocations.textureShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
+		uniformLocations.textureShader.mixColorLoc = shader.getUniformLocation("mixColor");
+		uniformLocations.textureShader.gSamplerLoc = shader.getUniformLocation("gSampler");
+	}
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
+		uniformLocations.directionalLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
+		uniformLocations.directionalLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
+		uniformLocations.directionalLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
+		uniformLocations.directionalLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
+		uniformLocations.directionalLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
+		uniformLocations.directionalLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
+		uniformLocations.directionalLightShader.gSamplerShadowmapLoc = shader.getUniformLocation("gSamplerShadowmap");
+		uniformLocations.directionalLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
+		uniformLocations.directionalLightShader.gLightDirectionLoc = shader.getUniformLocation("gLightDirection");
+		uniformLocations.directionalLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
+		uniformLocations.directionalLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
+		uniformLocations.directionalLightShader.shadowMatrixLoc = shader.getUniformLocation("shadowMatrix");
+		shader.setUniform(uniformLocations.directionalLightShader.modelMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.directionalLightShader.viewMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.directionalLightShader.projectionMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.directionalLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
+		shader.setUniform(uniformLocations.directionalLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
+		shader.setUniform(uniformLocations.directionalLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
+		shader.setUniform(uniformLocations.directionalLightShader.gSamplerShadowmapLoc, 8);
+	}
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
+		uniformLocations.spotLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
+		uniformLocations.spotLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
+		uniformLocations.spotLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
+		uniformLocations.spotLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
+		uniformLocations.spotLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
+		uniformLocations.spotLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
+		uniformLocations.spotLightShader.gSamplerShadowmapLoc = shader.getUniformLocation("gSamplerShadowmap");
+		uniformLocations.spotLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
+		uniformLocations.spotLightShader.gLightDirectionLoc = shader.getUniformLocation("gLightDirection");
+		uniformLocations.spotLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
+		uniformLocations.spotLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
+		uniformLocations.spotLightShader.shadowMatrixLoc = shader.getUniformLocation("shadowMatrix");
+		uniformLocations.spotLightShader.gLightPositionLoc = shader.getUniformLocation("gLightPosition");
+		uniformLocations.spotLightShader.gLightConeCosineLoc = shader.getUniformLocation("gLightConeCosine");
+		shader.setUniform(uniformLocations.spotLightShader.modelMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.spotLightShader.viewMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.spotLightShader.projectionMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.spotLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
+		shader.setUniform(uniformLocations.spotLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
+		shader.setUniform(uniformLocations.spotLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
+		shader.setUniform(uniformLocations.spotLightShader.gSamplerShadowmapLoc, 8);
+	}
+	{
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+		uniformLocations.pointLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
+		uniformLocations.pointLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
+		uniformLocations.pointLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
+		uniformLocations.pointLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
+		uniformLocations.pointLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
+		uniformLocations.pointLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
+		uniformLocations.pointLightShader.gSamplerShadowcubemapLoc = shader.getUniformLocation("gSamplerShadowcubemap");
+		uniformLocations.pointLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
+		uniformLocations.pointLightShader.gLightPositionLoc = shader.getUniformLocation("gLightPosition");
+		uniformLocations.pointLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
+		uniformLocations.pointLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
+		shader.setUniform(uniformLocations.pointLightShader.modelMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.pointLightShader.viewMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.pointLightShader.projectionMatrixLoc, Matrix4f(1.f));
+		shader.setUniform(uniformLocations.pointLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
+		shader.setUniform(uniformLocations.pointLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
+		shader.setUniform(uniformLocations.pointLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
+		shader.setUniform(uniformLocations.pointLightShader.gSamplerShadowcubemapLoc, 8);
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -174,81 +238,89 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 
 	ensureContext();
 
+	//Get uniform locations that are used. Avoid unnecessary lookups
+	const GLint viewMatrixLoc = shader.getUniformLocation("viewMatrix");
+	const GLint projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
+	const GLint modelMatrixLoc = shader.getUniformLocation("modelMatrix");
+	const GLint normalMatrixLoc = shader.getUniformLocation("normalMatrix");
+	const GLint diffuseTypeLoc = shader.getUniformLocation("diffuseType");
+	const GLint meshColorLoc = shader.getUniformLocation("meshColor");
+
 	//Set camera matrices
-	shader.setUniform("viewMatrix", camera.getViewMatrix());
-	shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+	shader.setUniform(viewMatrixLoc, camera.getViewMatrix());
+	shader.setUniform(projectionMatrixLoc, camera.getProjectionMatrix());
 
-	if(typeid(*(node)) == typeid(StaticMeshNode)){
+	//if(typeid(*(node)) == typeid(StaticMeshNode)){
 
-		//Cast this ugly pointer to a real object
-		StaticMeshNode n = *(static_cast<StaticMeshNode*>(node));
+	//Cast this ugly pointer to a real object
+	StaticMeshNode* n = (static_cast<StaticMeshNode*>(node));
 
-		if(!n.isLoaded())
-			return;
+	if(!n->isLoaded())
+		return;
 
-		//Calculate and set model's matrices
-		Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
-		shader.setUniform("modelMatrix", node->getModelMatrix());
-		shader.setUniform("normalMatrix", normalMatrix);
+	//Calculate and set model's matrices
+	Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
+	shader.setUniform(modelMatrixLoc, node->getModelMatrix());
+	shader.setUniform(normalMatrixLoc, normalMatrix);
 
-		//StaticMeshNode consists of several meshes
-		const std::vector<Mesh>& meshes = n.getMeshes();
-		for(size_t i = 0; i < meshes.size(); ++i){
+	//StaticMeshNode consists of several meshes
+	std::vector<Mesh>* meshes = n->getMeshesPointer();
+	for(size_t i = 0; i < meshes->size(); ++i){
 
-			//Retreive the mesh
-			const Mesh& mesh = meshes[i];
+		//Retreive the mesh
+		Mesh* mesh = &((*meshes)[i]);
 
-			//Set OpenGL according to mesh's flags
-			mesh.getMaterial().setOpenGlByFlags();
+		//Set OpenGL according to mesh's flags
+		mesh->getMaterial().setOpenGlByFlags();
 
-			//Set uniforms depending on mesh's material
-			if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
-				shader.setUniform("diffuseType", DIFFUSE_TYPE_COLORED);
-				shader.setUniform("meshColor", mesh.getMaterial().getDiffuseColor());
-			}else{
-				shader.setUniform("diffuseType", DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
-				mesh.getTexture().bind();
-			}
-
-			//Bind bufferobjects according to renderflags
-			glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
-			glEnableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
-			glEnableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
-
-			//Reset flags to original parameter
-			int flags = constflags;
-
-			if(flags >= UV){
-				mesh.getUvVbo().bind();
-				glVertexAttribPointer(_vboIndices[UV_ARRAY_INDEX], 2,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= UV;
-			}
-			if(flags >= NORMAL){
-				mesh.getNormalVbo().bind();
-				glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= NORMAL;
-			}
-			if(flags >= POSITION){
-				mesh.getPositionVbo().bind();
-				glVertexAttribPointer(_vboIndices[POSITION_ARRAY_INDEX], 3,
-				GL_FLOAT,
-										GL_FALSE, 0, (void*)0);
-				flags -= POSITION;
-			}
-
-			OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
-
-			glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
-			glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
-			glDisableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
-
+		//Set uniforms depending on mesh's material
+		if(mesh->getMaterial().getType() == Material::SOLID_COLOR){
+			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_COLORED);
+			shader.setUniform(meshColorLoc, mesh->getMaterial().getDiffuseColor());
+		}else{
+			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
+			mesh->getTexture().bind();
 		}
 
+		//Bind bufferobjects according to renderflags
+		glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
+		glEnableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
+		glEnableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+
+		//Reset flags to original parameter
+		int flags = constflags;
+
+		if(flags >= UV){
+			mesh->getUvVbo().bind();
+			glVertexAttribPointer(_vboIndices[UV_ARRAY_INDEX], 2,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= UV;
+		}
+		if(flags >= NORMAL){
+			mesh->getNormalVbo().bind();
+			glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= NORMAL;
+		}
+		if(flags >= POSITION){
+			mesh->getPositionVbo().bind();
+			glVertexAttribPointer(_vboIndices[POSITION_ARRAY_INDEX], 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			flags -= POSITION;
+		}
+
+		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh->getVertexCount(), shader);
+
+		glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
+		glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
+		glDisableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+
 	}
+
+	//}
 
 }
 
@@ -271,26 +343,31 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 
 	drawGBuffers(camera, nodes);
 
-	_window.bind();
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
+
+		Window::PolygonMode polygonMode = _window.getPolygonMode();
+		_window.setPolygonMode(Window::FILLED);
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-			shader.setUniform("modelMatrix", Matrix4f(1.f));
-			shader.setUniform("viewMatrix", Matrix4f(1.f));
-			shader.setUniform("projectionMatrix", Matrix4f(1.f));
-			shader.setUniform("mixColor", Vector3f(1.f));
-			shader.setUniform("gSampler", GBuffer::DIFFUSE);
+			shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
+			shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
+			shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
+			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
+			shader.setUniform(uniformLocations.textureShader.gSamplerLoc, GBuffer::DIFFUSE);
 
 			drawFullscreenQuad(shader, OpenGlControl::Settings());
 
 		}
 
 		if(isLightingEnabled)
-			lightPass(camera, nodes, lights, ambient, mode == LIGHTING);
+			lightPass(targetFramebuffer, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
+
+		_window.setPolygonMode(polygonMode);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -307,8 +384,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == NORMAL_WS){
@@ -319,8 +396,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == POSITION_WS){
@@ -331,12 +408,12 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							_gBuffer.getDimensions().y,
 							0,
 							0,
-							_window.getSettings().getWidth(),
-							_window.getSettings().getHeight(),
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							GL_COLOR_BUFFER_BIT,
 							GL_LINEAR);
 	}else if(mode == DEPTH){
-		dumpOutDepthGBuffer();    //Special, because no GL_COLOR_BUFFER
+		dumpOutDepthGBuffer(targetFramebuffer, targetFramebufferDimensions);    //Special, because no GL_COLOR_BUFFER
 
 	}
 
@@ -360,7 +437,9 @@ void SceneRenderSystem::drawGBuffers(	const Camera& camera,
 
 }
 
-void SceneRenderSystem::lightPass(	const Camera& camera,
+void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Window as default
+									const Vector2ui& targetFramebufferDimensions,
+									const Camera& camera,
 									const std::vector<SceneNode*>& nodes,
 									const std::vector<Light*>& lights,
 									const Vector3f& ambient,
@@ -378,36 +457,16 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	//Pre-Adjust Shaders:
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-		shader.setUniform("modelMatrix", Matrix4f(1.f));
-		shader.setUniform("viewMatrix", Matrix4f(1.f));
-		shader.setUniform("projectionMatrix", Matrix4f(1.f));
-		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
-		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
-		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
-		shader.setUniform("gSamplerShadowmap", 8);
-		shader.setUniform("gEyePosition", camera.getPosition());
+
+		shader.setUniform(uniformLocations.directionalLightShader.gEyePositionLoc, camera.getPosition());
 	}
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-		shader.setUniform("modelMatrix", Matrix4f(1.f));
-		shader.setUniform("viewMatrix", Matrix4f(1.f));
-		shader.setUniform("projectionMatrix", Matrix4f(1.f));
-		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
-		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
-		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
-		shader.setUniform("gSamplerShadowcubemap", 8);
-		shader.setUniform("gEyePosition", camera.getPosition());
+		shader.setUniform(uniformLocations.pointLightShader.gEyePositionLoc, camera.getPosition());
 	}
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
-		shader.setUniform("modelMatrix", Matrix4f(1.f));
-		shader.setUniform("viewMatrix", Matrix4f(1.f));
-		shader.setUniform("projectionMatrix", Matrix4f(1.f));
-		shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
-		shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
-		shader.setUniform("gSamplerColor", GBuffer::DIFFUSE);
-		shader.setUniform("gSamplerShadowmap", 8);
-		shader.setUniform("gEyePosition", camera.getPosition());
+		shader.setUniform(uniformLocations.spotLightShader.gEyePositionLoc, camera.getPosition());
 	}
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
@@ -425,17 +484,17 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			DirectionalLight* light = static_cast<DirectionalLight*>(lights[i]);
 
 			//Render shadowmap:
-			VpMatrix vpm = drawShadowmap(*light, nodes);
+			Matrix4f shadowMatrix = drawShadowmap(*light, nodes);
 
 			//Render light
 			_renderTarget.bind();
 			_vsm.bind(8);
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
-			shader.setUniform("gLightColor", light->getColor());
-			shader.setUniform("gLightIntensity", light->getIntensity());
-			shader.setUniform("shadowPMatrix", vpm.p);
-			shader.setUniform("shadowVMatrix", vpm.v);
+			shader.setUniform(	uniformLocations.directionalLightShader.gLightDirectionLoc,
+								Vector3f(light->getDirection()));
+			shader.setUniform(uniformLocations.directionalLightShader.gLightColorLoc, light->getColor());
+			shader.setUniform(uniformLocations.directionalLightShader.gLightIntensityLoc, light->getIntensity());
+			shader.setUniform(uniformLocations.directionalLightShader.shadowMatrixLoc, shadowMatrix);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -450,9 +509,9 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			_vscm.bind(8);
 			_renderTarget.bind();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-			shader.setUniform("gLightPosition", light->getPosition());
-			shader.setUniform("gLightColor", light->getColor());
-			shader.setUniform("gLightIntensity", light->getIntensity());
+			shader.setUniform(uniformLocations.pointLightShader.gLightPositionLoc, light->getPosition());
+			shader.setUniform(uniformLocations.pointLightShader.gLightColorLoc, light->getColor());
+			shader.setUniform(uniformLocations.pointLightShader.gLightIntensityLoc, light->getIntensity());
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -471,12 +530,12 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 			//glGenerateMipmap(GL_TEXTURE_2D);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
-			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
-			shader.setUniform("gLightPosition", light->getPosition());
-			shader.setUniform("gLightColor", light->getColor());
-			shader.setUniform("gLightIntensity", light->getIntensity());
-			shader.setUniform("gLightConeCosine", lightConeCosine);
-			shader.setUniform("shadowMatrix", shadowMatrix);
+			shader.setUniform(uniformLocations.spotLightShader.gLightDirectionLoc, Vector3f(light->getDirection()));
+			shader.setUniform(uniformLocations.spotLightShader.gLightPositionLoc, light->getPosition());
+			shader.setUniform(uniformLocations.spotLightShader.gLightColorLoc, light->getColor());
+			shader.setUniform(uniformLocations.spotLightShader.gLightIntensityLoc, light->getIntensity());
+			shader.setUniform(uniformLocations.spotLightShader.gLightConeCosineLoc, lightConeCosine);
+			shader.setUniform(uniformLocations.spotLightShader.shadowMatrixLoc, shadowMatrix);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -488,37 +547,33 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 
 	//Multiply result with the scene
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-	shader.setUniform("modelMatrix", Matrix4f(1.f));
-	shader.setUniform("viewMatrix", Matrix4f(1.f));
-	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	shader.setUniform("mixColor", Vector3f(1.f));
-	_window.bind();
+	shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
+	shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
+	shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
+	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
+
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 
 	if(!dumpLighting){
 		//Compose with diffuse part:
 		_diffusePartTexture.bind(1);
-		shader.setUniform("gSampler", 1);    //sample from diffuse
+		shader.setUniform(uniformLocations.textureShader.gSamplerLoc, 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::MULTIPLY);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
 		//Compose with specular part:
 		_specularPartTexture.bind(1);
-		//shader.setUniform("gSampler", 1);    //sample from specular
 		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
 	}else{
-
-		//_renderTarget.bind();
-
 		_diffusePartTexture.bind(1);
-		//_window.bind();
-		shader.setUniform("gSampler", 1);    //sample from diffuse
+		shader.setUniform(uniformLocations.textureShader.gSamplerLoc, 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::OVERWRITE);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
 		_specularPartTexture.bind(1);
-		//shader.setUniform("gSampler", 0);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::ADD);
 		drawFullscreenQuad(shader, toLightPassOgl);
 	}
@@ -526,8 +581,8 @@ void SceneRenderSystem::lightPass(	const Camera& camera,
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
-																const std::vector<SceneNode*>& nodes) {
+Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
+											const std::vector<SceneNode*>& nodes) {
 
 	OpenGlControl::Settings ogl;
 	ogl.setClearColor(Vector4f(0.f));
@@ -550,15 +605,10 @@ SceneRenderSystem::VpMatrix SceneRenderSystem::drawShadowmap(	const DirectionalL
 		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 	}
 
-	const float& softness = dirLight.getSoftness();
-	//if(softness != 0.f)
-	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	if(dirLight.isSofteningShadow())
+		PostEffects::gaussianBlur(_vsm);
 
-	VpMatrix vpm;
-	vpm.p = virtualCamera.getProjectionMatrix();
-	vpm.v = virtualCamera.getViewMatrix();
-
-	return vpm;
+	return virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 }
 
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
@@ -645,9 +695,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 
 	//_vsm.finishMultisampling();
 
-	const float& softness = spotlight.getSoftness();
-	//if(softness != 0.f)
-	//	PostEffects::gaussianBlur(_vsm, softness / _vsm.getDimensions().x);
+	if(spotlight.isSofteningShadow())
+		PostEffects::gaussianBlur(_vsm);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
@@ -679,14 +728,16 @@ void SceneRenderSystem::ambientPart(const Vector3f& ambient) {
 
 }
 
-void SceneRenderSystem::dumpOutDepthGBuffer() {
+void SceneRenderSystem::dumpOutDepthGBuffer(const GLuint& targetFramebuffer,    ///< Window as default
+											const Vector2ui& targetFramebufferDimensions) {
 
 	OpenGlControl::Settings ogl;
 	ogl.enableDepthtest(false);
 	ogl.enableDepthbufferWriting(false);
 	ogl.enableCulling(false);
 
-	_window.bind();
+	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 	_gBuffer.bindDepthBufferAsSourceTexture();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE_ONE_COMPONENT);

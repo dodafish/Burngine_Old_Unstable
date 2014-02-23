@@ -148,7 +148,11 @@ public:
 
 	void setPolygonMode(const PolygonMode& mode) const;
 
+	const PolygonMode& getPolygonMode() const;
+
 private:
+	mutable PolygonMode _polygonMode;
+
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
 

@@ -69,11 +69,14 @@ public:
 	 * @param camera The camera which the scene is drawn
 	 * relative to
 	 * @param mode The mode selecting the output of the rendering
+	 * @param targetTexture Reference to a texture if you want to
+	 * render the scene to a texture instead of the window
 	 *
 	 * @see RenderMode
 	 */
 	void draw(	const Camera& camera,
-				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
+				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION,
+				Texture* targetTexture = nullptr);
 
 	/**
 	 * @brief Attaches a SceneNode to the Scene.
@@ -174,7 +177,7 @@ private:
 
 	SceneRenderSystem _renderSystem;
 
-	bool _isLightingEnabled; ///< Does our scene render lighting? Default: false
+	bool _isLightingEnabled;    ///< Does our scene render lighting? Default: false
 
 	//Attachable nodes:
 	std::vector<SceneNode*> _nodes;

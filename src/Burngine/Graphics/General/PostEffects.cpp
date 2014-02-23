@@ -27,19 +27,30 @@
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 
+#include <Burngine/Graphics/Texture/Texture.h>
+#include <Burngine/Graphics/Texture/RenderTarget.h>
+
 namespace burn {
 
-/*void PostEffects::gaussianBlur(	const VarianceShadowMap& vsm,
-								const float& blurSize) {
+void PostEffects::gaussianBlur(const Texture& texture) {
 
-	//Return if the VSM is not created
-	if(!vsm.isCreated())
+	//Create a helper FBO with same size of the texture
+	RenderTarget rtt, rttBack;
+
+	//The ping-pong helper texture:
+	Texture helperTexture;
+	helperTexture.create(texture.getDimensions(), texture.getInternalFormat());
+
+	if(!rtt.create(helperTexture.getDimensions(), RenderTarget::NO_DEPTHBUFFER, helperTexture))
+		return;
+	if(!rttBack.create(texture.getDimensions(), RenderTarget::NO_DEPTHBUFFER, texture))
 		return;
 
-	//Create a helper FBO with same size of VSM
-	VarianceShadowMap helperFbo;
-	if(!helperFbo.create(vsm.getDimensions()))
-		return;
+	Texture::MagnificationFilter magF = texture.getMagnificationFilter();
+	Texture::MinificationFilter minF = texture.getMinificationFilter();
+
+	texture.setFiltering(BaseTexture::MAG_BILINEAR, BaseTexture::MIN_BILINEAR);
+	helperTexture.setFiltering(BaseTexture::MAG_BILINEAR, BaseTexture::MIN_BILINEAR);
 
 	//Now "Ping-Pong" horizontal and vertical blur,
 	//first to the helper fbo and the back to the source
@@ -79,10 +90,11 @@ namespace burn {
 	shaderGBH.setUniform("viewMatrix", Matrix4f(1.f));
 	shaderGBH.setUniform("projectionMatrix", Matrix4f(1.f));
 	shaderGBH.setUniform("gSamplerSource", 0);
-	shaderGBH.setUniform("gBlurSize", blurSize);
+	shaderGBH.setUniform("gBlurSize", 1.f / texture.getDimensions().x);
 
-	vsm.bindAsSource(0);
-	helperFbo.bindAsTarget();
+	texture.bind(0);
+	rtt.bind();
+	rtt.clear();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
@@ -102,10 +114,11 @@ namespace burn {
 	shaderGBV.setUniform("viewMatrix", Matrix4f(1.f));
 	shaderGBV.setUniform("projectionMatrix", Matrix4f(1.f));
 	shaderGBV.setUniform("gSamplerSource", 0);
-	shaderGBV.setUniform("gBlurSize", blurSize);
+	shaderGBV.setUniform("gBlurSize", 1.f / texture.getDimensions().y);
 
-	vsm.bindAsTarget();
-	helperFbo.bindAsSource(0);
+	helperTexture.bind(0);
+	rttBack.bind();
+	rttBack.clear();
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
@@ -122,7 +135,10 @@ namespace burn {
 	//Restore default OGL settings
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 
-}*/
+	//Restore texture's filtering
+	texture.setFiltering(magF, minF);
+
+}
 
 } /* namespace burn */
 

@@ -31,6 +31,10 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Window/WindowSettings.h>
 #include <vector>
+#include <Burngine/System/Reporter.h>
+
+//For the exit() func
+#include <cstdlib>
 
 namespace burn {
 
@@ -47,7 +51,7 @@ public:
 	 *
 	 * @see useContext()
 	 */
-	static void ensureContext();
+	inline static void ensureContext();
 
 	static GLFWwindow* createWindow(const WindowSettings& settings);
 	static void destroyWindow(GLFWwindow* window);
@@ -89,6 +93,100 @@ private:
 	static bool _contextEnsured;
 	static bool _isGlewInitialized, _isGlfwInitialized;
 };
+
+void ContextHandler::ensureContext() {
+
+	//No need to find or make a context?
+	if(_contextEnsured){
+		return;
+	}
+
+	//Try using the context of a real window
+	if(_isGlfwInitialized && _windows.size() != 0){
+		if(_preferredWindow != nullptr){
+			//Use the context of the preferred window
+			glfwMakeContextCurrent(_preferredWindow);
+			_currentContextWindow = _preferredWindow;
+		}else{
+			//Just use the first window of the list
+			glfwMakeContextCurrent(_windows[0]);
+			_currentContextWindow = _windows[0];
+		}
+	}else{
+
+		//When we land here we either have no windows or GLFW is not initialized.
+		//If the latter is the case, there can't be any window at all, so clear
+		//the vector just to be sure...
+		_windows.clear();
+
+		//The following commands need GLFW
+		ensureGlfw();
+
+		//We have to fake a window for having a valid context
+		if(_fakeWindow != nullptr){
+			//We already have a faked window. Use it
+			glfwMakeContextCurrent(_fakeWindow);
+		}else{
+			//We have to create a fakewindow first
+			glfwDefaultWindowHints();    //Reset window hints
+			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);    //Hide the window
+			_fakeWindow = glfwCreateWindow(1, 1, "", 0, 0);
+			glfwDefaultWindowHints();    //Reset window hints
+
+			//Check if creation succeeded
+			if(_fakeWindow == nullptr){
+				Reporter::report("Failed to ensure context! Creation of fake window failed!", Reporter::ERROR);
+				glfwTerminate();    // <- ensureGlfw initialized it. Terminate before end
+				exit(1);    //Terminate program... :(
+			}
+
+			//Fake window is created. Make its context current
+			glfwMakeContextCurrent(_fakeWindow);
+		}
+		_currentContextWindow = _fakeWindow;
+
+	}
+
+	////////////////////////////////////////////////////////
+	// Ensure that we have GLEW initialized
+	////////////////////////////////////////////////////////
+
+	//Is GLEW initialized already?
+	if(_isGlewInitialized){
+		_contextEnsured = true;
+		return;
+	}
+
+	//GLEW needs a valid context for creation. We have ensured this above.
+
+	//Initialize GLEW
+	glewExperimental = GL_TRUE;
+	if(glewInit() != GLEW_OK){
+		Reporter::report("Failed to initialize GLEW!", Reporter::ERROR);
+		glfwTerminate();
+		exit(2);
+	}
+
+	if(GLEW_VERSION_4_3){
+		Reporter::report("OpenGL 4.3 supported");
+	}else if(GLEW_VERSION_4_2){
+		Reporter::report("OpenGL 4.2 supported");
+	}else if(GLEW_VERSION_4_1){
+		Reporter::report("OpenGL 4.1 supported");
+	}else if(GLEW_VERSION_4_0){
+		Reporter::report("OpenGL 4.0 supported");
+	}else if(GLEW_VERSION_3_3){
+		Reporter::report("OpenGL 3.3 supported");
+	}else{
+		Reporter::report(	"OpenGL 3.3 or higher is not supported! Try updating your videocard's driver.",
+							Reporter::ERROR);
+		glfwTerminate();
+		exit(5);
+	}
+
+	_isGlewInitialized = true;
+	_contextEnsured = true;
+}
 
 /*
  * @brief Just a shortcut for ContextHandler::ensureContext()
