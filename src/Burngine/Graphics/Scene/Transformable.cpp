@@ -28,14 +28,16 @@ namespace burn {
 Transformable::Transformable() :
 _position(Vector3f(0.f, 0.f, 0.f)),
 _scale(Vector3f(1.f, 1.f, 1.f)),
-_rotation(Vector3f(0.f, 0.f, 0.f)) {
+_rotation(Vector3f(0.f, 0.f, 0.f)),
+_modelMatrix(Matrix4f(1.f)){
 
 }
 
 Transformable::Transformable(const Transformable& other):
 _position(other._position),
 _scale(other._scale),
-_rotation(other._rotation){
+_rotation(other._rotation),
+_modelMatrix(other._modelMatrix){
 }
 
 Transformable& Transformable::operator=(const Transformable& other) {
@@ -46,6 +48,7 @@ Transformable& Transformable::operator=(const Transformable& other) {
 	_position = other._position;
 	_scale = other._scale;
 	_rotation = other._rotation;
+	_modelMatrix = other._modelMatrix;
 
 	return *this;
 

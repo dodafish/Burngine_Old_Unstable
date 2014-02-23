@@ -28,6 +28,7 @@ namespace burn {
 
 Camera::Camera() :
 _aspectRatio(1.f),
+_lookAt(Vector3f(0.f, 0.f, -1.f)),
 _headUp(Vector3f(0.f, 1.f, 0.f)),
 _fov(35.f),
 _far(1000.f),
@@ -38,6 +39,7 @@ _type(PERSPECTIVE) {
 
 Camera::Camera(const Camera& other) :
 _aspectRatio(other._aspectRatio),
+_lookAt(other._lookAt),
 _headUp(other._headUp),
 _fov(other._fov),
 _far(other._far),
@@ -52,6 +54,7 @@ Camera& Camera::operator=(const Camera& other) {
 		return *this;
 
 	_aspectRatio = other._aspectRatio;
+	_lookAt = other._lookAt;
 	_headUp = other._headUp;
 	_fov = other._fov;
 	_far = other._far;
@@ -98,7 +101,7 @@ Matrix4f Camera::getProjectionMatrix() const {
 							_near,
 							_far));
 
-	return (glm::perspective<float>(_fov, _aspectRatio, _near, _far));
+	return (glm::perspective<float>(_fov, _aspectRatio > 0.f ? _aspectRatio : 1.f, _near, _far));
 }
 
 Matrix4f Camera::getViewMatrix() const {
@@ -123,6 +126,14 @@ const Camera::Type& Camera::getType() const {
 
 void Camera::setHeadUp(const Vector3f& headUp){
 	_headUp = headUp;
+}
+
+void Camera::updateRotation(){
+
+	Vector3f dir = glm::normalize(_lookAt - _position);
+
+
+
 }
 
 } /* namespace burn */

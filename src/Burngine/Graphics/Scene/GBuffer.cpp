@@ -157,6 +157,7 @@ void GBuffer::bindAsTarget() const {
 	}
 
 	OpenGlControl::bindDrawBuffer(_framebuffer);
+	glViewport(0, 0, _dimensions.x, _dimensions.y);
 }
 
 void GBuffer::bindAsSource(const unsigned int& offset) const {

@@ -21,68 +21,42 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef RENDERTARGET_H_
-#define RENDERTARGET_H_
+#ifndef OCULUSRIFT_H_
+#define OCULUSRIFT_H_
 
 #include <Burngine/Export.h>
-#include <Burngine/Graphics/General/OpenGL.h>
-
+#include <Burngine/Graphics/Texture/RenderTarget.h>
+#include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/NonCopyable.h>
-#include <Burngine/System/Math.h>
-
-#include <vector>
+#include <Burngine/Graphics/Scene/Scene.h>
+#include <Burngine/Graphics/General/VertexBufferObject.h>
 
 namespace burn {
 
-class Texture;
+class Gui;
 
-class BURNGINE_API RenderTarget : public NonCopyable {
+class BURNGINE_API OculusRift : public NonCopyable{
 public:
-	RenderTarget();
-	~RenderTarget();
+	OculusRift(const Window& window);
 
-	enum DepthbufferType {
-		NO_DEPTHBUFFER,
-		DEPTHBUFFER_16 = GL_DEPTH_COMPONENT16,
-		DEPTHBUFFER_24 = GL_DEPTH_COMPONENT24,
-		DEPTHBUFFER_32 = GL_DEPTH_COMPONENT32
-	};
+	void clear();
 
-	bool create(const Vector2ui& dimensions,
-				const DepthbufferType& depthbufferType,
-				const Texture& texture);
+	void renderScene(Scene& scene, const Camera& camera, const SceneRenderSystem::RenderMode& renderMode);
+	void renderGui(const Gui& gui);
 
-	bool addColorAttachment(const Texture& texture,
-							const GLuint& attachmentPosition);
-	bool removeColorAttachment(const Texture& texture);
+	void distortImages();
+	void renderToWindow();
 
-	bool bind() const;
-
-	void clear() const;
-
-	const GLuint& getFramebufferId() const;
-
-	const Vector2ui& getDimensions() const;
+	void setEyeSpacing(const float& eyeSpacing);
+	const float& getEyeSpacing() const;
 
 private:
-
-	struct ColorAttachment {
-		ColorAttachment(const GLuint& textureIdArg,
-						const GLuint& attachmentPositionArg);
-
-		GLuint textureId;
-		GLuint attachmentPosition;
-	};
-
-	std::vector<ColorAttachment> _colorAttachments;
-
-	void cleanup();
-
-	GLuint _framebuffer;
-	GLuint _depthbuffer;
-
-	Vector2ui _dimensions;
+	const Window& _window;
+	Texture _leftEyeTexture, _rightEyeTexture;
+	RenderTarget _leftEyeRenderTarget, _rightEyeRenderTarget;
+	float _eyeSpacing;
+	VertexBufferObject _leftEyeVbo, _rightEyeVbo;
 };
 
 } /* namespace burn */
-#endif /* RENDERTARGET_H_ */
+#endif /* OCULUSRIFT_H_ */

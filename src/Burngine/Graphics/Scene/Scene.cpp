@@ -56,14 +56,14 @@ Scene::~Scene() {
 
 void Scene::draw(	const Camera& camera,
 					const SceneRenderSystem::RenderMode& mode,
-					Texture* targetTexture) {
+					RenderTarget* renderTarget) {
 
 	GLuint target = 0;
 	Vector2ui targetDims(_window.getSettings().getWidth(), _window.getSettings().getHeight());
 
-	if(targetTexture != nullptr && targetTexture->getId() != 0){
-		target = targetTexture->getId();
-		targetDims = targetTexture->getDimensions();
+	if(renderTarget != nullptr && renderTarget->getFramebufferId() != 0){
+		target = renderTarget->getFramebufferId();
+		targetDims = renderTarget->getDimensions();
 	}
 
 	_renderSystem.render(target, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);

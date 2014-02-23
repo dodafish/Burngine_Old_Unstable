@@ -134,7 +134,11 @@ void Window::clear() const {
 		return;
 
 	ContextHandler::useContext(_window);
+
+	const GLuint& previous = OpenGlControl::getDrawBufferBinding();
+	bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	OpenGlControl::bindDrawBuffer(previous);
 }
 
 void Window::display() {

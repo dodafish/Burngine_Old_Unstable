@@ -76,7 +76,7 @@ public:
 	 */
 	void draw(	const Camera& camera,
 				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION,
-				Texture* targetTexture = nullptr);
+				RenderTarget* renderTarget = nullptr);
 
 	/**
 	 * @brief Attaches a SceneNode to the Scene.

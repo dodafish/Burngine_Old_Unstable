@@ -360,6 +360,9 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
 			shader.setUniform(uniformLocations.textureShader.gSamplerLoc, GBuffer::DIFFUSE);
 
+			OpenGlControl::bindDrawBuffer(targetFramebuffer);
+			glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
+
 			drawFullscreenQuad(shader, OpenGlControl::Settings());
 
 		}

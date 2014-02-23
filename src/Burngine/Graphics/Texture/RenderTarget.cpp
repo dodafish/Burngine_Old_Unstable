@@ -255,4 +255,12 @@ void RenderTarget::clear() const {
 
 }
 
+const GLuint& RenderTarget::getFramebufferId() const{
+	return _framebuffer;
+}
+
+const Vector2ui& RenderTarget::getDimensions() const{
+	return _dimensions;
+}
+
 } /* namespace burn */
