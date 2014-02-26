@@ -26,11 +26,20 @@
 #include <Burngine/Graphics/Gui/Gui.h>
 #include <assert.h>
 
+#include <iostream>
+
 namespace burn {
 
 OculusRift::OculusRift(const Window& window) :
 _window(window),
-_eyeSpacing(2.5f) {
+_eyeSpacing(1.1f) {
+
+	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
+
+	_pManager = *OVR::DeviceManager::Create();
+	_pHMD = *_pManager->EnumerateDevices<OVR::HMDDevice>().CreateDevice();
+
+	std::cout << "test";
 
 	const unsigned int& width = _window.getSettings().getWidth() / 2;
 	const unsigned int& height = _window.getSettings().getHeight();
@@ -98,7 +107,7 @@ void OculusRift::renderScene(	Scene& scene,
 	Vector3f n1;
 	n1.x = (-1.f) * dir.z;
 	n1.y = 0.f;
-	n1.z = /*(-1.f) */ dir.x;
+	n1.z = /*(-1.f) */dir.x;
 
 	n1 *= (_eyeSpacing * 0.5f);
 
@@ -112,8 +121,10 @@ void OculusRift::renderScene(	Scene& scene,
 
 	leftCamera.setPosition(camera.getPosition() + n2);
 	leftCamera.lookAt(camera.getLookAt() + n2);
+	leftCamera.setFov(125.f);
 	rightCamera.setPosition(camera.getPosition() + n1);
 	rightCamera.lookAt(camera.getLookAt() + n1);
+	rightCamera.setFov(125.f);
 
 	//Left Eye:
 	scene.draw(leftCamera, rendermode, &_leftEyeRenderTarget);
@@ -140,11 +151,48 @@ void OculusRift::renderToWindow() {
 	ogl.setBlendMode(OpenGlControl::OVERWRITE);
 	OpenGlControl::useSettings(ogl);
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::OVR_DISTORTION);
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
-	shader.setUniform("mixColor", Vector3f(1.f));
+
+	float eyedistance = 0.064;
+	float screenwidth = 0.14976;
+	float screenheight = 0.0936;
+	float screendist = 0.041;
+	float lensdist = 0.0635;
+
+	Vector4f hmdWarpParam;
+	OVR::HMDInfo hmd;
+	if(_pHMD->GetDeviceInfo(&hmd)){
+		eyedistance = hmd.InterpupillaryDistance;
+		screenwidth = hmd.HScreenSize;
+		screenheight = hmd.VScreenSize;
+		screendist = hmd.EyeToScreenDistance;
+		lensdist = hmd.LensSeparationDistance;
+
+		_eyeSpacing = eyedistance;
+
+		hmdWarpParam[0] = hmd.DistortionK[0];
+		hmdWarpParam[1] = hmd.DistortionK[1];
+		hmdWarpParam[2] = hmd.DistortionK[2];
+		hmdWarpParam[3] = hmd.DistortionK[3];
+	}else{
+		return;
+	}
+
+	float x = 0.f;
+	float y = 0.f;
+	float w = 1.0f;
+	float h = 1.f;
+	float projshift = 1.0f - 2.0f * hmd.LensSeparationDistance / hmd.HScreenSize;
+	float lensradius = -1.f - projshift;
+	float lensradsq = lensradius * lensradius;
+
+	float factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
+	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
+
+	float aspect = 640.f / 800.f;
 
 	_window.bind();
 	shader.setUniform("gSampler", 0);
@@ -153,9 +201,17 @@ void OculusRift::renderToWindow() {
 	glEnableVertexAttribArray(1);
 
 	//Left Eye
-	_leftEyeTexture.bind(0);
 
-	_leftEyeVbo.bind();
+	//Distortion parameters:
+	shader.setUniform("gLensCenter", Vector2f(x + w * 0.5f + projshift * 0.5f, y + h * 0.5f));
+	shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
+	shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
+	shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	shader.setUniform("gHmdWarpParam", hmdWarpParam);
+
+	_rightEyeTexture.bind(0);
+
+	_rightEyeVbo.bind();
 	glVertexAttribPointer(0, 3,
 	GL_FLOAT,
 							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
@@ -165,9 +221,23 @@ void OculusRift::renderToWindow() {
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
 	//Right Eye
-	_rightEyeTexture.bind(0);
+	//x = 0.5f;
 
-	_rightEyeVbo.bind();
+	lensradius = -1.f - projshift;
+	lensradsq = lensradius * lensradius;
+
+	factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
+	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
+
+	shader.setUniform("gLensCenter", Vector2f(x + w * 0.5f - projshift * 0.5f, y + h * 0.5f));
+	shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
+	shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
+	shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	shader.setUniform("gHmdWarpParam", hmdWarpParam);
+
+	_leftEyeTexture.bind(0);
+
+	_leftEyeVbo.bind();
 	glVertexAttribPointer(0, 3,
 	GL_FLOAT,
 							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);

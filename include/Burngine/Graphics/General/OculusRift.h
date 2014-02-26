@@ -31,17 +31,23 @@
 #include <Burngine/Graphics/Scene/Scene.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 
+#include <Burngine/extern/LibOVR/Include/OVRVersion.h>
+#include <Burngine/extern/LibOVR/Include/OVR.h>
+
+
 namespace burn {
 
 class Gui;
 
-class BURNGINE_API OculusRift : public NonCopyable{
+class BURNGINE_API OculusRift : public NonCopyable {
 public:
 	OculusRift(const Window& window);
 
 	void clear();
 
-	void renderScene(Scene& scene, const Camera& camera, const SceneRenderSystem::RenderMode& renderMode);
+	void renderScene(	Scene& scene,
+						const Camera& camera,
+						const SceneRenderSystem::RenderMode& renderMode);
 	void renderGui(const Gui& gui);
 
 	void distortImages();
@@ -56,6 +62,9 @@ private:
 	RenderTarget _leftEyeRenderTarget, _rightEyeRenderTarget;
 	float _eyeSpacing;
 	VertexBufferObject _leftEyeVbo, _rightEyeVbo;
+
+	OVR::Ptr<OVR::DeviceManager> _pManager;
+	OVR::Ptr<OVR::HMDDevice> _pHMD;
 };
 
 } /* namespace burn */

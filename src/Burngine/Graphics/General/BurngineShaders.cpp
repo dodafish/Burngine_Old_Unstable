@@ -38,6 +38,7 @@ Shader BurngineShaders::_gBufferShader;
 Shader BurngineShaders::_vsmDrawShader;
 Shader BurngineShaders::_gaussianBlurHorizontalShader;
 Shader BurngineShaders::_gaussianBlurVerticalShader;
+Shader BurngineShaders::_ovrDistortionShader;
 
 GLuint Shader::_currentProgram = 0;
 
@@ -87,6 +88,9 @@ bool BurngineShaders::load(const std::string& d) {
 	if(!_gaussianBlurVerticalShader.loadFromFile(dir + "texture.vert", dir + "gaussianVerticalBlur.frag")){
 		return false;
 	}
+	if(!_ovrDistortionShader.loadFromFile(dir + "texture.vert", dir + "ovrDistortion.frag")){
+		return false;
+	}
 
 	return true;
 }
@@ -132,6 +136,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 			break;
 		case GAUSSIAN_BLUR_VERTICAL:
 			return _gaussianBlurVerticalShader;
+			break;
+		case OVR_DISTORTION:
+			return _ovrDistortionShader;
 			break;
 	}
 	//See case of SOLID_COLOR above

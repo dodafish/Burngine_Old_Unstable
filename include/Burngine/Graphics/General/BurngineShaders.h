@@ -50,7 +50,8 @@ struct BURNGINE_API BurngineShaders {
 		G_BUFFER, ///< Used by the GBuffer
 		VSM_DRAW, ///< Used for drawing into VSM (2-component shadowmap)
 		GAUSSIAN_BLUR_HORIZONTAL,
-		GAUSSIAN_BLUR_VERTICAL
+		GAUSSIAN_BLUR_VERTICAL,
+		OVR_DISTORTION
 	};
 
 	/**
@@ -77,6 +78,7 @@ private:
 	static Shader _vsmDrawShader;
 	static Shader _gaussianBlurHorizontalShader;
 	static Shader _gaussianBlurVerticalShader;
+	static Shader _ovrDistortionShader;
 };
 
 }
