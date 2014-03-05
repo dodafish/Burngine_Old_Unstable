@@ -140,7 +140,7 @@ public:
 
 	void bind() const;
 
-	static glm::mat4 getOrthoMatrix();
+	static Matrix4f getOrthoMatrix();
 
 	enum PolygonMode {
 		FILLED, LINE, POINT
@@ -167,7 +167,7 @@ private:
 
 	GLuint _vertexArrayID;
 
-	static glm::mat4 _orthoMatrix;
+	static Matrix4f _orthoMatrix;
 };
 
 } /* namespace burn */

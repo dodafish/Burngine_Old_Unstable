@@ -43,12 +43,6 @@ public:
 	Character(const Uint32& codePoint = 0, const unsigned int& size = 0);
 
 	/**
-	 * @brief The default destructor. Takes care about
-	 * proper cleanup.
-	 */
-	~Character();
-
-	/**
 	 * @brief Creates a texture from a freetype glyph
 	 *
 	 * @param glyph The freetype glyph
@@ -105,12 +99,11 @@ public:
 	const unsigned int& getSize() const;
 
 private:
-	std::shared_ptr<Texture> _texture;
+	std::shared_ptr<Texture> _texture; ///< shared_ptr because Texture is NonCopyable
 	Uint32 _codePoint;
 	Vector2i _dimensions, _advance, _bearing;
-	VertexBufferObject _vbo;
+	VertexBufferObject _vbo; ///< Is copyable. Cares about that itself
 	unsigned int _size;
-
 };
 
 } /* namespace burn */

@@ -56,12 +56,6 @@ _codePoint(codePoint),
 _size(size) {
 }
 
-Character::~Character() {
-
-	_vbo.cleanup();
-
-}
-
 void Character::createFromFtGlyph(	void* g,
 									void* b) {
 
