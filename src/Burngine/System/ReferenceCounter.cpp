@@ -21,24 +21,65 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef SPRITE_H_
-#define SPRITE_H_
-
-#include <Burngine/Graphics/Gui/2D/RectangleShape.h>
-#include <Burngine/Graphics/Texture/Texture.h>
+#include <Burngine/System/ReferenceCounter.h>
 
 namespace burn {
 
-class BURNGINE_API Sprite : public RectangleShape {
-public:
-	void setTexture(const Texture& texture);
-	const Texture& getTexture() const;
+ReferenceCounter::ReferenceCounter() :
+_counter(new unsigned int(1)) {
 
-	virtual void draw();
+}
 
-private:
-	Texture _texture;
-};
+ReferenceCounter::ReferenceCounter(const ReferenceCounter& other) {
+
+	_counter = other._counter;
+	increaseCounter();
+
+}
+
+ReferenceCounter& ReferenceCounter::operator=(const ReferenceCounter& other) {
+
+	if(this == &other)
+		return *this;
+
+	decreaseCounter();
+	checkForDestruction();
+
+	_counter = other._counter;
+	increaseCounter();
+
+	return *this;
+}
+
+ReferenceCounter::~ReferenceCounter() {
+
+	decreaseCounter();
+	checkForDestruction();
+
+}
+
+const unsigned int& ReferenceCounter::getReferenceCount() const {
+	return *_counter;
+}
+
+bool ReferenceCounter::isLastReference() const {
+	return (*_counter < 2);
+}
+
+void ReferenceCounter::increaseCounter() {
+	++(*_counter);
+}
+
+void ReferenceCounter::decreaseCounter() {
+	--(*_counter);
+}
+
+void ReferenceCounter::checkForDestruction() {
+
+	if(isLastReference()){
+		delete _counter;
+	}
+
+}
 
 } /* namespace burn */
-#endif /* SPRITE_H_ */

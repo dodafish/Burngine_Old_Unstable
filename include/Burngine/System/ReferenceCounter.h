@@ -21,24 +21,28 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef SPRITE_H_
-#define SPRITE_H_
+#ifndef REFERENCECOUNTER_H_
+#define REFERENCECOUNTER_H_
 
-#include <Burngine/Graphics/Gui/2D/RectangleShape.h>
-#include <Burngine/Graphics/Texture/Texture.h>
+#include <Burngine/Export.h>
 
 namespace burn {
 
-class BURNGINE_API Sprite : public RectangleShape {
+class BURNGINE_API ReferenceCounter {
 public:
-	void setTexture(const Texture& texture);
-	const Texture& getTexture() const;
-
-	virtual void draw();
-
+	ReferenceCounter();
+	ReferenceCounter(const ReferenceCounter& other);
+	ReferenceCounter& operator=(const ReferenceCounter& other);
+	~ReferenceCounter();
+protected:
+	const unsigned int& getReferenceCount() const;
+	bool isLastReference() const;
 private:
-	Texture _texture;
+	void increaseCounter();
+	void decreaseCounter();
+	void checkForDestruction();
+	unsigned int *_counter;
 };
 
 } /* namespace burn */
-#endif /* SPRITE_H_ */
+#endif /* REFERENCECOUNTER_H_ */

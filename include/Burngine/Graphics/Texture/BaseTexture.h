@@ -27,14 +27,14 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/System/Math.h>
-#include <Burngine/System/NonCopyable.h>
+#include <Burngine/System/ReferenceCounter.h>
 
 namespace burn {
 
 //Limited to 32, because almost every graphicscard supports at least 32
 #define MAX_TEXTURE_BINDINGS 32
 
-class BURNGINE_API BaseTexture : public NonCopyable {
+class BURNGINE_API BaseTexture : public ReferenceCounter {
 public:
 
 	enum InternalFormat {

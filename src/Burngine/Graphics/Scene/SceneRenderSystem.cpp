@@ -357,7 +357,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 			shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
 			shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
 			shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
-			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
+			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
 			shader.setUniform(uniformLocations.textureShader.gSamplerLoc, GBuffer::DIFFUSE);
 
 			OpenGlControl::bindDrawBuffer(targetFramebuffer);
@@ -553,7 +553,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
 	shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
 	shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
-	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector3f(1.f));
+	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
 
 	OpenGlControl::bindDrawBuffer(targetFramebuffer);
 	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);

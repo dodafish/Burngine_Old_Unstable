@@ -82,15 +82,19 @@ public:
 	 *
 	 * @note Might be depracated in future versions
 	 */
-	void draw();
+	virtual void draw();
 
-private:
+protected:
 	Vector2f _dimensions;
 	Vector4f _color;
+
+	Matrix4f getViewMatrix();
+	Matrix4f getProjectionMatrix();
 
 	//Attributes for drawing purposes:
 	VertexBufferObject _vbo;
 
+private:
 	void updateVbo();
 };
 

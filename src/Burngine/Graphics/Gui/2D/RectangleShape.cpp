@@ -36,19 +36,23 @@ _color(color) {
 	updateVbo();
 }
 
-void RectangleShape::draw() {
-
-	//Calculate matrices
+Matrix4f RectangleShape::getViewMatrix() {
 	glm::mat4 modelView = glm::translate(glm::mat4(1.0f), Vector3f(_position, 0.0f));
-	modelView = glm::rotate(modelView, _rotation, Vector3f(0.f, 0.f, 1.f));
-	Matrix4f ortho = Window::getOrthoMatrix();
+	return glm::rotate(modelView, _rotation, Vector3f(0.f, 0.f, 1.f));
+}
+
+Matrix4f RectangleShape::getProjectionMatrix() {
+	return Window::getOrthoMatrix();
+}
+
+void RectangleShape::draw() {
 
 	//Get the shader we want to use
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
 
 	//Set uniforms
-	shader.setUniform("projectionMatrix", ortho);
-	shader.setUniform("viewMatrix", modelView);
+	shader.setUniform("projectionMatrix", getProjectionMatrix());
+	shader.setUniform("viewMatrix", getViewMatrix());
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
 	shader.setUniform("gColor", _color);
 
@@ -63,7 +67,7 @@ void RectangleShape::draw() {
 	//Draw
 	_vbo.bind();
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 	glDisableVertexAttribArray(0);
 
@@ -98,11 +102,17 @@ void RectangleShape::updateVbo() {
 	Vector3f(0.f, _dimensions.y, 0.f),
 	Vector3f(_dimensions.x, _dimensions.y, 0.f) };
 
+	Vector2f vboDataUv[4] = {
+	Vector2f(0.f, 0.f),
+	Vector2f(1.f, 0.f),
+	Vector2f(0.f, 1.f),
+	Vector2f(1.f, 1.f) };
+
 	_vbo.reset();
-	_vbo.addData(&vboData[0], sizeof(Vector3f));
-	_vbo.addData(&vboData[1], sizeof(Vector3f));
-	_vbo.addData(&vboData[2], sizeof(Vector3f));
-	_vbo.addData(&vboData[3], sizeof(Vector3f));
+	for(int i = 0; i != 4; ++i){
+		_vbo.addData(&vboData[i], sizeof(Vector3f));
+		_vbo.addData(&vboDataUv[i], sizeof(Vector2f));
+	}
 	_vbo.uploadDataToGpu(GL_ARRAY_BUFFER);
 
 }

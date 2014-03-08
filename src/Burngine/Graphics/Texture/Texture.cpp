@@ -63,7 +63,8 @@ _textureId(0) {
 }
 
 Texture::~Texture() {
-	cleanup();
+	if(isLastReference())
+		cleanup();
 }
 
 void Texture::cleanup() {
@@ -133,7 +134,7 @@ bool Texture::bind(const Uint32& unit) const {
 		Reporter::report("Cannot bind texture. Texture has not been created.", Reporter::ERROR);
 		return false;
 	}
-	if(unit > _realTextureBindingCap - 1 || unit > MAX_TEXTURE_BINDINGS - 1){
+	if(unit > static_cast<Uint32>(_realTextureBindingCap - 1) || unit > static_cast<Uint32>(MAX_TEXTURE_BINDINGS - 1)){
 		Reporter::report("Cannot bind texture. Chosen texture unit is too large.", Reporter::ERROR);
 		return false;
 	}

@@ -44,8 +44,10 @@ _internalFormat(RGB) {
 
 BaseTexture::~BaseTexture() {
 
-	ensureContext();
-	glDeleteSamplers(1, &_samplerId);
+	if(isLastReference()){
+		ensureContext();
+		glDeleteSamplers(1, &_samplerId);
+	}
 
 }
 
