@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
 #include <Burngine/Graphics/Gui/GuiNode.h>
+#include <Burngine/Graphics/General/VertexBufferObject.h>
 
 namespace burn {
 
@@ -35,7 +36,8 @@ public:
 	/**
 	 * @brief Default constructor
 	 */
-	RectangleShape();
+	RectangleShape(	const Vector4f& color = Vector4f(1.f),
+					const Vector2f& dimensions = Vector2f(1.f));
 
 	/**
 	 * @brief Sets the dimensions of the rectangle
@@ -85,6 +87,11 @@ public:
 private:
 	Vector2f _dimensions;
 	Vector4f _color;
+
+	//Attributes for drawing purposes:
+	VertexBufferObject _vbo;
+
+	void updateVbo();
 };
 
 } /* namespace burn */
