@@ -62,6 +62,7 @@ private:
 	RenderTarget _leftEyeRenderTarget, _rightEyeRenderTarget;
 	float _eyeSpacing;
 	VertexBufferObject _leftEyeVbo, _rightEyeVbo;
+	float _cameraAspect;
 
 	OVR::Ptr<OVR::DeviceManager> _pManager;
 	OVR::Ptr<OVR::HMDDevice> _pHMD;

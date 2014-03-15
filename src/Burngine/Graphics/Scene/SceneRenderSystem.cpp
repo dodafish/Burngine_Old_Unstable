@@ -91,6 +91,9 @@ _window(parentWindow) {
 	const Vector2ui& screenRes = Vector2ui(	parentWindow.getSettings().getWidth(),
 											parentWindow.getSettings().getHeight());
 
+	_sceneTexture.create(screenRes, Texture::RGB);
+	_sceneTextureTarget.create(screenRes, RenderTarget::NO_DEPTHBUFFER, _sceneTexture);
+
 	_diffusePartTexture.create(screenRes, Texture::RGB);
 	_specularPartTexture.create(screenRes, Texture::RGB);
 
@@ -341,9 +344,11 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 	if(nodes.size() == 0)
 		return;
 
+	_sceneTextureTarget.clear();
+
 	drawGBuffers(camera, nodes);
 
-	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	_sceneTextureTarget.bind();
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
 
@@ -360,7 +365,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
 			shader.setUniform(uniformLocations.textureShader.gSamplerLoc, GBuffer::DIFFUSE);
 
-			OpenGlControl::bindDrawBuffer(targetFramebuffer);
+			_sceneTextureTarget.bind();
 			glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 
 			drawFullscreenQuad(shader, OpenGlControl::Settings());
@@ -368,7 +373,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		}
 
 		if(isLightingEnabled)
-			lightPass(targetFramebuffer, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
+			lightPass(123, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
 
 		_window.setPolygonMode(polygonMode);
 
@@ -378,6 +383,20 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		 _window.bind();
 		 _skyBox.draw();
 		 }*/
+
+		OpenGlControl::bindReadBuffer(_sceneTextureTarget.getFramebufferId());
+		_sceneTexture.bind(0);
+		OpenGlControl::bindDrawBuffer(targetFramebuffer);
+		glBlitFramebuffer(	0,
+							0,
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
+							0,
+							0,
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
+							GL_COLOR_BUFFER_BIT,
+							GL_LINEAR);
 
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
@@ -555,7 +574,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
 	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
 
-	OpenGlControl::bindDrawBuffer(targetFramebuffer);
+	_sceneTextureTarget.bind();
 	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
 
 	if(!dumpLighting){

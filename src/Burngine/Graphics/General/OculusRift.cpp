@@ -32,7 +32,8 @@ namespace burn {
 
 OculusRift::OculusRift(const Window& window) :
 _window(window),
-_eyeSpacing(1.1f) {
+_eyeSpacing(1.1f),
+_cameraAspect(1.6f){
 
 	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
 
@@ -101,6 +102,8 @@ void OculusRift::renderScene(	Scene& scene,
 								const Camera& camera,
 								const SceneRenderSystem::RenderMode& rendermode) {
 
+	_cameraAspect = camera.getAspectRatio();
+
 	//TODO: 2 cameras
 	Vector3f dir = glm::normalize(camera.getLookAt() - camera.getPosition());
 
@@ -162,37 +165,38 @@ void OculusRift::renderToWindow() {
 	float screendist = 0.041;
 	float lensdist = 0.0635;
 
-	Vector4f hmdWarpParam;
+	Vector4f hmdWarpParam(1.0f, 0.22f, 0.24f, 0.0f);
 	OVR::HMDInfo hmd;
-	if(_pHMD->GetDeviceInfo(&hmd)){
-		eyedistance = hmd.InterpupillaryDistance;
-		screenwidth = hmd.HScreenSize;
-		screenheight = hmd.VScreenSize;
-		screendist = hmd.EyeToScreenDistance;
-		lensdist = hmd.LensSeparationDistance;
+	if(_pHMD)
+		if(_pHMD->GetDeviceInfo(&hmd)){
+			eyedistance = hmd.InterpupillaryDistance;
+			screenwidth = hmd.HScreenSize;
+			screenheight = hmd.VScreenSize;
+			screendist = hmd.EyeToScreenDistance;
+			lensdist = hmd.LensSeparationDistance;
 
-		_eyeSpacing = eyedistance;
-
-		hmdWarpParam[0] = hmd.DistortionK[0];
-		hmdWarpParam[1] = hmd.DistortionK[1];
-		hmdWarpParam[2] = hmd.DistortionK[2];
-		hmdWarpParam[3] = hmd.DistortionK[3];
-	}else{
-		return;
-	}
+			hmdWarpParam[0] = hmd.DistortionK[0];
+			hmdWarpParam[1] = hmd.DistortionK[1];
+			hmdWarpParam[2] = hmd.DistortionK[2];
+			hmdWarpParam[3] = hmd.DistortionK[3];
+		}else{
+			return;
+		}
+	_eyeSpacing = eyedistance;
 
 	float x = 0.f;
 	float y = 0.f;
-	float w = 1.0f;
+	float w = 1.f;
 	float h = 1.f;
-	float projshift = 1.0f - 2.0f * hmd.LensSeparationDistance / hmd.HScreenSize;
+	float projshift = 1.0f - 2.0f * lensdist / screenwidth;
 	float lensradius = -1.f - projshift;
 	float lensradsq = lensradius * lensradius;
 
 	float factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
 	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
 
-	float aspect = 640.f / 800.f;
+	float aspect = _cameraAspect;
+	//float aspect = screenwidth/screenheight;
 
 	_window.bind();
 	shader.setUniform("gSampler", 0);

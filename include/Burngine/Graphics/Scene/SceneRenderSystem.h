@@ -139,6 +139,10 @@ private:
 	Camera findCamera(	const int& face,
 						const Light& pointlight);
 
+	//Texture to pre render the scene
+	RenderTarget _sceneTextureTarget;
+	Texture _sceneTexture;
+
 	//Textures for lighting
 	Texture _diffusePartTexture, _specularPartTexture;
 
