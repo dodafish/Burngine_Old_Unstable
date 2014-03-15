@@ -100,7 +100,7 @@ public:
 	 *
 	 * @see keepOpened()
 	 */
-	static void update();
+	static void update(bool ignoreOpenGLErrors = false);
 
 	/**
 	 * @brief Cleares the back buffer. (The buffer on which Burngine is
@@ -142,19 +142,9 @@ public:
 
 	static Matrix4f getOrthoMatrix();
 
-	enum PolygonMode {
-		FILLED, LINE, POINT
-	};
-
-	void setPolygonMode(const PolygonMode& mode) const;
-
-	const PolygonMode& getPolygonMode() const;
-
 	bool isCreated() const;
 
 private:
-	mutable PolygonMode _polygonMode;
-
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();
 

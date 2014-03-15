@@ -89,8 +89,6 @@ public:
 	void setVboIndex(	const RenderFlag& flag,
 						const GLuint& index);
 
-	void renderTextureToFramebuffer(const BaseTexture& source);
-
 private:
 	void adjustRenderTextures(const Vector2ui& resolution);
 	Vector2ui _currentRenderTexturesResolution;

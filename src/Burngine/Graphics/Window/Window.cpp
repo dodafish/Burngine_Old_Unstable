@@ -38,7 +38,6 @@ namespace burn {
 glm::mat4 Window::_orthoMatrix;
 
 Window::Window() :
-_polygonMode(FILLED),
 _window(nullptr),
 _framerateLimit(0),
 _vertexArrayID(0) {
@@ -124,8 +123,13 @@ bool Window::keepOpened() const {
 	return !glfwWindowShouldClose(_window);
 }
 
-void Window::update() {
+void Window::update(bool ignoreOpenGLErrors) {
 	glfwPollEvents();
+
+	if(!ignoreOpenGLErrors){
+		OpenGlControl::checkError();
+	}
+
 }
 
 void Window::clear() const {
@@ -195,27 +199,7 @@ void Window::setCursorPosition(const Vector2d& position) const {
 	}
 }
 
-void Window::setPolygonMode(const PolygonMode& mode) const {
-
-	ContextHandler::useContext(_window);
-
-	_polygonMode = mode;
-
-	if(mode == FILLED)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	else if(mode == LINE)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	glPointSize(2.0f);
-
-}
-
-const Window::PolygonMode& Window::getPolygonMode() const {
-	return _polygonMode;
-}
-
-bool Window::isCreated() const{
+bool Window::isCreated() const {
 	return _window != nullptr;
 }
 

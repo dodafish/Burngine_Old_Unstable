@@ -36,26 +36,26 @@ class OpenGlControl {
 public:
 
 	enum BlendMode {
-		OVERWRITE, ///< Ignores source's data
-		ADD, ///< Adds to source's data
-		MULTIPLY, ///< Multiplies with source's data
-		MIX ///< Mixes according to alpha values
+		OVERWRITE,    ///< Ignores source's data
+		ADD,    ///< Adds to source's data
+		MULTIPLY,    ///< Multiplies with source's data
+		MIX    ///< Mixes according to alpha values
 	};
 
 	enum DepthtestTechnique {
-		LESS = GL_LESS, ///< Closer vertices win depthtest
-		EQUAL = GL_EQUAL, ///< Only equal vertices win depthtest
-		LEQUAL = GL_LEQUAL ///< Closer and equal vertices win depthtest
+		LESS = GL_LESS,    ///< Closer vertices win depthtest
+		EQUAL = GL_EQUAL,    ///< Only equal vertices win depthtest
+		LEQUAL = GL_LEQUAL    ///< Closer and equal vertices win depthtest
 	};
 
 	enum CullSide {
-		OUTSIDE = GL_FRONT, ///< Outside faces will be ignored
-		INSIDE = GL_BACK ///< Inside faces will be ignored
+		OUTSIDE = GL_FRONT,    ///< Outside faces will be ignored
+		INSIDE = GL_BACK    ///< Inside faces will be ignored
 	};
 
 	enum VertexOrder {
-		COUNTER_CLOCKWISE = GL_CCW, ///< Frontfaces have counter-clockwise vertexorder
-		CLOCKWISE = GL_CW ///< Frontfaces have clockwise vertexorder
+		COUNTER_CLOCKWISE = GL_CCW,    ///< Frontfaces have counter-clockwise vertexorder
+		CLOCKWISE = GL_CW    ///< Frontfaces have clockwise vertexorder
 	};
 
 	class Settings {
@@ -135,7 +135,17 @@ public:
 
 	static bool checkError();
 
+	enum PolygonMode {
+		FILLED, LINE, POINT
+	};
+
+	static void setPolygonMode(const PolygonMode& mode);
+
+	static const PolygonMode& getPolygonMode();
+
 private:
+
+	static PolygonMode _polygonMode;
 
 	//Static only
 	//C-Tor as private (also older C++) as alternative to deleting it (only C++11)
@@ -150,7 +160,7 @@ private:
 };
 
 //Shortcut
-inline bool checkError(){
+inline bool checkError() {
 	return OpenGlControl::checkError();
 }
 

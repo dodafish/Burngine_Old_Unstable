@@ -32,9 +32,30 @@ namespace burn {
 
 //Members of OpenGlControl
 
+OpenGlControl::PolygonMode OpenGlControl::_polygonMode = FILLED;
 GLuint OpenGlControl::_currentDrawBufferBinding = 0;
 GLuint OpenGlControl::_currentReadBufferBinding = 0;
 GLuint OpenGlControl::_currentRenderBufferBinding = 0;
+
+void OpenGlControl::setPolygonMode(const PolygonMode& mode) {
+
+	_polygonMode = mode;
+
+	ensureContext();
+
+	if(mode == FILLED)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	else if(mode == LINE)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	glPointSize(2.0f);
+
+}
+
+const OpenGlControl::PolygonMode& OpenGlControl::getPolygonMode() {
+	return _polygonMode;
+}
 
 void OpenGlControl::draw(	const DrawingTechnique& tech,
 							GLint first,
@@ -46,7 +67,7 @@ void OpenGlControl::draw(	const DrawingTechnique& tech,
 
 	if(tech == TRIANGLES){
 		glDrawArrays(GL_TRIANGLES, first, count);
-	}else{ //TRIANGLE_STRIP
+	}else{    //TRIANGLE_STRIP
 		glDrawArrays(GL_TRIANGLE_STRIP, first, count);
 	}
 

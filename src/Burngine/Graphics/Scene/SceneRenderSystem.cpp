@@ -367,8 +367,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
 
-		//Window::PolygonMode polygonMode = _window.getPolygonMode();
-		//_window.setPolygonMode(Window::FILLED);
+		OpenGlControl::PolygonMode polygonMode = OpenGlControl::getPolygonMode();
+		OpenGlControl::setPolygonMode(OpenGlControl::FILLED);
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
@@ -390,7 +390,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		if(isLightingEnabled)
 			lightPass(123, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
 
-		//_window.setPolygonMode(polygonMode);
+		OpenGlControl::setPolygonMode(polygonMode);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -456,10 +456,6 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		dumpOutDepthGBuffer(targetFramebuffer, targetFramebufferDimensions);    //Special, because no GL_COLOR_BUFFER
 
 	}
-
-}
-
-void SceneRenderSystem::renderTextureToFramebuffer(const BaseTexture& source) {
 
 }
 
