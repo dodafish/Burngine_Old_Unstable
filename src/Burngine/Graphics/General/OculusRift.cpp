@@ -33,7 +33,7 @@ namespace burn {
 OculusRift::OculusRift(const Window& window) :
 _window(window),
 _eyeSpacing(1.1f),
-_cameraAspect(1.6f){
+_cameraAspect(1.6f) {
 
 	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
 
@@ -130,9 +130,9 @@ void OculusRift::renderScene(	Scene& scene,
 	rightCamera.setFov(125.f);
 
 	//Left Eye:
-	scene.draw(leftCamera, rendermode, &_leftEyeRenderTarget);
+	scene.draw(_leftEyeRenderTarget, leftCamera, rendermode);
 	//Right Eye:
-	scene.draw(rightCamera, rendermode, &_rightEyeRenderTarget);
+	scene.draw(_rightEyeRenderTarget, rightCamera, rendermode);
 
 }
 

@@ -215,4 +215,8 @@ const Window::PolygonMode& Window::getPolygonMode() const {
 	return _polygonMode;
 }
 
+bool Window::isCreated() const{
+	return _window != nullptr;
+}
+
 } /* namespace burn */

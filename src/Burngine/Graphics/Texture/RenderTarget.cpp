@@ -263,4 +263,8 @@ const Vector2ui& RenderTarget::getDimensions() const{
 	return _dimensions;
 }
 
+bool RenderTarget::isCreated() const{
+	return _framebuffer != 0;
+}
+
 } /* namespace burn */

@@ -38,13 +38,15 @@
 
 #include <Burngine/Graphics/Scene/SceneRenderSystem.h>
 
+#include <Burngine/System/NonCopyable.h>
+
 namespace burn {
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
  * Provides advanced rendering with built-in technology!
  */
-class BURNGINE_API Scene {
+class BURNGINE_API Scene : public NonCopyable {
 public:
 	/**
 	 * @brief Constructor taking a window as the scene's parent.
@@ -52,11 +54,7 @@ public:
 	 *
 	 * @param parentWindow The parent of the scene
 	 */
-	Scene(const Window& parentWindow);
-
-	//Scenes are not copyable!
-	Scene(const Scene& other) = delete;
-	Scene& operator=(const Scene& other) = delete;
+	Scene();
 
 	/**
 	 * @brief The default destructor detaching all attached objects.
@@ -74,9 +72,14 @@ public:
 	 *
 	 * @see RenderMode
 	 */
-	void draw(	const Camera& camera,
-				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION,
-				RenderTarget* renderTarget = nullptr);
+
+	void draw(	const RenderTarget& renderTarget,
+				const Camera& camera,
+				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
+
+	void draw(	const Window& renderTarget,
+				const Camera& camera,
+				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
 
 	/**
 	 * @brief Attaches a SceneNode to the Scene.
@@ -171,8 +174,7 @@ public:
 	bool isLightingEnabled() const;
 
 private:
-	//Parent window and overall ambient color:
-	const Window& _window;
+	//Overall ambient color:
 	Vector3f _ambientColor;
 
 	SceneRenderSystem _renderSystem;

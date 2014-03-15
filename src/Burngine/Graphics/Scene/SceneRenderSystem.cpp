@@ -77,37 +77,10 @@ void SceneRenderSystem::setVboIndex(const RenderFlag& flag,
 	}
 }
 
-SceneRenderSystem::SceneRenderSystem(const Window& parentWindow) :
-_window(parentWindow) {
+SceneRenderSystem::SceneRenderSystem() {
 	SceneRenderSystem::setVboIndex(POSITION, 0);
 	SceneRenderSystem::setVboIndex(NORMAL, 1);
 	SceneRenderSystem::setVboIndex(UV, 2);
-
-	if(!_gBuffer.create(Vector2ui(parentWindow.getSettings().getWidth(), parentWindow.getSettings().getHeight()))){
-		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
-		exit(11);
-	}
-
-	const Vector2ui& screenRes = Vector2ui(	parentWindow.getSettings().getWidth(),
-											parentWindow.getSettings().getHeight());
-
-	_sceneTexture.create(screenRes, Texture::RGB);
-	_sceneTextureTarget.create(screenRes, RenderTarget::NO_DEPTHBUFFER, _sceneTexture);
-
-	_diffusePartTexture.create(screenRes, Texture::RGB);
-	_specularPartTexture.create(screenRes, Texture::RGB);
-
-	if(!_renderTarget.create(screenRes, RenderTarget::DEPTHBUFFER_16, _diffusePartTexture)){
-		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
-		exit(12);
-	}
-
-	if(!_renderTarget.addColorAttachment(_specularPartTexture, 1)){
-		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
-		exit(13);
-	}
-
-	_renderTarget.clear();
 
 	if(!_vsm.create(Vector2ui(1024, 1024), Texture::RG32F)){
 		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
@@ -330,6 +303,44 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void SceneRenderSystem::adjustRenderTextures(const Vector2ui& resolution) {
+
+	//Don't do anything when the resolution fits
+	if(resolution == _currentRenderTexturesResolution)
+		return;
+
+	//Recreate GBuffer
+	if(!_gBuffer.create(resolution)){
+		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
+		exit(11);
+	}
+
+	/*
+	 * Recreate rendertextures:
+	 */
+
+	_sceneTexture.create(resolution, Texture::RGB);
+	_sceneTextureTarget.create(resolution, RenderTarget::NO_DEPTHBUFFER, _sceneTexture);
+
+	_diffusePartTexture.create(resolution, Texture::RGB);
+	_specularPartTexture.create(resolution, Texture::RGB);
+
+	if(!_renderTarget.create(resolution, RenderTarget::DEPTHBUFFER_16, _diffusePartTexture)){
+		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		exit(12);
+	}
+
+	if(!_renderTarget.addColorAttachment(_specularPartTexture, 1)){
+		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		exit(13);
+	}
+
+	_renderTarget.clear();
+
+	//Remember the current resolution
+	_currentRenderTexturesResolution = resolution;
+}
+
 void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window is default
 								const Vector2ui& targetFramebufferDimensions,
 								const Camera& camera,
@@ -344,6 +355,10 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 	if(nodes.size() == 0)
 		return;
 
+	//Make the rendertextures fit the resolution (This is slow, when it has to adjust!)
+	//Don't use one Scene for different resolutions, unless you don't care about performance!
+	adjustRenderTextures(targetFramebufferDimensions);
+
 	_sceneTextureTarget.clear();
 
 	drawGBuffers(camera, nodes);
@@ -352,8 +367,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 	_gBuffer.bindAsSource();
 	if(mode == COMPOSITION || mode == LIGHTING){
 
-		Window::PolygonMode polygonMode = _window.getPolygonMode();
-		_window.setPolygonMode(Window::FILLED);
+		//Window::PolygonMode polygonMode = _window.getPolygonMode();
+		//_window.setPolygonMode(Window::FILLED);
 
 		if(mode != LIGHTING){
 			//Copy diffuse gBuffer to windowframebuffer:
@@ -375,7 +390,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		if(isLightingEnabled)
 			lightPass(123, targetFramebufferDimensions, camera, nodes, lights, ambient, mode == LIGHTING);
 
-		_window.setPolygonMode(polygonMode);
+		//_window.setPolygonMode(polygonMode);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
 
@@ -400,10 +415,11 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 
 	}else if(mode == DIFFUSE){
 		_gBuffer.setSourceBuffer(GBuffer::DIFFUSE);
+		OpenGlControl::bindDrawBuffer(targetFramebuffer);
 		glBlitFramebuffer(	0,
 							0,
-							_gBuffer.getDimensions().x,
-							_gBuffer.getDimensions().y,
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							0,
 							0,
 							targetFramebufferDimensions.x,
@@ -412,10 +428,11 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							GL_LINEAR);
 	}else if(mode == NORMAL_WS){
 		_gBuffer.setSourceBuffer(GBuffer::NORMAL_WS);
+		OpenGlControl::bindDrawBuffer(targetFramebuffer);
 		glBlitFramebuffer(	0,
 							0,
-							_gBuffer.getDimensions().x,
-							_gBuffer.getDimensions().y,
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							0,
 							0,
 							targetFramebufferDimensions.x,
@@ -424,10 +441,11 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 							GL_LINEAR);
 	}else if(mode == POSITION_WS){
 		_gBuffer.setSourceBuffer(GBuffer::POSITION_WS);
+		OpenGlControl::bindDrawBuffer(targetFramebuffer);
 		glBlitFramebuffer(	0,
 							0,
-							_gBuffer.getDimensions().x,
-							_gBuffer.getDimensions().y,
+							targetFramebufferDimensions.x,
+							targetFramebufferDimensions.y,
 							0,
 							0,
 							targetFramebufferDimensions.x,

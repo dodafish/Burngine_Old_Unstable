@@ -43,9 +43,7 @@ namespace burn {
 //Shortcut for easy access
 typedef SceneRenderSystem::RenderFlag RF;
 
-Scene::Scene(const Window& parentWindow) :
-_window(parentWindow),
-_renderSystem(parentWindow),
+Scene::Scene() :
 _isLightingEnabled(false) {
 
 }
@@ -54,19 +52,37 @@ Scene::~Scene() {
 	detachAll();
 }
 
-void Scene::draw(	const Camera& camera,
-					const SceneRenderSystem::RenderMode& mode,
-					RenderTarget* renderTarget) {
+void Scene::draw(	const RenderTarget& renderTarget,
+					const Camera& camera,
+					const SceneRenderSystem::RenderMode& mode) {
 
-	GLuint target = 0;
-	Vector2ui targetDims(_window.getSettings().getWidth(), _window.getSettings().getHeight());
+	if(!renderTarget.isCreated())
+		return;
 
-	if(renderTarget != nullptr && renderTarget->getFramebufferId() != 0){
-		target = renderTarget->getFramebufferId();
-		targetDims = renderTarget->getDimensions();
-	}
+	_renderSystem.render(	renderTarget.getFramebufferId(),
+							renderTarget.getDimensions(),
+							camera,
+							mode,
+							_nodes,
+							_lights,
+							_ambientColor,
+							_isLightingEnabled);
 
-	_renderSystem.render(target, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
+}
+
+void Scene::draw(	const Window& renderTarget,
+					const Camera& camera,
+					const SceneRenderSystem::RenderMode& mode) {
+
+	if(!renderTarget.isCreated())
+		return;
+
+	//Get window's dimensions
+	Vector2ui targetDims(renderTarget.getSettings().getWidth(), renderTarget.getSettings().getHeight());
+
+	//Bind window, so its framebuffer can be used (0)
+	renderTarget.bind();
+	_renderSystem.render(0, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
 
 }
 

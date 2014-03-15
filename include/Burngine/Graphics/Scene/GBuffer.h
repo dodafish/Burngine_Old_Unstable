@@ -111,9 +111,12 @@ public:
 	 */
 	const Vector2ui& getDimensions() const;
 
+	bool isCreated() const;
+
 private:
 
-	bool _isCreated;
+	void cleanup();
+
 	GLuint _textures[COUNT];
 	GLuint _depthTexture;
 	GLuint _framebuffer;

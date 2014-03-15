@@ -28,6 +28,8 @@
 #include <Burngine/extern/glm/glm.hpp>
 #include <Burngine/extern/glm/gtc/matrix_transform.hpp>
 #include <Burngine/extern/glm/gtx/transform.hpp>
+#include <Burngine/extern/glm/gtc/quaternion.hpp>
+#include <Burngine/extern/glm/gtx/quaternion.hpp>
 
 namespace burn {
 

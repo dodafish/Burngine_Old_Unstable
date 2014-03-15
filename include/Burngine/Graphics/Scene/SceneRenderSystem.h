@@ -59,14 +59,10 @@ class DirectionalLight;
 class BoundingBox;
 class Material;
 
-class BURNGINE_API SceneRenderSystem {
+class BURNGINE_API SceneRenderSystem : public NonCopyable {
 public:
 
-	SceneRenderSystem(const Window& parentWindow);
-
-	//Non-copyable
-	SceneRenderSystem(const SceneRenderSystem& other) = delete;
-	SceneRenderSystem& operator=(const SceneRenderSystem& other) = delete;
+	SceneRenderSystem();
 
 	enum RenderMode {
 		COMPOSITION,    ///< The final render result
@@ -96,8 +92,10 @@ public:
 	void renderTextureToFramebuffer(const BaseTexture& source);
 
 private:
+	void adjustRenderTextures(const Vector2ui& resolution);
+	Vector2ui _currentRenderTexturesResolution;
+
 	GLuint _vboIndices[3];    //Array size is elementcount of RenderFlag enum
-	const Window& _window;
 
 	void renderNode(SceneNode* node,
 					const int& flags,

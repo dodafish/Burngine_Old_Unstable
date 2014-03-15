@@ -32,7 +32,6 @@
 namespace burn {
 
 GBuffer::GBuffer() :
-_isCreated(false),
 _depthTexture(0),
 _framebuffer(0) {
 
@@ -40,20 +39,31 @@ _framebuffer(0) {
 
 GBuffer::~GBuffer() {
 
-	if(_isCreated){
+}
+
+bool GBuffer::isCreated() const {
+	return _framebuffer != 0;
+}
+
+void GBuffer::cleanup() {
+
+	if(isCreated()){
 		glDeleteTextures(COUNT, _textures);
 		glDeleteTextures(1, &_depthTexture);
 		glDeleteFramebuffers(1, &_framebuffer);
+
+		for(size_t i = 0; i != COUNT; ++i)
+			_textures[i] = 0;
+
+		_depthTexture = 0;
+		_framebuffer = 0;
 	}
 
 }
 
 bool GBuffer::create(const Vector2ui& dimensions) {
 
-	if(_isCreated){
-		Reporter::report("Attempt of creating gBuffer multiple times!", Reporter::WARNING);
-		return false;
-	}
+	cleanup();
 
 	ensureContext();
 
@@ -123,7 +133,6 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	/////////////////////////////////////////
-	_isCreated = true;
 	return true;
 }
 
@@ -131,7 +140,7 @@ void GBuffer::clear() {
 
 	ensureContext();
 
-	if(!_isCreated){
+	if(!isCreated()){
 		Reporter::report("Unable to clear gBuffer. gBuffer is not created.", Reporter::WARNING);
 		return;
 	}
@@ -151,7 +160,7 @@ void GBuffer::bindAsTarget() const {
 
 	ensureContext();
 
-	if(!_isCreated){
+	if(!isCreated()){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
 		return;
 	}
@@ -164,7 +173,7 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 
 	ensureContext();
 
-	if(!_isCreated){
+	if(!isCreated()){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
 		return;
 	}
@@ -198,7 +207,7 @@ void GBuffer::setSourceBuffer(const GBufferType& buffer) {
 		return;
 	}
 
-	if(!_isCreated){
+	if(!isCreated()){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
 		return;
 	}
@@ -215,7 +224,7 @@ void GBuffer::bindDepthBufferAsSourceTexture() const {
 
 	ensureContext();
 
-	if(!_isCreated){
+	if(!isCreated()){
 		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
 		return;
 	}

@@ -150,6 +150,8 @@ public:
 
 	const PolygonMode& getPolygonMode() const;
 
+	bool isCreated() const;
+
 private:
 	mutable PolygonMode _polygonMode;
 

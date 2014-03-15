@@ -64,6 +64,8 @@ public:
 
 	const Vector2ui& getDimensions() const;
 
+	bool isCreated() const;
+
 private:
 
 	struct ColorAttachment {
