@@ -21,45 +21,52 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef MATH_H_
-#define MATH_H_
-
-#include <Burngine/Export.h>
-
-#include <Burngine/extern/glm/glm.hpp>
-
-#include <Burngine/extern/glm/gtc/matrix_transform.hpp>
-#include <Burngine/extern/glm/gtx/transform.hpp>
-
-#include <Burngine/extern/glm/gtc/quaternion.hpp>
-#include <Burngine/extern/glm/gtx/quaternion.hpp>
+#include <Burngine/System/Rotation.h>
 
 namespace burn {
 
-//Floating
-typedef glm::detail::tvec4<float> Vector4f; //x,y,z,w / r,g,b,a
-typedef glm::detail::tvec3<float> Vector3f; //x,y,z / r,g,b
-typedef glm::detail::tvec2<float> Vector2f; //x,y / u,v
-
-//Double
-typedef glm::detail::tvec4<double> Vector4d;
-typedef glm::detail::tvec3<double> Vector3d;
-typedef glm::detail::tvec2<double> Vector2d;
-
-//Int
-typedef glm::detail::tvec4<Int32> Vector4i;
-typedef glm::detail::tvec3<Int32> Vector3i;
-typedef glm::detail::tvec2<Int32> Vector2i;
-
-//Unsigned Int
-typedef glm::detail::tvec4<Uint32> Vector4ui;
-typedef glm::detail::tvec3<Uint32> Vector3ui;
-typedef glm::detail::tvec2<Uint32> Vector2ui;
-
-typedef glm::mat4 Matrix4f;
-
-typedef glm::quat Quaternion;
-
+Rotation::Rotation(const Quaternion& quat) :
+_quat(quat) {
+	updateMatrix();
 }
 
-#endif /* MATH_H_ */
+void Rotation::updateMatrix() {
+	_mat = glm::toMat4(_quat);
+}
+
+const Quaternion& Rotation::asQuaternion() const {
+	return _quat;
+}
+
+const Matrix4f& Rotation::asMatrix() const {
+	return _mat;
+}
+
+void Rotation::setByEulerInRadians(const Vector3f& euler) {
+	_quat = Quaternion(euler);
+	updateMatrix();
+}
+
+void Rotation::setByEulerInDegrees(const Vector3f& euler) {
+	_quat = Quaternion(glm::radians(euler));
+	updateMatrix();
+}
+
+void Rotation::setByQuaternion(const Quaternion& quat) {
+	_quat = quat;
+	updateMatrix();
+}
+
+void Rotation::setByAxisAngleInRadians(	const Vector3f& axis,
+										const float& angle) {
+	_quat = glm::angleAxis(glm::degrees(angle), axis);
+	updateMatrix();
+}
+
+void Rotation::setByAxisAngleInDegrees(	const Vector3f& axis,
+										const float& angle) {
+	_quat = glm::angleAxis(angle, axis);
+	updateMatrix();
+}
+
+} /* namespace burn */

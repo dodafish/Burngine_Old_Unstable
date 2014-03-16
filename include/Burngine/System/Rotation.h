@@ -21,45 +21,38 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef MATH_H_
-#define MATH_H_
+#ifndef ROTATION_H_
+#define ROTATION_H_
 
 #include <Burngine/Export.h>
-
-#include <Burngine/extern/glm/glm.hpp>
-
-#include <Burngine/extern/glm/gtc/matrix_transform.hpp>
-#include <Burngine/extern/glm/gtx/transform.hpp>
-
-#include <Burngine/extern/glm/gtc/quaternion.hpp>
-#include <Burngine/extern/glm/gtx/quaternion.hpp>
+#include <Burngine/System/Math.h>
 
 namespace burn {
 
-//Floating
-typedef glm::detail::tvec4<float> Vector4f; //x,y,z,w / r,g,b,a
-typedef glm::detail::tvec3<float> Vector3f; //x,y,z / r,g,b
-typedef glm::detail::tvec2<float> Vector2f; //x,y / u,v
+class BURNGINE_API Rotation {
+public:
+	Rotation(const Quaternion& quat = Quaternion());
 
-//Double
-typedef glm::detail::tvec4<double> Vector4d;
-typedef glm::detail::tvec3<double> Vector3d;
-typedef glm::detail::tvec2<double> Vector2d;
+	//Getters:
+	const Quaternion& asQuaternion() const;
+	const Matrix4f& asMatrix() const;
 
-//Int
-typedef glm::detail::tvec4<Int32> Vector4i;
-typedef glm::detail::tvec3<Int32> Vector3i;
-typedef glm::detail::tvec2<Int32> Vector2i;
+	//Setters:
+	void setByEulerInRadians(const Vector3f& euler);
+	void setByEulerInDegrees(const Vector3f& euler);
 
-//Unsigned Int
-typedef glm::detail::tvec4<Uint32> Vector4ui;
-typedef glm::detail::tvec3<Uint32> Vector3ui;
-typedef glm::detail::tvec2<Uint32> Vector2ui;
+	void setByQuaternion(const Quaternion& quat);
 
-typedef glm::mat4 Matrix4f;
+	void setByAxisAngleInRadians(const Vector3f& axis, const float& angle);
+	void setByAxisAngleInDegrees(const Vector3f& axis, const float& angle);
 
-typedef glm::quat Quaternion;
+private:
+	Quaternion _quat;
+	Matrix4f _mat;
 
-}
+	// Quat -> Mat
+	void updateMatrix();
+};
 
-#endif /* MATH_H_ */
+} /* namespace burn */
+#endif /* ROTATION_H_ */
