@@ -22,6 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Scene/Transformable.h>
+#include <Burngine/System/RotationUtil.h>
 
 namespace burn {
 
@@ -74,6 +75,11 @@ const Rotation& Transformable::getRotation() const {
 	return _rotation;
 }
 
+void Transformable::lookAt(const Vector3f& point){
+	_rotation = RotationUtil::RotationBetweenVectors(Vector3f(1.f, 0.f, 0.f), point - _position);
+	updateModelMatrix();
+}
+
 /*void Transformable::rotate(const float& offsetX, const float& offsetY, const float& offsetZ){
  _rotation.x += offsetX;
  _rotation.y += offsetY;
@@ -95,8 +101,12 @@ const Matrix4f& Transformable::getModelMatrix() {
 
 void Transformable::updateModelMatrix() {
 	Matrix4f translationMatrix = glm::translate(_position.x, _position.y, _position.z);
-	Matrix4f scaleMatrix = glm::scale(_modelMatrix, _scale.x, _scale.y, _scale.z);
+	Matrix4f scaleMatrix = glm::scale(_scale.x, _scale.y, _scale.z);
 	_modelMatrix = translationMatrix * _rotation.asMatrix() * scaleMatrix;
+}
+
+void Transformable::setModelMatrix(const Matrix4f& matrix){
+	_modelMatrix = matrix;
 }
 
 } /* namespace burn */

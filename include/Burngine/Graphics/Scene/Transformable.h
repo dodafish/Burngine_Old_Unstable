@@ -86,6 +86,8 @@ public:
 	 */
 	void setRotation(const Rotation& rotation);
 
+	void lookAt(const Vector3f& point);
+
 	/**
 	 * @brief Returns the current rotation of the object
 	 *
@@ -121,6 +123,8 @@ public:
 	 * @return The current modelmatrix
 	 */
 	const Matrix4f& getModelMatrix();
+
+	void setModelMatrix(const Matrix4f& matrix);
 
 protected:
 	void updateModelMatrix();

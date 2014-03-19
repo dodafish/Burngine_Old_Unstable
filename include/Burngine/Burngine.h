@@ -67,6 +67,7 @@
 #include <Burngine/System/Rectangle.h>
 #include <Burngine/System/BoundingBox.h>
 #include <Burngine/System/Rotation.h>
+#include <Burngine/System/RotationUtil.h>
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
