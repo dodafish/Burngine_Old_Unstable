@@ -167,7 +167,7 @@ void OculusRift::renderToWindow() {
 
 	Vector4f hmdWarpParam(1.0f, 0.22f, 0.24f, 0.0f);
 	OVR::HMDInfo hmd;
-	if(_pHMD)
+	if(_pHMD){
 		if(_pHMD->GetDeviceInfo(&hmd)){
 			eyedistance = hmd.InterpupillaryDistance;
 			screenwidth = hmd.HScreenSize;
@@ -182,6 +182,8 @@ void OculusRift::renderToWindow() {
 		}else{
 			return;
 		}
+	}
+
 	_eyeSpacing = eyedistance;
 
 	float x = 0.f;
@@ -195,8 +197,8 @@ void OculusRift::renderToWindow() {
 	float factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
 	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
 
-	float aspect = _cameraAspect;
-	//float aspect = screenwidth/screenheight;
+	float aspect = screenwidth/screenheight;
+	aspect = _cameraAspect;
 
 	_window.bind();
 	shader.setUniform("gSampler", 0);

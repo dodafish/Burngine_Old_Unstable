@@ -26,10 +26,7 @@
 namespace burn {
 
 Vector4f DirectionalLight::getDirection() const {
-	Matrix4f rotMat = glm::rotate(Matrix4f(1.f), _rotation.x, Vector3f(1.f, 0.f, 0.f));
-	rotMat = glm::rotate(rotMat, _rotation.y, Vector3f(0.f, 1.f, 0.f));
-	rotMat = glm::rotate(rotMat, _rotation.z, Vector3f(0.f, 0.f, 1.f));
-	return (rotMat * Vector4f(1.f, 0.f, 0.f, 1.0f));
+	return (_rotation.asMatrix() * Vector4f(1.f, 0.f, 0.f, 1.0f));
 }
 
 } /* namespace burn */

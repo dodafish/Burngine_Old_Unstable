@@ -128,12 +128,4 @@ void Camera::setHeadUp(const Vector3f& headUp){
 	_headUp = headUp;
 }
 
-void Camera::updateRotation(){
-
-	Vector3f dir = glm::normalize(_lookAt - _position);
-
-
-
-}
-
 } /* namespace burn */

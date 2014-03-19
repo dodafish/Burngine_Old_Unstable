@@ -33,9 +33,8 @@
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/Texture/RenderTarget.h>
-//#include <Burngine/Graphics/Texture/CubeMap.h>
-//#include <Burngine/Graphics/Texture/VarianceShadowMap.h>
-//#include <Burngine/Graphics/Texture/VarianceShadowCubeMap.h>
+#include <Burngine/Graphics/General/OculusRift.h>
+#include <Burngine/Graphics/Gui/2D/Sprite.h>
 
 #include <Burngine/Graphics/Scene/Scene.h>
 #include <Burngine/Graphics/Scene/SceneNode.h>
@@ -67,16 +66,17 @@
 #include <Burngine/System/Utf.h>
 #include <Burngine/System/Rectangle.h>
 #include <Burngine/System/BoundingBox.h>
+#include <Burngine/System/Rotation.h>
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 
-namespace burn{
+namespace burn {
 
-	void shutdown(){
-		ContextHandler::shutdown();
-		Reporter::report("Burngine shutdown.");
-	}
+void shutdown() {
+	ContextHandler::shutdown();
+	Reporter::report("Burngine shutdown.");
+}
 
 }
 

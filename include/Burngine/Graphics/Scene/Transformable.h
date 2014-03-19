@@ -26,6 +26,7 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
+#include <Burngine/System/Rotation.h>
 
 namespace burn {
 
@@ -83,7 +84,7 @@ public:
 	 *
 	 * @see getRotation()
 	 */
-	void setRotation(const Vector3f& rotation);
+	void setRotation(const Rotation& rotation);
 
 	/**
 	 * @brief Returns the current rotation of the object
@@ -92,9 +93,9 @@ public:
 	 *
 	 * @see setRotation()
 	 */
-	const Vector3f& getRotation() const;
+	const Rotation& getRotation() const;
 
-	void rotate(const float& offsetX, const float& offsetY, const float& offsetZ);
+	//void rotate(const float& offsetX, const float& offsetY, const float& offsetZ);
 
 	/**
 	 * @brief Sets the scale of the object
@@ -122,10 +123,11 @@ public:
 	const Matrix4f& getModelMatrix();
 
 protected:
+	void updateModelMatrix();
 
-	Vector3f _position, _scale, _rotation;
+	Vector3f _position, _scale;
+	Rotation _rotation;
 	Matrix4f _modelMatrix;
-
 };
 
 } /* namespace burn */

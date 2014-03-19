@@ -160,8 +160,6 @@ public:
 	void setHeadUp(const Vector3f& headUp);
 
 private:
-	void updateRotation();
-
 	float _aspectRatio;
 	Vector3f _lookAt;
 	Vector3f _headUp;
