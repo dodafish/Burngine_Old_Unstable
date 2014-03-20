@@ -69,4 +69,19 @@ void Rotation::setByAxisAngleInDegrees(	const Vector3f& axis,
 	updateMatrix();
 }
 
+void Rotation::setByBulletQuaternion(const btQuaternion& bulletQuat) {
+
+	burn::Quaternion q = burn::Quaternion(-bulletQuat.z(), bulletQuat.y(), -bulletQuat.x(), bulletQuat.w());
+	burn::Rotation r;
+	r.setByAxisAngleInDegrees(burn::Vector3f(0.f, 0.f, 1.f), 180.f);
+	q = q * r.asQuaternion();
+
+	_quat = q;
+	updateMatrix();
+}
+
+btQuaternion Rotation::asBulletQuaternion() const {
+	return btQuaternion(_quat.x, _quat.y, _quat.z, _quat.w);
+}
+
 } /* namespace burn */

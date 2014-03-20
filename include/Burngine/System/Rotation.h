@@ -26,6 +26,7 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
+#include <LinearMath/btQuaternion.h>
 
 namespace burn {
 
@@ -37,6 +38,8 @@ public:
 	const Quaternion& asQuaternion() const;
 	const Matrix4f& asMatrix() const;
 
+	btQuaternion asBulletQuaternion() const;
+
 	//Setters:
 	void setByEulerInRadians(const Vector3f& euler);
 	void setByEulerInDegrees(const Vector3f& euler);
@@ -45,6 +48,8 @@ public:
 
 	void setByAxisAngleInRadians(const Vector3f& axis, const float& angle);
 	void setByAxisAngleInDegrees(const Vector3f& axis, const float& angle);
+
+	void setByBulletQuaternion(const btQuaternion& bulletQuat);
 
 private:
 	Quaternion _quat;
