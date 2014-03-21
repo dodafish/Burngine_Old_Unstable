@@ -21,34 +21,22 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef STATICMESHNODE_H_
-#define STATICMESHNODE_H_
-
-#include <Burngine/Export.h>
-#include <Burngine/Graphics/Scene/SceneNode.h>
-#include <Burngine/Graphics/Scene/Model.h>
-#include <Burngine/Physics/ObjectAttributes.h>
+#include <Burngine/Graphics/Scene/StaticMeshNode.h>
 
 namespace burn {
 
-/**
- * @brief A SceneNode describing a model that has no animations
- * e.g. a building.
- */
-class BURNGINE_API StaticMeshNode : public SceneNode, public Model {
-public:
-	void setAttributes(const ObjectAttributes& attributes);
-	const ObjectAttributes& getAttributes() const;
-private:
-	ObjectAttributes _attributes;
+void StaticMeshNode::setAttributes(const ObjectAttributes& attributes) {
+	_attributes = attributes;
+}
 
-	virtual void reattachToParents();
+const ObjectAttributes& StaticMeshNode::getAttributes() const {
+	return _attributes;
+}
 
-	//Hide methods, that are public in SceneNode.
-	//We have no need to have them public here, anymore.
-	//using SceneNode::addParentScene;
-	//using SceneNode::removeParentScene;
-};
+void StaticMeshNode::reattachToParents() {
+	for(size_t i = 0; i < _parents.size(); ++i){
+		_parents[i]->attachSceneNode(*this);
+	}
+}
 
-} /* namespace burn */
-#endif /* STATICMESHNODE_H_ */
+}

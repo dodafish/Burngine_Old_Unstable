@@ -69,6 +69,10 @@
 #include <Burngine/System/Rotation.h>
 #include <Burngine/System/RotationUtil.h>
 
+#include <Burngine/Physics/ObjectAttributes.h>
+#include <Burngine/Physics/RigidBody.h>
+#include <Burngine/Physics/World.h>
+
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 

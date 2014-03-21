@@ -113,12 +113,11 @@ public:
 	 * @see isCastingShadows()
 	 */
 	void setCastingShadows(bool enabled);
-
+protected:
+	std::vector<Scene*> _parents;
+	virtual void reattachToParents();
 private:
 	void removeAllParents();
-
-	std::vector<Scene*> _parents;
-
 	bool _isCastingShadows;
 };
 

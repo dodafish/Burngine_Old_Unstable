@@ -27,13 +27,10 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Material.h>
 #include <Burngine/System/BoundingBox.h>
+#include <Burngine/Graphics/Scene/Mesh.h>
 
 #include <vector>
 #include <memory>
-
-namespace burn {
-class Mesh;
-}
 
 template class BURNGINE_API std::vector<burn::Mesh>;
 

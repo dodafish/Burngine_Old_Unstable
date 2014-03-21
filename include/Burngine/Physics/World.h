@@ -32,11 +32,11 @@
 #include <memory>
 
 //Include as little bullet as possible here
-#include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
-#include <bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
-#include <bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
-#include <bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <Burngine/extern/bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <Burngine/extern/bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
+#include <Burngine/extern/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <Burngine/extern/bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <Burngine/extern/bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 
 namespace burn {
 
@@ -44,7 +44,7 @@ class RigidBody;
 
 class BURNGINE_API World : public NonCopyable {
 public:
-	World(const Vector3f& gravity = Vector3f(0.f, 0.98f, 0.f));
+	World(const Vector3f& gravity = Vector3f(0.f, -9.98f, 0.f));
 	~World();
 
 	bool addRigidBody(const RigidBody& body);

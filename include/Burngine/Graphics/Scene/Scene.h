@@ -40,7 +40,12 @@
 
 #include <Burngine/System/NonCopyable.h>
 
+#include <Burngine/Physics/World.h>
+#include <Burngine/Physics/RigidBody.h>
+
 namespace burn {
+
+class StaticMeshNode;
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
@@ -61,6 +66,8 @@ public:
 	 */
 	~Scene();
 
+	void stepSimulation(const float& elapsed, bool updateNodes = true);
+
 	/**
 	 * @brief Draws the scene with selected technology
 	 *
@@ -72,7 +79,6 @@ public:
 	 *
 	 * @see RenderMode
 	 */
-
 	void draw(	const RenderTarget& renderTarget,
 				const Camera& camera,
 				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
@@ -82,9 +88,9 @@ public:
 				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
 
 	/**
-	 * @brief Attaches a SceneNode to the Scene.
+	 * @brief Attaches a StaticMeshNode to the Scene.
 	 *
-	 * @param node The SceneNode to attach
+	 * @param staticMeshNode The SceneNode to attach
 	 *
 	 * @note You don't have to care about detaching. When either the
 	 * SceneNode or the Scene gets destroyed the destructors will care
@@ -92,7 +98,7 @@ public:
 	 *
 	 * @see detachSceneNode()
 	 */
-	void attachSceneNode(SceneNode& node);
+	void attachSceneNode(	StaticMeshNode& staticMeshNode);
 
 	/**
 	 * @brief Detaches a SceneNode from the Scene.
@@ -181,9 +187,16 @@ private:
 
 	bool _isLightingEnabled;    ///< Does our scene render lighting? Default: false
 
+	World _physicsWorld;
+
 	//Attachable nodes:
-	std::vector<SceneNode*> _nodes;
 	std::vector<Light*> _lights;
+	std::vector<SceneNode*> _nodes;
+	struct PhysicalSceneNode {
+		RigidBody rigidBody;
+		SceneNode* node;
+	};
+	std::vector<PhysicalSceneNode> _physicalNodes;
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;

@@ -25,6 +25,19 @@
 
 namespace burn {
 
+ObjectAttributes::ObjectAttributes(	const float& mass,
+									const float& friction,
+									const float& restitution,
+									const Vector3f& linearVelocity,
+									const Vector3f& angularVelocity) :
+_mass(mass),
+_linearVelocity(linearVelocity),
+_angularVelocity(angularVelocity),
+_friction(friction),
+_restitution(restitution) {
+
+}
+
 void ObjectAttributes::setLinearVelocity(const Vector3f& linearVelocity) {
 	_linearVelocity = linearVelocity;
 }
@@ -36,6 +49,9 @@ void ObjectAttributes::setFriction(const float& friction) {
 }
 void ObjectAttributes::setRestitution(const float& restitution) {
 	_restitution = restitution;
+}
+void ObjectAttributes::setMass(const float& mass) {
+	_mass = mass;
 }
 
 const Vector3f& ObjectAttributes::getLinearVelocity() const {
@@ -49,6 +65,9 @@ const float& ObjectAttributes::getFriction() const {
 }
 const float& ObjectAttributes::getRestitution() const {
 	return _restitution;
+}
+const float& ObjectAttributes::getMass() const {
+	return _mass;
 }
 
 } /* namespace burn */

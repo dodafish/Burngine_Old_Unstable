@@ -26,11 +26,12 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Physics/ObjectAttributes.h>
+#include <Burngine/Graphics/Scene/Transformable.h>
 
 #include <Burngine/Physics/World.h>
 
 //Include as little bullet as possible here
-#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <Burngine/extern/bullet/BulletDynamics/Dynamics/btRigidBody.h>
 
 //RigidBody will get copied, so we need smart pointers as we dont want
 //to _really_ copy it.
@@ -51,10 +52,15 @@ public:
 	bool createCollisionShape(	const Model& model,
 								const SHAPE_PRECISION& precision = IDENTICAL);
 
+	void setTransform(const Transformable& transformable);
+	const Transformable& getTransform() const;
+
 	void setAttributes(const ObjectAttributes& oa);
 	const ObjectAttributes& getAttributes() const;
 
-	void updateAttributes();
+	void update();
+
+	void forceSimulation();
 
 private:
 	friend bool World::addRigidBody(const RigidBody&);
@@ -65,6 +71,7 @@ private:
 	std::shared_ptr<btMotionState> _motionState;
 
 	ObjectAttributes _attributes;
+	Transformable _transform;
 };
 
 } /* namespace burn */

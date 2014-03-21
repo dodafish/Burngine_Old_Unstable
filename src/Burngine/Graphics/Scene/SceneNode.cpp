@@ -22,8 +22,13 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Scene/SceneNode.h>
+#include <Burngine/System/Reporter.h>
 
 namespace burn {
+
+void SceneNode::reattachToParents(){
+	Reporter::report("Pure SceneNode was copied!", Reporter::ERROR);
+}
 
 void SceneNode::removeAllParents() {
 	Scene* parents[_parents.size()];
@@ -45,9 +50,7 @@ SceneNode::~SceneNode() {
 SceneNode::SceneNode(const SceneNode& other) :
 _parents(other._parents),
 _isCastingShadows(other._isCastingShadows) {
-	for(size_t i = 0; i < _parents.size(); ++i){
-		_parents[i]->attachSceneNode(*this);
-	}
+	reattachToParents();
 }
 
 SceneNode& SceneNode::operator=(const SceneNode& other) {
@@ -56,25 +59,23 @@ SceneNode& SceneNode::operator=(const SceneNode& other) {
 	_isCastingShadows = other._isCastingShadows;
 
 	_parents = other._parents;
-	for(size_t i = 0; i < _parents.size(); ++i){
-		_parents[i]->attachSceneNode(*this);
-	}
+	reattachToParents();
 	return *this;
 }
 
 void SceneNode::addParentScene(Scene* scene) {
 	for(size_t i = 0; i < _parents.size(); ++i){
 		if(_parents[i] == scene)
-			return; //Already added as parent
+			return;    //Already added as parent
 	}
-	_parents.push_back(scene); //Add to parents
+	_parents.push_back(scene);    //Add to parents
 }
 
 void SceneNode::removeParentScene(Scene* scene) {
 	for(size_t i = 0; i < _parents.size(); ++i){
 		if(_parents[i] == scene){
 			_parents.erase(_parents.begin() + i);
-			return; //addParentScene() ensures, that a scene is added only once. So return
+			return;    //addParentScene() ensures, that a scene is added only once. So return
 		}
 	}
 }

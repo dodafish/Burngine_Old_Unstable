@@ -32,6 +32,14 @@
 
 namespace burn {
 
+void RigidBody::forceSimulation(){
+
+	if(_rigidBody.use_count() == 0)
+		return;
+	_rigidBody->activate(true);
+
+}
+
 bool RigidBody::create(const float& mass) {
 
 	if(_collisionShape.use_count() == 0){
@@ -39,10 +47,10 @@ bool RigidBody::create(const float& mass) {
 		return false;
 	}
 
-	_motionState.reset(new btDefaultMotionState(btTransform(_attributes.getRotation().asBulletQuaternion(),
-															btVector3(	_attributes.getPosition().x,
-																		_attributes.getPosition().y,
-																		_attributes.getPosition().z))));
+	_motionState.reset(new btDefaultMotionState(btTransform(_transform.getRotation().asBulletQuaternion(),
+															btVector3(	_transform.getPosition().x,
+																		_transform.getPosition().y,
+																		_transform.getPosition().z))));
 
 	btVector3 fallInertia(0, 0, 0);
 	_collisionShape->calculateLocalInertia(mass, fallInertia);
@@ -73,7 +81,7 @@ bool RigidBody::createCollisionShape(	const Model& model,
 		btConvexHullShape* convexHull = new btConvexHullShape;
 
 		//Cycle through the meshes
-		for(size_t i = 0; 1 < meshes.size(); ++i){
+		for(size_t i = 0; i < meshes.size(); ++i){
 			const std::vector<Vertex>& vertices = meshes[i].getVertices();
 			//Cycle through the vertices
 			for(size_t j = 0; j != vertices.size(); ++j){
@@ -89,19 +97,29 @@ bool RigidBody::createCollisionShape(	const Model& model,
 	return true;
 }
 
-void RigidBody::setAttributes(const ObjectAttributes& oa) {
-	_attributes = oa;
+void RigidBody::setTransform(const Transformable& transformable) {
+	_transform = transformable;
 
 	if(_rigidBody.use_count() == 0 || _motionState.use_count() == 0)
 		return;
 
 	//For translation, rotation and scale we use a matrix
 	btTransform trans;
-	trans.setFromOpenGLMatrix(glm::value_ptr(_attributes.getModelMatrix()));
+	trans.setFromOpenGLMatrix(glm::value_ptr(_transform.getModelMatrix()));
 	//_rigidBody->setCenterOfMassTransform(trans);
 	_motionState->setWorldTransform(trans);
 
-	//Other
+}
+const Transformable& RigidBody::getTransform() const{
+	return _transform;
+}
+
+void RigidBody::setAttributes(const ObjectAttributes& oa) {
+	_attributes = oa;
+
+	if(_rigidBody.use_count() == 0 || _motionState.use_count() == 0)
+		return;
+
 	_rigidBody->setFriction(_attributes.getFriction());
 	_rigidBody->setRestitution(_attributes.getRestitution());
 }
@@ -110,7 +128,7 @@ const ObjectAttributes& RigidBody::getAttributes() const {
 	return _attributes;
 }
 
-void RigidBody::updateAttributes() {
+void RigidBody::update() {
 
 	if(_rigidBody.use_count() == 0 || _motionState.use_count() == 0)
 		return;
@@ -127,10 +145,10 @@ void RigidBody::updateAttributes() {
 	btTransform trans;
 	_motionState->getWorldTransform(trans);
 
-	_attributes.setPosition(Vector3f(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+	_transform.setPosition(Vector3f(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
 	burn::Rotation rotation;
 	rotation.setByBulletQuaternion(trans.getRotation());
-	_attributes.setRotation(rotation);
+	_transform.setRotation(rotation);
 }
 
 } /* namespace burn */

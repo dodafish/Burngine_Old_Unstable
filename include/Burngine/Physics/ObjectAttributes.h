@@ -27,22 +27,29 @@
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
 
-#include <Burngine/Graphics/Scene/Transformable.h>
-
 namespace burn {
 
-class BURNGINE_API ObjectAttributes : public Transformable{
+class BURNGINE_API ObjectAttributes {
 public:
+	ObjectAttributes(	const float& mass = 0.f,
+	                 	const float& friction = 1.f,
+						const float& restitution = 0.f,
+						const Vector3f& linearVelocity = Vector3f(0.f),
+						const Vector3f& angularVelocity = Vector3f(0.f));
+
 	void setLinearVelocity(const Vector3f& linearVelocity);
 	void setAngularVelocity(const Vector3f& angularVelocity);
 	void setFriction(const float& friction);
 	void setRestitution(const float& restitution);
+	void setMass(const float& mass);
 
 	const Vector3f& getLinearVelocity() const;
 	const Vector3f& getAngularVelocity() const;
 	const float& getFriction() const;
 	const float& getRestitution() const;
+	const float& getMass() const;
 private:
+	float _mass;
 	Vector3f _linearVelocity, _angularVelocity;
 	float _friction, _restitution;
 };

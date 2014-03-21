@@ -86,7 +86,7 @@ bool World::removeRigidBody(const RigidBody& body) {
 }
 
 void World::stepSimulation(const float& elapsed) {
-	_world->stepSimulation(elapsed, 1000, 1.f / 1000.f);
+	_world->stepSimulation(elapsed, 10, 1.f / 40.f);
 }
 
 } /* namespace burn */
