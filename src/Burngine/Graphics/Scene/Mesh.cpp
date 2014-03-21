@@ -76,6 +76,10 @@ void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	update();
 }
 
+const std::vector<Vertex>& Mesh::getVertices() const{
+	return _vertices;
+}
+
 const VertexBufferObject& Mesh::getPositionVbo() const {
 	return _positionVbo;
 }

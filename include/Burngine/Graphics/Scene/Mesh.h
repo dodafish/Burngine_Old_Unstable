@@ -149,6 +149,8 @@ public:
 	 */
 	const Material& getMaterial() const;
 
+	const std::vector<Vertex>& getVertices() const;
+
 private:
 
 	/**
