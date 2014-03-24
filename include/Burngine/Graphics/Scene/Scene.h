@@ -46,6 +46,7 @@
 namespace burn {
 
 class StaticMeshNode;
+class PhysicalSceneNode;
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
@@ -192,11 +193,11 @@ private:
 	//Attachable nodes:
 	std::vector<Light*> _lights;
 	std::vector<SceneNode*> _nodes;
-	struct PhysicalSceneNode {
+	struct RigidSceneNode {
 		RigidBody rigidBody;
-		SceneNode* node;
+		PhysicalSceneNode* node;
 	};
-	std::vector<PhysicalSceneNode> _physicalNodes;
+	std::vector<RigidSceneNode> _physicalNodes;
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;

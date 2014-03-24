@@ -21,14 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include <Burngine/Graphics/Scene/StaticMeshNode.h>
+#include <Burngine/Graphics/Scene/PhysicalSceneNode.h>
 
 namespace burn {
 
-void StaticMeshNode::reattachToParents() {
-	for(size_t i = 0; i < _parents.size(); ++i){
-		_parents[i]->attachSceneNode(*this);
-	}
-}
-
-}
+} /* namespace burn */

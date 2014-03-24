@@ -240,22 +240,22 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 	shader.setUniform(normalMatrixLoc, normalMatrix);
 
 	//StaticMeshNode consists of several meshes
-	std::vector<Mesh>* meshes = n->getMeshesPointer();
-	for(size_t i = 0; i < meshes->size(); ++i){
+	const std::vector<Mesh>& meshes = n->getMeshes();
+	for(size_t i = 0; i < meshes.size(); ++i){
 
 		//Retreive the mesh
-		Mesh* mesh = &((*meshes)[i]);
+		const Mesh& mesh = meshes[i];
 
 		//Set OpenGL according to mesh's flags
-		mesh->getMaterial().setOpenGlByFlags();
+		mesh.getMaterial().setOpenGlByFlags();
 
 		//Set uniforms depending on mesh's material
-		if(mesh->getMaterial().getType() == Material::SOLID_COLOR){
+		if(mesh.getMaterial().getType() == Material::SOLID_COLOR){
 			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_COLORED);
-			shader.setUniform(meshColorLoc, mesh->getMaterial().getDiffuseColor());
+			shader.setUniform(meshColorLoc, mesh.getMaterial().getDiffuseColor());
 		}else{
 			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
-			mesh->getTexture().bind();
+			mesh.getTexture().bind();
 		}
 
 		//Bind bufferobjects according to renderflags
@@ -267,28 +267,28 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 		int flags = constflags;
 
 		if(flags >= UV){
-			mesh->getUvVbo().bind();
+			mesh.getUvVbo().bind();
 			glVertexAttribPointer(_vboIndices[UV_ARRAY_INDEX], 2,
 			GL_FLOAT,
 									GL_FALSE, 0, (void*)0);
 			flags -= UV;
 		}
 		if(flags >= NORMAL){
-			mesh->getNormalVbo().bind();
+			mesh.getNormalVbo().bind();
 			glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
 			GL_FLOAT,
 									GL_FALSE, 0, (void*)0);
 			flags -= NORMAL;
 		}
 		if(flags >= POSITION){
-			mesh->getPositionVbo().bind();
+			mesh.getPositionVbo().bind();
 			glVertexAttribPointer(_vboIndices[POSITION_ARRAY_INDEX], 3,
 			GL_FLOAT,
 									GL_FALSE, 0, (void*)0);
 			flags -= POSITION;
 		}
 
-		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh->getVertexCount(), shader);
+		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
 
 		glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
 		glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);

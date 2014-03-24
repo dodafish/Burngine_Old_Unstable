@@ -53,6 +53,13 @@ Scene::~Scene() {
 }
 
 void Scene::stepSimulation(const float& elapsed, bool updateNodes){
+
+	//Upload transform and attributes to physics world (has effect when changed)
+	for(size_t i = 0; i < _physicalNodes.size(); ++i){
+		_physicalNodes[i].rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i].node)));
+		_physicalNodes[i].rigidBody.setAttributes(static_cast<ObjectAttributes>(*(_physicalNodes[i].node)));
+	}
+
 	_physicsWorld.stepSimulation(elapsed);
 
 	if(updateNodes){
@@ -129,17 +136,17 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 	staticMeshNode.addParentScene(this);
 
 	//It's a static mesh, so add it to the physics!
-	PhysicalSceneNode psn;
-	psn.node = &staticMeshNode;
+	RigidSceneNode rsn;
+	rsn.node = &staticMeshNode;
 
-	psn.rigidBody.setAttributes(staticMeshNode.getAttributes());
-	psn.rigidBody.setTransform(staticMeshNode);
-	psn.rigidBody.createCollisionShape(staticMeshNode);
-	psn.rigidBody.create(staticMeshNode.getAttributes().getMass());
+	rsn.rigidBody.setAttributes(static_cast<ObjectAttributes>(staticMeshNode));
+	rsn.rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
+	rsn.rigidBody.setCollisionShape(staticMeshNode.getCollisionShape());
+	rsn.rigidBody.create(staticMeshNode.getMass());
 
-	_physicsWorld.addRigidBody(psn.rigidBody);
+	_physicsWorld.addRigidBody(rsn.rigidBody);
 
-	_physicalNodes.push_back(psn);
+	_physicalNodes.push_back(rsn);
 }
 
 void Scene::detachSceneNode(SceneNode& node) {

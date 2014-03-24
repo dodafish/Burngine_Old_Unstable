@@ -34,6 +34,8 @@
 #include <Burngine/System/Reporter.h>
 #include <sstream>
 
+#include <bullet/btBulletDynamicsCommon.h>
+
 namespace burn {
 
 struct MeshData {
@@ -66,11 +68,8 @@ const std::vector<Mesh>& Model::getMeshes() const {
 	return _meshes;
 }
 
-std::vector<Mesh>* Model::getMeshesPointer(){
-	return &_meshes;
-}
-
-bool Model::loadFromFile(const std::string& file) {
+bool Model::loadFromFile(	const std::string& file,
+							const PHYSICAL_SHAPE_PRECISION& precision) {
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(	file.c_str(),
@@ -201,7 +200,37 @@ bool Model::loadFromFile(const std::string& file) {
 
 	_isLoaded = true;
 
+	///////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
+
+	if(precision == CONVEX_HULL){
+
+		if(_meshes.size() == 0){
+			Reporter::report("Unable to create collision shape. Model has no meshes!", Reporter::ERROR);
+			return false;
+		}
+
+		btConvexHullShape* convexHull = new btConvexHullShape;
+
+		//Cycle through the meshes
+		for(size_t i = 0; i < _meshes.size(); ++i){
+			const std::vector<Vertex>& vertices = _meshes[i].getVertices();
+			//Cycle through the vertices
+			for(size_t j = 0; j != vertices.size(); ++j){
+				convexHull->addPoint(btVector3(	vertices[j].getPosition().x,
+												vertices[j].getPosition().y,
+												vertices[j].getPosition().z));
+			}
+		}
+
+		_collisionShape.reset(convexHull);
+	}
+
 	return _isLoaded;
+}
+
+const std::shared_ptr<btCollisionShape>& Model::getCollisionShape() const{
+	return _collisionShape;
 }
 
 } /* namespace burn */

@@ -40,10 +40,14 @@ void RigidBody::forceSimulation(){
 
 }
 
+void RigidBody::setCollisionShape(const std::shared_ptr<btCollisionShape>& shape){
+	_collisionShape = shape;
+}
+
 bool RigidBody::create(const float& mass) {
 
 	if(_collisionShape.use_count() == 0){
-		Reporter::report("Unable to create rigid body. No collision shape created!", Reporter::ERROR);
+		Reporter::report("Unable to create rigid body. No collision shape available!", Reporter::ERROR);
 		return false;
 	}
 
@@ -57,42 +61,6 @@ bool RigidBody::create(const float& mass) {
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, _motionState.get(), _collisionShape.get(), fallInertia);
 
 	_rigidBody.reset(new btRigidBody(rigidBodyCI));
-
-	return true;
-}
-
-bool RigidBody::createCollisionShape(	const Model& model,
-										const SHAPE_PRECISION& precision) {
-
-	if(!model.isLoaded()){
-		Reporter::report("Unable to create collision shape. Model is not loaded!", Reporter::ERROR);
-		return false;
-	}
-
-	if(precision == IDENTICAL){
-
-		const std::vector<Mesh>& meshes = model.getMeshes();
-
-		if(meshes.size() == 0){
-			Reporter::report("Unable to create collision shape. Model has no meshes!", Reporter::ERROR);
-			return false;
-		}
-
-		btConvexHullShape* convexHull = new btConvexHullShape;
-
-		//Cycle through the meshes
-		for(size_t i = 0; i < meshes.size(); ++i){
-			const std::vector<Vertex>& vertices = meshes[i].getVertices();
-			//Cycle through the vertices
-			for(size_t j = 0; j != vertices.size(); ++j){
-				convexHull->addPoint(btVector3(	vertices[j].getPosition().x,
-												vertices[j].getPosition().y,
-												vertices[j].getPosition().z));
-			}
-		}
-
-		_collisionShape.reset(convexHull);
-	}
 
 	return true;
 }

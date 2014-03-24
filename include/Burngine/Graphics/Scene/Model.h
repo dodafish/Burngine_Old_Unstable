@@ -34,6 +34,8 @@
 
 template class BURNGINE_API std::vector<burn::Mesh>;
 
+#include <Burngine/extern/bullet/BulletCollision/CollisionShapes/btCollisionShape.h>
+
 /**
  * @brief Holds several meshes describing a 3D model
  */
@@ -47,6 +49,10 @@ public:
 
 	Model();
 
+	enum PHYSICAL_SHAPE_PRECISION {
+		CONVEX_HULL
+	};
+
 	/**
 	 * @brief Loads a 3D model from file. Supports most
 	 * common formats like .obj .3ds etc.
@@ -55,7 +61,7 @@ public:
 	 *
 	 * @return Returns false if loading failed
 	 */
-	bool loadFromFile(const std::string& file);
+	bool loadFromFile(const std::string& file, const PHYSICAL_SHAPE_PRECISION& precision = CONVEX_HULL);
 
 	/**
 	 * @brief Returns a mesh depending on the given index.
@@ -71,13 +77,15 @@ public:
 	 * @see getMeshCount()
 	 */
 	const std::vector<Mesh>& getMeshes() const;
-	std::vector<Mesh>* getMeshesPointer();
 
 	bool isLoaded() const;
 
+	const std::shared_ptr<btCollisionShape>& getCollisionShape() const;
+
+protected:
+	std::shared_ptr<btCollisionShape> _collisionShape;
 private:
 	std::vector<Mesh> _meshes;
-
 	bool _isLoaded;
 };
 

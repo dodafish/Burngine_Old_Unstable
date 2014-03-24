@@ -21,54 +21,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef RIGIDBODY_H_
-#define RIGIDBODY_H_
+#ifndef PHYSICALSCENENODE_H_
+#define PHYSICALSCENENODE_H_
 
 #include <Burngine/Export.h>
+#include <Burngine/Graphics/Scene/SceneNode.h>
 #include <Burngine/Physics/ObjectAttributes.h>
-#include <Burngine/Graphics/Scene/Transformable.h>
-
-#include <Burngine/Physics/World.h>
-
-//Include as little bullet as possible here
-#include <Burngine/extern/bullet/BulletDynamics/Dynamics/btRigidBody.h>
-
-//RigidBody will get copied, so we need smart pointers as we dont want
-//to _really_ copy it.
-#include <memory>
 
 namespace burn {
 
-class Model;
-
-class BURNGINE_API RigidBody {
-public:
-
-	bool create(const float& mass);
-
-	void setCollisionShape(const std::shared_ptr<btCollisionShape>& shape);
-
-	void setTransform(const Transformable& transformable);
-	const Transformable& getTransform() const;
-
-	void setAttributes(const ObjectAttributes& oa);
-	const ObjectAttributes& getAttributes() const;
-
-	void update();
-
-	void forceSimulation();
-
-private:
-	friend bool World::addRigidBody(const RigidBody&);
-	friend bool World::removeRigidBody(const RigidBody&);
-
-	std::shared_ptr<btRigidBody> _rigidBody;
-	std::shared_ptr<btCollisionShape> _collisionShape;
-	std::shared_ptr<btMotionState> _motionState;
-
-	ObjectAttributes _attributes;
-	Transformable _transform;
+class BURNGINE_API PhysicalSceneNode : public SceneNode, public ObjectAttributes {
 };
 
 } /* namespace burn */
-#endif /* RIGIDBODY_H_ */
+#endif /* PHYSICALSCENENODE_H_ */
