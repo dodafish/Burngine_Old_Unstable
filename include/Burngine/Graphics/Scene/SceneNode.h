@@ -25,22 +25,16 @@
 #define SCENENODE_H_
 
 #include <Burngine/Export.h>
-#include <Burngine/System/Math.h>
-#include <Burngine/Graphics/Scene/Transformable.h>
-#include <Burngine/Graphics/General/Shader.h>
-#include <Burngine/Graphics/Scene/Scene.h>
 
-#include <vector>
+#include <Burngine/Graphics/Scene/Transformable.h>
+#include <Burngine/System/Component.h>
 
 namespace burn {
-
-class Camera;
-class Light;
 
 /**
  * @brief Describes an object attachable to the Scene
  */
-class BURNGINE_API SceneNode : public Transformable {
+class BURNGINE_API SceneNode : public Transformable, public Component {
 public:
 	/**
 	 * @brief Default Constructor initialzing some
@@ -74,28 +68,6 @@ public:
 	SceneNode& operator=(const SceneNode& other);
 
 	/**
-	 * @brief Adds a Scene as parent. This is used by Scene when
-	 * attaching SceneNodes. You should use the Scene's methods for
-	 * connecting SceneNodes to Scenes instead of this method
-	 *
-	 * @param parent The parent Scene
-	 *
-	 * @see removeParentScene()
-	 */
-	void addParentScene(Scene* scene);
-
-	/**
-	 * @brief Removes a Scene from parents. This is used by Scene when
-	 * detaching SceneNodes. You should use the Scene's methods for
-	 * disconnecting SceneNodes from Scenes instead of this method
-	 *
-	 * @param parent The parent Scene
-	 *
-	 * @see addParentScene()
-	 */
-	void removeParentScene(Scene* scene);
-
-	/**
 	 * @brief Returns true when the SceneNode is casting shadows
 	 *
 	 * @return Returns false when the SceneNode casts no shadows
@@ -113,11 +85,7 @@ public:
 	 * @see isCastingShadows()
 	 */
 	void setCastingShadows(bool enabled);
-protected:
-	std::vector<Scene*> _parents;
-	virtual void reattachToParents();
 private:
-	void removeAllParents();
 	bool _isCastingShadows;
 };
 

@@ -26,58 +26,26 @@
 
 namespace burn {
 
-void SceneNode::reattachToParents(){
-	Reporter::report("Pure SceneNode was copied!", Reporter::ERROR);
-}
-
-void SceneNode::removeAllParents() {
-	Scene* parents[_parents.size()];
-	for(size_t i = 0; i != _parents.size(); ++i)
-		parents[i] = _parents[i];
-	size_t size = _parents.size();
-	for(size_t i = 0; i != size; ++i)
-		parents[i]->detachSceneNode(*this);
-}
-
 SceneNode::SceneNode() :
 _isCastingShadows(true) {
 }
 
 SceneNode::~SceneNode() {
-	removeAllParents();
+
 }
 
 SceneNode::SceneNode(const SceneNode& other) :
-_parents(other._parents),
 _isCastingShadows(other._isCastingShadows) {
-	reattachToParents();
 }
 
 SceneNode& SceneNode::operator=(const SceneNode& other) {
-	removeAllParents();
+
+	if(this == &other)
+		return *this;
 
 	_isCastingShadows = other._isCastingShadows;
 
-	_parents = other._parents;
-	reattachToParents();
 	return *this;
-}
-
-void SceneNode::addParentScene(Scene* scene) {
-	for(size_t i = 0; i < _parents.size(); ++i){
-		if(_parents[i] == scene)
-			return;    //Already added as parent
-	}
-	_parents.push_back(scene);    //Add to parents
-}
-
-void SceneNode::removeParentScene(Scene* scene) {
-	for(size_t i = 0; i < _parents.size(); ++i){
-		if(_parents[i] == scene){
-			_parents.erase(_parents.begin() + i);
-			return;    //addParentScene() ensures, that a scene is added only once. So return
-		}
-	}
 }
 
 bool SceneNode::isCastingShadows() const {
