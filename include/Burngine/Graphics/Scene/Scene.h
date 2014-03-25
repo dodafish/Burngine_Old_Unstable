@@ -43,16 +43,19 @@
 #include <Burngine/Physics/World.h>
 #include <Burngine/Physics/RigidBody.h>
 
+#include <Burngine/System/MessageReceiver.h>
+
 namespace burn {
 
 class StaticMeshNode;
 class PhysicalSceneNode;
+class Message;
 
 /**
  * @brief Renders attached SceneNodes properly with attached lights.
  * Provides advanced rendering with built-in technology!
  */
-class BURNGINE_API Scene : public NonCopyable {
+class BURNGINE_API Scene : public NonCopyable, public MessageReceiver {
 public:
 	/**
 	 * @brief Constructor taking a window as the scene's parent.
@@ -108,7 +111,7 @@ public:
 	 *
 	 * @see attachSceneNode()
 	 */
-	void detachSceneNode(SceneNode& node);
+	void detachSceneNode(const SceneNode& node);
 
 	/**
 	 * @brief Attaches a Light to the Scene.
@@ -181,6 +184,8 @@ public:
 	bool isLightingEnabled() const;
 
 private:
+	virtual void onMessageReceive(const Message& msg);
+
 	//Overall ambient color:
 	Vector3f _ambientColor;
 
@@ -198,6 +203,9 @@ private:
 		PhysicalSceneNode* node;
 	};
 	std::vector<RigidSceneNode> _physicalNodes;
+
+	void removeSceneNodeById(const Uint64& id);
+	void removePhysicalSceneNodeById(const Uint64& id);
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;

@@ -38,7 +38,7 @@ public:
 
 	const Id& getId() const;
 
-private:
+protected:
 	Id _id;
 };
 

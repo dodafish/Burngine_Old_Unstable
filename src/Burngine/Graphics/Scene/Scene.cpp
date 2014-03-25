@@ -23,6 +23,8 @@
 
 #include <Burngine/Graphics/Scene/Scene.h>
 
+#include <Burngine/System/Message.h>
+
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 
@@ -43,6 +45,43 @@ namespace burn {
 //Shortcut for easy access
 typedef SceneRenderSystem::RenderFlag RF;
 
+void Scene::onMessageReceive(const Message& msg) {
+	if(msg.getName() == mn::SCENENODE_DESTRUCTED){
+		Uint64 recId = 0;
+		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			removeSceneNodeById(recId);
+		}
+	}else if(msg.getName() == mn::PHYSICALSCENENODE_DESTRUCTED){
+		Uint64 recId = 0;
+		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			removePhysicalSceneNodeById(recId);
+		}
+	}
+}
+
+void Scene::removeSceneNodeById(const Uint64& id) {
+	for(size_t i = 0; i < _nodes.size(); ++i){
+		if(_nodes[i]->getId().get() == id){
+			_nodes.erase(_nodes.begin() + i);
+			break;
+		}
+	}
+}
+
+void Scene::removePhysicalSceneNodeById(const Uint64& id) {
+	for(size_t i = 0; i < _physicalNodes.size(); ++i){
+		if(_physicalNodes[i].node->getId().get() == id){
+			_physicsWorld.removeRigidBody(_physicalNodes[i].rigidBody);
+			_physicalNodes.erase(_physicalNodes.begin() + i);
+
+			removeSceneNodeById(id);
+			break;
+		}
+	}
+}
+
+//////////////////////////////////////
+
 Scene::Scene() :
 _isLightingEnabled(false) {
 
@@ -52,9 +91,10 @@ Scene::~Scene() {
 	detachAll();
 }
 
-void Scene::stepSimulation(const float& elapsed, bool updateNodes){
+void Scene::stepSimulation(	const float& elapsed,
+							bool updateNodes) {
 
-	//Upload transform and attributes to physics world (has effect when changed)
+//Upload transform and attributes to physics world (has effect when changed)
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		_physicalNodes[i].rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i].node)));
 		_physicalNodes[i].rigidBody.setAttributes(static_cast<ObjectAttributes>(*(_physicalNodes[i].node)));
@@ -70,8 +110,7 @@ void Scene::stepSimulation(const float& elapsed, bool updateNodes){
 			_physicalNodes[i].node->setScale(_physicalNodes[i].rigidBody.getTransform().getScale());
 			_physicalNodes[i].node->setRotation(_physicalNodes[i].rigidBody.getTransform().getRotation());
 		}
-	}
-	else{
+	}else{
 		for(size_t i = 0; i < _physicalNodes.size(); ++i)
 			_physicalNodes[i].rigidBody.forceSimulation();
 	}
@@ -103,23 +142,20 @@ void Scene::draw(	const Window& renderTarget,
 	if(!renderTarget.isCreated())
 		return;
 
-	//Get window's dimensions
+//Get window's dimensions
 	Vector2ui targetDims(renderTarget.getSettings().getWidth(), renderTarget.getSettings().getHeight());
 
-	//Bind window, so its framebuffer can be used (0)
+//Bind window, so its framebuffer can be used (0)
 	renderTarget.bind();
 	_renderSystem.render(0, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
 
 }
 
 void Scene::detachAll() {
-	//All SceneNodes:
-	for(size_t i = 0; i < _nodes.size(); ++i){
-		_nodes[i]->removeParentScene(this);
-	}
+//All SceneNodes:
 	_nodes.clear();
 
-	//All Lights:
+//All Lights:
 	for(size_t i = 0; i < _lights.size(); ++i){
 		_lights[i]->removeParentScene(this);
 	}
@@ -133,9 +169,8 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 			return;    //Already attached
 	}
 	_nodes.push_back(&staticMeshNode);
-	staticMeshNode.addParentScene(this);
 
-	//It's a static mesh, so add it to the physics!
+//It's a static mesh, so add it to the physics!
 	RigidSceneNode rsn;
 	rsn.node = &staticMeshNode;
 
@@ -149,11 +184,9 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 	_physicalNodes.push_back(rsn);
 }
 
-void Scene::detachSceneNode(SceneNode& node) {
+void Scene::detachSceneNode(const SceneNode& node) {
 
-	node.removeParentScene(this);
-
-	//Remove from attachment-list
+//Remove from attachment-list
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
@@ -161,6 +194,8 @@ void Scene::detachSceneNode(SceneNode& node) {
 		}
 	}
 
+	//const PhysicalSceneNode* psn = dynamic_cast<const PhysicalSceneNode*>(&node);
+	//if(psn != 0){
 	//Also remove from physical nodes when necessary
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		if(_physicalNodes[i].node == &node){
@@ -169,6 +204,7 @@ void Scene::detachSceneNode(SceneNode& node) {
 			return;
 		}
 	}
+	//}
 
 }
 
@@ -185,7 +221,7 @@ void Scene::detachLight(Light& light) {
 
 	light.removeParentScene(this);
 
-	//Remove from attachement-list
+//Remove from attachement-list
 	for(size_t i = 0; i < _lights.size(); ++i){
 		if(_lights[i] == &light){
 			_lights.erase(_lights.begin() + i);

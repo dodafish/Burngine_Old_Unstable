@@ -23,6 +23,14 @@
 
 #include <Burngine/Graphics/Scene/PhysicalSceneNode.h>
 
+#include <Burngine/System/Message.h>
+
 namespace burn {
+
+void PhysicalSceneNode::onDestruction() {
+	Message msg(mn::PHYSICALSCENENODE_DESTRUCTED);
+	msg.addParameter<Uint64>(mp::COMPONENT_ID, _id.get());
+	msg.send();
+}
 
 } /* namespace burn */

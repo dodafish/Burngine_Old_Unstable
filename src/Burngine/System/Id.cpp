@@ -29,8 +29,8 @@
 
 namespace burn {
 
-unsigned long Id::_nextId = 0;
-std::vector<unsigned long> Id::_releasedIds;
+Uint64 Id::_nextId = 0;
+std::vector<Uint64> Id::_releasedIds;
 
 bool Id::getReleasedId() {
 	if(_releasedIds.size() == 0)
@@ -59,7 +59,7 @@ bool Id::operator==(const Id& other) const {
 	return _myId == other.get();
 }
 
-const unsigned long& Id::get() const {
+const Uint64& Id::get() const {
 	return _myId;
 }
 

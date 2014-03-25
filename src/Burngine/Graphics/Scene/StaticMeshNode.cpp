@@ -25,10 +25,4 @@
 
 namespace burn {
 
-void StaticMeshNode::reattachToParents() {
-	for(size_t i = 0; i < _parents.size(); ++i){
-		_parents[i]->attachSceneNode(*this);
-	}
-}
-
 }

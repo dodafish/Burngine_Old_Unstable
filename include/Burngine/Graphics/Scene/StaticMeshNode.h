@@ -35,14 +35,6 @@ namespace burn {
  * e.g. a building.
  */
 class BURNGINE_API StaticMeshNode : public PhysicalSceneNode, public Model {
-public:
-private:
-	virtual void reattachToParents();
-
-	//Hide methods, that are public in SceneNode.
-	//We have no need to have them public here, anymore.
-	//using SceneNode::addParentScene;
-	//using SceneNode::removeParentScene;
 };
 
 } /* namespace burn */

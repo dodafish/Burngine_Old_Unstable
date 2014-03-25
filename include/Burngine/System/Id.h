@@ -37,7 +37,7 @@ public:
 
 	bool operator==(const Id& other) const;
 
-	const unsigned long& get() const;
+	const Uint64& get() const;
 	std::string asString() const;
 
 private:
@@ -46,12 +46,12 @@ private:
 	Id& operator=(const Id& other);
 
 	//Static
-	static unsigned long _nextId;
-	static std::vector<unsigned long> _releasedIds;
+	static Uint64 _nextId;
+	static std::vector<Uint64> _releasedIds;
 	bool getReleasedId();
 
 	//The actual id
-	unsigned long _myId;
+	Uint64 _myId;
 };
 
 } /* namespace burn */

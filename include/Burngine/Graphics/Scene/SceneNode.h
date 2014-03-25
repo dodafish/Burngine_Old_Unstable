@@ -85,6 +85,8 @@ public:
 	 * @see isCastingShadows()
 	 */
 	void setCastingShadows(bool enabled);
+protected:
+	virtual void onDestruction();
 private:
 	bool _isCastingShadows;
 };

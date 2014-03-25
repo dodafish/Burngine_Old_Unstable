@@ -24,6 +24,10 @@
 #ifndef MESSAGE_H_
 #define MESSAGE_H_
 
+// For faster use:
+#include <Burngine/System/MessageNames.h>
+///////////////
+
 #include <Burngine/Export.h>
 #include <Burngine/System/Parameter.h>
 

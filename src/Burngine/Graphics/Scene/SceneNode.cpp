@@ -24,6 +24,8 @@
 #include <Burngine/Graphics/Scene/SceneNode.h>
 #include <Burngine/System/Reporter.h>
 
+#include <Burngine/System/Message.h>
+
 namespace burn {
 
 SceneNode::SceneNode() :
@@ -31,7 +33,13 @@ _isCastingShadows(true) {
 }
 
 SceneNode::~SceneNode() {
+	onDestruction();
+}
 
+void SceneNode::onDestruction() {
+	Message msg(mn::SCENENODE_DESTRUCTED);
+	msg.addParameter<Uint64>(mp::COMPONENT_ID, _id.get());
+	msg.send();
 }
 
 SceneNode::SceneNode(const SceneNode& other) :

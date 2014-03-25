@@ -21,21 +21,24 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef PHYSICALSCENENODE_H_
-#define PHYSICALSCENENODE_H_
+#ifndef MESSAGENAMES_H_
+#define MESSAGENAMES_H_
 
-#include <Burngine/Export.h>
-#include <Burngine/Graphics/Scene/SceneNode.h>
-#include <Burngine/Physics/ObjectAttributes.h>
+#include <string>
 
-namespace burn {
+namespace burn{
 
-class BURNGINE_API PhysicalSceneNode : public SceneNode, public ObjectAttributes {
-public:
+	/**
+	 * Names for Messages and for parameters
+	 */
+	namespace mn{
+		const std::string SCENENODE_DESTRUCTED = "MBUS__SCENENODE_DESTRUCTED";
+		const std::string PHYSICALSCENENODE_DESTRUCTED = "MBUS__PHYSICALSCENENODE_DESTRUCTED";
+	}
+	namespace mp{
+		const std::string COMPONENT_ID = "MBUS__COMPONENT_ID";
+	}
 
-protected:
-	virtual void onDestruction();
-};
+}
 
-} /* namespace burn */
-#endif /* PHYSICALSCENENODE_H_ */
+#endif /* MESSAGENAMES_H_ */
