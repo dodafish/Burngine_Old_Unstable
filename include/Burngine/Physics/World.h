@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/System/NonCopyable.h>
 #include <Burngine/System/Math.h>
+#include <Burngine/System/MessageReceiver.h>
 
 #include <vector>
 #include <memory>
@@ -47,19 +48,23 @@ public:
 	World(const Vector3f& gravity = Vector3f(0.f, -9.98f, 0.f));
 	~World();
 
-	bool addRigidBody(const RigidBody& body);
-	bool removeRigidBody(const RigidBody& body);
+	bool addRigidBody(RigidBody& body);
+	void removeRigidBody(const RigidBody& body);
 
 	void stepSimulation(const float& elapsed);
 
 private:
+	MessageReceiver _messageReceiver;
+	void onMessageReceive(const Message& message);
+
 	btDiscreteDynamicsWorld* _world;
 	btBroadphaseInterface* _broadphase;
 	btDefaultCollisionConfiguration* _collisionConfiguration;
 	btCollisionDispatcher* _dispatcher;
 	btSequentialImpulseConstraintSolver* _solver;
 
-	std::vector<std::shared_ptr<btRigidBody>> _rigidBodies;
+	std::vector<RigidBody*> _rigidBodies;
+	void removeRigidBodyById(const Uint64& id);
 };
 
 } /* namespace burn */
