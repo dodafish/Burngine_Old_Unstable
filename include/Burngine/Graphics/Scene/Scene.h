@@ -70,7 +70,8 @@ public:
 	 */
 	~Scene();
 
-	void stepSimulation(const float& elapsed, bool updateNodes = true);
+	void stepSimulation(const float& elapsed,
+						bool updateNodes = true);
 
 	/**
 	 * @brief Draws the scene with selected technology
@@ -102,7 +103,7 @@ public:
 	 *
 	 * @see detachSceneNode()
 	 */
-	void attachSceneNode(	StaticMeshNode& staticMeshNode);
+	void attachSceneNode(StaticMeshNode& staticMeshNode);
 
 	/**
 	 * @brief Detaches a SceneNode from the Scene.
@@ -203,7 +204,7 @@ private:
 		RigidBody rigidBody;
 		PhysicalSceneNode* node;
 	};
-	std::vector<RigidSceneNode> _physicalNodes;
+	std::vector<std::shared_ptr<RigidSceneNode> > _physicalNodes;
 
 	void removeSceneNodeById(const Uint64& id);
 	void removePhysicalSceneNodeById(const Uint64& id);

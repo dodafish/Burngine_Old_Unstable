@@ -28,9 +28,37 @@
 
 #include <bullet/btBulletDynamicsCommon.h>
 
+#include <Burngine/System/Message.h>
+
 namespace burn {
 
+void World::onMessageReceive(const Message& message) {
+	if(message.getName() == mn::RIGIDBODY_DESTRUCTED){
+		Uint64 recId = 0;
+		if(message.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			removeRigidBodyById(recId);
+		}
+	}
+}
+
+void World::removeRigidBodyById(const Uint64& id) {
+
+	//Check if we already have added the rigidbody
+	for(size_t i = 0; i < _rigidBodies.size(); ++i){
+		if(_rigidBodies[i]->getId().get() == id){
+
+			_world->removeRigidBody(_rigidBodies[i]->getBulletRigidBody().get());
+
+			_rigidBodies.erase(_rigidBodies.begin() + i);
+			break;
+		}
+	}
+
+}
+
 World::World(const Vector3f& gravity) {
+	_messageReceiver.bindReceiveFunction(std::bind(&World::onMessageReceive, this, std::placeholders::_1));
+
 	_broadphase = new btDbvtBroadphase();
 
 	_collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -48,41 +76,26 @@ World::~World() {
 	delete _broadphase;
 }
 
-bool World::addRigidBody(const RigidBody& body) {
+bool World::addRigidBody(RigidBody& body) {
 
 	//Check if we already have added the rigidbody
 	for(size_t i = 0; i < _rigidBodies.size(); ++i){
-		if(_rigidBodies[i] == body._rigidBody){
+		if(_rigidBodies[i] == &body){
 			Reporter::report("Adding of rigid body denied. Rigid body is already added!", Reporter::ERROR);
 			return false;
 		}
 	}
 
-	_world->addRigidBody(body._rigidBody.get());
-	_rigidBodies.push_back(body._rigidBody);
+	_world->addRigidBody(body.getBulletRigidBody().get());
+	_rigidBodies.push_back(&body);
 
 	return true;
 }
 
-bool World::removeRigidBody(const RigidBody& body) {
+void World::removeRigidBody(const RigidBody& body) {
 
-	//Check if we already have added the rigidbody
-	bool found = false;
-	for(size_t i = 0; i < _rigidBodies.size(); ++i){
-		if(_rigidBodies[i] == body._rigidBody){
-			found = true;
-			_rigidBodies.erase(_rigidBodies.begin() + i);
-			break;
-		}
-	}
+	removeRigidBodyById(body.getId().get());
 
-	if(!found){
-		Reporter::report("Removing of rigid body failed. Rigid body was not added!", Reporter::ERROR);
-		return false;
-	}
-
-	_world->removeRigidBody(body._rigidBody.get());
-	return true;
 }
 
 void World::stepSimulation(const float& elapsed) {

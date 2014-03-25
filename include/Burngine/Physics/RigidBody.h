@@ -27,8 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Physics/ObjectAttributes.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
-
-#include <Burngine/Physics/World.h>
+#include <Burngine/System/Component.h>
 
 //Include as little bullet as possible here
 #include <Burngine/extern/bullet/BulletDynamics/Dynamics/btRigidBody.h>
@@ -39,10 +38,10 @@
 
 namespace burn {
 
-class Model;
-
-class BURNGINE_API RigidBody {
+class BURNGINE_API RigidBody : public Component {
 public:
+
+	~RigidBody();
 
 	bool create(const float& mass);
 
@@ -58,9 +57,9 @@ public:
 
 	void forceSimulation();
 
+	const std::shared_ptr<btRigidBody>& getBulletRigidBody() const;
+
 private:
-	friend bool World::addRigidBody(const RigidBody&);
-	friend bool World::removeRigidBody(const RigidBody&);
 
 	std::shared_ptr<btRigidBody> _rigidBody;
 	std::shared_ptr<btCollisionShape> _collisionShape;

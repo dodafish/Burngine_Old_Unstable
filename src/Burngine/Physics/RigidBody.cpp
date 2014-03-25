@@ -30,9 +30,17 @@
 
 #include <bullet/btBulletDynamicsCommon.h>
 
+#include <Burngine/System/Message.h>
+
 namespace burn {
 
-void RigidBody::forceSimulation(){
+RigidBody::~RigidBody() {
+	Message msg(mn::RIGIDBODY_DESTRUCTED);
+	msg.addParameter<Uint64>(mp::COMPONENT_ID, _id.get());
+	msg.send();
+}
+
+void RigidBody::forceSimulation() {
 
 	if(_rigidBody.use_count() == 0)
 		return;
@@ -40,7 +48,7 @@ void RigidBody::forceSimulation(){
 
 }
 
-void RigidBody::setCollisionShape(const std::shared_ptr<btCollisionShape>& shape){
+void RigidBody::setCollisionShape(const std::shared_ptr<btCollisionShape>& shape) {
 	_collisionShape = shape;
 }
 
@@ -71,14 +79,22 @@ void RigidBody::setTransform(const Transformable& transformable) {
 	if(_rigidBody.use_count() == 0 || _motionState.use_count() == 0)
 		return;
 
+	{
+		btTransform comTrans = _rigidBody->getCenterOfMassTransform();
+		comTrans.setOrigin(btVector3(	_transform.getPosition().x,
+										_transform.getPosition().y,
+										_transform.getPosition().z));
+		_rigidBody->setCenterOfMassTransform(comTrans);
+
+	}
 	//For translation, rotation and scale we use a matrix
-	btTransform trans;
-	trans.setFromOpenGLMatrix(glm::value_ptr(_transform.getModelMatrix()));
+	//btTransform trans;
+	//trans.setFromOpenGLMatrix(glm::value_ptr(_transform.getModelMatrix()));
 	//_rigidBody->setCenterOfMassTransform(trans);
-	_motionState->setWorldTransform(trans);
+	//_motionState->setWorldTransform(trans);
 
 }
-const Transformable& RigidBody::getTransform() const{
+const Transformable& RigidBody::getTransform() const {
 	return _transform;
 }
 
@@ -117,6 +133,10 @@ void RigidBody::update() {
 	burn::Rotation rotation;
 	rotation.setByBulletQuaternion(trans.getRotation());
 	_transform.setRotation(rotation);
+}
+
+const std::shared_ptr<btRigidBody>& RigidBody::getBulletRigidBody() const {
+	return _rigidBody;
 }
 
 } /* namespace burn */

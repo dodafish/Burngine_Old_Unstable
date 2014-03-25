@@ -75,10 +75,8 @@ void Scene::removeSceneNodeById(const Uint64& id) {
 
 void Scene::removePhysicalSceneNodeById(const Uint64& id) {
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		if(_physicalNodes[i].node->getId().get() == id){
-			_physicsWorld.removeRigidBody(_physicalNodes[i].rigidBody);
+		if(_physicalNodes[i]->node->getId().get() == id){
 			_physicalNodes.erase(_physicalNodes.begin() + i);
-
 			removeSceneNodeById(id);
 			break;
 		}
@@ -110,23 +108,23 @@ void Scene::stepSimulation(	const float& elapsed,
 
 	//Upload transform and attributes to physics world (has effect when changed)
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		_physicalNodes[i].rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i].node)));
-		_physicalNodes[i].rigidBody.setAttributes(static_cast<ObjectAttributes>(*(_physicalNodes[i].node)));
+		_physicalNodes[i]->rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i]->node)));
+		_physicalNodes[i]->rigidBody.setAttributes(static_cast<ObjectAttributes>(*(_physicalNodes[i]->node)));
 	}
 
 	_physicsWorld.stepSimulation(elapsed);
 
 	if(updateNodes){
 		for(size_t i = 0; i < _physicalNodes.size(); ++i){
-			_physicalNodes[i].rigidBody.forceSimulation();
-			_physicalNodes[i].rigidBody.update();
-			_physicalNodes[i].node->setPosition(_physicalNodes[i].rigidBody.getTransform().getPosition());
-			_physicalNodes[i].node->setScale(_physicalNodes[i].rigidBody.getTransform().getScale());
-			_physicalNodes[i].node->setRotation(_physicalNodes[i].rigidBody.getTransform().getRotation());
+			_physicalNodes[i]->rigidBody.forceSimulation();
+			_physicalNodes[i]->rigidBody.update();
+			_physicalNodes[i]->node->setPosition(_physicalNodes[i]->rigidBody.getTransform().getPosition());
+			_physicalNodes[i]->node->setScale(_physicalNodes[i]->rigidBody.getTransform().getScale());
+			_physicalNodes[i]->node->setRotation(_physicalNodes[i]->rigidBody.getTransform().getRotation());
 		}
 	}else{
 		for(size_t i = 0; i < _physicalNodes.size(); ++i)
-			_physicalNodes[i].rigidBody.forceSimulation();
+			_physicalNodes[i]->rigidBody.forceSimulation();
 	}
 
 }
@@ -181,15 +179,15 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 	_nodes.push_back(&staticMeshNode);
 
 	//It's a static mesh, so add it to the physics!
-	RigidSceneNode rsn;
-	rsn.node = &staticMeshNode;
+	std::shared_ptr<RigidSceneNode> rsn(new RigidSceneNode());
+	rsn->node = &staticMeshNode;
 
-	rsn.rigidBody.setAttributes(static_cast<ObjectAttributes>(staticMeshNode));
-	rsn.rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
-	rsn.rigidBody.setCollisionShape(staticMeshNode.getCollisionShape());
-	rsn.rigidBody.create(staticMeshNode.getMass());
+	rsn->rigidBody.setAttributes(static_cast<ObjectAttributes>(staticMeshNode));
+	rsn->rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
+	rsn->rigidBody.setCollisionShape(staticMeshNode.getCollisionShape());
+	rsn->rigidBody.create(staticMeshNode.getMass());
 
-	_physicsWorld.addRigidBody(rsn.rigidBody);
+	_physicsWorld.addRigidBody(rsn->rigidBody);
 
 	_physicalNodes.push_back(rsn);
 }
@@ -206,8 +204,7 @@ void Scene::detachSceneNode(const SceneNode& node) {
 
 	//Also remove from physical nodes when necessary
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		if(_physicalNodes[i].node == &node){
-			_physicsWorld.removeRigidBody(_physicalNodes[i].rigidBody);
+		if(_physicalNodes[i]->node == &node){;
 			_physicalNodes.erase(_physicalNodes.begin() + i);
 			return;
 		}
