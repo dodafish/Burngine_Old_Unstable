@@ -54,13 +54,17 @@ MessageReceiver::~MessageReceiver() {
 		}
 }
 
-void MessageReceiver::onMessageReceive(const Message& msg) {
+void MessageReceiver::takeMessage(const Message& msg) {
+	_receiveFunction(msg);
+}
 
+void MessageReceiver::bindReceiveFunction(const std::function<void(const Message&)>& function) {
+	_receiveFunction = function;
 }
 
 void MessageReceiver::sendMessageToAllReceivers(const Message& msg) {
 	for(unsigned int i = 0; i < _receivers.size(); ++i)
-		_receivers[i]->onMessageReceive(msg);
+		_receivers[i]->takeMessage(msg);
 }
 
 } /* namespace burn */

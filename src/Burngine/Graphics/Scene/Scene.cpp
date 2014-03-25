@@ -98,7 +98,7 @@ void Scene::removeLightById(const Uint64& id) {
 
 Scene::Scene() :
 _isLightingEnabled(false) {
-
+	_messageReceiver.bindReceiveFunction(std::bind(&Scene::onMessageReceive, this, std::placeholders::_1));
 }
 
 Scene::~Scene() {

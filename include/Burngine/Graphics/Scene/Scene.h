@@ -55,7 +55,7 @@ class Message;
  * @brief Renders attached SceneNodes properly with attached lights.
  * Provides advanced rendering with built-in technology!
  */
-class BURNGINE_API Scene : public NonCopyable, public MessageReceiver {
+class BURNGINE_API Scene : public NonCopyable {
 public:
 	/**
 	 * @brief Constructor taking a window as the scene's parent.
@@ -184,7 +184,8 @@ public:
 	bool isLightingEnabled() const;
 
 private:
-	virtual void onMessageReceive(const Message& msg);
+	MessageReceiver _messageReceiver;
+	void onMessageReceive(const Message& msg);
 
 	//Overall ambient color:
 	Vector3f _ambientColor;

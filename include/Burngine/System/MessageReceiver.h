@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 
 #include <vector>
+#include <functional>
 
 namespace burn {
 
@@ -39,10 +40,12 @@ public:
 	MessageReceiver& operator=(const MessageReceiver& other);
 	virtual ~MessageReceiver();
 
-	virtual void onMessageReceive(const Message& msg);
+	void takeMessage(const Message& msg);
+	void bindReceiveFunction(const std::function<void(const Message&)>& function);
 
 	static void sendMessageToAllReceivers(const Message& msg);
 private:
+	std::function<void(const Message&)> _receiveFunction;
 	static std::vector<MessageReceiver*> _receivers;
 };
 
