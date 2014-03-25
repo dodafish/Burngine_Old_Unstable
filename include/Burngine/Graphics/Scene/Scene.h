@@ -206,6 +206,7 @@ private:
 
 	void removeSceneNodeById(const Uint64& id);
 	void removePhysicalSceneNodeById(const Uint64& id);
+	void removeLightById(const Uint64& id);
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;

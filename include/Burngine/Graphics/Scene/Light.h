@@ -26,14 +26,14 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Scene/Transformable.h>
-#include <Burngine/Graphics/Scene/Scene.h>
+#include <Burngine/System/Component.h>
 
 namespace burn {
 
 /**
  * @brief Lightsource with the behaviour of a pointlight
  */
-class BURNGINE_API Light : public Transformable {
+class BURNGINE_API Light : public Transformable, public Component {
 public:
 	/**
 	 * @brief Default constructor initializing some
@@ -107,28 +107,6 @@ public:
 	const float& getIntensity() const;
 
 	/**
-	 * @brief Adds a Scene as parent. This is used by Scene when
-	 * attaching Lights. You should use the Scene's methods for
-	 * connecting Lights to Scenes instead of this method
-	 *
-	 * @param parent The parent Scene
-	 *
-	 * @see removeParentScene()
-	 */
-	void addParentScene(Scene* scene);
-
-	/**
-	 * @brief Removes a Scene from parents. This is used by Scene when
-	 * detaching Lights. You should use the Scene's methods for
-	 * disconnecting Lights from Scenes instead of this method
-	 *
-	 * @param parent The parent Scene
-	 *
-	 * @see addParentScene()
-	 */
-	void removeParentScene(Scene* scene);
-
-	/**
 	 * @brief Enables or disables the softening step of this light's shadows
 	 */
 	void softenShadow(bool enabled = true);
@@ -140,13 +118,9 @@ public:
 	bool isSofteningShadow() const;
 
 protected:
-
 	Vector3f _color;
 	float _intensity;
 	bool _isSofteningShadow;
-
-	std::vector<Scene*> _parents;
-	void removeAllParents();
 };
 
 } /* namespace burn */

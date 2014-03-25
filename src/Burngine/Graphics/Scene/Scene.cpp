@@ -56,6 +56,11 @@ void Scene::onMessageReceive(const Message& msg) {
 		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
 			removePhysicalSceneNodeById(recId);
 		}
+	}else if(msg.getName() == mn::LIGHT_DESTRUCTED){
+		Uint64 recId = 0;
+		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			removeLightById(recId);
+		}
 	}
 }
 
@@ -80,6 +85,15 @@ void Scene::removePhysicalSceneNodeById(const Uint64& id) {
 	}
 }
 
+void Scene::removeLightById(const Uint64& id) {
+	for(size_t i = 0; i < _lights.size(); ++i){
+		if(_lights[i]->getId().get() == id){
+			_lights.erase(_lights.begin() + i);
+			return;
+		}
+	}
+}
+
 //////////////////////////////////////
 
 Scene::Scene() :
@@ -94,7 +108,7 @@ Scene::~Scene() {
 void Scene::stepSimulation(	const float& elapsed,
 							bool updateNodes) {
 
-//Upload transform and attributes to physics world (has effect when changed)
+	//Upload transform and attributes to physics world (has effect when changed)
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		_physicalNodes[i].rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i].node)));
 		_physicalNodes[i].rigidBody.setAttributes(static_cast<ObjectAttributes>(*(_physicalNodes[i].node)));
@@ -142,25 +156,21 @@ void Scene::draw(	const Window& renderTarget,
 	if(!renderTarget.isCreated())
 		return;
 
-//Get window's dimensions
+	//Get window's dimensions
 	Vector2ui targetDims(renderTarget.getSettings().getWidth(), renderTarget.getSettings().getHeight());
 
-//Bind window, so its framebuffer can be used (0)
+	//Bind window, so its framebuffer can be used (0)
 	renderTarget.bind();
 	_renderSystem.render(0, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
 
 }
 
 void Scene::detachAll() {
-//All SceneNodes:
+	//All SceneNodes:
 	_nodes.clear();
 
-//All Lights:
-	for(size_t i = 0; i < _lights.size(); ++i){
-		_lights[i]->removeParentScene(this);
-	}
+	//All Lights:
 	_lights.clear();
-
 }
 
 void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
@@ -170,7 +180,7 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 	}
 	_nodes.push_back(&staticMeshNode);
 
-//It's a static mesh, so add it to the physics!
+	//It's a static mesh, so add it to the physics!
 	RigidSceneNode rsn;
 	rsn.node = &staticMeshNode;
 
@@ -186,7 +196,7 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 
 void Scene::detachSceneNode(const SceneNode& node) {
 
-//Remove from attachment-list
+	//Remove from attachment-list
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
@@ -194,8 +204,6 @@ void Scene::detachSceneNode(const SceneNode& node) {
 		}
 	}
 
-	//const PhysicalSceneNode* psn = dynamic_cast<const PhysicalSceneNode*>(&node);
-	//if(psn != 0){
 	//Also remove from physical nodes when necessary
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		if(_physicalNodes[i].node == &node){
@@ -204,7 +212,6 @@ void Scene::detachSceneNode(const SceneNode& node) {
 			return;
 		}
 	}
-	//}
 
 }
 
@@ -214,21 +221,10 @@ void Scene::attachLight(Light& light) {
 			return;    //Already attached
 	}
 	_lights.push_back(&light);
-	light.addParentScene(this);
 }
 
 void Scene::detachLight(Light& light) {
-
-	light.removeParentScene(this);
-
-//Remove from attachement-list
-	for(size_t i = 0; i < _lights.size(); ++i){
-		if(_lights[i] == &light){
-			_lights.erase(_lights.begin() + i);
-			return;
-		}
-	}
-
+	removeLightById(light.getId().get());
 }
 
 void Scene::setAmbientColor(const Vector3f& color) {

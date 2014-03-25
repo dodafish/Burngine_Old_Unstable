@@ -34,6 +34,7 @@ namespace burn{
 	namespace mn{
 		const std::string SCENENODE_DESTRUCTED = "MBUS__SCENENODE_DESTRUCTED";
 		const std::string PHYSICALSCENENODE_DESTRUCTED = "MBUS__PHYSICALSCENENODE_DESTRUCTED";
+		const std::string LIGHT_DESTRUCTED = "MBUS__LIGHT_DESTRUCTED";
 	}
 	namespace mp{
 		const std::string COMPONENT_ID = "MBUS__COMPONENT_ID";
