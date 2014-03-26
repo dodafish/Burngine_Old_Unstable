@@ -32,7 +32,7 @@ namespace burn {
 
 OculusRift::OculusRift(const Window& window) :
 _window(window),
-_eyeSpacing(1.1f),
+_eyeSpacing(5.f),
 _cameraAspect(1.6f) {
 
 	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
@@ -42,7 +42,7 @@ _cameraAspect(1.6f) {
 
 	std::cout << "test";
 
-	const unsigned int& width = _window.getSettings().getWidth() / 2;
+	const unsigned int& width = _window.getSettings().getWidth();
 	const unsigned int& height = _window.getSettings().getHeight();
 
 	assert(_leftEyeTexture.create(Vector2ui(width, height), Texture::RGB));
@@ -102,19 +102,21 @@ void OculusRift::renderScene(	Scene& scene,
 								const Camera& camera,
 								const SceneRenderSystem::RenderMode& rendermode) {
 
+
+
 	_cameraAspect = camera.getAspectRatio();
 
 	//TODO: 2 cameras
-	Vector3f dir = glm::normalize(camera.getLookAt() - camera.getPosition());
+	Vector3f dir = camera.getLookAt() - camera.getPosition();
 
 	Vector3f n1;
 	n1.x = (-1.f) * dir.z;
 	n1.y = 0.f;
-	n1.z = /*(-1.f) */dir.x;
+	n1.z = dir.x;
 
-	n1 *= (_eyeSpacing * 0.5f);
-
-	Vector3f n2 = -1.f * n1;
+	n1 = glm::normalize(n1);
+	n1.x *= (10 * 0.5f);
+	n1.z *= (10 * 0.5f);
 
 	Camera leftCamera, rightCamera;
 	/*leftCamera.setPosition(leftCamera.getPosition() + n1);
@@ -122,12 +124,16 @@ void OculusRift::renderScene(	Scene& scene,
 	 rightCamera.setPosition(rightCamera.getPosition() + n2);
 	 rightCamera.lookAt(rightCamera.getLookAt() + n2);*/
 
-	leftCamera.setPosition(camera.getPosition() + n2);
-	leftCamera.lookAt(camera.getLookAt() + n2);
-	leftCamera.setFov(125.f);
+	//std::cout << "N: " << n1.x << "/" << n1.y << "/" << n1.z << "\n";
+
+	Rotation r;
+
+	leftCamera.setPosition(camera.getPosition() - n1);
+	leftCamera.lookAt(camera.getLookAt() - n1);
+	leftCamera.setFov(125.871f);
 	rightCamera.setPosition(camera.getPosition() + n1);
 	rightCamera.lookAt(camera.getLookAt() + n1);
-	rightCamera.setFov(125.f);
+	rightCamera.setFov(125.871f);
 
 	//Left Eye:
 	scene.draw(_leftEyeRenderTarget, leftCamera, rendermode);
@@ -165,7 +171,7 @@ void OculusRift::renderToWindow() {
 	float screendist = 0.041;
 	float lensdist = 0.0635;
 
-	Vector4f hmdWarpParam(1.0f, 0.22f, 0.24f, 0.0f);
+	Vector4f hmdWarpParam(1.0f, 0.22f, 0.24f, 0.f);
 	OVR::HMDInfo hmd;
 	if(_pHMD){
 		if(_pHMD->GetDeviceInfo(&hmd)){
@@ -184,21 +190,25 @@ void OculusRift::renderToWindow() {
 		}
 	}
 
+	float LensCenter = 1 - 2 * lensdist / screenwidth;
+
 	_eyeSpacing = eyedistance;
 
 	float x = 0.f;
 	float y = 0.f;
-	float w = 1.f;
+	float w = 0.5f;
 	float h = 1.f;
-	float projshift = 1.0f - 2.0f * lensdist / screenwidth;
-	float lensradius = -1.f - projshift;
+	float projshift = 0.15197f;
+	float lensradius = -1.f - LensCenter;
 	float lensradsq = lensradius * lensradius;
 
 	float factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
 	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
 
-	float aspect = screenwidth/screenheight;
-	aspect = _cameraAspect;
+	//factor = 0.5877112f;
+
+	float aspect = (1280.f / 2.f) / 800.f;
+	aspect = 0.8f;
 
 	_window.bind();
 	shader.setUniform("gSampler", 0);
@@ -209,10 +219,14 @@ void OculusRift::renderToWindow() {
 	//Left Eye
 
 	//Distortion parameters:
-	shader.setUniform("gLensCenter", Vector2f(x + w * 0.5f + projshift * 0.5f, y + h * 0.5f));
-	shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
-	shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
-	shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	//shader.setUniform("gLensCenter", Vector2f(x + (w + projshift) * 0.5f, y + h * 0.5f));
+	//shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
+	//shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
+	//shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	shader.setUniform("gLensCenter", Vector2f(0.5-LensCenter, 0.5f));
+	shader.setUniform("gScreenCenter", Vector2f(0.5f, 0.5f));
+	shader.setUniform("gScale", Vector2f(0.5f / factor, 0.5f * aspect / factor));
+	shader.setUniform("gScaleIn", Vector2f(2.f, 2.f / aspect));
 	shader.setUniform("gHmdWarpParam", hmdWarpParam);
 
 	_rightEyeTexture.bind(0);
@@ -227,18 +241,23 @@ void OculusRift::renderToWindow() {
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
 	//Right Eye
-	//x = 0.5f;
+	x = 0.5f;
+	projshift = -0.15197f;
 
-	lensradius = -1.f - projshift;
-	lensradsq = lensradius * lensradius;
+	//lensradius = -1.f - projshift;
+	//lensradsq = lensradius * lensradius;
 
-	factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
-	+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
+	//factor = hmdWarpParam.x + hmdWarpParam.y * lensradsq + hmdWarpParam.z * lensradsq * lensradsq
+	//+ hmdWarpParam.w * lensradsq * lensradsq * lensradsq;
 
-	shader.setUniform("gLensCenter", Vector2f(x + w * 0.5f - projshift * 0.5f, y + h * 0.5f));
-	shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
-	shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
-	shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	//shader.setUniform("gLensCenter", Vector2f(x + (w + projshift) * 0.5f, y + h * 0.5f));
+	//shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
+	//shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
+	//shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
+	shader.setUniform("gLensCenter", Vector2f(0.5+LensCenter, 0.5f));
+	shader.setUniform("gScreenCenter", Vector2f(0.5f, 0.5f));
+	shader.setUniform("gScale", Vector2f(0.5f / factor, 0.5f * aspect / factor));
+	shader.setUniform("gScaleIn", Vector2f(2.f, 2.f / aspect));
 	shader.setUniform("gHmdWarpParam", hmdWarpParam);
 
 	_leftEyeTexture.bind(0);

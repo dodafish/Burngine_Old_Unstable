@@ -105,7 +105,7 @@ Matrix4f Camera::getProjectionMatrix() const {
 }
 
 Matrix4f Camera::getViewMatrix() const {
-	return (glm::lookAt(_position, _lookAt, _headUp));
+	return (glm::lookAt(_position, _lookAt, _headUp) * _rotation.asMatrix());
 }
 
 void Camera::setFar(const float& far) {
