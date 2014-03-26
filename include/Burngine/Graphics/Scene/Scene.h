@@ -70,9 +70,6 @@ public:
 	 */
 	~Scene();
 
-	void stepSimulation(const float& elapsed,
-						bool updateNodes = true);
-
 	/**
 	 * @brief Draws the scene with selected technology
 	 *
@@ -195,19 +192,11 @@ private:
 
 	bool _isLightingEnabled;    ///< Does our scene render lighting? Default: false
 
-	World _physicsWorld;
-
 	//Attachable nodes:
 	std::vector<Light*> _lights;
 	std::vector<SceneNode*> _nodes;
-	struct RigidSceneNode {
-		RigidBody rigidBody;
-		PhysicalSceneNode* node;
-	};
-	std::vector<std::shared_ptr<RigidSceneNode> > _physicalNodes;
 
 	void removeSceneNodeById(const Uint64& id);
-	void removePhysicalSceneNodeById(const Uint64& id);
 	void removeLightById(const Uint64& id);
 
 	//Copy of a skybox which is used

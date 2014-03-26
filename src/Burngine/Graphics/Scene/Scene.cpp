@@ -54,12 +54,6 @@ void Scene::onMessageReceive(const Message& msg) {
 			std::cout << "Scene: rmSN...\n";
 			removeSceneNodeById(recId);
 		}
-	}else if(msg.getName() == mn::PHYSICALSCENENODE_DESTRUCTED){
-		Uint64 recId = 0;
-		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
-			std::cout << "Scene: rmPSN...\n";
-			removePhysicalSceneNodeById(recId);
-		}
 	}else if(msg.getName() == mn::LIGHT_DESTRUCTED){
 		Uint64 recId = 0;
 		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
@@ -72,16 +66,6 @@ void Scene::removeSceneNodeById(const Uint64& id) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i]->getId().get() == id){
 			_nodes.erase(_nodes.begin() + i);
-			break;
-		}
-	}
-}
-
-void Scene::removePhysicalSceneNodeById(const Uint64& id) {
-	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		if(_physicalNodes[i]->node->getId().get() == id){
-			_physicalNodes.erase(_physicalNodes.begin() + i);
-			removeSceneNodeById(id);
 			break;
 		}
 	}
@@ -105,33 +89,6 @@ _isLightingEnabled(false) {
 
 Scene::~Scene() {
 	detachAll();
-}
-
-void Scene::stepSimulation(	const float& elapsed,
-							bool updateNodes) {
-
-	//Upload transform and attributes to physics world (has effect when changed)
-	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		_physicalNodes[i]->rigidBody.setTransform(static_cast<Transformable>(*(_physicalNodes[i]->node)));
-		_physicalNodes[i]->rigidBody.setAttributes(_physicalNodes[i]->node->getAttributes());
-	}
-
-	_physicsWorld.stepSimulation(elapsed);
-
-	if(updateNodes){
-		for(size_t i = 0; i < _physicalNodes.size(); ++i){
-			_physicalNodes[i]->rigidBody.forceSimulation();
-			_physicalNodes[i]->rigidBody.update();
-			_physicalNodes[i]->node->setPosition(_physicalNodes[i]->rigidBody.getTransform().getPosition());
-			_physicalNodes[i]->node->setScale(_physicalNodes[i]->rigidBody.getTransform().getScale());
-			_physicalNodes[i]->node->setRotation(_physicalNodes[i]->rigidBody.getTransform().getRotation());
-			_physicalNodes[i]->node->setAttributes(_physicalNodes[i]->rigidBody.getAttributes());
-		}
-	}else{
-		for(size_t i = 0; i < _physicalNodes.size(); ++i)
-			_physicalNodes[i]->rigidBody.forceSimulation();
-	}
-
 }
 
 void Scene::draw(	const RenderTarget& renderTarget,
@@ -182,23 +139,6 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 			return;    //Already attached
 	}
 	_nodes.push_back(&staticMeshNode);
-
-	//It's a static mesh, so add it to the physics!
-	std::shared_ptr<RigidSceneNode> rsn(new RigidSceneNode());
-	rsn->node = &staticMeshNode;
-
-	rsn->rigidBody.setAttributes(staticMeshNode.getAttributes());
-	rsn->rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
-
-	rsn->rigidBody.setCollisionShape(staticMeshNode.getModel().getCollisionShape());
-	rsn->rigidBody.create(staticMeshNode.getAttributes().getMass());
-
-	rsn->rigidBody.setAttributes(staticMeshNode.getAttributes());
-	rsn->rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
-
-	_physicsWorld.addRigidBody(rsn->rigidBody);
-
-	_physicalNodes.push_back(rsn);
 }
 
 void Scene::detachSceneNode(const SceneNode& node) {
@@ -208,14 +148,6 @@ void Scene::detachSceneNode(const SceneNode& node) {
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
 			break;
-		}
-	}
-
-	//Also remove from physical nodes when necessary
-	for(size_t i = 0; i < _physicalNodes.size(); ++i){
-		if(_physicalNodes[i]->node == &node){
-			_physicalNodes.erase(_physicalNodes.begin() + i);
-			return;
 		}
 	}
 

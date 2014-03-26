@@ -29,6 +29,9 @@
 #include <Burngine/System/Math.h>
 #include <Burngine/System/MessageReceiver.h>
 
+#include <Burngine/Graphics/Scene/PhysicalSceneNode.h>
+#include <Burngine/Graphics/Scene/StaticMeshNode.h>
+
 #include <vector>
 #include <memory>
 
@@ -48,10 +51,11 @@ public:
 	World(const Vector3f& gravity = Vector3f(0.f, -9.98f, 0.f));
 	~World();
 
-	bool addRigidBody(RigidBody& body);
-	void removeRigidBody(const RigidBody& body);
+	bool attachPhysicalSceneNode(StaticMeshNode& node);
 
-	void stepSimulation(const float& elapsed);
+	void detachPhysicalSceneNode(const PhysicalSceneNode& node);
+
+	void stepSimulation(const float& elapsed, bool updateNodes = true);
 
 private:
 	MessageReceiver _messageReceiver;
@@ -63,8 +67,13 @@ private:
 	btCollisionDispatcher* _dispatcher;
 	btSequentialImpulseConstraintSolver* _solver;
 
-	std::vector<RigidBody*> _rigidBodies;
-	void removeRigidBodyById(const Uint64& id);
+	struct RigidSceneNode {
+		std::shared_ptr<btRigidBody> _bulletRigidBody;
+		std::shared_ptr<btMotionState> _bulletMotionState;
+		PhysicalSceneNode* node;
+	};
+	std::vector<RigidSceneNode> _physicalNodes;
+	void removePhysicalSceneNodeById(const Uint64& id);
 };
 
 } /* namespace burn */
