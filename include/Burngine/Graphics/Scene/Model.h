@@ -76,7 +76,7 @@ public:
 	 *
 	 * @see getMeshCount()
 	 */
-	const std::vector<Mesh>& getMeshes() const;
+	const std::vector<std::shared_ptr<Mesh>>& getMeshes() const;
 
 	bool isLoaded() const;
 
@@ -85,7 +85,7 @@ public:
 protected:
 	std::shared_ptr<btCollisionShape> _collisionShape;
 private:
-	std::vector<Mesh> _meshes;
+	std::vector<std::shared_ptr<Mesh>> _meshes;
 	bool _isLoaded;
 };
 

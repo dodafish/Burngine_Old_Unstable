@@ -33,4 +33,12 @@ void PhysicalSceneNode::onDestruction() {
 	msg.send();
 }
 
+void PhysicalSceneNode::setAttributes(const ObjectAttributes& attributes) {
+	_attributes = attributes;
+}
+
+const ObjectAttributes& PhysicalSceneNode::getAttributes() const {
+	return _attributes;
+}
+
 } /* namespace burn */

@@ -30,11 +30,14 @@
 
 namespace burn {
 
-class BURNGINE_API PhysicalSceneNode : public SceneNode, public ObjectAttributes {
+class BURNGINE_API PhysicalSceneNode : public SceneNode {
 public:
-
+	void setAttributes(const ObjectAttributes& attributes);
+	const ObjectAttributes& getAttributes() const;
 protected:
 	virtual void onDestruction();
+
+	ObjectAttributes _attributes;
 };
 
 } /* namespace burn */

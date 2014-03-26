@@ -64,7 +64,7 @@ bool Model::isLoaded() const {
 	return _isLoaded;
 }
 
-const std::vector<Mesh>& Model::getMeshes() const {
+const std::vector<std::shared_ptr<Mesh>>& Model::getMeshes() const {
 	return _meshes;
 }
 
@@ -187,13 +187,13 @@ bool Model::loadFromFile(	const std::string& file,
 
 	//Create all meshes
 	for(size_t i = 0; i != meshData.size(); ++i){
-		Mesh mesh;
+		Mesh* mesh = new Mesh();
 
-		mesh.setMaterial(meshData[i].material);
-		mesh.setVertices(meshData[i].vertices);
-		mesh.setTexture(meshData[i].texture);
+		mesh->setMaterial(meshData[i].material);
+		mesh->setVertices(meshData[i].vertices);
+		mesh->setTexture(meshData[i].texture);
 
-		_meshes.push_back(mesh);
+		_meshes.push_back(std::shared_ptr<Mesh>(mesh));
 	}
 
 	Reporter::report("Successfully loaded model: " + file);
@@ -201,6 +201,7 @@ bool Model::loadFromFile(	const std::string& file,
 	_isLoaded = true;
 
 	///////////////////////////////////////////////////////////////////////////
+	// Create Collisionshape
 	///////////////////////////////////////////////////////////////////////////
 
 	if(precision == CONVEX_HULL){
@@ -214,7 +215,7 @@ bool Model::loadFromFile(	const std::string& file,
 
 		//Cycle through the meshes
 		for(size_t i = 0; i < _meshes.size(); ++i){
-			const std::vector<Vertex>& vertices = _meshes[i].getVertices();
+			const std::vector<Vertex>& vertices = _meshes[i]->getVertices();
 			//Cycle through the vertices
 			for(size_t j = 0; j != vertices.size(); ++j){
 				convexHull->addPoint(btVector3(	vertices[j].getPosition().x,

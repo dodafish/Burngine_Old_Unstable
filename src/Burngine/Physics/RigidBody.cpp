@@ -80,11 +80,11 @@ void RigidBody::setTransform(const Transformable& transformable) {
 		return;
 
 	{
-		btTransform comTrans = _rigidBody->getCenterOfMassTransform();
-		comTrans.setOrigin(btVector3(	_transform.getPosition().x,
+		/*btTransform comTrans = _rigidBody->getCenterOfMassTransform();
+		comTrans.set(btVector3(	_transform.getPosition().x,
 										_transform.getPosition().y,
 										_transform.getPosition().z));
-		_rigidBody->setCenterOfMassTransform(comTrans);
+		_rigidBody->setCenterOfMassTransform(comTrans);*/
 
 	}
 	//For translation, rotation and scale we use a matrix

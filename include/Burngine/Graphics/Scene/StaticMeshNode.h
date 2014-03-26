@@ -34,7 +34,12 @@ namespace burn {
  * @brief A SceneNode describing a model that has no animations
  * e.g. a building.
  */
-class BURNGINE_API StaticMeshNode : public PhysicalSceneNode, public Model {
+class BURNGINE_API StaticMeshNode : public PhysicalSceneNode {
+public:
+	void setModel(const Model& model);
+	const Model& getModel() const;
+private:
+	Model _model;
 };
 
 } /* namespace burn */
