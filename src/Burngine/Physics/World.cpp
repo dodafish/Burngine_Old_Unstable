@@ -30,6 +30,8 @@
 
 #include <Burngine/System/Message.h>
 
+#include <iostream>
+
 namespace burn {
 
 void World::onMessageReceive(const Message& message) {

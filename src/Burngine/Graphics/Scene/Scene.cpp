@@ -40,6 +40,8 @@
 
 #include <Burngine/Graphics/General/OpenGL.h>
 
+#include <iostream>
+
 namespace burn {
 
 //Shortcut for easy access
@@ -49,11 +51,13 @@ void Scene::onMessageReceive(const Message& msg) {
 	if(msg.getName() == mn::SCENENODE_DESTRUCTED){
 		Uint64 recId = 0;
 		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			std::cout << "Scene: rmSN...\n";
 			removeSceneNodeById(recId);
 		}
 	}else if(msg.getName() == mn::PHYSICALSCENENODE_DESTRUCTED){
 		Uint64 recId = 0;
 		if(msg.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
+			std::cout << "Scene: rmPSN...\n";
 			removePhysicalSceneNodeById(recId);
 		}
 	}else if(msg.getName() == mn::LIGHT_DESTRUCTED){
@@ -121,6 +125,7 @@ void Scene::stepSimulation(	const float& elapsed,
 			_physicalNodes[i]->node->setPosition(_physicalNodes[i]->rigidBody.getTransform().getPosition());
 			_physicalNodes[i]->node->setScale(_physicalNodes[i]->rigidBody.getTransform().getScale());
 			_physicalNodes[i]->node->setRotation(_physicalNodes[i]->rigidBody.getTransform().getRotation());
+			_physicalNodes[i]->node->setAttributes(_physicalNodes[i]->rigidBody.getAttributes());
 		}
 	}else{
 		for(size_t i = 0; i < _physicalNodes.size(); ++i)
@@ -184,8 +189,12 @@ void Scene::attachSceneNode(StaticMeshNode& staticMeshNode) {
 
 	rsn->rigidBody.setAttributes(staticMeshNode.getAttributes());
 	rsn->rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
+
 	rsn->rigidBody.setCollisionShape(staticMeshNode.getModel().getCollisionShape());
 	rsn->rigidBody.create(staticMeshNode.getAttributes().getMass());
+
+	rsn->rigidBody.setAttributes(staticMeshNode.getAttributes());
+	rsn->rigidBody.setTransform(static_cast<Transformable>(staticMeshNode));
 
 	_physicsWorld.addRigidBody(rsn->rigidBody);
 
@@ -198,14 +207,13 @@ void Scene::detachSceneNode(const SceneNode& node) {
 	for(size_t i = 0; i < _nodes.size(); ++i){
 		if(_nodes[i] == &node){
 			_nodes.erase(_nodes.begin() + i);
-			return;
+			break;
 		}
 	}
 
 	//Also remove from physical nodes when necessary
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		if(_physicalNodes[i]->node == &node){
-			;
 			_physicalNodes.erase(_physicalNodes.begin() + i);
 			return;
 		}

@@ -32,6 +32,7 @@ namespace burn {
 
 class BURNGINE_API PhysicalSceneNode : public SceneNode {
 public:
+	~PhysicalSceneNode();
 	void setAttributes(const ObjectAttributes& attributes);
 	const ObjectAttributes& getAttributes() const;
 protected:

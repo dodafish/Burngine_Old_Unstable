@@ -27,6 +27,10 @@
 
 namespace burn {
 
+PhysicalSceneNode::~PhysicalSceneNode(){
+	onDestruction();
+}
+
 void PhysicalSceneNode::onDestruction() {
 	Message msg(mn::PHYSICALSCENENODE_DESTRUCTED);
 	msg.addParameter<Uint64>(mp::COMPONENT_ID, _id.get());

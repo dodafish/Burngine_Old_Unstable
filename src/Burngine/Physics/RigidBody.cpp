@@ -32,6 +32,8 @@
 
 #include <Burngine/System/Message.h>
 
+#include <iostream>
+
 namespace burn {
 
 RigidBody::~RigidBody() {
@@ -70,6 +72,8 @@ bool RigidBody::create(const float& mass) {
 
 	_rigidBody.reset(new btRigidBody(rigidBodyCI));
 
+	setAttributes(_attributes);
+
 	return true;
 }
 
@@ -81,10 +85,10 @@ void RigidBody::setTransform(const Transformable& transformable) {
 
 	{
 		/*btTransform comTrans = _rigidBody->getCenterOfMassTransform();
-		comTrans.set(btVector3(	_transform.getPosition().x,
-										_transform.getPosition().y,
-										_transform.getPosition().z));
-		_rigidBody->setCenterOfMassTransform(comTrans);*/
+		 comTrans.set(btVector3(	_transform.getPosition().x,
+		 _transform.getPosition().y,
+		 _transform.getPosition().z));
+		 _rigidBody->setCenterOfMassTransform(comTrans);*/
 
 	}
 	//For translation, rotation and scale we use a matrix
@@ -106,6 +110,12 @@ void RigidBody::setAttributes(const ObjectAttributes& oa) {
 
 	_rigidBody->setFriction(_attributes.getFriction());
 	_rigidBody->setRestitution(_attributes.getRestitution());
+	_rigidBody->setLinearVelocity(btVector3(_attributes.getLinearVelocity().x,
+											_attributes.getLinearVelocity().y,
+											_attributes.getLinearVelocity().z));
+	_rigidBody->setAngularVelocity(btVector3(	_attributes.getAngularVelocity().x,
+												_attributes.getAngularVelocity().y,
+												_attributes.getAngularVelocity().z));
 }
 
 const ObjectAttributes& RigidBody::getAttributes() const {
