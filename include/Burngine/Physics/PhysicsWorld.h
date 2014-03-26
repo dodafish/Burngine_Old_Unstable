@@ -44,12 +44,10 @@
 
 namespace burn {
 
-class RigidBody;
-
-class BURNGINE_API World : public NonCopyable {
+class BURNGINE_API PhysicsWorld : public NonCopyable {
 public:
-	World(const Vector3f& gravity = Vector3f(0.f, -9.98f, 0.f));
-	~World();
+	PhysicsWorld(const Vector3f& gravity = Vector3f(0.f, -9.98f, 0.f));
+	~PhysicsWorld();
 
 	bool attachPhysicalSceneNode(StaticMeshNode& node);
 

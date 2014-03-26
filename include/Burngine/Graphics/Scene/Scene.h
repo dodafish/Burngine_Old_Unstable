@@ -40,9 +40,6 @@
 
 #include <Burngine/System/NonCopyable.h>
 
-#include <Burngine/Physics/World.h>
-#include <Burngine/Physics/RigidBody.h>
-
 #include <Burngine/System/MessageReceiver.h>
 
 namespace burn {

@@ -70,8 +70,7 @@
 #include <Burngine/System/RotationUtil.h>
 
 #include <Burngine/Physics/ObjectAttributes.h>
-#include <Burngine/Physics/RigidBody.h>
-#include <Burngine/Physics/World.h>
+#include <Burngine/Physics/PhysicsWorld.h>
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

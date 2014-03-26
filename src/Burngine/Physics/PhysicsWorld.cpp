@@ -21,9 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include <Burngine/Physics/World.h>
+#include <Burngine/Physics/PhysicsWorld.h>
 
-#include <Burngine/Physics/RigidBody.h>
 #include <Burngine/System/Reporter.h>
 
 #include <bullet/btBulletDynamicsCommon.h>
@@ -34,7 +33,7 @@
 
 namespace burn {
 
-void World::onMessageReceive(const Message& message) {
+void PhysicsWorld::onMessageReceive(const Message& message) {
 	if(message.getName() == mn::PHYSICALSCENENODE_DESTRUCTED){
 		Uint64 recId = 0;
 		if(message.getParameter<Uint64>(mp::COMPONENT_ID, &recId)){
@@ -43,7 +42,7 @@ void World::onMessageReceive(const Message& message) {
 	}
 }
 
-void World::removePhysicalSceneNodeById(const Uint64& id) {
+void PhysicsWorld::removePhysicalSceneNodeById(const Uint64& id) {
 
 	//Check if we already have added the rigidbody
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
@@ -58,8 +57,8 @@ void World::removePhysicalSceneNodeById(const Uint64& id) {
 
 }
 
-World::World(const Vector3f& gravity) {
-	_messageReceiver.bindReceiveFunction(std::bind(&World::onMessageReceive, this, std::placeholders::_1));
+PhysicsWorld::PhysicsWorld(const Vector3f& gravity) {
+	_messageReceiver.bindReceiveFunction(std::bind(&PhysicsWorld::onMessageReceive, this, std::placeholders::_1));
 
 	_broadphase = new btDbvtBroadphase();
 
@@ -70,7 +69,7 @@ World::World(const Vector3f& gravity) {
 	_world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 }
 
-World::~World() {
+PhysicsWorld::~PhysicsWorld() {
 	delete _world;
 	delete _solver;
 	delete _dispatcher;
@@ -78,7 +77,7 @@ World::~World() {
 	delete _broadphase;
 }
 
-bool World::attachPhysicalSceneNode(StaticMeshNode& node) {
+bool PhysicsWorld::attachPhysicalSceneNode(StaticMeshNode& node) {
 	for(size_t i = 0; i < _physicalNodes.size(); ++i){
 		if(_physicalNodes[i].node == &node){
 			return false;    //Already attached
@@ -115,11 +114,11 @@ bool World::attachPhysicalSceneNode(StaticMeshNode& node) {
 	return true;
 }
 
-void World::detachPhysicalSceneNode(const PhysicalSceneNode& node) {
+void PhysicsWorld::detachPhysicalSceneNode(const PhysicalSceneNode& node) {
 	removePhysicalSceneNodeById(node.getId().get());
 }
 
-void World::stepSimulation(	const float& elapsed,
+void PhysicsWorld::stepSimulation(	const float& elapsed,
 							bool updateNodes) {
 
 	//Upload transform and attributes to physics world (has effect when changed)
