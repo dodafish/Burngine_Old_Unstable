@@ -136,8 +136,10 @@ void OculusRift::renderScene(	Scene& scene,
 	rightCamera.setFov(125.871f);
 
 	//Left Eye:
+	_leftEyeRenderTarget.clear();
 	scene.draw(_leftEyeRenderTarget, leftCamera, rendermode);
 	//Right Eye:
+	_rightEyeRenderTarget.clear();
 	scene.draw(_rightEyeRenderTarget, rightCamera, rendermode);
 
 }
@@ -273,6 +275,8 @@ void OculusRift::renderToWindow() {
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+	OpenGlControl::useSettings(OpenGlControl::Settings());
 
 }
 
