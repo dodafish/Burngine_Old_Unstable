@@ -31,6 +31,8 @@
 #include <Burngine/System/Reporter.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Window/Window.h>
+#include <Burngine/System/Rotation.h>
+#include <Burngine/System/RotationUtil.h>
 
 //SceneNodes
 #include <Burngine/Graphics/Scene/SceneNode.h>
@@ -630,7 +632,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
 	Camera virtualCamera;
-	virtualCamera.lookAt(Vector3f(dirLight.getDirection()));
+	virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(	Vector3f(0.f, 0.f, -1.f),
+																	Vector3f(dirLight.getDirection())));
 	virtualCamera.setType(Camera::ORTHOGONAL);
 	virtualCamera.setFov(100.f);    //Dimensions of the "box"
 	virtualCamera.setNear(-500.f);
@@ -697,7 +700,7 @@ Camera SceneRenderSystem::findCamera(	const int& face,
 	}
 
 	virtualCamera.setPosition(pointlight.getPosition());
-	virtualCamera.lookAt(pointlight.getPosition() + direction);
+	virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(Vector3f(0.f, 0.f, -1.f), direction));
 	virtualCamera.setHeadUp(headUp);
 	virtualCamera.setNear(0.01f);
 	virtualCamera.setFar(500.f);
@@ -722,7 +725,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	virtualCamera.setFov(spotlight.getConeAngle() * 2.f);
 	virtualCamera.setAspectRatio(1.f);
 	virtualCamera.setPosition(spotlight.getPosition());
-	virtualCamera.lookAt(spotlight.getPosition() + Vector3f(spotlight.getDirection()));
+	virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(	Vector3f(0.f, 0.f, -1.f),
+																	Vector3f(spotlight.getDirection())));
 	virtualCamera.setFar(std::sqrt(spotlight.getIntensity() / 0.02f));
 
 	for(size_t i = 0; i < nodes.size(); ++i){

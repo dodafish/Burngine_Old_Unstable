@@ -107,7 +107,8 @@ void OculusRift::renderScene(	Scene& scene,
 	_cameraAspect = camera.getAspectRatio();
 
 	//TODO: 2 cameras
-	Vector3f dir = camera.getLookAt() - camera.getPosition();
+	//Vector3f dir = camera.getLookAt() - camera.getPosition();
+	Vector3f dir;
 
 	Vector3f n1;
 	n1.x = (-1.f) * dir.z;
@@ -129,10 +130,10 @@ void OculusRift::renderScene(	Scene& scene,
 	Rotation r;
 
 	leftCamera.setPosition(camera.getPosition() - n1);
-	leftCamera.lookAt(camera.getLookAt() - n1);
+	//leftCamera.lookAt(camera.getLookAt() - n1);
 	leftCamera.setFov(125.871f);
 	rightCamera.setPosition(camera.getPosition() + n1);
-	rightCamera.lookAt(camera.getLookAt() + n1);
+	//rightCamera.lookAt(camera.getLookAt() + n1);
 	rightCamera.setFov(125.871f);
 
 	//Left Eye:

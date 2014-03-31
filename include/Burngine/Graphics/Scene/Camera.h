@@ -76,24 +76,6 @@ public:
 	const float& getAspectRatio() const;
 
 	/**
-	 * @brief Sets the point the camera will face to
-	 *
-	 * @param point A Vector3f defining the faced point
-	 *
-	 * @see getLookAt()
-	 */
-	void lookAt(const Vector3f& point);
-
-	/**
-	 * @brief Returns the point the camera is facing
-	 *
-	 * @return A Vector3f defining the faced point
-	 *
-	 * @see lookAt()
-	 */
-	const Vector3f& getLookAt() const;
-
-	/**
 	 * @brief Sets the Field-Of-View
 	 *
 	 * @param fov A value between 0 and 90
@@ -157,16 +139,16 @@ public:
 
 	const Type& getType() const;
 
-	void setHeadUp(const Vector3f& headUp);
+	void setHeadUp(const Vector3f& headup);
+	const Vector3f& getHeadUp() const;
 
 private:
 	float _aspectRatio;
-	Vector3f _lookAt;
-	Vector3f _headUp;
 	float _fov;
 	float _far;
 	float _near;
 	Type _type;
+	Vector3f _headUp;
 };
 
 } /* namespace burn */

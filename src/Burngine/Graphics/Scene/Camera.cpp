@@ -28,23 +28,21 @@ namespace burn {
 
 Camera::Camera() :
 _aspectRatio(1.f),
-_lookAt(Vector3f(0.f, 0.f, -1.f)),
-_headUp(Vector3f(0.f, 1.f, 0.f)),
 _fov(35.f),
 _far(1000.f),
 _near(0.1f),
-_type(PERSPECTIVE) {
+_type(PERSPECTIVE),
+_headUp(0.f, 1.f, 0.f){
 
 }
 
 Camera::Camera(const Camera& other) :
 _aspectRatio(other._aspectRatio),
-_lookAt(other._lookAt),
-_headUp(other._headUp),
 _fov(other._fov),
 _far(other._far),
 _near(other._near),
-_type(other._type) {
+_type(other._type),
+_headUp(other._headUp){
 
 }
 
@@ -54,12 +52,11 @@ Camera& Camera::operator=(const Camera& other) {
 		return *this;
 
 	_aspectRatio = other._aspectRatio;
-	_lookAt = other._lookAt;
-	_headUp = other._headUp;
 	_fov = other._fov;
 	_far = other._far;
 	_near = other._near;
 	_type = other._type;
+	_headUp = other._headUp;
 
 	return *this;
 }
@@ -70,14 +67,6 @@ void Camera::setAspectRatio(const float& aspectRatio) {
 
 const float& Camera::getAspectRatio() const {
 	return _aspectRatio;
-}
-
-void Camera::lookAt(const Vector3f& point) {
-	_lookAt = point;
-}
-
-const Vector3f& Camera::getLookAt() const {
-	return _lookAt;
 }
 
 void Camera::setFov(const float& fov) {
@@ -101,18 +90,21 @@ Matrix4f Camera::getProjectionMatrix() const {
 							_near,
 							_far));
 
-	return (glm::perspective<float>(_fov, _aspectRatio > 0.f ? _aspectRatio : 1.f, _near, _far));
+	return (glm::perspective<float>(_fov, _aspectRatio > 0.f ? 	_aspectRatio :
+																1.f,
+									_near, _far));
 }
 
 Matrix4f Camera::getViewMatrix() const {
-	return (glm::lookAt(_position, _lookAt, _headUp) * _rotation.asMatrix());
+	Vector4f dir = _rotation.asMatrix() * Vector4f(0.f, 0.f, -1.f, 1.f);
+	return glm::lookAt(_position, _position + Vector3f(dir), _headUp);
 }
 
 void Camera::setFar(const float& far) {
 	_far = far;
 }
 
-void Camera::setNear(const float& near){
+void Camera::setNear(const float& near) {
 	_near = near;
 }
 
@@ -124,8 +116,12 @@ const Camera::Type& Camera::getType() const {
 	return _type;
 }
 
-void Camera::setHeadUp(const Vector3f& headUp){
-	_headUp = headUp;
+void Camera::setHeadUp(const Vector3f& headup) {
+	_headUp = headup;
+}
+
+const Vector3f& Camera::getHeadUp() const {
+	return _headUp;
 }
 
 } /* namespace burn */
