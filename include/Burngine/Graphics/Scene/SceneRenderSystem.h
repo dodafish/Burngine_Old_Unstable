@@ -58,6 +58,7 @@ class SpotLight;
 class DirectionalLight;
 class BoundingBox;
 class Material;
+class SkyBox;
 
 class BURNGINE_API SceneRenderSystem : public NonCopyable {
 public:
@@ -80,6 +81,7 @@ public:
 				const std::vector<SceneNode*>& nodes,
 				const std::vector<Light*>& lights,
 				const Vector3f& ambient,
+				const SkyBox& skybox,
 				bool isLightingEnabled = true);
 
 	enum RenderFlag {
@@ -103,7 +105,8 @@ private:
 
 	//////////////////////////////////////////////////////////////////////////////
 	void drawGBuffers(	const Camera& camera,
-						const std::vector<SceneNode*>& nodes);
+						const std::vector<SceneNode*>& nodes,
+						const SkyBox& skyBox);
 	void dumpOutDepthGBuffer(	const GLuint& targetFramebuffer,    ///< Window as default
 								const Vector2ui& targetFramebufferDimensions);
 

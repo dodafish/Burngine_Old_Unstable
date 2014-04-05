@@ -105,6 +105,7 @@ void Scene::draw(	const RenderTarget& renderTarget,
 							_nodes,
 							_lights,
 							_ambientColor,
+							_skyBox,
 							_isLightingEnabled);
 
 }
@@ -121,7 +122,7 @@ void Scene::draw(	const Window& renderTarget,
 
 	//Bind window, so its framebuffer can be used (0)
 	renderTarget.bind();
-	_renderSystem.render(0, targetDims, camera, mode, _nodes, _lights, _ambientColor, _isLightingEnabled);
+	_renderSystem.render(0, targetDims, camera, mode, _nodes, _lights, _ambientColor, _skyBox, _isLightingEnabled);
 
 }
 

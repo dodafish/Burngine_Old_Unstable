@@ -35,6 +35,8 @@
 #include <Burngine/System/RotationUtil.h>
 
 //SceneNodes
+#include <Burngine/Graphics/Scene/SkyBox.h>
+
 #include <Burngine/Graphics/Scene/SceneNode.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 #include <Burngine/Graphics/Scene/StaticMeshNode.h>
@@ -272,6 +274,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 								const std::vector<SceneNode*>& nodes,
 								const std::vector<Light*>& lights,
 								const Vector3f& ambient,
+								const SkyBox& skyBox,
 								bool isLightingEnabled) {
 
 	ensureContext();
@@ -285,7 +288,7 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 
 	_sceneTextureTarget.clear();
 
-	drawGBuffers(camera, nodes);
+	drawGBuffers(camera, nodes, skyBox);
 
 	_sceneTextureTarget.bind();
 	_gBuffer.bindAsSource();
@@ -317,11 +320,6 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 		OpenGlControl::setPolygonMode(polygonMode);
 
 		OpenGlControl::useSettings(OpenGlControl::Settings());
-
-		/*if(mode != LIGHTING){
-		 _window.bind();
-		 _skyBox.draw();
-		 }*/
 
 		OpenGlControl::bindReadBuffer(_sceneTextureTarget.getFramebufferId());
 		_sceneTexture.bind(0);
@@ -384,7 +382,8 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 }
 
 void SceneRenderSystem::drawGBuffers(	const Camera& camera,
-										const std::vector<SceneNode*>& nodes) {
+										const std::vector<SceneNode*>& nodes,
+										const SkyBox& skyBox) {
 
 	_gBuffer.clear();
 	_gBuffer.bindAsTarget();
@@ -394,6 +393,8 @@ void SceneRenderSystem::drawGBuffers(	const Camera& camera,
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION | NORMAL | UV, camera, shader);
 	}
+
+	skyBox.draw(camera);
 
 }
 
