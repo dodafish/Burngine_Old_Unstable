@@ -125,8 +125,13 @@ private:
 	RenderTarget _renderTarget;
 	VertexBufferObject _fullscreenVbo;
 
-	Matrix4f drawShadowmap(	const DirectionalLight& dirLight,
-							const std::vector<SceneNode*>& nodes);
+	struct HiMidLowResMatrices{
+		Matrix4f matrices[3];
+	};
+
+	HiMidLowResMatrices drawShadowmap(	const DirectionalLight& dirLight,
+							const std::vector<SceneNode*>& nodes,
+							const Vector3f& cameraPosition);
 	Matrix4f drawShadowmap(	const SpotLight& spotLight,
 							const std::vector<SceneNode*>& nodes);
 	//Pointlight:
@@ -143,67 +148,10 @@ private:
 	Texture _diffusePartTexture, _specularPartTexture;
 
 	//Shadowmaps:
-	Texture _vsm;
-	RenderTarget _vsmTarget;
+	Texture _vsm[3]; //Array of 3 VSMs for hi- med- and low-resolution
+	RenderTarget _vsmTarget[3]; //See vsm[3]
 	CubeMap _vscm;
 	CubeRenderTarget _vscmTarget;
-
-	/////////////////////////////////////////////////////////////////////////
-	//Performance optimization:
-	/////////////////////////////////////////////////////////////////////////
-	//Save uniform locations:
-	static struct UniformLocations {
-		struct TextureShader {
-			GLint modelMatrixLoc;
-			GLint viewMatrixLoc;
-			GLint projectionMatrixLoc;
-			GLint mixColorLoc;
-			GLint gSamplerLoc;
-		} textureShader;
-		struct DirectionalLightShader {
-			GLint modelMatrixLoc;
-			GLint viewMatrixLoc;
-			GLint projectionMatrixLoc;
-			GLint gSamplerNormalsLoc;
-			GLint gSamplerPositionsLoc;
-			GLint gSamplerColorLoc;
-			GLint gSamplerShadowmapLoc;
-			GLint gEyePositionLoc;
-			GLint gLightDirectionLoc;
-			GLint gLightColorLoc;
-			GLint gLightIntensityLoc;
-			GLint shadowMatrixLoc;
-		} directionalLightShader;
-		struct SpotLightShader {
-			GLint modelMatrixLoc;
-			GLint viewMatrixLoc;
-			GLint projectionMatrixLoc;
-			GLint gSamplerNormalsLoc;
-			GLint gSamplerPositionsLoc;
-			GLint gSamplerColorLoc;
-			GLint gSamplerShadowmapLoc;
-			GLint gEyePositionLoc;
-			GLint gLightDirectionLoc;
-			GLint gLightPositionLoc;
-			GLint gLightConeCosineLoc;
-			GLint gLightColorLoc;
-			GLint gLightIntensityLoc;
-			GLint shadowMatrixLoc;
-		} spotLightShader;
-		struct PointLightShader {
-			GLint modelMatrixLoc;
-			GLint viewMatrixLoc;
-			GLint projectionMatrixLoc;
-			GLint gSamplerNormalsLoc;
-			GLint gSamplerPositionsLoc;
-			GLint gSamplerColorLoc;
-			GLint gSamplerShadowcubemapLoc;
-			GLint gEyePositionLoc;
-			GLint gLightPositionLoc;
-			GLint gLightColorLoc;
-			GLint gLightIntensityLoc;
-		} pointLightShader;
-	} uniformLocations;
 
 };
 

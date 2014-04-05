@@ -51,8 +51,6 @@
 
 namespace burn {
 
-SceneRenderSystem::UniformLocations SceneRenderSystem::uniformLocations;
-
 //RenderFlag to ArrayIndex Mapping:
 #define POSITION_ARRAY_INDEX 0
 #define NORMAL_ARRAY_INDEX 1
@@ -84,14 +82,16 @@ SceneRenderSystem::SceneRenderSystem() {
 	SceneRenderSystem::setVboIndex(NORMAL, 1);
 	SceneRenderSystem::setVboIndex(UV, 2);
 
-	if(!_vsm.create(Vector2ui(1024, 1024), Texture::RG32F)){
-		Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
-		exit(16);
-	}
-	_vsm.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
-	if(!_vsmTarget.create(_vsm.getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm)){
-		Reporter::report("Unable to create VarianceShadowMap RenderTarget!", Reporter::ERROR);
-		exit(18);
+	for(int i = 0; i != 3; ++i){
+		if(!_vsm[i].create(Vector2ui(1024, 1024), Texture::RG32F)){
+			Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
+			exit(16);
+		}
+		_vsm[i].setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
+		if(!_vsmTarget[i].create(_vsm[i].getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm[i])){
+			Reporter::report("Unable to create VarianceShadowMap RenderTarget!", Reporter::ERROR);
+			exit(18);
+		}
 	}
 
 	if(!_vscm.create(Vector2ui(512, 512), Texture::RG32F)){
@@ -124,84 +124,6 @@ SceneRenderSystem::SceneRenderSystem() {
 	}
 	_fullscreenVbo.uploadDataToGpu( GL_ARRAY_BUFFER,
 	GL_STATIC_DRAW);
-
-	/////////////////////////////////////////////////////////////////////////////////
-
-	{
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-		uniformLocations.textureShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
-		uniformLocations.textureShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
-		uniformLocations.textureShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
-		uniformLocations.textureShader.mixColorLoc = shader.getUniformLocation("mixColor");
-		uniformLocations.textureShader.gSamplerLoc = shader.getUniformLocation("gSampler");
-	}
-	{
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-		uniformLocations.directionalLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
-		uniformLocations.directionalLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
-		uniformLocations.directionalLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
-		uniformLocations.directionalLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
-		uniformLocations.directionalLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
-		uniformLocations.directionalLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
-		uniformLocations.directionalLightShader.gSamplerShadowmapLoc = shader.getUniformLocation("gSamplerShadowmap");
-		uniformLocations.directionalLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
-		uniformLocations.directionalLightShader.gLightDirectionLoc = shader.getUniformLocation("gLightDirection");
-		uniformLocations.directionalLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
-		uniformLocations.directionalLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
-		uniformLocations.directionalLightShader.shadowMatrixLoc = shader.getUniformLocation("shadowMatrix");
-		shader.setUniform(uniformLocations.directionalLightShader.modelMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.directionalLightShader.viewMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.directionalLightShader.projectionMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.directionalLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
-		shader.setUniform(uniformLocations.directionalLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
-		shader.setUniform(uniformLocations.directionalLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
-		shader.setUniform(uniformLocations.directionalLightShader.gSamplerShadowmapLoc, 8);
-	}
-	{
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
-		uniformLocations.spotLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
-		uniformLocations.spotLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
-		uniformLocations.spotLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
-		uniformLocations.spotLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
-		uniformLocations.spotLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
-		uniformLocations.spotLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
-		uniformLocations.spotLightShader.gSamplerShadowmapLoc = shader.getUniformLocation("gSamplerShadowmap");
-		uniformLocations.spotLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
-		uniformLocations.spotLightShader.gLightDirectionLoc = shader.getUniformLocation("gLightDirection");
-		uniformLocations.spotLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
-		uniformLocations.spotLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
-		uniformLocations.spotLightShader.shadowMatrixLoc = shader.getUniformLocation("shadowMatrix");
-		uniformLocations.spotLightShader.gLightPositionLoc = shader.getUniformLocation("gLightPosition");
-		uniformLocations.spotLightShader.gLightConeCosineLoc = shader.getUniformLocation("gLightConeCosine");
-		shader.setUniform(uniformLocations.spotLightShader.modelMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.spotLightShader.viewMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.spotLightShader.projectionMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.spotLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
-		shader.setUniform(uniformLocations.spotLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
-		shader.setUniform(uniformLocations.spotLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
-		shader.setUniform(uniformLocations.spotLightShader.gSamplerShadowmapLoc, 8);
-	}
-	{
-		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-		uniformLocations.pointLightShader.modelMatrixLoc = shader.getUniformLocation("modelMatrix");
-		uniformLocations.pointLightShader.viewMatrixLoc = shader.getUniformLocation("viewMatrix");
-		uniformLocations.pointLightShader.projectionMatrixLoc = shader.getUniformLocation("projectionMatrix");
-		uniformLocations.pointLightShader.gSamplerNormalsLoc = shader.getUniformLocation("gSamplerNormals");
-		uniformLocations.pointLightShader.gSamplerPositionsLoc = shader.getUniformLocation("gSamplerPositions");
-		uniformLocations.pointLightShader.gSamplerColorLoc = shader.getUniformLocation("gSamplerColor");
-		uniformLocations.pointLightShader.gSamplerShadowcubemapLoc = shader.getUniformLocation("gSamplerShadowcubemap");
-		uniformLocations.pointLightShader.gEyePositionLoc = shader.getUniformLocation("gEyePosition");
-		uniformLocations.pointLightShader.gLightPositionLoc = shader.getUniformLocation("gLightPosition");
-		uniformLocations.pointLightShader.gLightColorLoc = shader.getUniformLocation("gLightColor");
-		uniformLocations.pointLightShader.gLightIntensityLoc = shader.getUniformLocation("gLightIntensity");
-		shader.setUniform(uniformLocations.pointLightShader.modelMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.pointLightShader.viewMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.pointLightShader.projectionMatrixLoc, Matrix4f(1.f));
-		shader.setUniform(uniformLocations.pointLightShader.gSamplerNormalsLoc, GBuffer::NORMAL_WS);
-		shader.setUniform(uniformLocations.pointLightShader.gSamplerPositionsLoc, GBuffer::POSITION_WS);
-		shader.setUniform(uniformLocations.pointLightShader.gSamplerColorLoc, GBuffer::DIFFUSE);
-		shader.setUniform(uniformLocations.pointLightShader.gSamplerShadowcubemapLoc, 8);
-	}
 
 }
 
@@ -376,11 +298,11 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 			//Copy diffuse gBuffer to windowframebuffer:
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-			shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
-			shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
-			shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
-			shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
-			shader.setUniform(uniformLocations.textureShader.gSamplerLoc, GBuffer::DIFFUSE);
+			shader.setUniform("modelMatrix", Matrix4f(1.f));
+			shader.setUniform("viewMatrix", Matrix4f(1.f));
+			shader.setUniform("projectionMatrix", Matrix4f(1.f));
+			shader.setUniform("mixColor", Vector4f(1.f));
+			shader.setUniform("gSampler", GBuffer::DIFFUSE);
 
 			_sceneTextureTarget.bind();
 			glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
@@ -496,15 +418,15 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 
-		shader.setUniform(uniformLocations.directionalLightShader.gEyePositionLoc, camera.getPosition());
+		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-		shader.setUniform(uniformLocations.pointLightShader.gEyePositionLoc, camera.getPosition());
+		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	{
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
-		shader.setUniform(uniformLocations.spotLightShader.gEyePositionLoc, camera.getPosition());
+		shader.setUniform("gEyePosition", camera.getPosition());
 	}
 	/////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
@@ -526,13 +448,15 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 
 			//Render light
 			_renderTarget.bind();
-			_vsm.bind(8);
+			_vsm[0].bind(8);
+			_vsm[1].bind(9);
+			_vsm[2].bind(10);
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-			shader.setUniform(	uniformLocations.directionalLightShader.gLightDirectionLoc,
+			shader.setUniform("gLightDirection",
 								Vector3f(light->getDirection()));
-			shader.setUniform(uniformLocations.directionalLightShader.gLightColorLoc, light->getColor());
-			shader.setUniform(uniformLocations.directionalLightShader.gLightIntensityLoc, light->getIntensity());
-			shader.setUniform(uniformLocations.directionalLightShader.shadowMatrixLoc, shadowMatrix);
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
+			shader.setUniform("shadowMatrix", shadowMatrix);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -547,9 +471,9 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			_vscm.bind(8);
 			_renderTarget.bind();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
-			shader.setUniform(uniformLocations.pointLightShader.gLightPositionLoc, light->getPosition());
-			shader.setUniform(uniformLocations.pointLightShader.gLightColorLoc, light->getColor());
-			shader.setUniform(uniformLocations.pointLightShader.gLightIntensityLoc, light->getIntensity());
+			shader.setUniform("gLightPosition", light->getPosition());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -562,18 +486,18 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 
 			//Render light
 			_renderTarget.bind();
-			_vsm.bind(8);
+			_vsm[0].bind(8);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			//glGenerateMipmap(GL_TEXTURE_2D);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
-			shader.setUniform(uniformLocations.spotLightShader.gLightDirectionLoc, Vector3f(light->getDirection()));
-			shader.setUniform(uniformLocations.spotLightShader.gLightPositionLoc, light->getPosition());
-			shader.setUniform(uniformLocations.spotLightShader.gLightColorLoc, light->getColor());
-			shader.setUniform(uniformLocations.spotLightShader.gLightIntensityLoc, light->getIntensity());
-			shader.setUniform(uniformLocations.spotLightShader.gLightConeCosineLoc, lightConeCosine);
-			shader.setUniform(uniformLocations.spotLightShader.shadowMatrixLoc, shadowMatrix);
+			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
+			shader.setUniform("gLightPosition", light->getPosition());
+			shader.setUniform("gLightColor", light->getColor());
+			shader.setUniform("gLightIntensity", light->getIntensity());
+			shader.setUniform("gLightConeCosine", lightConeCosine);
+			shader.setUniform("gShadowMatrix", shadowMatrix);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -585,10 +509,10 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 
 	//Multiply result with the scene
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::TEXTURE);
-	shader.setUniform(uniformLocations.textureShader.modelMatrixLoc, Matrix4f(1.f));
-	shader.setUniform(uniformLocations.textureShader.viewMatrixLoc, Matrix4f(1.f));
-	shader.setUniform(uniformLocations.textureShader.projectionMatrixLoc, Matrix4f(1.f));
-	shader.setUniform(uniformLocations.textureShader.mixColorLoc, Vector4f(1.f));
+	shader.setUniform("modelMatrix", Matrix4f(1.f));
+	shader.setUniform("viewMatrix", Matrix4f(1.f));
+	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	shader.setUniform("mixColor", Vector4f(1.f));
 
 	_sceneTextureTarget.bind();
 	glViewport(0, 0, targetFramebufferDimensions.x, targetFramebufferDimensions.y);
@@ -596,7 +520,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	if(!dumpLighting){
 		//Compose with diffuse part:
 		_diffusePartTexture.bind(1);
-		shader.setUniform(uniformLocations.textureShader.gSamplerLoc, 1);    //sample from diffuse
+		shader.setUniform("gSampler", 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::MULTIPLY);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -607,7 +531,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 
 	}else{
 		_diffusePartTexture.bind(1);
-		shader.setUniform(uniformLocations.textureShader.gSamplerLoc, 1);    //sample from diffuse
+		shader.setUniform("gSampler", 1);    //sample from diffuse
 		toLightPassOgl.setBlendMode(OpenGlControl::OVERWRITE);
 		drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -619,35 +543,45 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-Matrix4f SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
-											const std::vector<SceneNode*>& nodes) {
+SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
+											const std::vector<SceneNode*>& nodes,
+											const Vector3f& cameraPosition) {
 
 	OpenGlControl::Settings ogl;
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
-	_vsmTarget.clear();
-	_vsmTarget.bind();
+	HiMidLowResMatrices mats;
+	for(int i = 0; i != 3; ++i){
+		_vsmTarget[i].clear();
+		_vsmTarget[i].bind();
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+		const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
-	Camera virtualCamera;
-	virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(	Vector3f(0.f, 0.f, -1.f),
-																	Vector3f(dirLight.getDirection())));
-	virtualCamera.setType(Camera::ORTHOGONAL);
-	virtualCamera.setFov(100.f);    //Dimensions of the "box"
-	virtualCamera.setNear(-500.f);
-	virtualCamera.setFar(500.f);
-	virtualCamera.setAspectRatio(1.f);
+		Camera virtualCamera;
+		virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(	Vector3f(0.f, 0.f, -1.f),
+																		Vector3f(dirLight.getDirection())));
+		virtualCamera.setType(Camera::ORTHOGONAL);
+		 //Dimensions of the "box"
+		//First 10 then 100 then 1000 (hi mid low)
+		virtualCamera.setFov(std::pow(10.f, i + 1));
 
-	for(size_t i = 0; i < nodes.size(); ++i){
-		renderNode(nodes[i], POSITION, virtualCamera, shader, true);
+		virtualCamera.setNear(-1000.f);
+		virtualCamera.setFar(1000.f);
+		virtualCamera.setAspectRatio(1.f);
+		virtualCamera.setPosition(cameraPosition);
+
+		for(size_t i = 0; i < nodes.size(); ++i){
+			renderNode(nodes[i], POSITION, virtualCamera, shader, true);
+		}
+
+		if(dirLight.isSofteningShadow())
+			PostEffects::gaussianBlur(_vsm[i]);
+
+		mats.matrices[i] = virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
 	}
 
-	if(dirLight.isSofteningShadow())
-		PostEffects::gaussianBlur(_vsm);
-
-	return virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
+	return mats;
 }
 
 void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
@@ -715,8 +649,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
-	_vsmTarget.clear();
-	_vsmTarget.bind();
+	_vsmTarget[0].clear();
+	_vsmTarget[0].bind();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
 
@@ -736,7 +670,7 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	//_vsm.finishMultisampling();
 
 	if(spotlight.isSofteningShadow())
-		PostEffects::gaussianBlur(_vsm);
+		PostEffects::gaussianBlur(_vsm[0]);
 
 	return (virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix());
 }
