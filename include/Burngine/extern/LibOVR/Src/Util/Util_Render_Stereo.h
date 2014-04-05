@@ -28,6 +28,11 @@ limitations under the License.
 #ifndef OVR_Util_Render_Stereo_h
 #define OVR_Util_Render_Stereo_h
 
+#ifdef __GNUC__
+//Avoid tons of warnings
+#pragma GCC system_header
+#endif
+
 #include "../OVR_Device.h"
 
 namespace OVR { namespace Util { namespace Render {

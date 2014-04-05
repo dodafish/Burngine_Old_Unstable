@@ -17,6 +17,11 @@ subject to the following restrictions:
 #ifndef BT_SCALAR_H
 #define BT_SCALAR_H
 
+#ifdef __GNUC__
+//Avoid tons of warnings
+#pragma GCC system_header
+#endif
+
 #ifdef BT_MANAGED_CODE
 //Aligned data types not supported in managed code
 #pragma unmanaged
