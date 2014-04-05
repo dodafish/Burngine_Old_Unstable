@@ -32,8 +32,8 @@ _fov(35.f),
 _far(1000.f),
 _near(0.1f),
 _type(PERSPECTIVE),
-_headUp(0.f, 1.f, 0.f){
-
+_headUp(0.f, 1.f, 0.f) {
+	_isChanged = true;
 }
 
 Camera::Camera(const Camera& other) :
@@ -42,7 +42,7 @@ _fov(other._fov),
 _far(other._far),
 _near(other._near),
 _type(other._type),
-_headUp(other._headUp){
+_headUp(other._headUp) {
 
 }
 
@@ -82,22 +82,30 @@ const float& Camera::getFov() const {
 
 Matrix4f Camera::getProjectionMatrix() const {
 
-	if(_type == ORTHOGONAL)
-		return (glm::ortho(	(_fov * _aspectRatio) / -2.f,
-							(_fov * _aspectRatio) / 2.f,
-							_fov / -2.f,
-							_fov / 2.f,
-							_near,
-							_far));
+	if(_isChanged){
+		if(_type == ORTHOGONAL)
+			_projectionMatrix = (glm::ortho((_fov * _aspectRatio) / -2.f,
+											(_fov * _aspectRatio) / 2.f,
+											_fov / -2.f,
+											_fov / 2.f,
+											_near,
+											_far));
+		else
+			_projectionMatrix = (glm::perspective<float>(_fov, _aspectRatio > 0.f ? _aspectRatio :
+																					1.f,
+															_near, _far));
 
-	return (glm::perspective<float>(_fov, _aspectRatio > 0.f ? 	_aspectRatio :
-																1.f,
-									_near, _far));
+	}
+
+	return _projectionMatrix;
 }
 
 Matrix4f Camera::getViewMatrix() const {
-	Vector4f dir = _rotation.asMatrix() * Vector4f(0.f, 0.f, -1.f, 1.f);
-	return glm::lookAt(_position, _position + Vector3f(dir), _headUp);
+	if(_isChanged){
+		Vector4f dir = _rotation.asMatrix() * Vector4f(0.f, 0.f, -1.f, 1.f);
+		_viewMatrix = glm::lookAt(_position, _position + Vector3f(dir), _headUp);
+	}
+	return _viewMatrix;
 }
 
 void Camera::setFar(const float& far) {
@@ -122,6 +130,18 @@ void Camera::setHeadUp(const Vector3f& headup) {
 
 const Vector3f& Camera::getHeadUp() const {
 	return _headUp;
+}
+
+void Camera::setViewMatrix(const Matrix4f& matrix) {
+	//User has set the viewmatrix manually. so avoid automated resetting
+	_isChanged = false;
+	_viewMatrix = matrix;
+}
+
+void Camera::setProjectionMatrix(const Matrix4f& matrix) {
+	//User has set the viewmatrix manually. so avoid automated resetting
+	_isChanged = false;
+	_projectionMatrix = matrix;
 }
 
 } /* namespace burn */

@@ -132,6 +132,8 @@ protected:
 	Vector3f _position, _scale;
 	Rotation _rotation;
 	Matrix4f _modelMatrix;
+
+	bool _isChanged;
 };
 
 } /* namespace burn */

@@ -56,7 +56,8 @@ texture(new Texture()) {
 /////////////////////////////////////////////////////////////////////
 
 Model::Model() :
-_isLoaded(false) {
+_isLoaded(false),
+_isCollisionShapeCreated(false) {
 
 }
 
@@ -68,8 +69,7 @@ const std::vector<std::shared_ptr<Mesh>>& Model::getMeshes() const {
 	return _meshes;
 }
 
-bool Model::loadFromFile(	const std::string& file,
-							const PHYSICAL_SHAPE_PRECISION& precision) {
+bool Model::loadFromFile(const std::string& file) {
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(	file.c_str(),
@@ -199,17 +199,27 @@ bool Model::loadFromFile(	const std::string& file,
 	Reporter::report("Successfully loaded model: " + file);
 
 	_isLoaded = true;
+	_isCollisionShapeCreated = false;
+
+	return _isLoaded;
+}
+
+const std::shared_ptr<btCollisionShape>& Model::getCollisionShape(const PHYSICAL_SHAPE_PRECISION& precision) const {
+
+	if(!_isLoaded){
+		Reporter::report("Unable to create collision shape. Model not loaded!", Reporter::ERROR);
+		exit(551);
+	}
+
+	if(_isCollisionShapeCreated){
+		return _collisionShape;
+	}
 
 	///////////////////////////////////////////////////////////////////////////
 	// Create Collisionshape
 	///////////////////////////////////////////////////////////////////////////
 
 	if(precision == CONVEX_HULL){
-
-		if(_meshes.size() == 0){
-			Reporter::report("Unable to create collision shape. Model has no meshes!", Reporter::ERROR);
-			return false;
-		}
 
 		btConvexHullShape* convexHull = new btConvexHullShape;
 
@@ -225,12 +235,9 @@ bool Model::loadFromFile(	const std::string& file,
 		}
 
 		_collisionShape.reset(convexHull);
+		_isCollisionShapeCreated = true;
 	}
 
-	return _isLoaded;
-}
-
-const std::shared_ptr<btCollisionShape>& Model::getCollisionShape() const{
 	return _collisionShape;
 }
 

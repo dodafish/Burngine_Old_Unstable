@@ -32,8 +32,10 @@ namespace burn {
 
 OculusRift::OculusRift(const Window& window) :
 _window(window),
-_eyeSpacing(5.f),
+_eyeSpacing(25.f),
 _cameraAspect(1.6f) {
+
+	std::cout << "test";
 
 	OVR::System::Init(OVR::Log::ConfigureDefaultLog(OVR::LogMask_All));
 
@@ -42,7 +44,7 @@ _cameraAspect(1.6f) {
 
 	std::cout << "test";
 
-	const unsigned int& width = _window.getSettings().getWidth();
+	const unsigned int& width = _window.getSettings().getWidth() / 2;
 	const unsigned int& height = _window.getSettings().getHeight();
 
 	assert(_leftEyeTexture.create(Vector2ui(width, height), Texture::RGB));
@@ -91,6 +93,23 @@ _cameraAspect(1.6f) {
 		GL_STATIC_DRAW);
 	}
 
+	_SFusion = new OVR::SensorFusion();
+	std::cout << "wo";
+	_pSensor = *_pHMD->GetSensor();
+	std::cout << "wo";
+	if(_pSensor){
+		_SFusion->AttachToSensor(_pSensor);
+		std::cout << "wo";
+	}
+
+}
+
+OculusRift::~OculusRift() {
+	_pSensor.Clear();
+	_pHMD.Clear();
+	_pManager.Clear();
+	delete _SFusion;
+	OVR::System::Destroy();
 }
 
 void OculusRift::clear() {
@@ -102,13 +121,35 @@ void OculusRift::renderScene(	Scene& scene,
 								const Camera& camera,
 								const SceneRenderSystem::RenderMode& rendermode) {
 
+	Quaternion headQuat;
+	if(_pSensor){
 
+		OVR::Quatf headQuatOvr = _SFusion->GetOrientation();
+		headQuat = Quaternion(-headQuatOvr.z, headQuatOvr.y, -headQuatOvr.x, headQuatOvr.w);
+	}
+
+	OVR::Util::Render::StereoConfig stereo;
+	OVR::HMDInfo hmd;
+	//float renderScale;
+	// Obtain setup data from the HMD and initialize StereoConfig
+	// for stereo rendering.
+	_pHMD->GetDeviceInfo(&hmd);
+	stereo.SetFullViewport(OVR::Util::Render::Viewport(0, 0, 1280, 800));
+	stereo.SetStereoMode(OVR::Util::Render::Stereo_LeftRight_Multipass);
+	stereo.SetHMDInfo(hmd);
+	stereo.SetDistortionFitPointVP(-1.0f, 0.0f);
+	//renderScale = stereo.GetDistortionScale();
+
+	OVR::Util::Render::StereoEyeParams leftEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Left);
+	OVR::Util::Render::StereoEyeParams rightEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Right);
+
+	Rotation headRot;
+	headRot.setByQuaternion(camera.getRotation().asQuaternion() * headQuat);
 
 	_cameraAspect = camera.getAspectRatio();
 
 	//TODO: 2 cameras
-	//Vector3f dir = camera.getLookAt() - camera.getPosition();
-	Vector3f dir;
+	Vector3f dir = Vector3f(camera.getRotation().asMatrix() * Vector4f(0.f, 0.f, -1.f, 1.f));
 
 	Vector3f n1;
 	n1.x = (-1.f) * dir.z;
@@ -116,8 +157,8 @@ void OculusRift::renderScene(	Scene& scene,
 	n1.z = dir.x;
 
 	n1 = glm::normalize(n1);
-	n1.x *= (10 * 0.5f);
-	n1.z *= (10 * 0.5f);
+	n1.x *= (_eyeSpacing * 0.5f);
+	n1.z *= (_eyeSpacing * 0.5f);
 
 	Camera leftCamera, rightCamera;
 	/*leftCamera.setPosition(leftCamera.getPosition() + n1);
@@ -125,22 +166,56 @@ void OculusRift::renderScene(	Scene& scene,
 	 rightCamera.setPosition(rightCamera.getPosition() + n2);
 	 rightCamera.lookAt(rightCamera.getLookAt() + n2);*/
 
+	float screenwidth = hmd.HScreenSize;
+	//screenheight = hmd.VScreenSize;
+	//screendist = hmd.EyeToScreenDistance;
+	float lensdist = hmd.LensSeparationDistance;
+	float LensCenter = 1 - 2 * lensdist / screenwidth;
+
+	float halfScreenDistance = (hmd.VScreenSize / 2);
+	float yfov = 2.0f * std::atan(halfScreenDistance/hmd.EyeToScreenDistance);
+
+	// Compute Aspect Ratio. Stereo mode cuts width in half.
+	float aspectRatio = float(hmd.HResolution * 0.5f) / float(hmd.VResolution);
+	// Post-projection viewport coordinates range from (-1.0, 1.0), with the
+	// center of the left viewport falling at (1/4) of horizontal screen size.
+	// We need to shift this projection center to match with the lens center.
+	// We compute this shift in physical units (meters) to correct
+	// for different screen sizes and then rescale to viewport coordinates.
+	float viewCenter = hmd.HScreenSize * 0.25f;
+	float eyeProjectionShift = viewCenter - hmd.LensSeparationDistance*0.5f;
+	float projectionCenterOffset = 4.0f * eyeProjectionShift / hmd.HScreenSize;
+	// Projection matrix for the "center eye", which the left/right matrices are based on.
+	OVR::Matrix4f projCenter = OVR::Matrix4f::PerspectiveRH(yfov, aspectRatio, 0.3f, 1000.0f);
+	OVR::Matrix4f projLeft = OVR::Matrix4f::Translation(projectionCenterOffset, 0, 0) * projCenter;
+	OVR::Matrix4f projRight = OVR::Matrix4f::Translation(-projectionCenterOffset, 0, 0) * projCenter;
+
 	//std::cout << "N: " << n1.x << "/" << n1.y << "/" << n1.z << "\n";
-
-	Rotation r;
-
 	leftCamera.setPosition(camera.getPosition() - n1);
-	//leftCamera.lookAt(camera.getLookAt() - n1);
-	leftCamera.setFov(125.871f);
+	leftCamera.setRotation(headRot);
+	leftCamera.setFov(yfov);
+	leftCamera.setAspectRatio(0.8f);
+	Matrix4f leftVA;
+	for(int i = 0; i != 4; ++i)
+		for(int j = 0; j != 4; ++j)
+			leftVA[i][j] = leftEye.ViewAdjust.M[i][j];
+	Matrix4f leftVP = leftVA * leftCamera.getViewMatrix();
+	//leftCamera.setViewMatrix(leftVP);
+
 	rightCamera.setPosition(camera.getPosition() + n1);
-	//rightCamera.lookAt(camera.getLookAt() + n1);
-	rightCamera.setFov(125.871f);
+	rightCamera.setRotation(headRot);
+	rightCamera.setFov(yfov);
+	rightCamera.setAspectRatio(0.8f);
+	Matrix4f rightVA;
+	for(int i = 0; i != 4; ++i)
+		for(int j = 0; j != 4; ++j)
+			rightVA[i][j] = rightEye.ViewAdjust.M[i][j];
+	Matrix4f rightVP = rightVA * rightCamera.getViewMatrix();
+	//rightCamera.setViewMatrix(rightVP);
 
 	//Left Eye:
-	_leftEyeRenderTarget.clear();
 	scene.draw(_leftEyeRenderTarget, leftCamera, rendermode);
 	//Right Eye:
-	_rightEyeRenderTarget.clear();
 	scene.draw(_rightEyeRenderTarget, rightCamera, rendermode);
 
 }
@@ -170,24 +245,32 @@ void OculusRift::renderToWindow() {
 
 	float eyedistance = 0.064;
 	float screenwidth = 0.14976;
-	float screenheight = 0.0936;
-	float screendist = 0.041;
+	//float screenheight = 0.0936;
+	//float screendist = 0.041;
 	float lensdist = 0.0635;
+	//float renderScale = 0.f;
 
 	Vector4f hmdWarpParam(1.0f, 0.22f, 0.24f, 0.f);
 	OVR::HMDInfo hmd;
+	OVR::Util::Render::StereoConfig stereo;
 	if(_pHMD){
 		if(_pHMD->GetDeviceInfo(&hmd)){
 			eyedistance = hmd.InterpupillaryDistance;
 			screenwidth = hmd.HScreenSize;
-			screenheight = hmd.VScreenSize;
-			screendist = hmd.EyeToScreenDistance;
+			//screenheight = hmd.VScreenSize;
+			//screendist = hmd.EyeToScreenDistance;
 			lensdist = hmd.LensSeparationDistance;
 
 			hmdWarpParam[0] = hmd.DistortionK[0];
 			hmdWarpParam[1] = hmd.DistortionK[1];
 			hmdWarpParam[2] = hmd.DistortionK[2];
 			hmdWarpParam[3] = hmd.DistortionK[3];
+
+			stereo.SetFullViewport(OVR::Util::Render::Viewport(0, 0, 1280, 800));
+			stereo.SetStereoMode(OVR::Util::Render::Stereo_LeftRight_Multipass);
+			stereo.SetHMDInfo(hmd);
+			stereo.SetDistortionFitPointVP(-1.0f, 0.0f);
+			//renderScale = stereo.GetDistortionScale();
 		}else{
 			return;
 		}
@@ -197,11 +280,6 @@ void OculusRift::renderToWindow() {
 
 	_eyeSpacing = eyedistance;
 
-	float x = 0.f;
-	float y = 0.f;
-	float w = 0.5f;
-	float h = 1.f;
-	float projshift = 0.15197f;
 	float lensradius = -1.f - LensCenter;
 	float lensradsq = lensradius * lensradius;
 
@@ -211,7 +289,6 @@ void OculusRift::renderToWindow() {
 	//factor = 0.5877112f;
 
 	float aspect = (1280.f / 2.f) / 800.f;
-	aspect = 0.8f;
 
 	_window.bind();
 	shader.setUniform("gSampler", 0);
@@ -220,15 +297,17 @@ void OculusRift::renderToWindow() {
 	glEnableVertexAttribArray(1);
 
 	//Left Eye
+	///WOWOWOWOWOOW
+///////WWWWWWWWWPOOOWOWOOWOWOW
 
 	//Distortion parameters:
 	//shader.setUniform("gLensCenter", Vector2f(x + (w + projshift) * 0.5f, y + h * 0.5f));
 	//shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
 	//shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
 	//shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
-	shader.setUniform("gLensCenter", Vector2f(0.5-LensCenter, 0.5f));
+	shader.setUniform("gLensCenter", Vector2f(0.5 - LensCenter, 0.5f));
 	shader.setUniform("gScreenCenter", Vector2f(0.5f, 0.5f));
-	shader.setUniform("gScale", Vector2f(0.5f / factor, 0.5f * aspect / factor));
+	shader.setUniform("gScale", Vector2f(0.5f / factor, (0.5f * aspect) / factor));
 	shader.setUniform("gScaleIn", Vector2f(2.f, 2.f / aspect));
 	shader.setUniform("gHmdWarpParam", hmdWarpParam);
 
@@ -244,8 +323,6 @@ void OculusRift::renderToWindow() {
 	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
 
 	//Right Eye
-	x = 0.5f;
-	projshift = -0.15197f;
 
 	//lensradius = -1.f - projshift;
 	//lensradsq = lensradius * lensradius;
@@ -257,9 +334,9 @@ void OculusRift::renderToWindow() {
 	//shader.setUniform("gScreenCenter", Vector2f(x + w * 0.5f, y + h * 0.5f));
 	//shader.setUniform("gScale", Vector2f(w * 0.5f / factor, h * 0.5f * aspect / factor));
 	//shader.setUniform("gScaleIn", Vector2f(2.f / w, 2.f / h / aspect));
-	shader.setUniform("gLensCenter", Vector2f(0.5+LensCenter, 0.5f));
+	shader.setUniform("gLensCenter", Vector2f(0.5 + LensCenter, 0.5f));
 	shader.setUniform("gScreenCenter", Vector2f(0.5f, 0.5f));
-	shader.setUniform("gScale", Vector2f(0.5f / factor, 0.5f * aspect / factor));
+	shader.setUniform("gScale", Vector2f(0.5f / factor, (0.5f * aspect) / factor));
 	shader.setUniform("gScaleIn", Vector2f(2.f, 2.f / aspect));
 	shader.setUniform("gHmdWarpParam", hmdWarpParam);
 

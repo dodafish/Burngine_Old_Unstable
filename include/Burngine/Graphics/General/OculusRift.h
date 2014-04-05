@@ -34,7 +34,6 @@
 #include <Burngine/extern/LibOVR/Include/OVRVersion.h>
 #include <Burngine/extern/LibOVR/Include/OVR.h>
 
-
 namespace burn {
 
 class Gui;
@@ -42,6 +41,7 @@ class Gui;
 class BURNGINE_API OculusRift : public NonCopyable {
 public:
 	OculusRift(const Window& window);
+	~OculusRift();
 
 	void clear();
 
@@ -66,6 +66,8 @@ private:
 
 	OVR::Ptr<OVR::DeviceManager> _pManager;
 	OVR::Ptr<OVR::HMDDevice> _pHMD;
+	OVR::Ptr<OVR::SensorDevice> _pSensor;
+	OVR::SensorFusion* _SFusion;
 };
 
 } /* namespace burn */

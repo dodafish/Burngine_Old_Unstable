@@ -130,9 +130,9 @@ public:
 	void setFar(const float& far);
 	void setNear(const float& near);
 
-	enum Type{
-		PERSPECTIVE, ///< The camera has perspective projection
-		ORTHOGONAL ///< The camera has orthogonal projection
+	enum Type {
+		PERSPECTIVE,    ///< The camera has perspective projection
+		ORTHOGONAL    ///< The camera has orthogonal projection
 	};
 
 	void setType(const Type& type);
@@ -142,6 +142,9 @@ public:
 	void setHeadUp(const Vector3f& headup);
 	const Vector3f& getHeadUp() const;
 
+	void setViewMatrix(const Matrix4f& matrix);
+	void setProjectionMatrix(const Matrix4f& matrix);
+
 private:
 	float _aspectRatio;
 	float _fov;
@@ -149,6 +152,8 @@ private:
 	float _near;
 	Type _type;
 	Vector3f _headUp;
+
+	mutable Matrix4f _viewMatrix, _projectionMatrix;
 };
 
 } /* namespace burn */

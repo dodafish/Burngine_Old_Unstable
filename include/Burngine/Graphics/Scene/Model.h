@@ -61,7 +61,7 @@ public:
 	 *
 	 * @return Returns false if loading failed
 	 */
-	bool loadFromFile(const std::string& file, const PHYSICAL_SHAPE_PRECISION& precision = CONVEX_HULL);
+	bool loadFromFile(const std::string& file);
 
 	/**
 	 * @brief Returns a mesh depending on the given index.
@@ -80,13 +80,14 @@ public:
 
 	bool isLoaded() const;
 
-	const std::shared_ptr<btCollisionShape>& getCollisionShape() const;
+	const std::shared_ptr<btCollisionShape>& getCollisionShape(const PHYSICAL_SHAPE_PRECISION& precision = CONVEX_HULL) const;
 
 protected:
-	std::shared_ptr<btCollisionShape> _collisionShape;
+	mutable std::shared_ptr<btCollisionShape> _collisionShape;
 private:
 	std::vector<std::shared_ptr<Mesh>> _meshes;
 	bool _isLoaded;
+	mutable bool _isCollisionShapeCreated;
 };
 
 } /* namespace burn */

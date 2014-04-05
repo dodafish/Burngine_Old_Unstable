@@ -29,7 +29,8 @@ namespace burn {
 Transformable::Transformable() :
 _position(Vector3f(0.f, 0.f, 0.f)),
 _scale(Vector3f(1.f, 1.f, 1.f)),
-_modelMatrix(Matrix4f(1.f)) {
+_modelMatrix(Matrix4f(1.f)),
+_isChanged(false){
 	updateModelMatrix();
 }
 
@@ -37,7 +38,8 @@ Transformable::Transformable(const Transformable& other) :
 _position(other._position),
 _scale(other._scale),
 _rotation(other._rotation),
-_modelMatrix(other._modelMatrix) {
+_modelMatrix(other._modelMatrix),
+_isChanged(true) {
 }
 
 Transformable& Transformable::operator=(const Transformable& other) {
@@ -49,6 +51,7 @@ Transformable& Transformable::operator=(const Transformable& other) {
 	_scale = other._scale;
 	_rotation = other._rotation;
 	_modelMatrix = other._modelMatrix;
+	_isChanged = true;
 
 	return *this;
 
@@ -60,6 +63,7 @@ Transformable::~Transformable() {
 void Transformable::setPosition(const Vector3f& position) {
 	_position = position;
 	updateModelMatrix();
+	_isChanged = true;
 }
 
 const Vector3f& Transformable::getPosition() const {
@@ -69,6 +73,7 @@ const Vector3f& Transformable::getPosition() const {
 void Transformable::setRotation(const Rotation& rotation) {
 	_rotation = rotation;
 	updateModelMatrix();
+	_isChanged = true;
 }
 
 const Rotation& Transformable::getRotation() const {
@@ -78,6 +83,7 @@ const Rotation& Transformable::getRotation() const {
 void Transformable::lookAt(const Vector3f& point){
 	_rotation = RotationUtil::RotationBetweenVectors(Vector3f(1.f, 0.f, 0.f), point - _position);
 	updateModelMatrix();
+	_isChanged = true;
 }
 
 /*void Transformable::rotate(const float& offsetX, const float& offsetY, const float& offsetZ){
@@ -89,6 +95,7 @@ void Transformable::lookAt(const Vector3f& point){
 void Transformable::setScale(const Vector3f& scale) {
 	_scale = scale;
 	updateModelMatrix();
+	_isChanged = true;
 }
 
 const Vector3f& Transformable::getScale() const {
@@ -107,6 +114,7 @@ void Transformable::updateModelMatrix() {
 
 void Transformable::setModelMatrix(const Matrix4f& matrix){
 	_modelMatrix = matrix;
+	_isChanged = true;
 }
 
 } /* namespace burn */
