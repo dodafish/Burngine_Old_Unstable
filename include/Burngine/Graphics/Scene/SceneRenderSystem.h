@@ -127,6 +127,7 @@ private:
 
 	struct HiMidLowResMatrices{
 		Matrix4f matrices[3];
+		Matrix4f view;
 	};
 
 	HiMidLowResMatrices drawShadowmap(	const DirectionalLight& dirLight,

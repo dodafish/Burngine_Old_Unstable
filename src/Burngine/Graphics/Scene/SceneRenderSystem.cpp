@@ -444,19 +444,32 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			DirectionalLight* light = static_cast<DirectionalLight*>(lights[i]);
 
 			//Render shadowmap:
-			Matrix4f shadowMatrix = drawShadowmap(*light, nodes);
+			HiMidLowResMatrices shadowMatrices = drawShadowmap(*light, nodes, camera.getPosition());
 
 			//Render light
 			_renderTarget.bind();
 			_vsm[0].bind(8);
 			_vsm[1].bind(9);
 			_vsm[2].bind(10);
+
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
-			shader.setUniform("gLightDirection",
-								Vector3f(light->getDirection()));
+
+			shader.setUniform("modelMatrix", Matrix4f(1.f));
+			shader.setUniform("viewMatrix", Matrix4f(1.f));
+			shader.setUniform("projectionMatrix", Matrix4f(1.f));
+			shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+			shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+			shader.setUniform("gSamplerShadowmapHI", 8);
+			shader.setUniform("gSamplerShadowmapMID", 9);
+			shader.setUniform("gSamplerShadowmapLOW", 10);
+
+			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
-			shader.setUniform("shadowMatrix", shadowMatrix);
+			shader.setUniform("shadowMatrixHI", shadowMatrices.matrices[0]);
+			shader.setUniform("shadowMatrixMID", shadowMatrices.matrices[1]);
+			shader.setUniform("shadowMatrixLOW", shadowMatrices.matrices[2]);
+			shader.setUniform("shadowViewMatrix", shadowMatrices.view);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -471,6 +484,14 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			_vscm.bind(8);
 			_renderTarget.bind();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
+
+			shader.setUniform("modelMatrix", Matrix4f(1.f));
+			shader.setUniform("viewMatrix", Matrix4f(1.f));
+			shader.setUniform("projectionMatrix", Matrix4f(1.f));
+			shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+			shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+			shader.setUniform("gSamplerShadowcubemap", 8);
+
 			shader.setUniform("gLightPosition", light->getPosition());
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
@@ -492,12 +513,20 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			//glGenerateMipmap(GL_TEXTURE_2D);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::SPOTLIGHT);
+
+			shader.setUniform("modelMatrix", Matrix4f(1.f));
+			shader.setUniform("viewMatrix", Matrix4f(1.f));
+			shader.setUniform("projectionMatrix", Matrix4f(1.f));
+			shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
+			shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
+			shader.setUniform("gSamplerShadowmap", 8);
+
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightPosition", light->getPosition());
 			shader.setUniform("gLightColor", light->getColor());
 			shader.setUniform("gLightIntensity", light->getIntensity());
 			shader.setUniform("gLightConeCosine", lightConeCosine);
-			shader.setUniform("gShadowMatrix", shadowMatrix);
+			shader.setUniform("shadowMatrix", shadowMatrix);
 
 			drawFullscreenQuad(shader, toLightPassOgl);
 
@@ -543,31 +572,39 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 	OpenGlControl::useSettings(OpenGlControl::Settings());
 }
 
-SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(	const DirectionalLight& dirLight,
-											const std::vector<SceneNode*>& nodes,
-											const Vector3f& cameraPosition) {
+SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(const DirectionalLight& dirLight,
+																		const std::vector<SceneNode*>& nodes,
+																		const Vector3f& cameraPosition) {
 
 	OpenGlControl::Settings ogl;
 	ogl.setClearColor(Vector4f(0.f));
 	OpenGlControl::useSettings(ogl);
 
 	HiMidLowResMatrices mats;
-	for(int i = 0; i != 3; ++i){
-		_vsmTarget[i].clear();
-		_vsmTarget[i].bind();
+	for(int q = 0; q != 3; ++q){
+		OpenGlControl::useSettings(ogl);
+		_vsmTarget[q].clear();
+		_vsmTarget[q].bind();
 
 		const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+
+		shader.setUniform("onlyZ", true);
 
 		Camera virtualCamera;
 		virtualCamera.setRotation(RotationUtil::RotationBetweenVectors(	Vector3f(0.f, 0.f, -1.f),
 																		Vector3f(dirLight.getDirection())));
 		virtualCamera.setType(Camera::ORTHOGONAL);
-		 //Dimensions of the "box"
-		//First 10 then 100 then 1000 (hi mid low)
-		virtualCamera.setFov(std::pow(10.f, i + 1));
+		//Dimensions of the "box"
+		if(q == 0)
+			virtualCamera.setFov(50.f);
+		else if(q == 1){
+			virtualCamera.setFov(200.f);
+		}else{
+			virtualCamera.setFov(600.f);
+		}
 
-		virtualCamera.setNear(-1000.f);
-		virtualCamera.setFar(1000.f);
+		virtualCamera.setNear(-750.f);
+		virtualCamera.setFar(750.f);
 		virtualCamera.setAspectRatio(1.f);
 		virtualCamera.setPosition(cameraPosition);
 
@@ -575,10 +612,18 @@ SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(	const D
 			renderNode(nodes[i], POSITION, virtualCamera, shader, true);
 		}
 
-		if(dirLight.isSofteningShadow())
-			PostEffects::gaussianBlur(_vsm[i]);
+		mats.matrices[q] = virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
+		mats.view = virtualCamera.getViewMatrix();
+	}
 
-		mats.matrices[i] = virtualCamera.getProjectionMatrix() * virtualCamera.getViewMatrix();
+	if(dirLight.isSofteningShadow()){
+		PostEffects::gaussianBlur(_vsm[0]);
+		OpenGlControl::useSettings(ogl);
+		_vsmTarget[1].bind();
+		PostEffects::gaussianBlur(_vsm[1]);
+		OpenGlControl::useSettings(ogl);
+		_vsmTarget[2].bind();
+		PostEffects::gaussianBlur(_vsm[2]);
 	}
 
 	return mats;
@@ -594,6 +639,8 @@ void SceneRenderSystem::drawShadowmap(	const Light& pointlight,
 	_vscmTarget.clear();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+
+	shader.setUniform("onlyZ", false);
 
 	for(int face = 0; face != 6; ++face){
 		_vscmTarget.bind(face);
@@ -653,6 +700,8 @@ Matrix4f SceneRenderSystem::drawShadowmap(	const SpotLight& spotlight,
 	_vsmTarget[0].bind();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::VSM_DRAW);
+
+	shader.setUniform("onlyZ", false);
 
 	//Camera from light's view
 	Camera virtualCamera;
