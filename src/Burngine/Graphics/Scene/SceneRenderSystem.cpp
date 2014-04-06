@@ -735,20 +735,14 @@ void SceneRenderSystem::ambientPart(const Vector3f& ambient) {
 	ogl.setBlendMode(OpenGlControl::OVERWRITE);
 	OpenGlControl::useSettings(ogl);
 
-	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SINGLECOLOR);
+	const Shader& shader = BurngineShaders::getShader(BurngineShaders::AMBIENT);
 	shader.setUniform("gColor", Vector4f(ambient, 1.f));
 	shader.setUniform("modelMatrix", Matrix4f(1.f));
 	shader.setUniform("viewMatrix", Matrix4f(1.f));
 	shader.setUniform("projectionMatrix", Matrix4f(1.f));
+	_gBuffer.bindDepthBufferAsSourceTexture();
 
-	glEnableVertexAttribArray(0);
-	_fullscreenVbo.bind();
-	glVertexAttribPointer(0, 3,
-	GL_FLOAT,
-							GL_FALSE, sizeof(Vector3f) + sizeof(Vector2f), (void*)0);
-
-	OpenGlControl::draw(OpenGlControl::TRIANGLE_STRIP, 0, 4, shader);
-	glDisableVertexAttribArray(0);
+	drawFullscreenQuad(shader, ogl);
 
 }
 

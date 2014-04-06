@@ -38,6 +38,7 @@ struct BURNGINE_API BurngineShaders {
 	 * @see useShader()
 	 */
 	enum Type {
+		AMBIENT, ///< Applies ambient part depending on pixel's depth
 		TEXTURE, ///< Simple 1-Texture Shader
 		TEXTURE_ONE_COMPONENT, ///< Samples from a texture with a single component e.g. depth textures
 		POINTLIGHT, ///< Renders a pointlight
@@ -65,6 +66,7 @@ private:
 	//Making ctor private avoids creating of instances
 	BurngineShaders() = delete;
 
+	static Shader _ambientShader;
 	static Shader _textureShader;
 	static Shader _textureOneComponentShader;
 	static Shader _pointlightShader;

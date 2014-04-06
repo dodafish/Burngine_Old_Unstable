@@ -25,6 +25,7 @@
 
 namespace burn {
 
+Shader BurngineShaders::_ambientShader;
 Shader BurngineShaders::_textureShader;
 Shader BurngineShaders::_textureOneComponentShader;
 Shader BurngineShaders::_pointlightShader;
@@ -49,6 +50,9 @@ bool BurngineShaders::load(const std::string& d) {
 	if(d[d.size() - 1] != '/' || d[d.size() - 1] != '\\')
 		dir = d + "/";
 
+	if(!_ambientShader.loadFromFile(dir + "texture.vert", dir + "ambient.frag")){
+		return false;
+	}
 	if(!_textureShader.loadFromFile(dir + "texture.vert", dir + "texture.frag")){
 		return false;
 	}
@@ -100,6 +104,9 @@ const Shader& BurngineShaders::getShader(const Type& type) {
 		case TEXTURE:
 			//Will be returned at end of function, so it always returns.
 			//This makes the compiler happy :)
+			break;
+		case AMBIENT:
+			return _ambientShader;
 			break;
 		case TEXTURE_ONE_COMPONENT:
 			return _textureOneComponentShader;
