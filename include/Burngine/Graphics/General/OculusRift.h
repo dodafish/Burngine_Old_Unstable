@@ -40,34 +40,35 @@ class Gui;
 
 class BURNGINE_API OculusRift : public NonCopyable {
 public:
-	OculusRift(const Window& window);
+	OculusRift();
 	~OculusRift();
-
-	void clear();
 
 	void renderScene(	Scene& scene,
 						const Camera& camera,
-						const SceneRenderSystem::RenderMode& renderMode);
-	void renderGui(const Gui& gui);
-
-	void distortImages();
-	void renderToWindow();
-
-	void setEyeSpacing(const float& eyeSpacing);
-	const float& getEyeSpacing() const;
+						const SceneRenderSystem::RenderMode& renderMode,
+						const Window& window);
 
 private:
-	const Window& _window;
-	Texture _leftEyeTexture, _rightEyeTexture;
-	RenderTarget _leftEyeRenderTarget, _rightEyeRenderTarget;
-	float _eyeSpacing;
-	VertexBufferObject _leftEyeVbo, _rightEyeVbo;
-	float _cameraAspect;
+	// Some Oculus SDK types
+	OVR::Ptr<OVR::SensorDevice> _ovrSensor;
+	OVR::SensorFusion* _sensorFusion;
+	OVR::Util::Render::StereoConfig _stereoConfig;
 
-	OVR::Ptr<OVR::DeviceManager> _pManager;
-	OVR::Ptr<OVR::HMDDevice> _pHMD;
-	OVR::Ptr<OVR::SensorDevice> _pSensor;
-	OVR::SensorFusion* _SFusion;
+	// Provides the resolution and location of the Rift
+	OVR::HMDInfo _hmdInfo;
+	// Calculated width and height of the per-eye rendering area used
+	int _eyeWidth, _eyeHeight;
+	// Calculated width and height of the frame buffer object used to contain
+    // intermediate results for the multipass render
+	int _fboWidth, _fboHeight;
+
+	VertexBufferObject _quadVbo;
+
+	Texture _stereoTexture;
+	RenderTarget _stereoTextureTarget;
+
+	bool _useTracker;
+	float _aspectRatio;
 };
 
 } /* namespace burn */
