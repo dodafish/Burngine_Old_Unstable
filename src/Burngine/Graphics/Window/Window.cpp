@@ -203,4 +203,8 @@ bool Window::isCreated() const {
 	return _window != nullptr;
 }
 
+void Window::setPolygonMode(const OpenGlControl::PolygonMode& mode) const{
+	OpenGlControl::setPolygonMode(mode);
+}
+
 } /* namespace burn */

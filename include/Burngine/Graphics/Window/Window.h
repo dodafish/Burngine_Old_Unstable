@@ -26,6 +26,7 @@
 
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/General/OpenGL.h>
+#include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/Window/WindowSettings.h>
 
 #include <vector>
@@ -143,6 +144,8 @@ public:
 	static Matrix4f getOrthoMatrix();
 
 	bool isCreated() const;
+
+	void setPolygonMode(const OpenGlControl::PolygonMode& mode) const;
 
 private:
 	void updateOrthoMatrix();
