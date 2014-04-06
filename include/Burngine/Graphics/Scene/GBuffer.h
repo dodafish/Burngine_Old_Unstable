@@ -102,7 +102,7 @@ public:
 	 * @brief Binds the depthattachment as texture to texture
 	 * unit 0
 	 */
-	void bindDepthBufferAsSourceTexture() const;
+	void bindDepthBufferAsSourceTexture(const Uint32& unit = 0) const;
 
 	/**
 	 * @brief Return the dimensions of the GBuffer

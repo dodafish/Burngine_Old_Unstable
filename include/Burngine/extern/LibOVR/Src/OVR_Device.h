@@ -28,6 +28,12 @@ limitations under the License.
 #ifndef OVR_Device_h
 #define OVR_Device_h
 
+#ifdef __GNUC__
+//Avoid tons of warnings
+#pragma GCC system_header
+#endif
+
+
 #include "OVR_DeviceConstants.h"
 #include "OVR_DeviceHandle.h"
 #include "OVR_DeviceMessages.h"

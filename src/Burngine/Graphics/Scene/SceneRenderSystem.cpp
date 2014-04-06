@@ -452,6 +452,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			_vsm[0].bind(8);
 			_vsm[1].bind(9);
 			_vsm[2].bind(10);
+			_gBuffer.bindDepthBufferAsSourceTexture(11);
 
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::DIRECTIONAL_LIGHT);
 
@@ -463,6 +464,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			shader.setUniform("gSamplerShadowmapHI", 8);
 			shader.setUniform("gSamplerShadowmapMID", 9);
 			shader.setUniform("gSamplerShadowmapLOW", 10);
+			shader.setUniform("gSamplerDepth", 11);
 
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightColor", light->getColor());
@@ -483,6 +485,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 
 			//Render light
 			_vscm.bind(8);
+			_gBuffer.bindDepthBufferAsSourceTexture(9);
 			_renderTarget.bind();
 			const Shader& shader = BurngineShaders::getShader(BurngineShaders::POINTLIGHT);
 
@@ -492,6 +495,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 			shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
 			shader.setUniform("gSamplerShadowcubemap", 8);
+			shader.setUniform("gSamplerDepth", 9);
 
 			shader.setUniform("gLightPosition", light->getPosition());
 			shader.setUniform("gLightColor", light->getColor());
@@ -509,6 +513,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			//Render light
 			_renderTarget.bind();
 			_vsm[0].bind(8);
+			_gBuffer.bindDepthBufferAsSourceTexture(9);
 			float lightConeCosine = std::cos(light->getConeAngle() / (180.f / 3.1415f));
 
 			//glGenerateMipmap(GL_TEXTURE_2D);
@@ -521,6 +526,7 @@ void SceneRenderSystem::lightPass(	const GLuint& targetFramebuffer,    ///< Wind
 			shader.setUniform("gSamplerNormals", GBuffer::NORMAL_WS);
 			shader.setUniform("gSamplerPositions", GBuffer::POSITION_WS);
 			shader.setUniform("gSamplerShadowmap", 8);
+			shader.setUniform("gSamplerDepth", 9);
 
 			shader.setUniform("gLightDirection", Vector3f(light->getDirection()));
 			shader.setUniform("gLightPosition", light->getPosition());

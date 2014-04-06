@@ -207,4 +207,13 @@ void Window::setPolygonMode(const OpenGlControl::PolygonMode& mode) const{
 	OpenGlControl::setPolygonMode(mode);
 }
 
+void Window::setCursorVisible(bool visible){
+	if(isCreated()){
+		if(visible)
+			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else
+			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
+}
+
 } /* namespace burn */

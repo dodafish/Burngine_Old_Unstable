@@ -147,6 +147,8 @@ public:
 
 	void setPolygonMode(const OpenGlControl::PolygonMode& mode) const;
 
+	void setCursorVisible(bool visible = true);
+
 private:
 	void updateOrthoMatrix();
 	bool checkOpenGLVersion();

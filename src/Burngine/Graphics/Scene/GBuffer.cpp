@@ -220,7 +220,7 @@ const Vector2ui& GBuffer::getDimensions() const {
 	return _dimensions;
 }
 
-void GBuffer::bindDepthBufferAsSourceTexture() const {
+void GBuffer::bindDepthBufferAsSourceTexture(const Uint32& unit) const {
 
 	ensureContext();
 
@@ -230,9 +230,9 @@ void GBuffer::bindDepthBufferAsSourceTexture() const {
 	}
 
 	//BaseTexture::bindTexture(_depthTexture, 0);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, _depthTexture);
-	glBindSampler(0, 0);
+	glBindSampler(unit, 0);
 }
 
 } /* namespace burn */
