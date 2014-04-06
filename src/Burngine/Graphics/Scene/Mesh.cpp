@@ -100,8 +100,16 @@ void Mesh::setTexture(const std::shared_ptr<Texture>& tex) {
 	_texture = tex;
 }
 
+void Mesh::setNormalMap(const std::shared_ptr<Texture>& tex) {
+	_normalMap = tex;
+}
+
 const Texture& Mesh::getTexture() const {
 	return *_texture;
+}
+
+const Texture& Mesh::getNormalMap() const {
+	return *_normalMap;
 }
 
 const Material& Mesh::getMaterial() const {

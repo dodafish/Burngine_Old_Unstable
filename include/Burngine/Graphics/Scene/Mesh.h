@@ -121,6 +121,8 @@ public:
 	 */
 	void setTexture(const std::shared_ptr<Texture>& texture);
 
+	void setNormalMap(const std::shared_ptr<Texture>& normalMap);
+
 	/**
 	 * @brief Returns the current Texture of the mesh
 	 *
@@ -129,6 +131,8 @@ public:
 	 * @see setTexture()
 	 */
 	const Texture& getTexture() const;
+
+	const Texture& getNormalMap() const;
 
 	/**
 	 * @brief Sets the material of the node. Influences the rendering
@@ -162,7 +166,7 @@ private:
 	bool update();
 
 	Material _material;
-	std::shared_ptr<Texture> _texture;
+	std::shared_ptr<Texture> _texture, _normalMap;
 
 	std::vector<Vertex> _vertices;
 	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;

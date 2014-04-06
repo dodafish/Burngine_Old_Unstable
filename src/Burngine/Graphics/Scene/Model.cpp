@@ -44,11 +44,13 @@ struct MeshData {
 	std::vector<Vertex> vertices;
 	Material material;
 	std::shared_ptr<Texture> texture;
+	std::shared_ptr<Texture> normalMap;
 };
 
 MeshData::MeshData() :
 index(0),
-texture(new Texture()) {
+texture(new Texture()),
+normalMap(new Texture()){
 
 }
 
@@ -179,7 +181,29 @@ bool Model::loadFromFile(const std::string& file) {
 			}
 
 			//Texture type not supported
-		}else{
+		}else if(material->GetTexture(aiTextureType_NORMALS, textureIndex, &assimpFile) == AI_SUCCESS){
+			//Convert assimpstring to std::string
+			std::string file = assimpFile.data;
+
+			//Find material and set to mesh
+			for(size_t j = 0; j < meshData.size(); ++j){
+				if(meshData[j].index == i){
+
+					//meshData[j].texture = std::make_shared<Texture>(new Texture());
+
+					//Load texture
+					if(meshData[j].normalMap->loadFromFile(file)){
+						break;
+					}else{
+						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
+						return false;
+					}
+
+				}
+			}
+		}
+
+		else{
 			Reporter::report("Material texture is invalid.", Reporter::WARNING);
 		}
 
@@ -192,6 +216,7 @@ bool Model::loadFromFile(const std::string& file) {
 		mesh->setMaterial(meshData[i].material);
 		mesh->setVertices(meshData[i].vertices);
 		mesh->setTexture(meshData[i].texture);
+		mesh->setNormalMap(meshData[i].normalMap);
 
 		_meshes.push_back(std::shared_ptr<Mesh>(mesh));
 	}
