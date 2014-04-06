@@ -57,7 +57,6 @@ typedef glm::detail::tvec3<Uint32> Vector3ui;
 typedef glm::detail::tvec2<Uint32> Vector2ui;
 
 typedef glm::mat4 Matrix4f;
-typedef glm::mat3 Matrix3f;
 
 typedef glm::quat Quaternion;
 

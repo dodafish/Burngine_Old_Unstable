@@ -104,11 +104,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const Matrix4f& value) const;
-
-	inline void setUniform(	const std::string& name,
-							const Matrix3f& value) const;
+	inline void setUniform(const std::string& name,
+					const Matrix4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -116,8 +113,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const Vector4f& value) const;
+	inline void setUniform(const std::string& name,
+					const Vector4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -125,8 +122,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const Vector3f& value) const;
+	inline void setUniform(const std::string& name,
+					const Vector3f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -134,8 +131,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const Vector2f& value) const;
+	inline void setUniform(const std::string& name,
+					const Vector2f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -143,8 +140,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const int& value) const;
+	inline void setUniform(const std::string& name,
+					const int& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -152,8 +149,8 @@ public:
 	 * @param name Variable name in the shader
 	 * @param value Value to set to the variable
 	 */
-	inline void setUniform(	const std::string& name,
-							const float& value) const;
+	inline void setUniform(const std::string& name,
+					const float& value) const;
 
 	////////////////////////////////////////////////////////////
 
@@ -165,8 +162,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const Matrix4f& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const Matrix4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -176,8 +173,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const Vector4f& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const Vector4f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -187,8 +184,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const Vector3f& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const Vector3f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -198,8 +195,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const Vector2f& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const Vector2f& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -209,8 +206,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const int& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const int& value) const;
 
 	/**
 	 * @brief Sets a variable in the shader program
@@ -220,8 +217,8 @@ public:
 	 *
 	 * @see getUniformLocation()
 	 */
-	inline void setUniform(	const GLint& uniformLocation,
-							const float& value) const;
+	inline void setUniform(const GLint& uniformLocation,
+					const float& value) const;
 
 private:
 	GLuint _id;
@@ -251,31 +248,6 @@ void Shader::setUniform(const std::string& name,
 	}else{
 
 		glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1,
-		GL_FALSE,
-							&value[0][0]);
-
-	}
-
-}
-
-void Shader::setUniform(const std::string& name,
-						const Matrix3f& value) const {
-
-	ensureContext();
-
-	if(_id != _currentProgram){
-
-		glUseProgram(_id);
-
-		glUniformMatrix3fv(glGetUniformLocation(_id, name.c_str()), 1,
-		GL_FALSE,
-							&value[0][0]);
-
-		glUseProgram(_currentProgram);
-
-	}else{
-
-		glUniformMatrix3fv(glGetUniformLocation(_id, name.c_str()), 1,
 		GL_FALSE,
 							&value[0][0]);
 

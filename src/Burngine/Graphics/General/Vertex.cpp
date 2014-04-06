@@ -28,12 +28,10 @@ namespace burn {
 Vertex::Vertex(	const Vector3f& position,
 				const Vector2f& uv,
 				const Vector3f& normal,
-				const Vector3f& tangent,
-				const Vector3f& bitangent) :
+				const Vector3f& tangent) :
 _position(position),
 _normal(normal),
 _tangent(tangent),
-_bitangent(bitangent),
 _uv(uv) {
 }
 
@@ -62,14 +60,6 @@ void Vertex::setTangent(const Vector3f& tangent) {
 
 const Vector3f& Vertex::getTangent() const {
 	return _tangent;
-}
-
-void Vertex::setBitangent(const Vector3f& bitangent) {
-	_bitangent = bitangent;
-}
-
-const Vector3f& Vertex::getBitangent() const {
-	return _bitangent;
 }
 
 void Vertex::setUv(const Vector2f& uv) {

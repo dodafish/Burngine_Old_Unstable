@@ -98,14 +98,6 @@ const VertexBufferObject& Mesh::getUvVbo() const {
 	return _uvVbo;
 }
 
-const VertexBufferObject& Mesh::getTangentVbo() const {
-	return _tangentVbo;
-}
-
-const VertexBufferObject& Mesh::getBitangentVbo() const {
-	return _bitangentVbo;
-}
-
 const VertexBufferObject& Mesh::getIndexVbo() const {
 	return _indexVbo;
 }
@@ -118,16 +110,12 @@ void Mesh::setNormalMap(const std::shared_ptr<Texture>& tex) {
 	_normalMap = tex;
 }
 
-const Texture* Mesh::getTexture() const {
-	if(_texture.use_count() == 0)
-		return nullptr;
-	return _texture.get();
+const Texture& Mesh::getTexture() const {
+	return *_texture;
 }
 
-const Texture* Mesh::getNormalMap() const {
-	if(_normalMap.use_count() == 0)
-			return nullptr;
-	return _normalMap.get();
+const Texture& Mesh::getNormalMap() const {
+	return *_normalMap;
 }
 
 const Material& Mesh::getMaterial() const {
@@ -163,48 +151,8 @@ bool getSimilarVertexIndex(	Vertex& vertex,
 	}
 }
 
-void computeTangentBasis(std::vector<Vertex> & vertices) {
-
-	for(size_t i = 0; i < vertices.size(); i += 3){
-
-		// Shortcuts for vertices
-		const glm::vec3 & v0 = vertices[i + 0].getPosition();
-		const glm::vec3 & v1 = vertices[i + 1].getPosition();
-		const glm::vec3 & v2 = vertices[i + 2].getPosition();
-
-		// Shortcuts for UVs
-		const glm::vec2 & uv0 = vertices[i + 0].getUv();
-		const glm::vec2 & uv1 = vertices[i + 1].getUv();
-		const glm::vec2 & uv2 = vertices[i + 2].getUv();
-
-		// Edges of the triangle : postion delta
-		glm::vec3 deltaPos1 = v1 - v0;
-		glm::vec3 deltaPos2 = v2 - v0;
-
-		// UV delta
-		glm::vec2 deltaUV1 = uv1 - uv0;
-		glm::vec2 deltaUV2 = uv2 - uv0;
-
-		float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
-		glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
-		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
-
-		vertices[i + 0].setTangent(tangent);
-		vertices[i + 1].setTangent(tangent);
-		vertices[i + 2].setTangent(tangent);
-
-		vertices[i + 0].setBitangent(bitangent);
-		vertices[i + 1].setBitangent(bitangent);
-		vertices[i + 2].setBitangent(bitangent);
-
-	}
-
-}
-
 bool Mesh::update() {
 	if(_vertices.size() != 0){
-
-		computeTangentBasis(_vertices);
 
 		//Run indexer:
 		_indices.clear();
@@ -221,11 +169,6 @@ bool Mesh::update() {
 
 			if(found){    // A similar vertex is already in the VBO, use it instead !
 				_indices.push_back(index);
-
-				_indexedVertices[index].setTangent(_indexedVertices[index].getTangent() + _vertices[i].getTangent());
-				_indexedVertices[index].setBitangent(_indexedVertices[index].getBitangent()
-				+ _vertices[i].getBitangent());
-
 			}else{    // If not, it needs to be added in the output data.
 				_indexedVertices.push_back(_vertices[i]);
 				unsigned short newindex = (unsigned short)_indexedVertices.size() - 1;
@@ -242,8 +185,6 @@ bool Mesh::update() {
 		_normalVbo.reset();
 		_uvVbo.reset();
 		_indexVbo.reset();
-		_tangentVbo.reset();
-		_bitangentVbo.reset();
 
 		for(size_t i = 0; i < _indexedVertices.size(); ++i){
 
@@ -255,9 +196,6 @@ bool Mesh::update() {
 
 			_normalVbo.addData(&(_indexedVertices[i].getNormal()), sizeof(Vector3f));
 
-			_tangentVbo.addData(&(_indexedVertices[i].getTangent()), sizeof(Vector3f));
-			_bitangentVbo.addData(&(_indexedVertices[i].getBitangent()), sizeof(Vector3f));
-
 		}
 		for(size_t i = 0; i < _indices.size(); ++i){
 			_indexVbo.addData(&(_indices[i]), sizeof(unsigned short));
@@ -267,9 +205,6 @@ bool Mesh::update() {
 		_colorVbo.uploadDataToGpu();
 		_normalVbo.uploadDataToGpu();
 		_uvVbo.uploadDataToGpu();
-		_tangentVbo.uploadDataToGpu();
-		_bitangentVbo.uploadDataToGpu();
-
 		_indexVbo.uploadDataToGpu(GL_ELEMENT_ARRAY_BUFFER);
 
 		_verticesCount = _indices.size();

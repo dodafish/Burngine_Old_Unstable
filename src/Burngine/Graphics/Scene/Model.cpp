@@ -50,7 +50,7 @@ struct MeshData {
 MeshData::MeshData() :
 index(0),
 texture(new Texture()),
-normalMap(new Texture()) {
+normalMap(new Texture()){
 
 }
 
@@ -193,8 +193,6 @@ bool Model::loadFromFile(const std::string& file) {
 
 					//Load texture
 					if(meshData[j].normalMap->loadFromFile(file)){
-						Reporter::report("Loaded normal map: " + file, Reporter::NOTIFICATION);
-						std::cout << "Loaded normal map.\n";
 						break;
 					}else{
 						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
@@ -203,80 +201,10 @@ bool Model::loadFromFile(const std::string& file) {
 
 				}
 			}
-		}else if(material->GetTexture(aiTextureType_SPECULAR, textureIndex, &assimpFile) == AI_SUCCESS){
-			//Convert assimpstring to std::string
-			std::string file = assimpFile.data;
+		}
 
-			//Find material and set to mesh
-			for(size_t j = 0; j < meshData.size(); ++j){
-				if(meshData[j].index == i){
-
-					//meshData[j].texture = std::make_shared<Texture>(new Texture());
-
-					//Load texture
-					if(meshData[j].normalMap->loadFromFile(file)){
-						Reporter::report("Loaded normal map: " + file, Reporter::NOTIFICATION);
-						std::cout << "Loaded normal map.\n";
-						break;
-					}else{
-						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
-						return false;
-					}
-
-				}
-			}
-		}else if(material->GetTexture(aiTextureType_SHININESS, textureIndex, &assimpFile) == AI_SUCCESS){
-			//Convert assimpstring to std::string
-			std::string file = assimpFile.data;
-
-			//Find material and set to mesh
-			for(size_t j = 0; j < meshData.size(); ++j){
-				if(meshData[j].index == i){
-
-					//meshData[j].texture = std::make_shared<Texture>(new Texture());
-
-					//Load texture
-					if(meshData[j].normalMap->loadFromFile(file)){
-						Reporter::report("Loaded normal map: " + file, Reporter::NOTIFICATION);
-						std::cout << "Loaded normal map.\n";
-						break;
-					}else{
-						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
-						return false;
-					}
-
-				}
-			}
-		}else if(material->GetTexture(aiTextureType_REFLECTION, textureIndex, &assimpFile) == AI_SUCCESS){
-			//Convert assimpstring to std::string
-			std::string file = assimpFile.data;
-
-			//Find material and set to mesh
-			for(size_t j = 0; j < meshData.size(); ++j){
-				if(meshData[j].index == i){
-
-					//meshData[j].texture = std::make_shared<Texture>(new Texture());
-
-					//Load texture
-					if(meshData[j].normalMap->loadFromFile(file)){
-						Reporter::report("Loaded normal map: " + file, Reporter::NOTIFICATION);
-						std::cout << "Loaded normal map.\n";
-						break;
-					}else{
-						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
-						return false;
-					}
-
-				}
-			}
-		}else if(material->GetTexture(aiTextureType_UNKNOWN, textureIndex, &assimpFile) == AI_SUCCESS){
-			//Convert assimpstring to std::string
-			std::string file = assimpFile.data;
-			Reporter::report("Material texture is invalid. Unknown texturetype: " + file, Reporter::WARNING);
-		}else if(material->GetTexture(aiTextureType_NONE, textureIndex, &assimpFile) == AI_SUCCESS){
-			//Convert assimpstring to std::string
-			std::string file = assimpFile.data;
-			Reporter::report("Material texture is invalid. no texturetype: " + file, Reporter::WARNING);
+		else{
+			Reporter::report("Material texture is invalid.", Reporter::WARNING);
 		}
 
 	}
@@ -310,9 +238,9 @@ const std::shared_ptr<btCollisionShape>& Model::getCollisionShape(const PHYSICAL
 		return _collisionShape;
 	}
 
-///////////////////////////////////////////////////////////////////////////
-// Create Collisionshape
-///////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
+	// Create Collisionshape
+	///////////////////////////////////////////////////////////////////////////
 
 	if(precision == CONVEX_HULL){
 
