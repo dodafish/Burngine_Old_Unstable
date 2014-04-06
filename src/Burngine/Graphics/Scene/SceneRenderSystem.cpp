@@ -165,6 +165,9 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 	shader.setUniform(modelMatrixLoc, node->getModelMatrix());
 	shader.setUniform(normalMatrixLoc, normalMatrix);
 
+	glm::mat3 ModelView3x3Matrix = glm::mat3(camera.getViewMatrix() * node->getModelMatrix());
+	shader.setUniform("modelView3x3Matrix", ModelView3x3Matrix);
+
 	//StaticMeshNode consists of several meshes
 	const std::vector<std::shared_ptr<Mesh>>& meshes = n->getModel().getMeshes();
 	for(size_t i = 0; i < meshes.size(); ++i){
@@ -181,13 +184,23 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			shader.setUniform(meshColorLoc, mesh.getMaterial().getDiffuseColor());
 		}else{
 			shader.setUniform(diffuseTypeLoc, DIFFUSE_TYPE_TEXTURED);    //Type = TEXTURED
-			mesh.getTexture().bind();
+			if(mesh.getTexture()->getId() != 0)
+				mesh.getTexture()->bind(0);
+			if(mesh.getNormalMap()->getId() != 0){
+				mesh.getNormalMap()->bind(1);
+				shader.setUniform("isUsingNormalMap", true);
+			}
+			else{
+				shader.setUniform("isUsingNormalMap", false);
+			}
 		}
 
 		//Bind bufferobjects according to renderflags
 		glEnableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
 		glEnableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
 		glEnableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+		glEnableVertexAttribArray(3);
+		glEnableVertexAttribArray(4);
 
 		//Reset flags to original parameter
 		int flags = constflags;
@@ -204,6 +217,16 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			glVertexAttribPointer(_vboIndices[NORMAL_ARRAY_INDEX], 3,
 			GL_FLOAT,
 									GL_FALSE, 0, (void*)0);
+
+			mesh.getTangentVbo().bind();
+			glVertexAttribPointer(3, 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+			mesh.getBitangentVbo().bind();
+			glVertexAttribPointer(4, 3,
+			GL_FLOAT,
+									GL_FALSE, 0, (void*)0);
+
 			flags -= NORMAL;
 		}
 		if(flags >= POSITION){
@@ -220,6 +243,8 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 		glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
 		glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);
 		glDisableVertexAttribArray(_vboIndices[UV_ARRAY_INDEX]);
+		glDisableVertexAttribArray(3);
+		glDisableVertexAttribArray(4);
 
 	}
 
@@ -390,6 +415,9 @@ void SceneRenderSystem::drawGBuffers(	const Camera& camera,
 	_gBuffer.bindAsTarget();
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::G_BUFFER);
+
+	shader.setUniform("gColorTexture", 0);
+	shader.setUniform("gNormalMap", 1);
 
 	for(size_t i = 0; i < nodes.size(); ++i){
 		renderNode(nodes[i], POSITION | NORMAL | UV, camera, shader);

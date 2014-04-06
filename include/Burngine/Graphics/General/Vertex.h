@@ -49,7 +49,8 @@ public:
 	Vertex(	const Vector3f& position = Vector3f(0.f),
 			const Vector2f& uv = Vector2f(0.f),
 			const Vector3f& normal = Vector3f(1.f),
-			const Vector3f& tangent = Vector3f(1.f));
+			const Vector3f& tangent = Vector3f(1.f),
+			const Vector3f& bitangent = Vector3f(1.f));
 
 	/**
 	 * @brief The default destructor
@@ -114,13 +115,15 @@ public:
 
 	void setTangent(const Vector3f& tangent);
 	const Vector3f& getTangent() const;
+	void setBitangent(const Vector3f& bitangent);
+	const Vector3f& getBitangent() const;
 
 	bool operator<(const Vertex that) const {
 		return memcmp((void*)this, (void*)&that, sizeof(Vertex)) > 0;
 	}
 
 private:
-	Vector3f _position, _normal, _tangent;
+	Vector3f _position, _normal, _tangent, _bitangent;
 	Vector2f _uv;
 };
 

@@ -114,6 +114,9 @@ public:
 
 	const VertexBufferObject& getIndexVbo() const;
 
+	const VertexBufferObject& getTangentVbo() const;
+	const VertexBufferObject& getBitangentVbo() const;
+
 	/**
 	 * @brief Sets the Texture of the mesh
 	 *
@@ -132,9 +135,9 @@ public:
 	 *
 	 * @see setTexture()
 	 */
-	const Texture& getTexture() const;
+	const Texture* getTexture() const;
 
-	const Texture& getNormalMap() const;
+	const Texture* getNormalMap() const;
 
 	/**
 	 * @brief Sets the material of the node. Influences the rendering
@@ -157,8 +160,6 @@ public:
 
 	const std::vector<Vertex>& getVertices() const;
 
-
-
 private:
 
 	/**
@@ -173,7 +174,7 @@ private:
 	std::shared_ptr<Texture> _texture, _normalMap;
 
 	std::vector<Vertex> _vertices;
-	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo, _indexVbo;
+	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo, _indexVbo, _tangentVbo, _bitangentVbo;
 	size_t _verticesCount;
 	std::vector<unsigned short> _indices;
 	std::vector<Vertex> _indexedVertices;
