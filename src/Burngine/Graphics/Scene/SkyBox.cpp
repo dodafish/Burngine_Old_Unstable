@@ -122,7 +122,12 @@ void SkyBox::draw(const Camera& camera) const {
 
 	const Shader& shader = BurngineShaders::getShader(BurngineShaders::SKY_BOX);
 
+	Transformable modelMat;
+	modelMat.setPosition(camera.getPosition());
+
+	shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
 	shader.setUniform("viewMatrix", camera.getViewMatrix());
+	shader.setUniform("modelMatrix", modelMat.getModelMatrix());
 
 	_cubeMap.bind(0);
 

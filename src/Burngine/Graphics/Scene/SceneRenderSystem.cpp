@@ -599,9 +599,9 @@ SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(const Di
 		if(q == 0)
 			virtualCamera.setFov(50.f);
 		else if(q == 1){
-			virtualCamera.setFov(200.f);
+			virtualCamera.setFov(100.f);
 		}else{
-			virtualCamera.setFov(600.f);
+			virtualCamera.setFov(250.f);
 		}
 
 		virtualCamera.setNear(-750.f);
