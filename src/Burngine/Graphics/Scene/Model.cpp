@@ -212,12 +212,10 @@ bool Model::loadFromFile(const std::string& file) {
 	//Create all meshes
 	for(size_t i = 0; i != meshData.size(); ++i){
 		Mesh* mesh = new Mesh();
-
 		mesh->setMaterial(meshData[i].material);
 		mesh->setVertices(meshData[i].vertices);
 		mesh->setTexture(meshData[i].texture);
 		mesh->setNormalMap(meshData[i].normalMap);
-
 		_meshes.push_back(std::shared_ptr<Mesh>(mesh));
 	}
 

@@ -214,7 +214,8 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 			flags -= POSITION;
 		}
 
-		OpenGlControl::draw(OpenGlControl::TRIANGLES, 0, mesh.getVertexCount(), shader);
+		mesh.getIndexVbo().bind(GL_ELEMENT_ARRAY_BUFFER);
+		OpenGlControl::drawIndexed(OpenGlControl::TRIANGLES, mesh.getVertexCount(), shader);
 
 		glDisableVertexAttribArray(_vboIndices[POSITION_ARRAY_INDEX]);
 		glDisableVertexAttribArray(_vboIndices[NORMAL_ARRAY_INDEX]);

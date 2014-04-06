@@ -27,6 +27,7 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 
 #include <iostream>
+#include <map>
 
 namespace burn {
 
@@ -37,6 +38,7 @@ _verticesCount(0) {
 	_colorVbo.create();
 	_uvVbo.create();
 	_normalVbo.create();
+	_indexVbo.create();
 
 }
 
@@ -76,7 +78,7 @@ void Mesh::setVertices(const std::vector<Vertex>& vertices) {
 	update();
 }
 
-const std::vector<Vertex>& Mesh::getVertices() const{
+const std::vector<Vertex>& Mesh::getVertices() const {
 	return _vertices;
 }
 
@@ -94,6 +96,10 @@ const VertexBufferObject& Mesh::getColorVbo() const {
 
 const VertexBufferObject& Mesh::getUvVbo() const {
 	return _uvVbo;
+}
+
+const VertexBufferObject& Mesh::getIndexVbo() const {
+	return _indexVbo;
 }
 
 void Mesh::setTexture(const std::shared_ptr<Texture>& tex) {
@@ -117,12 +123,60 @@ const Material& Mesh::getMaterial() const {
 }
 
 void Mesh::setMaterial(const Material& material) {
+	bool updateNeeded = false;
+	if(_material.getDiffuseColor() != material.getDiffuseColor())
+		updateNeeded = true;
+
 	_material = material;
-	update();
+
+	if(updateNeeded)
+		update();
+}
+
+// Returns true iif v1 can be considered equal to v2
+bool is_near(	float v1,
+				float v2) {
+	return fabs(v1 - v2) < 0.01f;
+}
+
+bool getSimilarVertexIndex(	Vertex& vertex,
+							std::map<Vertex, unsigned short> & VertexToOutIndex,
+							unsigned short & result) {
+	std::map<Vertex, unsigned short>::iterator it = VertexToOutIndex.find(vertex);
+	if(it == VertexToOutIndex.end()){
+		return false;
+	}else{
+		result = it->second;
+		return true;
+	}
 }
 
 bool Mesh::update() {
 	if(_vertices.size() != 0){
+
+		//Run indexer:
+		_indices.clear();
+		_indexedVertices.clear();
+
+		std::map<Vertex, unsigned short> VertexToOutIndex;
+
+		//For each input vertex...
+		for(size_t i = 0; i < _vertices.size(); ++i){
+
+			//Try to find another vertex
+			unsigned short index;
+			bool found = getSimilarVertexIndex(_vertices[i], VertexToOutIndex, index);
+
+			if(found){    // A similar vertex is already in the VBO, use it instead !
+				_indices.push_back(index);
+			}else{    // If not, it needs to be added in the output data.
+				_indexedVertices.push_back(_vertices[i]);
+				unsigned short newindex = (unsigned short)_indexedVertices.size() - 1;
+				_indices.push_back(newindex);
+				VertexToOutIndex[_vertices[i]] = newindex;
+			}
+
+		}
 
 		ensureContext();
 
@@ -130,25 +184,30 @@ bool Mesh::update() {
 		_colorVbo.reset();
 		_normalVbo.reset();
 		_uvVbo.reset();
+		_indexVbo.reset();
 
-		std::vector<GLfloat> pos, col, uv, norm;
-		for(size_t i = 0; i < _vertices.size(); ++i){
+		for(size_t i = 0; i < _indexedVertices.size(); ++i){
 
-			_positionVbo.addData(&(_vertices[i].getPosition()), sizeof(Vector3f));
+			_positionVbo.addData(&(_indexedVertices[i].getPosition()), sizeof(Vector3f));
 
 			_colorVbo.addData(&(_material.getDiffuseColor()), sizeof(Vector3f));
 
-			_uvVbo.addData(&(_vertices[i].getUv()), sizeof(Vector2f));
+			_uvVbo.addData(&(_indexedVertices[i].getUv()), sizeof(Vector2f));
 
-			_normalVbo.addData(&(_vertices[i].getNormal()), sizeof(Vector3f));
+			_normalVbo.addData(&(_indexedVertices[i].getNormal()), sizeof(Vector3f));
+
+		}
+		for(size_t i = 0; i < _indices.size(); ++i){
+			_indexVbo.addData(&(_indices[i]), sizeof(unsigned short));
 		}
 
 		_positionVbo.uploadDataToGpu();
 		_colorVbo.uploadDataToGpu();
 		_normalVbo.uploadDataToGpu();
 		_uvVbo.uploadDataToGpu();
+		_indexVbo.uploadDataToGpu(GL_ELEMENT_ARRAY_BUFFER);
 
-		_verticesCount = _vertices.size();
+		_verticesCount = _indices.size();
 
 		return true;
 

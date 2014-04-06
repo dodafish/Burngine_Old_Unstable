@@ -73,6 +73,21 @@ void OpenGlControl::draw(	const DrawingTechnique& tech,
 
 }
 
+void OpenGlControl::drawIndexed(const DrawingTechnique& tech,
+								GLsizei count,
+								const Shader& shader) {
+
+	//Activates shader and uploads uniforms
+	shader.activate();
+
+	if(tech == TRIANGLES){
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, (void*)0);
+	}else{    //TRIANGLE_STRIP
+		glDrawElements(GL_TRIANGLE_STRIP, count, GL_UNSIGNED_SHORT, (void*)0);
+	}
+
+}
+
 OpenGlControl::Settings::Settings(	bool isBlendingEnabled,
 									const BlendMode& blendMode,
 									bool isCullingEnabled,

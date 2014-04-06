@@ -118,6 +118,10 @@ public:
 						GLsizei count,
 						const Shader& shader);
 
+	static void drawIndexed(const DrawingTechnique& tech,
+							GLsizei count,
+							const Shader& shader);
+
 	//////////////////////////////////////////////
 	// Binding Control
 	//////////////////////////////////////////////

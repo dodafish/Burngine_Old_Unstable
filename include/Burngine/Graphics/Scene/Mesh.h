@@ -112,6 +112,8 @@ public:
 	 */
 	const VertexBufferObject& getUvVbo() const;
 
+	const VertexBufferObject& getIndexVbo() const;
+
 	/**
 	 * @brief Sets the Texture of the mesh
 	 *
@@ -155,6 +157,8 @@ public:
 
 	const std::vector<Vertex>& getVertices() const;
 
+
+
 private:
 
 	/**
@@ -169,8 +173,10 @@ private:
 	std::shared_ptr<Texture> _texture, _normalMap;
 
 	std::vector<Vertex> _vertices;
-	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo;
+	VertexBufferObject _positionVbo, _colorVbo, _uvVbo, _normalVbo, _indexVbo;
 	size_t _verticesCount;
+	std::vector<unsigned short> _indices;
+	std::vector<Vertex> _indexedVertices;
 };
 
 const size_t& Mesh::getVertexCount() const {

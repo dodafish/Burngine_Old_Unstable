@@ -25,9 +25,13 @@
 
 namespace burn {
 
-Vertex::Vertex(const Vector3f& position, const Vector2f& uv, const Vector3f& normal) :
+Vertex::Vertex(	const Vector3f& position,
+				const Vector2f& uv,
+				const Vector3f& normal,
+				const Vector3f& tangent) :
 _position(position),
 _normal(normal),
+_tangent(tangent),
 _uv(uv) {
 }
 
@@ -48,6 +52,14 @@ void Vertex::setNormal(const Vector3f& normal) {
 
 const Vector3f& Vertex::getNormal() const {
 	return _normal;
+}
+
+void Vertex::setTangent(const Vector3f& tangent) {
+	_tangent = tangent;
+}
+
+const Vector3f& Vertex::getTangent() const {
+	return _tangent;
 }
 
 void Vertex::setUv(const Vector2f& uv) {

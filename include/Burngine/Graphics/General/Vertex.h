@@ -27,6 +27,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/System/Math.h>
 
+#include <string.h> // for memcmp
 namespace burn {
 
 /**
@@ -47,7 +48,8 @@ public:
 	 */
 	Vertex(	const Vector3f& position = Vector3f(0.f),
 			const Vector2f& uv = Vector2f(0.f),
-			const Vector3f& normal = Vector3f(1.f));
+			const Vector3f& normal = Vector3f(1.f),
+			const Vector3f& tangent = Vector3f(1.f));
 
 	/**
 	 * @brief The default destructor
@@ -110,8 +112,15 @@ public:
 	 */
 	const Vector3f& getNormal() const;
 
+	void setTangent(const Vector3f& tangent);
+	const Vector3f& getTangent() const;
+
+	bool operator<(const Vertex that) const {
+		return memcmp((void*)this, (void*)&that, sizeof(Vertex)) > 0;
+	}
+
 private:
-	Vector3f _position, _normal;
+	Vector3f _position, _normal, _tangent;
 	Vector2f _uv;
 };
 
