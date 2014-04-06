@@ -80,6 +80,10 @@ const float& Camera::getFov() const {
 	return _fov;
 }
 
+void Camera::setProjectionMatrixOffset(const Matrix4f& offset){
+	_projectionMatrixOffset = offset;
+}
+
 Matrix4f Camera::getProjectionMatrix() const {
 
 	if(_isChanged){
@@ -97,7 +101,7 @@ Matrix4f Camera::getProjectionMatrix() const {
 
 	}
 
-	return _projectionMatrix;
+	return _projectionMatrixOffset * _projectionMatrix;
 }
 
 Matrix4f Camera::getViewMatrix() const {

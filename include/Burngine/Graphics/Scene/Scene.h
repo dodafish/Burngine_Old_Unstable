@@ -86,6 +86,8 @@ public:
 				const Camera& camera,
 				const SceneRenderSystem::RenderMode& mode = SceneRenderSystem::COMPOSITION);
 
+	void setModelMatrixOffset(const Matrix4f& offset);
+
 	/**
 	 * @brief Attaches a StaticMeshNode to the Scene.
 	 *
@@ -198,6 +200,9 @@ private:
 
 	//Copy of a skybox which is used
 	SkyBox _skyBox;
+
+	// for ovr basically:
+	Matrix4f _modelMatrixOffset;
 };
 
 } /* namespace burn */

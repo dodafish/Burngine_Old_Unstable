@@ -145,6 +145,8 @@ public:
 	void setViewMatrix(const Matrix4f& matrix);
 	void setProjectionMatrix(const Matrix4f& matrix);
 
+	void setProjectionMatrixOffset(const Matrix4f& offset);
+
 private:
 	float _aspectRatio;
 	float _fov;
@@ -154,6 +156,7 @@ private:
 	Vector3f _headUp;
 
 	mutable Matrix4f _viewMatrix, _projectionMatrix;
+	Matrix4f _projectionMatrixOffset;
 };
 
 } /* namespace burn */

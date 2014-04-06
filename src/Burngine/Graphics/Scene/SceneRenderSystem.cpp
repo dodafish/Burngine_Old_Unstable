@@ -162,7 +162,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 
 	//Calculate and set model's matrices
 	Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
-	shader.setUniform(modelMatrixLoc, node->getModelMatrix());
+	shader.setUniform(modelMatrixLoc, _modelMatrixOffset * node->getModelMatrix());
 	shader.setUniform(normalMatrixLoc, normalMatrix);
 
 	//StaticMeshNode consists of several meshes
@@ -276,7 +276,10 @@ void SceneRenderSystem::render(	const GLuint& targetFramebuffer,    ///< Window 
 								const std::vector<Light*>& lights,
 								const Vector3f& ambient,
 								const SkyBox& skyBox,
-								bool isLightingEnabled) {
+								bool isLightingEnabled,
+								const Matrix4f& modelMatrixOffset) {
+
+	_modelMatrixOffset = modelMatrixOffset;
 
 	ensureContext();
 

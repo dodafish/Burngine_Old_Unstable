@@ -186,4 +186,8 @@ bool Scene::isLightingEnabled() const {
 	return _isLightingEnabled;
 }
 
+void Scene::setModelMatrixOffset(const Matrix4f& offset){
+	_modelMatrixOffset = offset;
+}
+
 } /* namespace burn */

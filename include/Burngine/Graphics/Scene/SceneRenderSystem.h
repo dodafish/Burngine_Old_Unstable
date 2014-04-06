@@ -82,7 +82,8 @@ public:
 				const std::vector<Light*>& lights,
 				const Vector3f& ambient,
 				const SkyBox& skybox,
-				bool isLightingEnabled = true);
+				bool isLightingEnabled = true,
+				const Matrix4f& modelMatrixOffset = Matrix4f(1.f));
 
 	enum RenderFlag {
 		POSITION = 1, NORMAL = 2, UV = 4
@@ -102,6 +103,7 @@ private:
 					const Camera& camera,
 					const Shader& shader,
 					bool shadowMapRendering = false);
+	Matrix4f _modelMatrixOffset;
 
 	//////////////////////////////////////////////////////////////////////////////
 	void drawGBuffers(	const Camera& camera,
