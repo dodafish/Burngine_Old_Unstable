@@ -30,7 +30,7 @@ Transformable::Transformable() :
 _position(Vector3f(0.f, 0.f, 0.f)),
 _scale(Vector3f(1.f, 1.f, 1.f)),
 _modelMatrix(Matrix4f(1.f)),
-_isChanged(false){
+_isChanged(true){
 	updateModelMatrix();
 }
 

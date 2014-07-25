@@ -62,6 +62,7 @@ Camera& Camera::operator=(const Camera& other) {
 }
 
 void Camera::setAspectRatio(const float& aspectRatio) {
+	_isChanged = true;
 	_aspectRatio = aspectRatio;
 }
 
@@ -74,6 +75,7 @@ void Camera::setFov(const float& fov) {
 		_fov = 1.f;
 	else
 		_fov = fov;
+	_isChanged = true;
 }
 
 const float& Camera::getFov() const {
@@ -113,14 +115,17 @@ Matrix4f Camera::getViewMatrix() const {
 }
 
 void Camera::setFar(const float& far) {
+	_isChanged = true;
 	_far = far;
 }
 
 void Camera::setNear(const float& near) {
+	_isChanged = true;
 	_near = near;
 }
 
 void Camera::setType(const Type& type) {
+	_isChanged = true;
 	_type = type;
 }
 
@@ -129,6 +134,7 @@ const Camera::Type& Camera::getType() const {
 }
 
 void Camera::setHeadUp(const Vector3f& headup) {
+	_isChanged = true;
 	_headUp = headup;
 }
 

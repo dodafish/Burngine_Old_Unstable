@@ -50,24 +50,25 @@ public:
 						const SceneRenderSystem::RenderMode& renderMode);
 	void renderGui(const Gui& gui);
 
-	void distortImages();
 	void renderToWindow();
 
-	void setEyeSpacing(const float& eyeSpacing);
-	const float& getEyeSpacing() const;
+	void setIpdScale(const float& ipdScale);
 
 private:
 	const Window& _window;
 	Texture _leftEyeTexture, _rightEyeTexture;
 	RenderTarget _leftEyeRenderTarget, _rightEyeRenderTarget;
-	float _eyeSpacing;
 	VertexBufferObject _leftEyeVbo, _rightEyeVbo;
-	float _cameraAspect;
 
 	OVR::Ptr<OVR::DeviceManager> _pManager;
 	OVR::Ptr<OVR::HMDDevice> _pHMD;
 	OVR::Ptr<OVR::SensorDevice> _pSensor;
 	OVR::SensorFusion* _SFusion;
+
+	float _renderScale;
+	unsigned int _width;
+	unsigned int _height;
+	float _ipdScale;
 };
 
 } /* namespace burn */

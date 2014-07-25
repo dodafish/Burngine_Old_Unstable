@@ -162,7 +162,7 @@ void SceneRenderSystem::renderNode(	SceneNode* node,
 
 	//Calculate and set model's matrices
 	Matrix4f normalMatrix = glm::transpose(glm::inverse(node->getModelMatrix()));
-	shader.setUniform(modelMatrixLoc, _modelMatrixOffset * node->getModelMatrix());
+	shader.setUniform(modelMatrixLoc, node->getModelMatrix());
 	shader.setUniform(normalMatrixLoc, normalMatrix);
 
 	//StaticMeshNode consists of several meshes
@@ -607,9 +607,9 @@ SceneRenderSystem::HiMidLowResMatrices SceneRenderSystem::drawShadowmap(const Di
 		virtualCamera.setType(Camera::ORTHOGONAL);
 		//Dimensions of the "box"
 		if(q == 0)
-			virtualCamera.setFov(50.f);
+			virtualCamera.setFov(10.f);
 		else if(q == 1){
-			virtualCamera.setFov(100.f);
+			virtualCamera.setFov(50.f);
 		}else{
 			virtualCamera.setFov(250.f);
 		}
