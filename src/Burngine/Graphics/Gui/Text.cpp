@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Gui/Text.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>

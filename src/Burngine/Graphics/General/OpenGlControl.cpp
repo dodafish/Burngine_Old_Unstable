@@ -26,7 +26,7 @@
 #include <Burngine/Graphics/General/Shader.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 namespace burn {
 
@@ -280,7 +280,7 @@ bool OpenGlControl::checkError() {
 
 	GLenum err = glGetError();
 	if(err != GL_NO_ERROR){
-		Reporter::report("OpenGL Error: " + err, Reporter::ERROR);
+		Log::log("OpenGL Error: " + err, Log::ERROR);
 	}
 
 	return err == GL_NO_ERROR;

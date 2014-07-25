@@ -23,7 +23,7 @@
 
 #include <Burngine/Graphics/Scene/GBuffer.h>
 #include <Burngine/Graphics/Window/Window.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
@@ -123,7 +123,7 @@ bool GBuffer::create(const Vector2ui& dimensions) {
 
 	//Check:
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("gBuffer: Failed to create framebuffer!\n", Reporter::ERROR);
+		Log::log("gBuffer: Failed to create framebuffer!\n", Log::ERROR);
 		return false;
 	}
 
@@ -141,7 +141,7 @@ void GBuffer::clear() {
 	ensureContext();
 
 	if(!isCreated()){
-		Reporter::report("Unable to clear gBuffer. gBuffer is not created.", Reporter::WARNING);
+		Log::log("Unable to clear gBuffer. gBuffer is not created.", Log::WARNING);
 		return;
 	}
 
@@ -161,7 +161,7 @@ void GBuffer::bindAsTarget() const {
 	ensureContext();
 
 	if(!isCreated()){
-		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
+		Log::log("Unable to bind gBuffer. gBuffer is not created.", Log::ERROR);
 		return;
 	}
 
@@ -174,7 +174,7 @@ void GBuffer::bindAsSource(const unsigned int& offset) const {
 	ensureContext();
 
 	if(!isCreated()){
-		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
+		Log::log("Unable to bind gBuffer. gBuffer is not created.", Log::ERROR);
 		return;
 	}
 
@@ -203,12 +203,12 @@ void GBuffer::setSourceBuffer(const GBufferType& buffer) {
 	ensureContext();
 
 	if(buffer == COUNT){
-		Reporter::report("Refused attempt to bind gBuffer enum: COUNT.", Reporter::WARNING);
+		Log::log("Refused attempt to bind gBuffer enum: COUNT.", Log::WARNING);
 		return;
 	}
 
 	if(!isCreated()){
-		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
+		Log::log("Unable to bind gBuffer. gBuffer is not created.", Log::ERROR);
 		return;
 	}
 
@@ -225,7 +225,7 @@ void GBuffer::bindDepthBufferAsSourceTexture(const Uint32& unit) const {
 	ensureContext();
 
 	if(!isCreated()){
-		Reporter::report("Unable to bind gBuffer. gBuffer is not created.", Reporter::ERROR);
+		Log::log("Unable to bind gBuffer. gBuffer is not created.", Log::ERROR);
 		return;
 	}
 

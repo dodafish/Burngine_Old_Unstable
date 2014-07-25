@@ -28,7 +28,7 @@
 #include <Burngine/Graphics/General/OpenGL.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
 #include <Burngine/Graphics/General/VertexBufferObject.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/Graphics/Texture/BaseTexture.h>
 #include <Burngine/Graphics/Window/Window.h>
 #include <Burngine/System/Rotation.h>
@@ -86,24 +86,24 @@ SceneRenderSystem::SceneRenderSystem() {
 
 	for(int i = 0; i != 3; ++i){
 		if(!_vsm[i].create(Vector2ui(1024, 1024), Texture::RG32F)){
-			Reporter::report("Unable to create VarianceShadowMap!", Reporter::ERROR);
+			Log::log("Unable to create VarianceShadowMap!", Log::ERROR);
 			exit(16);
 		}
 		_vsm[i].setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
 		if(!_vsmTarget[i].create(_vsm[i].getDimensions(), RenderTarget::DEPTHBUFFER_32, _vsm[i])){
-			Reporter::report("Unable to create VarianceShadowMap RenderTarget!", Reporter::ERROR);
+			Log::log("Unable to create VarianceShadowMap RenderTarget!", Log::ERROR);
 			exit(18);
 		}
 	}
 
 	if(!_vscm.create(Vector2ui(512, 512), Texture::RG32F)){
-		Reporter::report("Unable to create VarianceShadowCubeMap!", Reporter::ERROR);
+		Log::log("Unable to create VarianceShadowCubeMap!", Log::ERROR);
 		exit(17);
 	}
 
 	_vscm.setFiltering(Texture::MAG_BILINEAR, Texture::MIN_BILINEAR);
 	if(!_vscmTarget.create(_vscm.getDimensions(), CubeRenderTarget::DEPTHBUFFER_32, _vscm)){
-		Reporter::report("Unable to create VarianceShadowCubeMap RenderTarget!", Reporter::ERROR);
+		Log::log("Unable to create VarianceShadowCubeMap RenderTarget!", Log::ERROR);
 		exit(19);
 	}
 
@@ -238,7 +238,7 @@ void SceneRenderSystem::adjustRenderTextures(const Vector2ui& resolution) {
 
 	//Recreate GBuffer
 	if(!_gBuffer.create(resolution)){
-		Reporter::report("Unable to create gBuffer!", Reporter::ERROR);
+		Log::log("Unable to create gBuffer!", Log::ERROR);
 		exit(11);
 	}
 
@@ -253,12 +253,12 @@ void SceneRenderSystem::adjustRenderTextures(const Vector2ui& resolution) {
 	_specularPartTexture.create(resolution, Texture::RGB);
 
 	if(!_renderTarget.create(resolution, RenderTarget::DEPTHBUFFER_16, _diffusePartTexture)){
-		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		Log::log("Unable to create rendertexture!", Log::ERROR);
 		exit(12);
 	}
 
 	if(!_renderTarget.addColorAttachment(_specularPartTexture, 1)){
-		Reporter::report("Unable to create rendertexture!", Reporter::ERROR);
+		Log::log("Unable to create rendertexture!", Log::ERROR);
 		exit(13);
 	}
 

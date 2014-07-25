@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Texture/CubeMap.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <Burngine/extern/SOIL.h>
 
@@ -37,7 +37,7 @@ void CubeMap::ensureConstants() {
 		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &_realTextureBindingCap);
 
 		if(_realTextureBindingCap == 0){
-			Reporter::report("Could not estimate maximum number of texture units!", Reporter::ERROR);
+			Log::log("Could not estimate maximum number of texture units!", Log::ERROR);
 			exit(1);    //Kill process
 		}
 
@@ -89,7 +89,7 @@ bool CubeMap::create(	const Vector2ui& dimensions,
 						const InternalFormat& internalFormat) {
 
 	if(dimensions.x != dimensions.y || dimensions.x == 0 || dimensions.y == 0){
-		Reporter::report("Unable to create cubemap. Dimensions are invalid!", Reporter::ERROR);
+		Log::log("Unable to create cubemap. Dimensions are invalid!", Log::ERROR);
 		return false;
 	}
 
@@ -126,7 +126,7 @@ bool CubeMap::create(	const Vector2ui& dimensions,
 	glBindTexture(GL_TEXTURE_2D, _currentCubeMapBinding[0]);
 
 	if(_cubemapId == 0){
-		Reporter::report("Failed to create cubemap.", Reporter::ERROR);
+		Log::log("Failed to create cubemap.", Log::ERROR);
 	}
 
 	return (_cubemapId != 0);
@@ -135,11 +135,11 @@ bool CubeMap::create(	const Vector2ui& dimensions,
 bool CubeMap::bind(const Uint32& unit) const {
 
 	if(_cubemapId == 0){
-		Reporter::report("Cannot bind cubemap. Cubemap has not been created.", Reporter::ERROR);
+		Log::log("Cannot bind cubemap. Cubemap has not been created.", Log::ERROR);
 		return false;
 	}
 	if(unit > _realTextureBindingCap - 1 || unit > MAX_TEXTURE_BINDINGS - 1){
-		Reporter::report("Cannot bind cubemap. Chosen texture unit is too large.", Reporter::ERROR);
+		Log::log("Cannot bind cubemap. Chosen texture unit is too large.", Log::ERROR);
 		return false;
 	}
 

@@ -23,7 +23,7 @@
 
 #include <Burngine/Physics/PhysicsWorld.h>
 
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <bullet/btBulletDynamicsCommon.h>
 

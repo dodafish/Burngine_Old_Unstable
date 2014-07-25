@@ -25,7 +25,7 @@
 
 #include <Burngine/Graphics/Texture/Texture.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 namespace burn {
 
@@ -67,12 +67,12 @@ bool RenderTarget::create(	const Vector2ui& dimensions,
 							const Texture& texture) {
 
 	if(dimensions.x == 0 || dimensions.y == 0){
-		Reporter::report("Unable to create RenderTarget! Dimensions are too little.", Reporter::ERROR);
+		Log::log("Unable to create RenderTarget! Dimensions are too little.", Log::ERROR);
 		return false;
 	}
 
 	if(texture.getId() == 0){
-		Reporter::report("Unable to create RenderTarget! Initial color attachment not created.", Reporter::ERROR);
+		Log::log("Unable to create RenderTarget! Initial color attachment not created.", Log::ERROR);
 		return false;
 	}
 
@@ -112,7 +112,7 @@ bool RenderTarget::create(	const Vector2ui& dimensions,
 	glDrawBuffers(1, drawBuffers);
 
 	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("RenderTexture: Failed to create render target!\n", Reporter::ERROR);
+		Log::log("RenderTexture: Failed to create render target!\n", Log::ERROR);
 		return false;
 	}
 
@@ -127,26 +127,26 @@ bool RenderTarget::addColorAttachment(	const Texture& texture,
 										const GLuint& attachmentPosition) {
 
 	if(_framebuffer == 0){
-		Reporter::report("Cannot add color attachment. No framebuffer created!", Reporter::ERROR);
+		Log::log("Cannot add color attachment. No framebuffer created!", Log::ERROR);
 		return false;
 	}
 
 	if(texture.getDimensions() != _dimensions){
-		Reporter::report("Unable to add color attachment. Attachment has wrong dimensions!", Reporter::ERROR);
+		Log::log("Unable to add color attachment. Attachment has wrong dimensions!", Log::ERROR);
 		return false;
 	}
 
 	if(attachmentPosition >= GL_MAX_COLOR_ATTACHMENTS){
-		Reporter::report("Unable to add color attachment. Attachment position out of range!", Reporter::ERROR);
+		Log::log("Unable to add color attachment. Attachment position out of range!", Log::ERROR);
 		return false;
 	}
 
 	for(size_t i = 0; i < _colorAttachments.size(); ++i){
 		if(_colorAttachments[i].attachmentPosition == attachmentPosition){
-			Reporter::report("Unable to add color attachment. Slot already taken!", Reporter::ERROR);
+			Log::log("Unable to add color attachment. Slot already taken!", Log::ERROR);
 			return false;
 		}else if(_colorAttachments[i].textureId == texture.getId()){
-			Reporter::report("Unable to add color attachment. Texture already attached!", Reporter::ERROR);
+			Log::log("Unable to add color attachment. Texture already attached!", Log::ERROR);
 			return false;
 		}
 	}
@@ -173,7 +173,7 @@ bool RenderTarget::addColorAttachment(	const Texture& texture,
 
 	//Check:
 	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("RenderTexture: Failed to add color attachment!\n", Reporter::ERROR);
+		Log::log("RenderTexture: Failed to add color attachment!\n", Log::ERROR);
 		return false;
 	}
 
@@ -210,7 +210,7 @@ bool RenderTarget::removeColorAttachment(const Texture& texture) {
 
 			//Check:
 			if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-				Reporter::report("RenderTexture: Failed to remove color attachment!\n", Reporter::ERROR);
+				Log::log("RenderTexture: Failed to remove color attachment!\n", Log::ERROR);
 				return false;
 			}
 

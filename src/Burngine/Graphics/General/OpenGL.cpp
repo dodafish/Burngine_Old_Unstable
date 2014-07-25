@@ -83,7 +83,7 @@ GLFWwindow* ContextHandler::createWindow(const WindowSettings& settings) {
 
 	//Check if creation succeeded
 	if(window == nullptr){
-		Reporter::report("Failed to create window!", Reporter::ERROR);
+		Log::log("Failed to create window!", Log::ERROR);
 		glfwTerminate();
 		exit(4);
 	}else{
@@ -164,7 +164,7 @@ void ContextHandler::ensureGlfw() {
 
 	//Initialize GLFW
 	if(!glfwInit()){
-		Reporter::report("Failed to initialize GLFW!", Reporter::ERROR);
+		Log::log("Failed to initialize GLFW!", Log::ERROR);
 		exit(3);
 	}
 

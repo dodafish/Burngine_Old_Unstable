@@ -36,7 +36,7 @@
 #include <Burngine/Graphics/Scene/SpotLight.h>
 #include <Burngine/Graphics/Scene/Mesh.h>
 
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <Burngine/Graphics/General/OpenGL.h>
 

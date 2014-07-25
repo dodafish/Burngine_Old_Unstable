@@ -60,7 +60,7 @@
 #include <Burngine/System/Keyboard.h>
 #include <Burngine/System/Math.h>
 #include <Burngine/System/Mouse.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/System/String.h>
 #include <Burngine/System/Time.h>
 #include <Burngine/System/Utf.h>
@@ -79,7 +79,7 @@ namespace burn {
 
 void shutdown() {
 	ContextHandler::shutdown();
-	Reporter::report("Burngine shutdown.");
+	Log::log("Burngine shutdown.");
 }
 
 }

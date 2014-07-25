@@ -25,7 +25,7 @@
 
 #include <Burngine/Graphics/Texture/CubeMap.h>
 #include <Burngine/Graphics/General/OpenGlControl.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 namespace burn {
 
@@ -67,12 +67,12 @@ bool CubeRenderTarget::create(	const Vector2ui& dimensions,
 								const CubeMap& cubemap) {
 
 	if(dimensions.x == 0 || dimensions.y == 0 || dimensions.x != dimensions.y){
-		Reporter::report("Unable to create CubeRenderTarget! Dimensions are too little or invalid.", Reporter::ERROR);
+		Log::log("Unable to create CubeRenderTarget! Dimensions are too little or invalid.", Log::ERROR);
 		return false;
 	}
 
 	if(cubemap.getId() == 0){
-		Reporter::report("Unable to create CubeRenderTarget! Initial color attachment not created.", Reporter::ERROR);
+		Log::log("Unable to create CubeRenderTarget! Initial color attachment not created.", Log::ERROR);
 		return false;
 	}
 
@@ -115,7 +115,7 @@ bool CubeRenderTarget::create(	const Vector2ui& dimensions,
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, ca.textureId, 0);
 
 	if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-		Reporter::report("CubeRenderTarget: Failed to create render target!\n", Reporter::ERROR);
+		Log::log("CubeRenderTarget: Failed to create render target!\n", Log::ERROR);
 		checkError();
 		return false;
 	}
@@ -131,26 +131,26 @@ bool CubeRenderTarget::addColorAttachment(	const CubeMap& cubemap,
 											const GLuint& attachmentPosition) {
 
 	if(_framebuffer == 0){
-		Reporter::report("Cannot add color attachment. No framebuffer created!", Reporter::ERROR);
+		Log::log("Cannot add color attachment. No framebuffer created!", Log::ERROR);
 		return false;
 	}
 
 	if(cubemap.getDimensions() != _dimensions){
-		Reporter::report("Unable to add color attachment. Attachment has wrong dimensions!", Reporter::ERROR);
+		Log::log("Unable to add color attachment. Attachment has wrong dimensions!", Log::ERROR);
 		return false;
 	}
 
 	if(attachmentPosition >= GL_MAX_COLOR_ATTACHMENTS){
-		Reporter::report("Unable to add color attachment. Attachment position out of range!", Reporter::ERROR);
+		Log::log("Unable to add color attachment. Attachment position out of range!", Log::ERROR);
 		return false;
 	}
 
 	for(size_t i = 0; i < _colorAttachments.size(); ++i){
 		if(_colorAttachments[i].attachmentPosition == attachmentPosition){
-			Reporter::report("Unable to add color attachment. Slot already taken!", Reporter::ERROR);
+			Log::log("Unable to add color attachment. Slot already taken!", Log::ERROR);
 			return false;
 		}else if(_colorAttachments[i].textureId == cubemap.getId()){
-			Reporter::report("Unable to add color attachment. Texture already attached!", Reporter::ERROR);
+			Log::log("Unable to add color attachment. Texture already attached!", Log::ERROR);
 			return false;
 		}
 	}
@@ -201,7 +201,7 @@ bool CubeRenderTarget::removeColorAttachment(const CubeMap& cubemap) {
 
 			//Check:
 			if(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-				Reporter::report("RenderTexture: Failed to remove color attachment!\n", Reporter::ERROR);
+				Log::log("RenderTexture: Failed to remove color attachment!\n", Log::ERROR);
 				return false;
 			}
 

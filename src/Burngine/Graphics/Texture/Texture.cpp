@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Texture/Texture.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <Burngine/extern/SOIL.h>
 
@@ -37,7 +37,7 @@ void Texture::ensureConstants() {
 		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &_realTextureBindingCap);
 
 		if(_realTextureBindingCap == 0){
-			Reporter::report("Could not estimate maximum number of texture units!", Reporter::ERROR);
+			Log::log("Could not estimate maximum number of texture units!", Log::ERROR);
 			exit(1);    //Kill process
 		}
 
@@ -91,7 +91,7 @@ bool Texture::create(	const Vector2ui& dimensions,
 						GLubyte* data) {
 
 	if(dimensions.x == 0 || dimensions.y == 0){
-		Reporter::report("Unable to create texture. Dimensions must be greater than 0!", Reporter::ERROR);
+		Log::log("Unable to create texture. Dimensions must be greater than 0!", Log::ERROR);
 		return false;
 	}
 
@@ -122,7 +122,7 @@ bool Texture::create(	const Vector2ui& dimensions,
 	glBindTexture(GL_TEXTURE_2D, _currentTexture2DBinding[0]);
 
 	if(_textureId == 0){
-		Reporter::report("Failed to create texture.", Reporter::ERROR);
+		Log::log("Failed to create texture.", Log::ERROR);
 	}
 
 	return (_textureId != 0);
@@ -131,11 +131,11 @@ bool Texture::create(	const Vector2ui& dimensions,
 bool Texture::bind(const Uint32& unit) const {
 
 	if(_textureId == 0){
-		Reporter::report("Cannot bind texture. Texture has not been created.", Reporter::ERROR);
+		Log::log("Cannot bind texture. Texture has not been created.", Log::ERROR);
 		return false;
 	}
 	if(unit > static_cast<Uint32>(_realTextureBindingCap - 1) || unit > static_cast<Uint32>(MAX_TEXTURE_BINDINGS - 1)){
-		Reporter::report("Cannot bind texture. Chosen texture unit is too large.", Reporter::ERROR);
+		Log::log("Cannot bind texture. Chosen texture unit is too large.", Log::ERROR);
 		return false;
 	}
 

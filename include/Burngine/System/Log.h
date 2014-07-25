@@ -28,28 +28,35 @@
 
 namespace burn {
 
-class BURNGINE_API Reporter {
+class BURNGINE_API Log {
 public:
 
-	enum MessageType {
+	enum LogType {
 		NOTIFICATION = 0, WARNING, ERROR
 	};
 
 	/**
 	 * @brief Reporter is a static class
 	 */
-	Reporter() = delete;
+	Log() = delete;
 
-	static void report(const std::string& message, const MessageType& type = NOTIFICATION);
+	static void log(const std::string& text,
+					const LogType& type = NOTIFICATION);
+
+	static void logToConsole(bool enabled = true);
+	static void logToFile(bool enabled = true);
+	static void enableLogging(bool enabled = true);
 
 private:
 	static std::string doubleDigit(const int& number);
 
-	static bool dumpToFile, dumpToConsole; ///< Where to report to
-	static std::string file; ///< The "logfile"
-	static bool firstDump; ///< To be able to mark beginnings
+	static void toConsole(const std::string& text);
+	static void toFile(const std::string& text);
+	static std::string timestamp();
 
-	static MessageType _level;
+	static bool _firstDump;    ///< To be able to mark beginnings
+	static bool _logFile, _logConsole;
+	static bool _logOff;
 };
 
 } /* namespace burn */

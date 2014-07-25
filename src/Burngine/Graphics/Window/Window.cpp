@@ -30,7 +30,7 @@
 
 #include <Burngine/System/Keyboard.h>
 #include <Burngine/System/Mouse.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <sstream>
 
 namespace burn {
@@ -55,7 +55,7 @@ bool Window::create(const WindowSettings& settings,
 
 	//Log information
 	std::stringstream ss(glfwGetVersionString());
-	Reporter::report("Version string: " + ss.str());
+	Log::log("Version string: " + ss.str());
 
 	// Set the window resolution according to _settings
 	_settings = ContextHandler::estimateWindowResolution(_settings);
@@ -73,10 +73,10 @@ bool Window::create(const WindowSettings& settings,
 		if(!BurngineShaders::load("Shaders/")){
 			return false;
 		}
-		Reporter::report("Loaded BurngineShaders.");
+		Log::log("Loaded BurngineShaders.");
 	}else{
-		Reporter::report(	"BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
-							Reporter::WARNING);
+		Log::log(	"BurngineShaders not loaded! This might cause crashes, when not loaded manually.",
+							Log::WARNING);
 	}
 
 	//////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ bool Window::create(const WindowSettings& settings,
 	glGenVertexArrays(1, &_vertexArrayID);
 	glBindVertexArray(_vertexArrayID);
 
-	Reporter::report("Created default VAO. Window creation done.");
+	Log::log("Created default VAO. Window creation done.");
 
 	glEnable(GL_MULTISAMPLE);
 
@@ -115,7 +115,7 @@ void Window::close() {
 	std::stringstream ss;
 	ss << _uptime.getElapsedTime().asSeconds() << " seconds (" << _uptime.getElapsedTime().asMilliseconds()
 	<< " milliseconds; " << _uptime.getElapsedTime().asNanoseconds() << " nanoseconds)";
-	Reporter::report("Window closed. Uptime: " + ss.str());
+	Log::log("Window closed. Uptime: " + ss.str());
 
 }
 

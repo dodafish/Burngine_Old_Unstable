@@ -23,7 +23,7 @@
 
 #include <Burngine/Graphics/General/Shader.h>
 #include <Burngine/Graphics/Window/Window.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 
 #include <iostream>
@@ -85,7 +85,7 @@ bool Shader::loadFromString(const std::string& vertexShader,
 	int InfoLogLength;
 
 // Compile Vertex Shader
-	Reporter::report("Compiling vertexshader...");
+	Log::log("Compiling vertexshader...");
 	char const * VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
@@ -96,12 +96,12 @@ bool Shader::loadFromString(const std::string& vertexShader,
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+		Log::log(&VertexShaderErrorMessage[0], Log::ERROR);
 		return false;
 	}
 
 // Compile Fragment Shader
-	Reporter::report("Compiling fragmentshader...");
+	Log::log("Compiling fragmentshader...");
 	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
@@ -112,12 +112,12 @@ bool Shader::loadFromString(const std::string& vertexShader,
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+		Log::log(&FragmentShaderErrorMessage[0], Log::ERROR);
 		return false;
 	}
 
 // Link the program
-	Reporter::report("Linking program...");
+	Log::log("Linking program...");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
@@ -129,7 +129,7 @@ bool Shader::loadFromString(const std::string& vertexShader,
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 	if(!Result){
-		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+		Log::log(&ProgramErrorMessage[0], Log::ERROR);
 		return false;
 	}
 
@@ -174,7 +174,7 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	int InfoLogLength;
 
 // Compile Vertex Shader
-	Reporter::report("Compiling vertexshader...");
+	Log::log("Compiling vertexshader...");
 	char const * VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
@@ -185,13 +185,13 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to load/compile shader: " + vertexShaderFile, Reporter::ERROR);
-		Reporter::report(&VertexShaderErrorMessage[0], Reporter::ERROR);
+		Log::log("Failed to load/compile shader: " + vertexShaderFile, Log::ERROR);
+		Log::log(&VertexShaderErrorMessage[0], Log::ERROR);
 		return false;
 	}
 
 // Compile Fragment Shader
-	Reporter::report("Compiling fragmentshader...");
+	Log::log("Compiling fragmentshader...");
 	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
@@ -202,13 +202,13 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to load/compile shader: " + fragmentShaderFile, Reporter::ERROR);
-		Reporter::report(&FragmentShaderErrorMessage[0], Reporter::ERROR);
+		Log::log("Failed to load/compile shader: " + fragmentShaderFile, Log::ERROR);
+		Log::log(&FragmentShaderErrorMessage[0], Log::ERROR);
 		return false;
 	}
 
 // Link the program
-	Reporter::report("Linking program...");
+	Log::log("Linking program...");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
@@ -220,8 +220,8 @@ bool Shader::loadFromFile(	const std::string& vertexShaderFile,
 	std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)));
 	glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 	if(!Result){
-		Reporter::report("Failed to link shaders: " + vertexShaderFile + " & " + fragmentShaderFile, Reporter::ERROR);
-		Reporter::report(&ProgramErrorMessage[0], Reporter::ERROR);
+		Log::log("Failed to link shaders: " + vertexShaderFile + " & " + fragmentShaderFile, Log::ERROR);
+		Log::log(&ProgramErrorMessage[0], Log::ERROR);
 		return false;
 	}
 

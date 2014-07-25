@@ -31,7 +31,7 @@
 #include <Burngine/Export.h>
 #include <Burngine/Graphics/Window/WindowSettings.h>
 #include <vector>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 //For the exit() func
 #include <cstdlib>
@@ -135,7 +135,7 @@ void ContextHandler::ensureContext() {
 
 			//Check if creation succeeded
 			if(_fakeWindow == nullptr){
-				Reporter::report("Failed to ensure context! Creation of fake window failed!", Reporter::ERROR);
+				Log::log("Failed to ensure context! Creation of fake window failed!", Log::ERROR);
 				glfwTerminate();    // <- ensureGlfw initialized it. Terminate before end
 				exit(1);    //Terminate program... :(
 			}
@@ -162,24 +162,24 @@ void ContextHandler::ensureContext() {
 	//Initialize GLEW
 	glewExperimental = GL_TRUE;
 	if(glewInit() != GLEW_OK){
-		Reporter::report("Failed to initialize GLEW!", Reporter::ERROR);
+		Log::log("Failed to initialize GLEW!", Log::ERROR);
 		glfwTerminate();
 		exit(2);
 	}
 
 	if(GLEW_VERSION_4_3){
-		Reporter::report("OpenGL 4.3 supported");
+		Log::log("OpenGL 4.3 supported");
 	}else if(GLEW_VERSION_4_2){
-		Reporter::report("OpenGL 4.2 supported");
+		Log::log("OpenGL 4.2 supported");
 	}else if(GLEW_VERSION_4_1){
-		Reporter::report("OpenGL 4.1 supported");
+		Log::log("OpenGL 4.1 supported");
 	}else if(GLEW_VERSION_4_0){
-		Reporter::report("OpenGL 4.0 supported");
+		Log::log("OpenGL 4.0 supported");
 	}else if(GLEW_VERSION_3_3){
-		Reporter::report("OpenGL 3.3 supported");
+		Log::log("OpenGL 3.3 supported");
 	}else{
-		Reporter::report(	"OpenGL 3.3 or higher is not supported! Try updating your videocard's driver.",
-							Reporter::ERROR);
+		Log::log(	"OpenGL 3.3 or higher is not supported! Try updating your videocard's driver.",
+							Log::ERROR);
 		glfwTerminate();
 		exit(5);
 	}

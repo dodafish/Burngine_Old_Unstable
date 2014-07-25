@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Gui/Font.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -61,24 +61,24 @@ bool Font::loadFromFile(const std::string& file) {
 
 	//Initialize Freetype
 	if(FT_Init_FreeType(&lib) != 0){
-		Reporter::report("Failed to load font (Unable to init Freetype)", Reporter::ERROR);
+		Log::log("Failed to load font (Unable to init Freetype)", Log::ERROR);
 		return false;
 	}
 
 	//Load first face from file
 	if(FT_New_Face(lib, file.c_str(), 0, &face) != 0){ //0 means success
-		Reporter::report("Failed to load font. (Failed to load face)", Reporter::ERROR);
+		Log::log("Failed to load font. (Failed to load face)", Log::ERROR);
 		return false;
 	}
 
 	// Select the unicode character map
 	if(FT_Select_Charmap(face, FT_ENCODING_UNICODE) != 0){
-		Reporter::report("Failed to load font. (Failed to set Unicode-character-set)", Reporter::ERROR);
+		Log::log("Failed to load font. (Failed to set Unicode-character-set)", Log::ERROR);
 		return false;
 	}
 
 	if(FT_Set_Pixel_Sizes(face, 0, 32) != 0){
-		Reporter::report("Failed to load font. (Failed to set Fontsize of 32)", Reporter::ERROR);
+		Log::log("Failed to load font. (Failed to set Fontsize of 32)", Log::ERROR);
 		return false;
 	}
 
@@ -145,20 +145,20 @@ const std::shared_ptr<Character>& Font::createCharacter(const Uint32& codePoint)
 
 	//Load the glyph in face
 	if(FT_Load_Glyph(face, FT_Get_Char_Index(face, codePoint), FT_LOAD_DEFAULT) != 0){
-		Reporter::report("Failed to load glyph!", Reporter::ERROR);
+		Log::log("Failed to load glyph!", Log::ERROR);
 		return _emptyCharacter;
 	}
 
 	//Get the glyph
 	FT_Glyph glyph;
 	if(FT_Get_Glyph(face->glyph, &glyph) != 0){
-		Reporter::report("Failed get glyph!", Reporter::ERROR);
+		Log::log("Failed get glyph!", Log::ERROR);
 		return _emptyCharacter;
 	}
 
 	//Render to a bitmap
 	if(FT_Glyph_To_Bitmap(&glyph, ft_render_mode_normal, 0, 1) != 0){
-		Reporter::report("Failed to render glyph to bitmap!", Reporter::ERROR);
+		Log::log("Failed to render glyph to bitmap!", Log::ERROR);
 		return _emptyCharacter;
 	}
 	FT_BitmapGlyph bitmapGlyph = (FT_BitmapGlyph)(glyph);

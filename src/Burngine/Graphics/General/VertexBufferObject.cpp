@@ -24,7 +24,7 @@
 #include <Burngine/Graphics/General/VertexBufferObject.h>
 #include <Burngine/Graphics/Window/Window.h>
 
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <Burngine/Graphics/General/OpenGL.h>
 
 namespace burn {

@@ -22,7 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/Graphics/Scene/SceneNode.h>
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 
 #include <Burngine/System/Message.h>
 

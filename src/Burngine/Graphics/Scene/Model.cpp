@@ -31,7 +31,7 @@
 #include <Burngine/extern/assimp/postprocess.h>     // Post processing flags
 #include <iostream>
 
-#include <Burngine/System/Reporter.h>
+#include <Burngine/System/Log.h>
 #include <sstream>
 
 #include <bullet/btBulletDynamicsCommon.h>
@@ -79,11 +79,11 @@ bool Model::loadFromFile(const std::string& file) {
 												| aiProcess_JoinIdenticalVertices | aiProcess_SortByPType);
 
 	if(!scene){
-		Reporter::report(	"Cannot load asset! (" + std::stringstream(importer.GetErrorString()).str() + ")",
-							Reporter::ERROR);
+		Log::log(	"Cannot load asset! (" + std::stringstream(importer.GetErrorString()).str() + ")",
+							Log::ERROR);
 		return false;
 	}else{
-		Reporter::report("Successfully loaded asset: " + file);
+		Log::log("Successfully loaded asset: " + file);
 	}
 
 	//Asset successfully loaded.
@@ -173,7 +173,7 @@ bool Model::loadFromFile(const std::string& file) {
 						meshData[j].material.setType(Material::Type::TEXTURED);
 						break;
 					}else{
-						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
+						Log::log("Failed to load texture: " + file, Log::ERROR);
 						return false;
 					}
 
@@ -195,7 +195,7 @@ bool Model::loadFromFile(const std::string& file) {
 					if(meshData[j].normalMap->loadFromFile(file)){
 						break;
 					}else{
-						Reporter::report("Failed to load texture: " + file, Reporter::ERROR);
+						Log::log("Failed to load texture: " + file, Log::ERROR);
 						return false;
 					}
 
@@ -204,7 +204,7 @@ bool Model::loadFromFile(const std::string& file) {
 		}
 
 		else{
-			Reporter::report("Material texture is invalid.", Reporter::WARNING);
+			Log::log("Material texture is invalid.", Log::WARNING);
 		}
 
 	}
@@ -219,7 +219,7 @@ bool Model::loadFromFile(const std::string& file) {
 		_meshes.push_back(std::shared_ptr<Mesh>(mesh));
 	}
 
-	Reporter::report("Successfully loaded model: " + file);
+	Log::log("Successfully loaded model: " + file);
 
 	_isLoaded = true;
 	_isCollisionShapeCreated = false;
@@ -230,7 +230,7 @@ bool Model::loadFromFile(const std::string& file) {
 const std::shared_ptr<btCollisionShape>& Model::getCollisionShape(const PHYSICAL_SHAPE_PRECISION& precision) const {
 
 	if(!_isLoaded){
-		Reporter::report("Unable to create collision shape. Model not loaded!", Reporter::ERROR);
+		Log::log("Unable to create collision shape. Model not loaded!", Log::ERROR);
 		exit(551);
 	}
 
