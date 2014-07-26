@@ -156,8 +156,8 @@ void OculusRift::renderScene(	Scene& scene,
 	_renderScale = stereo.GetDistortionScale();
 	_renderScale = 1.f;
 
-	OVR::Util::Render::StereoEyeParams leftEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Left);
-	OVR::Util::Render::StereoEyeParams rightEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Right);
+	//OVR::Util::Render::StereoEyeParams leftEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Left);
+	//OVR::Util::Render::StereoEyeParams rightEye = stereo.GetEyeRenderParams(OVR::Util::Render::StereoEye_Right);
 
 	Rotation headRot;
 	headRot.setByQuaternion(camera.getRotation().asQuaternion() * headQuat);

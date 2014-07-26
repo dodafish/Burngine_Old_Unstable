@@ -63,7 +63,11 @@ struct Viewport {
 	int x, y;
 	int w, h;
 
-	Viewport() {
+	Viewport():
+	x(0),
+	y(0),
+	w(0),
+	h(0) {
 	}
 	Viewport(	int x1,
 				int y1,

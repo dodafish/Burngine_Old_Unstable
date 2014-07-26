@@ -22,6 +22,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <Burngine/System/Id.h>
+#include <Burngine/System/Log.h>
 
 #include <iostream>
 #include <stdio.h>
@@ -47,7 +48,7 @@ Id::Id() {
 		_myId = _nextId++;
 
 	if(_nextId == 2000000000){
-		std::cout << "2 Mrd IDs had been created... That must not happen!\n";
+		Log::log("2 Mrd IDs had been created... That must not happen!", Log::WARNING);
 	}
 }
 
